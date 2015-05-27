@@ -104,7 +104,8 @@
   
     cell.meetTitleLabel.text = [[object valueForKey:@"meetName"] description];
     cell.meetDateLabel.text = [[object valueForKey:@"meetDate"] description];
-    cell.numberOfTeamsLabel.text = @"Teams: 1";
+    cell.numberOfTeamsLabel.text = @"2";
+    //[[@"hello"] description];
 }
 
 #pragma mark - Fetched results controller

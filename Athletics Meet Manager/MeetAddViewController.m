@@ -15,6 +15,12 @@
 
 @implementation MeetAddViewController
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
