@@ -14,6 +14,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *meetName;
 
+@property (weak, nonatomic) IBOutlet UILabel *idLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *meetID;
 
 

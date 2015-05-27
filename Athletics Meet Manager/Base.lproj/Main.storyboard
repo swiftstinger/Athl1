@@ -194,6 +194,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="iDLabel" destination="6Y5-Aw-xPf" id="3Jm-D4-CxE"/>
+                        <outlet property="idLabel" destination="KkF-AA-GDt" id="ICd-WW-QK1"/>
                         <outlet property="meetID" destination="3GU-x2-ucO" id="ogk-r4-vBH"/>
                         <outlet property="meetName" destination="rCd-xk-lKc" id="bpn-Li-8Tn"/>
                     </connections>
