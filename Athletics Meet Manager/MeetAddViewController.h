@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface MeetAddViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface MeetAddViewController : UITableViewController <NSFetchedResultsControllerDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) id detailItem;
 
@@ -19,7 +19,13 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *meetName;
 
-@property (weak, nonatomic) IBOutlet UILabel *meetID;
+@property (weak, nonatomic) IBOutlet UIDatePicker *meetDate;
+
+
+- (IBAction)cEventLimitStepperValueChanged:(UIStepper *)sender;
+
+@property (weak, nonatomic) IBOutlet UIStepper *ceventLimitStepper;
+@property (weak, nonatomic) IBOutlet UILabel *cEventLimitLabel;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;

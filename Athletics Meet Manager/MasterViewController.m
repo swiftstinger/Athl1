@@ -37,7 +37,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+/*
 - (void)insertNewObject:(id)sender {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
@@ -60,7 +60,7 @@
     }
 }
 
-
+*/
 
 #pragma mark - Table View
 
@@ -104,7 +104,7 @@
   
     cell.meetTitleLabel.text = [[object valueForKey:@"meetName"] description];
     cell.meetDateLabel.text = [[object valueForKey:@"meetDate"] description];
-    cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[object valueForKey:@"teams"] count] )];  ;
+    cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[object valueForKey:@"teams"] count] )];  
     //[[@"hello"] description];
 }
 
@@ -250,8 +250,15 @@
         [meet setValue: sourceViewController.meetName.text forKey:@"meetName"];
             
         }
-        
-        [meet setValue: [NSDate date] forKey:@"meetDate"];
+        if (sourceViewController.meetDate) {
+        [meet setValue: sourceViewController.meetDate.date forKey:@"meetDate"];
+            
+        }
+        if (sourceViewController.ceventLimitStepper) {
+        [meet setValue: [NSNumber numberWithInt:[sourceViewController.cEventLimitLabel.text intValue]]forKey:@"cEventLimit"];
+            
+        }
+
         
         
         

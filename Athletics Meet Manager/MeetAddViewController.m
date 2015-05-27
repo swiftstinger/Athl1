@@ -10,7 +10,7 @@
 #import "Meet.h"
 
 @interface MeetAddViewController ()
-
+@property (nonatomic, assign) id currentResponder;
 @end
 
 @implementation MeetAddViewController
@@ -24,11 +24,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [_meetName setDelegate:self];
+   
+    
+   
+ 
+       UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
+    [self.view addGestureRecognizer:singleTap];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -103,6 +115,27 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (IBAction)cEventLimitStepperValueChanged:(UIStepper *)sender
+{
+  NSUInteger value = sender.value;
+  self.cEventLimitLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    NSLog(@"close keyboard?");
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.currentResponder = textField;
+}
+
+- (void)resignOnTap:(id)iSender {
+    [self.currentResponder resignFirstResponder];
+}
 
 - (IBAction)cancel:(id)sender
 {
@@ -142,6 +175,9 @@
     if (indexPath.section == 0) {
         [self.meetName becomeFirstResponder];
     }
+    
+    
 }
+
 
 @end

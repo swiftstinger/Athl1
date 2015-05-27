@@ -124,59 +124,59 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Id #" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KkF-AA-GDt">
-                                                    <rect key="frame" x="427" y="11" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="IDLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3GU-x2-ucO">
-                                                    <rect key="frame" x="477" y="11" width="87" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="6FJ-Ar-1MW">
+                            <tableViewSection headerTitle="Meet Date" id="6FJ-Ar-1MW">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="cj6-Re-5db">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="208" id="cj6-Re-5db">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cj6-Re-5db" id="48j-Eh-nH9">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <datePicker contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Cvs-Gq-9Kc">
+                                                    <rect key="frame" x="0.0" y="0.0" width="400" height="34"/>
+                                                    <rect key="contentStretch" x="0.0" y="0.0" width="0.49999999999999961" height="0.49999999999999961"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="400" id="PU8-cm-AxA"/>
+                                                    </constraints>
+                                                    <date key="date" timeIntervalSinceReferenceDate="454456847.53183597">
+                                                        <!--2015-05-27 22:00:47 +0000-->
+                                                    </date>
+                                                </datePicker>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Cvs-Gq-9Kc" firstAttribute="top" secondItem="48j-Eh-nH9" secondAttribute="top" id="MVm-Jh-F2x"/>
+                                                <constraint firstItem="Cvs-Gq-9Kc" firstAttribute="leading" secondItem="48j-Eh-nH9" secondAttribute="leading" id="tAq-dl-hOP"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="G1C-v2-nDI">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Af2-In-4aA">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Af2-In-4aA" id="ll4-j5-VEx">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="3TV-DF-1u4">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="jDv-8Z-oyi">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jDv-8Z-oyi" id="in5-nU-q0b">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="fX4-yC-R44">
+                            <tableViewSection headerTitle="Maximum Events Per Competitor" footerTitle="0 = unlimited" id="fX4-yC-R44">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="PKn-5N-8MR">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PKn-5N-8MR" id="jhT-Bo-7bM">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7BD-3S-VHg">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="uqo-ti-zqf">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="O9W-AV-2Mn"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -203,14 +203,16 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="meetID" destination="3GU-x2-ucO" id="ogk-r4-vBH"/>
+                        <outlet property="cEventLimitLabel" destination="7BD-3S-VHg" id="Nq2-gu-wlp"/>
+                        <outlet property="ceventLimitStepper" destination="uqo-ti-zqf" id="fnn-qa-5MK"/>
+                        <outlet property="meetDate" destination="Cvs-Gq-9Kc" id="6js-fi-1eW"/>
                         <outlet property="meetName" destination="rCd-xk-lKc" id="bpn-Li-8Tn"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zDS-Vd-Ok9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="10i-f3-KeB" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="844" y="-342"/>
+            <point key="canvasLocation" x="818" y="-442"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tB6-xt-hga">

@@ -88,12 +88,12 @@
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="teams" inverseEntity="Meet" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Meet" positionX="-11999" positionY="-13671" width="128" height="268"/>
-        <element name="Team" positionX="-12303" positionY="-13399" width="128" height="178"/>
-        <element name="Division" positionX="-12042" positionY="-13392" width="128" height="163"/>
-        <element name="GEvent" positionX="-11486" positionY="-13366" width="128" height="208"/>
-        <element name="Event" positionX="-11871" positionY="-13185" width="128" height="193"/>
-        <element name="Competitor" positionX="-12267" positionY="-13032" width="128" height="163"/>
         <element name="CEventScore" positionX="-12071" positionY="-12879" width="128" height="223"/>
+        <element name="Competitor" positionX="-12267" positionY="-13032" width="128" height="163"/>
+        <element name="Division" positionX="-12042" positionY="-13392" width="128" height="163"/>
+        <element name="Event" positionX="-11871" positionY="-13185" width="128" height="193"/>
+        <element name="GEvent" positionX="-11486" positionY="-13366" width="128" height="208"/>
+        <element name="Meet" positionX="-11999" positionY="-13671" width="128" height="270"/>
+        <element name="Team" positionX="-12303" positionY="-13399" width="128" height="178"/>
     </elements>
 </model>
