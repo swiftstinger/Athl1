@@ -60,15 +60,7 @@
     }
 }
 
-#pragma mark - Segues
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
-    }
-}
 
 #pragma mark - Table View
 
@@ -216,5 +208,61 @@
     [self.tableView reloadData];
 }
  */
+#pragma mark - Segues
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ /**
+    if ([[segue identifier] isEqualToString:@"addMeet"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        MeetAddViewController *MeetAddViewController = [navigationController viewControllers][0];
+        MeetAddViewController.delegate = self;
+    }
+    **/
+    if ([[segue identifier] isEqualToString:@"showMeet"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        [[segue destinationViewController] setDetailItem:object];
+    }
+    
+}
+#pragma mark - MeetAddViewControllerUnwinds
+
+- (IBAction)unwindToMainDone:(UIStoryboardSegue *)unwindSegue
+{
+UIViewController* sourceViewController = unwindSegue.sourceViewController;
+
+    if ([sourceViewController isKindOfClass:[MeetAddViewController class]])
+    {
+        NSLog(@"Coming from MeetAdd Done!");
+    }
+    
+
+}
+- (IBAction)unwindToMainCancel:(UIStoryboardSegue *)unwindSegue
+{
+
+UIViewController* sourceViewController = unwindSegue.sourceViewController;
+
+if ([sourceViewController isKindOfClass:[MeetAddViewController class]])
+    {
+        NSLog(@"Coming from MeetAdd Cancel!");
+    }
+}
+
+/**
+#pragma mark - MeetAddViewControllerDelegate
+
+
+
+- (void)MeetAddViewControllerDidCancel:(MeetAddViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+ 
+- (void)MeetAddViewControllerDidSave:(MeetAddViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+**/
 @end

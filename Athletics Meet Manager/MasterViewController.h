@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "MeetAddViewController.h"
+
+
+//@interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate,MeetAddViewControllerDelegate>
 
 @interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 

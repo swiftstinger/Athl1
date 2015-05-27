@@ -15,6 +15,7 @@
 		1F095F501B0FB765000FE30A /* Athletics_Meet_ManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F095F4F1B0FB765000FE30A /* Athletics_Meet_ManagerTests.m */; };
 		1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */; };
 		1FD022001B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */; };
+		1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */; };
 		1FFB4F621B15342900C6309C /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F611B15342900C6309C /* Event.m */; };
 		1FFB4F651B15342900C6309C /* GEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F641B15342900C6309C /* GEvent.m */; };
 		1FFB4F681B15342A00C6309C /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F671B15342A00C6309C /* Team.m */; };
@@ -53,6 +54,8 @@
 		1FD021F81B13BA6900F40102 /* MeetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetTableViewCell.h; sourceTree = "<group>"; };
 		1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetTableViewCell.m; sourceTree = "<group>"; };
 		1FD021FF1B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Athletics_Meet_Manager.xcdatamodel; sourceTree = "<group>"; };
+		1FD6B6371B15DDD200F05968 /* MeetAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetAddViewController.h; sourceTree = "<group>"; };
+		1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetAddViewController.m; sourceTree = "<group>"; };
 		1FFB4F601B15342900C6309C /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		1FFB4F611B15342900C6309C /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		1FFB4F631B15342900C6309C /* GEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEvent.h; sourceTree = "<group>"; };
@@ -141,6 +144,8 @@
 				1F095F3D1B0FB765000FE30A /* Main.storyboard */,
 				1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */,
 				1F095F2D1B0FB765000FE30A /* Supporting Files */,
+				1FD6B6371B15DDD200F05968 /* MeetAddViewController.h */,
+				1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */,
 			);
 			path = "Athletics Meet Manager";
 			sourceTree = "<group>";
@@ -284,6 +289,7 @@
 				1FFB4F6B1B15342A00C6309C /* Division.m in Sources */,
 				1FD022001B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodeld in Sources */,
 				1F095F301B0FB765000FE30A /* main.m in Sources */,
+				1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

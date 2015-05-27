@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rS3-R9-Ivy">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Master-->
@@ -35,17 +36,17 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="MeetTitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exE-ZA-nDT">
-                                            <rect key="frame" x="8" y="4" width="350" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="MeetTitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exE-ZA-nDT">
+                                            <rect key="frame" x="1" y="4" width="71" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" misplaced="YES" text="MeetDate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDF-n0-8wF">
-                                            <rect key="frame" x="8" y="28" width="188" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="MeetDate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDF-n0-8wF">
+                                            <rect key="frame" x="1" y="28" width="188" height="21"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="188" id="6My-eM-90P"/>
-                                                <constraint firstAttribute="height" constant="21" id="XIc-G6-EXA"/>
+                                                <constraint firstAttribute="height" constant="21" id="5D2-Yg-Tft"/>
+                                                <constraint firstAttribute="width" constant="188" id="boL-bg-fYJ"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -57,6 +58,12 @@
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="zDF-n0-8wF" firstAttribute="leading" secondItem="exE-ZA-nDT" secondAttribute="leading" id="0cj-Nw-KCM"/>
+                                        <constraint firstAttribute="bottom" secondItem="zDF-n0-8wF" secondAttribute="bottom" id="0tT-nq-TkF"/>
+                                        <constraint firstItem="zDF-n0-8wF" firstAttribute="top" secondItem="exE-ZA-nDT" secondAttribute="bottom" constant="3" id="IH2-E8-FcT"/>
+                                        <constraint firstItem="zDF-n0-8wF" firstAttribute="leading" secondItem="d3P-M7-ByW" secondAttribute="leadingMargin" constant="-7" id="NNN-b6-Bwr"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -75,23 +82,22 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="ATHLETICS MEETS" id="tQt-TN-PWz">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="WgD-FV-lNf">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="WgD-FV-lNf">
                             <connections>
-                                <segue destination="lXd-SU-uvL" kind="presentation" id="g5m-wT-vJF"/>
+                                <segue destination="lXd-SU-uvL" kind="presentation" identifier="addMeet" modalTransitionStyle="flipHorizontal" id="pjO-ql-D1X"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
-                <navigationItem title="Title" id="jKe-T3-QVK" userLabel="Add"/>
             </objects>
             <point key="canvasLocation" x="-708" y="-342"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Meet Details-->
         <scene sceneID="rP0-oa-0bP">
             <objects>
-                <tableViewController id="T3l-tU-Cpz" sceneMemberID="viewController">
+                <tableViewController id="T3l-tU-Cpz" customClass="MeetAddViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="HUH-rZ-Wgx">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -109,13 +115,24 @@
                             <outlet property="delegate" destination="T3l-tU-Cpz" id="PGz-VJ-myl"/>
                         </connections>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem title="Item" id="RwC-8B-8qd"/>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="h2C-iZ-CXO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Meet Details" id="h2C-iZ-CXO">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="jAo-Om-puZ">
+                            <connections>
+                                <action selector="cancel:" destination="T3l-tU-Cpz" id="9DF-c5-rGb"/>
+                                <segue destination="10i-f3-KeB" kind="unwind" unwindAction="unwindToMainCancel:" id="0ct-yO-xCY"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="9Ok-mD-ZTA">
+                            <connections>
+                                <action selector="done:" destination="T3l-tU-Cpz" id="Gbd-R0-pus"/>
+                                <segue destination="10i-f3-KeB" kind="unwind" unwindAction="unwindToMainDone:" id="rvi-87-NMm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zDS-Vd-Ok9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="10i-f3-KeB" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="844" y="-342"/>
         </scene>
@@ -166,14 +183,11 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Lao-HR-xhW">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="ciK-xF-wux" kind="show" identifier="TestSegue" id="v5x-Nm-nyZ"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -191,32 +205,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X36-NF-u6f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-708" y="480"/>
-        </scene>
-        <!--Table View Controller-->
-        <scene sceneID="YZv-jv-bpe">
-            <objects>
-                <tableViewController id="ciK-xF-wux" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vcH-53-1d1">
-                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Icc-5x-aMr">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Icc-5x-aMr" id="Hg8-gH-AhV">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="ciK-xF-wux" id="8at-w8-mkE"/>
-                            <outlet property="delegate" destination="ciK-xF-wux" id="5jR-9b-4gA"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jxH-YN-ivI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="212" y="466"/>
         </scene>
     </scenes>
 </document>
