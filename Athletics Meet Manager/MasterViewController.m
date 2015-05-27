@@ -211,13 +211,14 @@
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- /**
+ 
+ /*
+ 
     if ([[segue identifier] isEqualToString:@"addMeet"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        MeetAddViewController *MeetAddViewController = [navigationController viewControllers][0];
-        MeetAddViewController.delegate = self;
+        
+        
     }
-    **/
+  */
     if ([[segue identifier] isEqualToString:@"showMeet"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
@@ -229,32 +230,47 @@
 
 - (IBAction)unwindToMainDone:(UIStoryboardSegue *)unwindSegue
 {
-UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
-    if ([sourceViewController isKindOfClass:[MeetAddViewController class]])
+
+    if ([unwindSegue.sourceViewController isKindOfClass:[MeetAddViewController class]])
     {
         NSLog(@"Coming from MeetAdd Done!");
         
-    }
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-    Meet *meet = [NSEntityDescription insertNewObjectForEntityForName:@"Meet" inManagedObjectContext:context];
+        Meet *meet = [NSEntityDescription insertNewObjectForEntityForName:@"Meet" inManagedObjectContext:context];
         
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-   
-    [meet setValue: @"Mymeet" forKey:@"meetName"];
-    [meet setValue: [NSDate date] forKey:@"meetDate"];
-   
         
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
+        MeetAddViewController *sourceViewController = unwindSegue.sourceViewController;
+        
+        /////   set values
+        if (sourceViewController.meetName) {
+        [meet setValue: sourceViewController.meetName.text forKey:@"meetName"];
+            
+        }
+        
+        [meet setValue: [NSDate date] forKey:@"meetDate"];
+        
+        
+        
+        
+        
+        ////////
+        
+        
+
+        // Save the context.
+            NSError *error = nil;
+            if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+        
     }
+   
+   
 
 }
 - (IBAction)unwindToMainCancel:(UIStoryboardSegue *)unwindSegue
