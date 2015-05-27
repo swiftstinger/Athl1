@@ -139,13 +139,13 @@
 				1F095F321B0FB765000FE30A /* AppDelegate.m */,
 				1F095F371B0FB765000FE30A /* MasterViewController.h */,
 				84B5B8421B15C81D00529756 /* MasterViewController.m */,
+				1FD6B6371B15DDD200F05968 /* MeetAddViewController.h */,
+				1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */,
 				1F095F401B0FB765000FE30A /* Images.xcassets */,
 				1F095F421B0FB765000FE30A /* LaunchScreen.xib */,
 				1F095F3D1B0FB765000FE30A /* Main.storyboard */,
 				1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */,
 				1F095F2D1B0FB765000FE30A /* Supporting Files */,
-				1FD6B6371B15DDD200F05968 /* MeetAddViewController.h */,
-				1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */,
 			);
 			path = "Athletics Meet Manager";
 			sourceTree = "<group>";
