@@ -104,7 +104,7 @@
   
     cell.meetTitleLabel.text = [[object valueForKey:@"meetName"] description];
     cell.meetDateLabel.text = [[object valueForKey:@"meetDate"] description];
-    cell.numberOfTeamsLabel.text = @"2";
+    cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[object valueForKey:@"teams"] count] )];  ;
     //[[@"hello"] description];
 }
 
@@ -243,8 +243,9 @@
         
         
         MeetAddViewController *sourceViewController = unwindSegue.sourceViewController;
-        
+        ////////
         /////   set values
+        ///////
         if (sourceViewController.meetName) {
         [meet setValue: sourceViewController.meetName.text forKey:@"meetName"];
             
