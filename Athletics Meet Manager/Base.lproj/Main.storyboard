@@ -182,20 +182,18 @@
                     <navigationItem key="navigationItem" title="Meet Details" id="h2C-iZ-CXO">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="jAo-Om-puZ">
                             <connections>
-                                <action selector="cancel:" destination="T3l-tU-Cpz" id="9DF-c5-rGb"/>
+                                <action selector="cancel:" destination="T3l-tU-Cpz" id="WaH-yu-xoP"/>
                                 <segue destination="10i-f3-KeB" kind="unwind" unwindAction="unwindToMainCancel:" id="0ct-yO-xCY"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="9Ok-mD-ZTA">
                             <connections>
-                                <action selector="done:" destination="T3l-tU-Cpz" id="Gbd-R0-pus"/>
+                                <action selector="done:" destination="T3l-tU-Cpz" id="OOD-ya-XdH"/>
                                 <segue destination="10i-f3-KeB" kind="unwind" unwindAction="unwindToMainDone:" id="rvi-87-NMm"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="iDLabel" destination="6Y5-Aw-xPf" id="3Jm-D4-CxE"/>
-                        <outlet property="idLabel" destination="KkF-AA-GDt" id="ICd-WW-QK1"/>
                         <outlet property="meetID" destination="3GU-x2-ucO" id="ogk-r4-vBH"/>
                         <outlet property="meetName" destination="rCd-xk-lKc" id="bpn-Li-8Tn"/>
                     </connections>
