@@ -7,15 +7,19 @@
 //
 
 #import "MeetViewController.h"
+#import "MeetMenuViewCell.h"
 
 @interface MeetViewController ()
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+
 @end
 
 @implementation MeetViewController
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+ //   self.teamCellTitle.text = @"Teams";
+    NSLog(@"title set?");
+    
 }
 
 - (void)viewDidLoad
@@ -59,7 +63,7 @@
     }
 }
 **/
-
+/*
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -107,7 +111,7 @@
     // The table view should not be re-orderable.
     return NO;
 }
-
+*/
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
@@ -156,6 +160,8 @@
     return _fetchedResultsController;
 }    
 **/
+
+/*
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView beginUpdates];
@@ -205,7 +211,7 @@
 {
     [self.tableView endUpdates];
 }
-
+*/
 /*
 // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
  
@@ -215,11 +221,11 @@
     [self.tableView reloadData];
 }
  */
-
+/*
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = [[object valueForKey:@"meetDate"] description];
 }
-
+*/
 @end

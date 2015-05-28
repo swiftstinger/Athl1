@@ -1,0 +1,15 @@
+NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Meet"];
+NSError *error = nil;
+NSUInteger meetID = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+[meet setValue: [NSNumber numberWithUnsignedInteger:meetID] forKey: @"meetID"];
+
+
+string [format stringFromDate:fulldate]
+
+ NSDate *fulldate = [object valueForKey:@"meetDate"];
+    
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+format.dateFormat = @"dd-MM-yyyy";
+
+
+cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[object valueForKey:@"teams"] count] )]; 

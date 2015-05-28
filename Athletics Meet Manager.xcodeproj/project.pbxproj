@@ -16,6 +16,9 @@
 		1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */; };
 		1FD022001B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */; };
 		1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */; };
+		1FD6B63B1B170DC700F05968 /* TempCode in Resources */ = {isa = PBXBuildFile; fileRef = 1FD6B63A1B170DC700F05968 /* TempCode */; };
+		1FD6B6411B171F4200F05968 /* MeetMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6401B171F4200F05968 /* MeetMenuViewController.m */; };
+		1FD6B6471B17224300F05968 /* MeetMenuViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6461B17224300F05968 /* MeetMenuViewCell.m */; };
 		1FFB4F621B15342900C6309C /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F611B15342900C6309C /* Event.m */; };
 		1FFB4F651B15342900C6309C /* GEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F641B15342900C6309C /* GEvent.m */; };
 		1FFB4F681B15342A00C6309C /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F671B15342A00C6309C /* Team.m */; };
@@ -56,6 +59,11 @@
 		1FD021FF1B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Athletics_Meet_Manager.xcdatamodel; sourceTree = "<group>"; };
 		1FD6B6371B15DDD200F05968 /* MeetAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetAddViewController.h; sourceTree = "<group>"; };
 		1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetAddViewController.m; sourceTree = "<group>"; };
+		1FD6B63A1B170DC700F05968 /* TempCode */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TempCode; sourceTree = "<group>"; };
+		1FD6B63F1B171F4200F05968 /* MeetMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetMenuViewController.h; sourceTree = "<group>"; };
+		1FD6B6401B171F4200F05968 /* MeetMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetMenuViewController.m; sourceTree = "<group>"; };
+		1FD6B6451B17224300F05968 /* MeetMenuViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetMenuViewCell.h; sourceTree = "<group>"; };
+		1FD6B6461B17224300F05968 /* MeetMenuViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetMenuViewCell.m; sourceTree = "<group>"; };
 		1FFB4F601B15342900C6309C /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		1FFB4F611B15342900C6309C /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		1FFB4F631B15342900C6309C /* GEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEvent.h; sourceTree = "<group>"; };
@@ -98,6 +106,7 @@
 		1F095F211B0FB765000FE30A = {
 			isa = PBXGroup;
 			children = (
+				1FD6B63A1B170DC700F05968 /* TempCode */,
 				1FFB4F7B1B1535C100C6309C /* CoreData.framework */,
 				1F095F2C1B0FB765000FE30A /* Athletics Meet Manager */,
 				1F095F4C1B0FB765000FE30A /* Athletics Meet ManagerTests */,
@@ -133,14 +142,16 @@
 				1FFB4F611B15342900C6309C /* Event.m */,
 				1FD021F81B13BA6900F40102 /* MeetTableViewCell.h */,
 				1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */,
-				84B5B8441B15C83100529756 /* MeetViewController.h */,
-				84B5B8451B15C83100529756 /* MeetViewController.m */,
 				1F095F311B0FB765000FE30A /* AppDelegate.h */,
 				1F095F321B0FB765000FE30A /* AppDelegate.m */,
 				1F095F371B0FB765000FE30A /* MasterViewController.h */,
 				84B5B8421B15C81D00529756 /* MasterViewController.m */,
 				1FD6B6371B15DDD200F05968 /* MeetAddViewController.h */,
 				1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */,
+				1FD6B63F1B171F4200F05968 /* MeetMenuViewController.h */,
+				1FD6B6401B171F4200F05968 /* MeetMenuViewController.m */,
+				1FD6B6451B17224300F05968 /* MeetMenuViewCell.h */,
+				1FD6B6461B17224300F05968 /* MeetMenuViewCell.m */,
 				1F095F401B0FB765000FE30A /* Images.xcassets */,
 				1F095F421B0FB765000FE30A /* LaunchScreen.xib */,
 				1F095F3D1B0FB765000FE30A /* Main.storyboard */,
@@ -153,6 +164,8 @@
 		1F095F2D1B0FB765000FE30A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84B5B8441B15C83100529756 /* MeetViewController.h */,
+				84B5B8451B15C83100529756 /* MeetViewController.m */,
 				1F095F2E1B0FB765000FE30A /* Info.plist */,
 				1F095F2F1B0FB765000FE30A /* main.m */,
 			);
@@ -257,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F095F3F1B0FB765000FE30A /* Main.storyboard in Resources */,
+				1FD6B63B1B170DC700F05968 /* TempCode in Resources */,
 				1F095F441B0FB765000FE30A /* LaunchScreen.xib in Resources */,
 				1F095F411B0FB765000FE30A /* Images.xcassets in Resources */,
 			);
@@ -277,12 +291,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FFB4F7A1B15359500C6309C /* Meet.m in Sources */,
+				1FD6B6411B171F4200F05968 /* MeetMenuViewController.m in Sources */,
 				1FFB4F681B15342A00C6309C /* Team.m in Sources */,
 				84B5B8461B15C83100529756 /* MeetViewController.m in Sources */,
 				1FFB4F6E1B15342B00C6309C /* Competitor.m in Sources */,
 				1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */,
 				84B5B8431B15C81D00529756 /* MasterViewController.m in Sources */,
 				1FFB4F711B15342B00C6309C /* CEventScore.m in Sources */,
+				1FD6B6471B17224300F05968 /* MeetMenuViewCell.m in Sources */,
 				1F095F331B0FB765000FE30A /* AppDelegate.m in Sources */,
 				1FFB4F621B15342900C6309C /* Event.m in Sources */,
 				1FFB4F651B15342900C6309C /* GEvent.m in Sources */,

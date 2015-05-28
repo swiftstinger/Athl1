@@ -10,6 +10,8 @@
 
 #import <CoreData/CoreData.h>
 
+
+
 @interface MeetViewController : UITableViewController<NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -17,7 +19,11 @@
 
 @property (strong, nonatomic) id detailItem;
 
-@property (strong, nonatomic) IBOutlet UITableView *TestLabel;
+
+
+
+
+
 
 @end
 

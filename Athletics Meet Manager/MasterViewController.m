@@ -103,7 +103,17 @@
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
     cell.meetTitleLabel.text = [[object valueForKey:@"meetName"] description];
-    cell.meetDateLabel.text = [[object valueForKey:@"meetDate"] description];
+
+    NSDate *fulldate = [object valueForKey:@"meetDate"];
+    
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+format.dateFormat = @"dd MMM yyyy";
+
+
+
+    
+ //   [[object valueForKey:@"meetDate"] description];
+    cell.meetDateLabel.text = [format stringFromDate:fulldate];
     cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[object valueForKey:@"teams"] count] )];  
     //[[@"hello"] description];
 }
@@ -259,9 +269,14 @@
             
         }
 
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Meet"];
+NSError *error = nil;
+NSUInteger meetID = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
         
         
-        
+        [meet setValue: [NSNumber numberWithUnsignedInteger:meetID] forKey: @"meetID"];
+
+        NSLog(@"meetname %@  meetID %@", meet.meetName, meet.meetID);
         
         
         ////////
@@ -269,7 +284,7 @@
         
 
         // Save the context.
-            NSError *error = nil;
+        
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
