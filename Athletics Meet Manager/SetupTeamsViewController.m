@@ -63,7 +63,7 @@ NSLog(@"in view");
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+  //  self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     [self configureView];
 }

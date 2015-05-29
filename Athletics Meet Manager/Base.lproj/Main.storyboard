@@ -103,10 +103,10 @@
             </objects>
             <point key="canvasLocation" x="-708" y="-342"/>
         </scene>
-        <!--Meet Menu-->
+        <!--Meet-->
         <scene sceneID="a21-jW-fuA">
             <objects>
-                <tableViewController title="Meet Menu" id="K1t-Ae-hdm" customClass="MeetMenuViewController" sceneMemberID="viewController">
+                <tableViewController title="Meet" id="K1t-Ae-hdm" customClass="MeetMenuViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="cnq-Fz-hdt">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -245,6 +245,7 @@
                             <outlet property="delegate" destination="K1t-Ae-hdm" id="Uzg-HS-QW8"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Title" id="iaR-ri-1Td"/>
                     <connections>
                         <outlet property="MeetMenuLabel" destination="I85-X5-9LE" id="ofi-xo-fiM"/>
                     </connections>
@@ -429,6 +430,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Group Divisions" id="3bp-av-lKE">
+                        <barButtonItem key="backBarButtonItem" title="hello" id="TVU-Ms-XOv"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="nJo-77-IqJ">
                             <connections>
                                 <segue destination="lO5-h7-G6N" kind="presentation" identifier="addDiv" modalTransitionStyle="flipHorizontal" id="HxQ-va-xu1"/>
@@ -475,7 +477,7 @@
                     <navigationItem key="navigationItem" title="Events at Meet" id="XkJ-qd-JBg">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="bb7-CG-NFS">
                             <connections>
-                                <segue destination="NaG-ot-8A6" kind="presentation" identifier="addGEvent" id="oBo-Wm-xkL"/>
+                                <segue destination="NaG-ot-8A6" kind="presentation" identifier="addGEvent" modalTransitionStyle="flipHorizontal" id="oBo-Wm-xkL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -545,7 +547,7 @@
                     <navigationItem key="navigationItem" title="Teams" id="P1a-vU-cyG">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="cG2-0H-OxP">
                             <connections>
-                                <segue destination="oKG-ro-3Rs" kind="presentation" identifier="addTeam" id="kWb-zD-Ztb"/>
+                                <segue destination="oKG-ro-3Rs" kind="presentation" identifier="addTeam" modalTransitionStyle="flipHorizontal" id="kWb-zD-Ztb"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -815,9 +817,6 @@
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="LI4-Q6-Ng3">
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="pYv-3w-DOe" eventType="valueChanged" id="bQG-TB-e2f"/>
-                                                    </connections>
                                                 </stepper>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -844,8 +843,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cEventLimitLabel" destination="bYU-4m-X30" id="b5Y-EQ-lpS"/>
-                        <outlet property="ceventLimitStepper" destination="LI4-Q6-Ng3" id="qhq-B1-tS7"/>
                         <outlet property="teamName" destination="Rr5-hB-vdE" id="Xdh-YG-3ye"/>
                     </connections>
                 </tableViewController>
