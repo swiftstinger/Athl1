@@ -646,12 +646,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="qeN-Jl-Jeh" kind="show" id="IyN-xo-DDZ"/>
+                        <segue destination="qeN-Jl-Jeh" kind="relationship" relationship="rootViewController" id="5qd-oR-5HF"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h0c-tt-znf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="970" y="1078"/>
+            <point key="canvasLocation" x="984" y="1078"/>
         </scene>
         <!--AddGEventDetails-->
         <scene sceneID="r96-MA-1Fq">
@@ -748,12 +748,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="pYv-3w-DOe" kind="show" id="H0S-HD-bo0"/>
+                        <segue destination="pYv-3w-DOe" kind="relationship" relationship="rootViewController" id="agx-0Y-qcV"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aKu-MA-YwT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="938" y="1798"/>
+            <point key="canvasLocation" x="984" y="1798"/>
         </scene>
         <!--AddTeam Details-->
         <scene sceneID="eAJ-bp-y3v">

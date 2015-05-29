@@ -1,3 +1,13 @@
+
+Update events if in addiv, adteam, addEvent, done if gevent and team bool = yes
+
+
+
+
+
+
+
+
 NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Meet"];
 NSError *error = nil;
 NSUInteger meetID = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];

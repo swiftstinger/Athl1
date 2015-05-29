@@ -57,14 +57,6 @@ NSLog(@"in view");
     if (self.detailItem) {
       NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
       
-             /*
-          self.titleField.text = [self.detailItem valueForKey:@"title"];
-        self.episodeIDField.text = [NSString stringWithFormat:@"%d", [[self.detailItem valueForKey:@"episodeID"] integerValue]];
-        self.descriptionView.text = [self.detailItem valueForKey:@"desc"];
-        self.firstRunSegmentedControl.selectedSegmentIndex = [[self.detailItem valueForKey:@"firstRun"] boolValue];
-        self.showTimeLabel.text = [[self.detailItem valueForKey:@"showTime"] description];
-        
-        */
     }
 }
 
@@ -222,46 +214,20 @@ NSLog(@"in view");
 
 
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (void)configureCell:(DivTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
           cell.divTitleLabel.text = [[object valueForKey:@"divName"] description];
 
-  //  NSDate *fulldate = [object valueForKey:@"meetDate"];
-    
- //   NSDateFormatter *format = [[NSDateFormatter alloc] init];
-// format.dateFormat = @"dd MMM yyyy";
-
-
-
-    
- //   [[object valueForKey:@"meetDate"] description];
- //   cell.meetDateLabel.text = [format stringFromDate:fulldate];
- //   cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[object valueForKey:@"teams"] count] )];
-    //[[@"hello"] description];
-}
+  }
 
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  
- /*
- 
-    if ([[segue identifier] isEqualToString:@"addDiv"]) {
-        
-        
-    }
-  */
+
     if ([[segue identifier] isEqualToString:@"showDiv"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
@@ -297,20 +263,8 @@ NSLog(@"in view");
     
         }
         
-                //        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Division"];
-NSError *error = nil;
+                NSError *error = nil;
 
-/*
-
-NSUInteger meetID = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-        
-
-        [meet setValue: [NSNumber numberWithUnsignedInteger:meetID] forKey: @"meetID"];
-
-        NSLog(@"meetname %@  meetID %@", meet.meetName, meet.meetID);
- */
-        
-        ////////
         
         
 
