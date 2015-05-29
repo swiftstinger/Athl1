@@ -7,6 +7,10 @@
 //
 
 #import "SetupDivViewController.h"
+#import "DivTableViewCell.h"
+#import "Division.h"
+
+
 
 @interface SetupDivViewController ()
 
@@ -14,15 +18,66 @@
 
 @implementation SetupDivViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+#pragma mark - Managing the managedobjectcontext item
+
+- (void)setManagedObjectContext:(NSManagedObjectContext *)newcontext
+{
+    if (_managedObjectContext != newcontext) {
+        _managedObjectContext = newcontext;
+        
+    }
 }
+
+#pragma mark - Managing the detail item
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+}
+
+- (void)setDetailItem:(id)newDetailItem
+{
+    if (_detailItem != newDetailItem) {
+        _detailItem = newDetailItem;
+        _meetObject = _detailItem;
+        // Update the view.
+        [self configureView];
+        
+       
+        
+    }
+}
+
+
+
+- (void)configureView
+{
+
+NSLog(@"in view");
+    // Update the user interface for the detail item.
+    if (self.detailItem) {
+      NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
+      
+             /*
+          self.titleField.text = [self.detailItem valueForKey:@"title"];
+        self.episodeIDField.text = [NSString stringWithFormat:@"%d", [[self.detailItem valueForKey:@"episodeID"] integerValue]];
+        self.descriptionView.text = [self.detailItem valueForKey:@"desc"];
+        self.firstRunSegmentedControl.selectedSegmentIndex = [[self.detailItem valueForKey:@"firstRun"] boolValue];
+        self.showTimeLabel.text = [[self.detailItem valueForKey:@"showTime"] description];
+        
+        */
+    }
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    [self configureView];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -32,60 +87,140 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    return [sectionInfo numberOfObjects];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+- (DivTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    DivTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DivCell" forIndexPath:indexPath];
+    [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
-*/
-
-/*
-// Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+            
+        NSError *error = nil;
+        if (![context save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+#pragma mark - Fetched results controller
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Division" inManagedObjectContext:self.managedObjectContext];
+    
+    [fetchRequest setEntity:entity];
+    
+     // limit to those entities that belong to the particular item
+ //
+ 
+//NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"item.name like '%@'",self.item.name]];
+//    [fetch setPredicate:predicate];
+    
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+   NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"divID" ascending:YES];
+   NSArray *sortDescriptors = @[sortDescriptor];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+	NSError *error = nil;
+	if (![self.fetchedResultsController performFetch:&error]) {
+	     // Replace this implementation with code to handle the error appropriately.
+	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    abort();
+	}
+    
+    return _fetchedResultsController;
+}    
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView beginUpdates];
 }
-*/
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        default:
+            return;
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView endUpdates];
+}
+
+
+
 
 /*
 #pragma mark - Navigation
@@ -96,5 +231,121 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)configureCell:(DivTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+   // cell.meetTitleLabel.text = [[object valueForKey:@"meetName"] description];
+
+  //  NSDate *fulldate = [object valueForKey:@"meetDate"];
+    
+ //   NSDateFormatter *format = [[NSDateFormatter alloc] init];
+// format.dateFormat = @"dd MMM yyyy";
+
+
+
+    
+ //   [[object valueForKey:@"meetDate"] description];
+ //   cell.meetDateLabel.text = [format stringFromDate:fulldate];
+ //   cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[object valueForKey:@"teams"] count] )];
+    //[[@"hello"] description];
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ 
+ /*
+ 
+    if ([[segue identifier] isEqualToString:@"addDiv"]) {
+        
+        
+    }
+  */
+    if ([[segue identifier] isEqualToString:@"showDiv"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        [[segue destinationViewController] setDetailItem:object];
+    }
+    
+}
+
+
+
+#pragma mark - MeetAddViewControllerUnwinds
+
+- (IBAction)unwindToSetupDivDone:(UIStoryboardSegue *)unwindSegue
+{
+
+
+    if ([unwindSegue.sourceViewController isKindOfClass:[DivAddViewController class]])
+    {
+        NSLog(@"Coming from DivAdd Done!");
+        
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+        Division *div = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
+        
+        
+        DivAddViewController *sourceViewController = unwindSegue.sourceViewController;
+        ////////
+        /////   set values
+        ///////
+     /*
+           if (sourceViewController.meetName) {
+        [meet setValue: sourceViewController.meetName.text forKey:@"meetName"];
+    
+        }
+        if (sourceViewController.meetDate) {
+        [meet setValue: sourceViewController.meetDate.date forKey:@"meetDate"];
+            
+        }
+        if (sourceViewController.ceventLimitStepper) {
+        [meet setValue: [NSNumber numberWithInt:[sourceViewController.cEventLimitLabel.text intValue]]forKey:@"cEventLimit"];
+            
+        }
+*/
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Division"];
+NSError *error = nil;
+
+/*
+
+NSUInteger meetID = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        
+
+        [meet setValue: [NSNumber numberWithUnsignedInteger:meetID] forKey: @"meetID"];
+
+        NSLog(@"meetname %@  meetID %@", meet.meetName, meet.meetID);
+ */
+        
+        ////////
+        
+        
+
+        // Save the context.
+        
+            if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+        
+    }
+   
+   
+
+}
+- (IBAction)unwindToMainCancel:(UIStoryboardSegue *)unwindSegue
+{
+
+UIViewController* sourceViewController = unwindSegue.sourceViewController;
+
+if ([sourceViewController isKindOfClass:[DivAddViewController class]])
+    {
+        NSLog(@"Coming from DivAdd Cancel!");
+    }
+}
+
 
 @end

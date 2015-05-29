@@ -137,38 +137,11 @@
     [self.currentResponder resignFirstResponder];
 }
 
-- (IBAction)cancel:(id)sender
-{
-    
-}
-- (IBAction)done:(id)sender
-{
-    
-   
-    /*
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    
-    Meet *meet = [NSEntityDescription insertNewObjectForEntityForName:@"Meet" inManagedObjectContext:context];
-        
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    
-    [meet setValue: self.meetName.text forKey:@"meetName"];
-    [meet setValue: [NSDate date] forKey:@"meetDate"];
-   
-        
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-*/
+
+ 
     
     
-}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

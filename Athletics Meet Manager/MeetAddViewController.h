@@ -27,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UIStepper *ceventLimitStepper;
 @property (weak, nonatomic) IBOutlet UILabel *cEventLimitLabel;
 
-- (IBAction)cancel:(id)sender;
-- (IBAction)done:(id)sender;
+
 
 @end

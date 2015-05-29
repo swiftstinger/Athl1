@@ -362,7 +362,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zDS-Vd-Ok9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="10i-f3-KeB" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="818" y="-442"/>
+            <point key="canvasLocation" x="1776" y="-614"/>
+        </scene>
+        <!--AddDiv Navigation Controller-->
+        <scene sceneID="j1V-sb-PVA">
+            <objects>
+                <navigationController title="AddDiv Navigation Controller" id="lO5-h7-G6N" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lfx-vJ-UYT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="49t-WJ-Yae" kind="show" id="G5z-9s-Uhw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y54-bV-NAA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="970" y="342"/>
         </scene>
         <!--AddMeetNavigation Controller-->
         <scene sceneID="tB6-xt-hga">
@@ -378,7 +394,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QG2-YQ-fVD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24" y="-342"/>
+            <point key="canvasLocation" x="970" y="-614"/>
         </scene>
         <!--DivSetup1-->
         <scene sceneID="731-mO-1Ch">
@@ -389,7 +405,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="j6V-j6-Gp7">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DivCell" id="j6V-j6-Gp7" customClass="DivTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j6V-j6-Gp7" id="dyl-L1-IEx">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -401,6 +417,13 @@
                             <outlet property="delegate" destination="8Ir-gj-wqw" id="CkI-ps-PlU"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Group Divisions" id="3bp-av-lKE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="nJo-77-IqJ">
+                            <connections>
+                                <segue destination="lO5-h7-G6N" kind="presentation" identifier="addDiv" id="HxQ-va-xu1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NIM-Ap-z1i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -427,6 +450,13 @@
                             <outlet property="delegate" destination="KGd-ro-0EY" id="yTt-Pl-hdY"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Events at Meet" id="XkJ-qd-JBg">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="bb7-CG-NFS">
+                            <connections>
+                                <segue destination="NaG-ot-8A6" kind="presentation" identifier="addGEvent" id="oBo-Wm-xkL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XGJ-6a-Fps" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -479,6 +509,13 @@
                             <outlet property="delegate" destination="FDm-94-BHM" id="62t-F5-vCq"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Teams" id="P1a-vU-cyG">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cG2-0H-OxP">
+                            <connections>
+                                <segue destination="oKG-ro-3Rs" kind="presentation" identifier="addTeam" id="kWb-zD-Ztb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUZ-3S-zya" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -509,6 +546,297 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zfd-JV-ndN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1532" y="938"/>
+        </scene>
+        <!--AddDiv Details-->
+        <scene sceneID="CIC-uk-M3c">
+            <objects>
+                <tableViewController title="AddDiv Details" id="49t-WJ-Yae" customClass="DivAddViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="NHR-91-dmq">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection headerTitle="Division Name" id="t6D-SY-Uyp">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="fzX-SJ-OjI">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fzX-SJ-OjI" id="GN3-dR-Br7">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Insert Division Name" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zcr-Zx-jZV">
+                                                    <rect key="frame" x="8" y="7" width="336" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Meet Date" id="Etl-dV-jNR">
+                                <cells/>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Maximum Events Per Competitor" footerTitle="0 = unlimited" id="ieS-Z8-RDi">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="GVH-of-lB3">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GVH-of-lB3" id="5Rh-j0-Yds">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZN-EY-cuO">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="rQ0-9F-Liy">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="49t-WJ-Yae" eventType="valueChanged" id="4ow-CV-LIm"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="49t-WJ-Yae" id="AjB-K0-Tva"/>
+                            <outlet property="delegate" destination="49t-WJ-Yae" id="Rcj-wH-svd"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Division Details" id="uTS-f0-Lu9">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="HJT-W4-wkU">
+                            <connections>
+                                <action selector="cancel:" destination="49t-WJ-Yae" id="WZI-FT-hfr"/>
+                                <segue destination="fMA-cl-rVa" kind="unwind" unwindAction="unwindToMainCancel:" id="W5S-S2-peW"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="1ap-f7-WbR">
+                            <connections>
+                                <action selector="done:" destination="49t-WJ-Yae" id="K5T-GK-r9p"/>
+                                <segue destination="fMA-cl-rVa" kind="unwind" unwindAction="unwindToMainDone:" id="qdZ-N7-Wap"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cEventLimitLabel" destination="TZN-EY-cuO" id="809-9S-d8b"/>
+                        <outlet property="ceventLimitStepper" destination="rQ0-9F-Liy" id="DIj-6X-Msh"/>
+                        <outlet property="divName" destination="zcr-Zx-jZV" id="1le-0B-1CN"/>
+                        <outlet property="meetName" destination="zcr-Zx-jZV" id="HMb-mg-TxK"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wxM-ns-EJv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="fMA-cl-rVa" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1776" y="342"/>
+        </scene>
+        <!--AddGEvent Navigation Controller-->
+        <scene sceneID="C3x-uC-VvL">
+            <objects>
+                <navigationController title="AddGEvent Navigation Controller" id="NaG-ot-8A6" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8G8-Jq-QE4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="qeN-Jl-Jeh" kind="show" id="IyN-xo-DDZ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h0c-tt-znf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="970" y="1078"/>
+        </scene>
+        <!--AddGEventDetails-->
+        <scene sceneID="r96-MA-1Fq">
+            <objects>
+                <tableViewController title="AddGEventDetails" id="qeN-Jl-Jeh" customClass="MeetAddViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="GLO-xl-Rnq">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection headerTitle="Event Name" id="56i-iW-rOt">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="cVl-KN-q22">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cVl-KN-q22" id="Joe-UE-L42">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Insert Event Name" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kw9-rG-R91">
+                                                    <rect key="frame" x="8" y="7" width="336" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Meet Date" id="v9u-pP-ip6">
+                                <cells/>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Maximum Events Per Competitor" footerTitle="0 = unlimited" id="m5b-SL-syF">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="8bR-UA-Aax">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8bR-UA-Aax" id="tAj-FE-TE8">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2l1-zz-GW1">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="J1I-yJ-H5V">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="qeN-Jl-Jeh" eventType="valueChanged" id="vkI-DL-dgW"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="qeN-Jl-Jeh" id="BeR-p0-1dj"/>
+                            <outlet property="delegate" destination="qeN-Jl-Jeh" id="TEc-O9-pXT"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Event Details" id="XNe-K8-yP0">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="UEs-CG-lOn">
+                            <connections>
+                                <action selector="cancel:" destination="qeN-Jl-Jeh" id="YTk-JD-aDq"/>
+                                <segue destination="JbH-z6-0yw" kind="unwind" unwindAction="unwindToMainCancel:" id="LsP-fP-w8j"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="8k4-GV-hTa">
+                            <connections>
+                                <action selector="done:" destination="qeN-Jl-Jeh" id="M6d-9a-ZGG"/>
+                                <segue destination="JbH-z6-0yw" kind="unwind" unwindAction="unwindToMainDone:" id="zUW-q3-ORt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cEventLimitLabel" destination="2l1-zz-GW1" id="Rdh-HV-GrI"/>
+                        <outlet property="ceventLimitStepper" destination="J1I-yJ-H5V" id="Vk1-OB-fWL"/>
+                        <outlet property="meetName" destination="Kw9-rG-R91" id="XTp-PX-kuv"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YJB-bv-mqZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="JbH-z6-0yw" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1792" y="1078"/>
+        </scene>
+        <!--AddTeam Navigation Controller-->
+        <scene sceneID="Zl8-5X-zcb">
+            <objects>
+                <navigationController title="AddTeam Navigation Controller" id="oKG-ro-3Rs" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cvb-nh-b0O">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="pYv-3w-DOe" kind="show" id="H0S-HD-bo0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aKu-MA-YwT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="938" y="1798"/>
+        </scene>
+        <!--AddTeam Details-->
+        <scene sceneID="eAJ-bp-y3v">
+            <objects>
+                <tableViewController title="AddTeam Details" id="pYv-3w-DOe" customClass="MeetAddViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="o8Q-Fa-NM5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection headerTitle="Team Name" id="dL1-7r-oVe">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1UT-1G-M90">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1UT-1G-M90" id="tE3-bp-jcG">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Insert Team Name" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rr5-hB-vdE">
+                                                    <rect key="frame" x="8" y="7" width="336" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Meet Date" id="rve-F8-wfh">
+                                <cells/>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Maximum Events Per Competitor" footerTitle="0 = unlimited" id="cq6-yD-R29">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="GD3-xe-jeU">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GD3-xe-jeU" id="wAY-tl-OvA">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bYU-4m-X30">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="LI4-Q6-Ng3">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="pYv-3w-DOe" eventType="valueChanged" id="bQG-TB-e2f"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="pYv-3w-DOe" id="ZSk-6F-lsY"/>
+                            <outlet property="delegate" destination="pYv-3w-DOe" id="HtX-xP-9TZ"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Team Details" id="iCo-9z-foE">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ma1-l6-FYe">
+                            <connections>
+                                <action selector="cancel:" destination="pYv-3w-DOe" id="8aR-ze-Y9b"/>
+                                <segue destination="Z2n-S5-t0h" kind="unwind" unwindAction="unwindToMainCancel:" id="gs4-ZL-9sm"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="K0s-2l-YYF">
+                            <connections>
+                                <action selector="done:" destination="pYv-3w-DOe" id="eKA-Sn-gXT"/>
+                                <segue destination="Z2n-S5-t0h" kind="unwind" unwindAction="unwindToMainDone:" id="bBi-gB-lmx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cEventLimitLabel" destination="bYU-4m-X30" id="b5Y-EQ-lpS"/>
+                        <outlet property="ceventLimitStepper" destination="LI4-Q6-Ng3" id="qhq-B1-tS7"/>
+                        <outlet property="meetName" destination="Rr5-hB-vdE" id="f8Q-c4-ztj"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="is3-AL-nlV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Z2n-S5-t0h" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1784" y="1798"/>
         </scene>
     </scenes>
 </document>

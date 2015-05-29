@@ -7,7 +7,7 @@
 //
 
 #import "MasterViewController.h"
-#import "MeetViewController.h"
+#import "MeetMenuViewController.h"
 #import "MeetTableViewCell.h"
 #import "Meet.h"
 
@@ -230,10 +230,11 @@ format.dateFormat = @"dd MMM yyyy";
         
     }
   */
-    if ([[segue identifier] isEqualToString:@"showMeet"]) {
+    if ([[segue identifier] isEqualToString:@"meetMenu"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
+        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
     }
     
 }
