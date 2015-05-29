@@ -373,7 +373,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="49t-WJ-Yae" kind="show" id="G5z-9s-Uhw"/>
+                        <segue destination="49t-WJ-Yae" kind="relationship" relationship="rootViewController" id="A0r-75-CK0"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y54-bV-NAA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -409,7 +409,18 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j6V-j6-Gp7" id="dyl-L1-IEx">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="diveTitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajo-bA-pOr">
+                                            <rect key="frame" x="0.0" y="8" width="452" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="divTitleLabel" destination="ajo-bA-pOr" id="h8c-tN-qAz"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -420,7 +431,7 @@
                     <navigationItem key="navigationItem" title="Group Divisions" id="3bp-av-lKE">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="nJo-77-IqJ">
                             <connections>
-                                <segue destination="lO5-h7-G6N" kind="presentation" identifier="addDiv" id="HxQ-va-xu1"/>
+                                <segue destination="lO5-h7-G6N" kind="presentation" identifier="addDiv" modalTransitionStyle="flipHorizontal" id="HxQ-va-xu1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -592,9 +603,6 @@
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="rQ0-9F-Liy">
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="49t-WJ-Yae" eventType="valueChanged" id="4ow-CV-LIm"/>
-                                                    </connections>
                                                 </stepper>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -611,22 +619,17 @@
                     <navigationItem key="navigationItem" title="Division Details" id="uTS-f0-Lu9">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="HJT-W4-wkU">
                             <connections>
-                                <action selector="cancel:" destination="49t-WJ-Yae" id="WZI-FT-hfr"/>
-                                <segue destination="fMA-cl-rVa" kind="unwind" unwindAction="unwindToMainCancel:" id="W5S-S2-peW"/>
+                                <segue destination="fMA-cl-rVa" kind="unwind" unwindAction="unwindToSetupDivCancel:" id="cV1-jd-5fS"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="1ap-f7-WbR">
                             <connections>
-                                <action selector="done:" destination="49t-WJ-Yae" id="K5T-GK-r9p"/>
-                                <segue destination="fMA-cl-rVa" kind="unwind" unwindAction="unwindToMainDone:" id="qdZ-N7-Wap"/>
+                                <segue destination="fMA-cl-rVa" kind="unwind" unwindAction="unwindToSetupDivDone:" id="8JV-5T-EYk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cEventLimitLabel" destination="TZN-EY-cuO" id="809-9S-d8b"/>
-                        <outlet property="ceventLimitStepper" destination="rQ0-9F-Liy" id="DIj-6X-Msh"/>
                         <outlet property="divName" destination="zcr-Zx-jZV" id="1le-0B-1CN"/>
-                        <outlet property="meetName" destination="zcr-Zx-jZV" id="HMb-mg-TxK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wxM-ns-EJv" userLabel="First Responder" sceneMemberID="firstResponder"/>

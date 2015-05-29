@@ -235,7 +235,7 @@ NSLog(@"in view");
 - (void)configureCell:(DivTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
-   // cell.meetTitleLabel.text = [[object valueForKey:@"meetName"] description];
+          cell.divTitleLabel.text = [[object valueForKey:@"divName"] description];
 
   //  NSDate *fulldate = [object valueForKey:@"meetDate"];
     
@@ -291,21 +291,13 @@ NSLog(@"in view");
         ////////
         /////   set values
         ///////
-     /*
-           if (sourceViewController.meetName) {
-        [meet setValue: sourceViewController.meetName.text forKey:@"meetName"];
+     
+           if (sourceViewController.divName) {
+        [div setValue: sourceViewController.divName.text forKey:@"divName"];
     
         }
-        if (sourceViewController.meetDate) {
-        [meet setValue: sourceViewController.meetDate.date forKey:@"meetDate"];
-            
-        }
-        if (sourceViewController.ceventLimitStepper) {
-        [meet setValue: [NSNumber numberWithInt:[sourceViewController.cEventLimitLabel.text intValue]]forKey:@"cEventLimit"];
-            
-        }
-*/
-        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Division"];
+        
+                //        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Division"];
 NSError *error = nil;
 
 /*
@@ -336,7 +328,7 @@ NSUInteger meetID = [self.managedObjectContext countForFetchRequest:fetchRequest
    
 
 }
-- (IBAction)unwindToMainCancel:(UIStoryboardSegue *)unwindSegue
+- (IBAction)unwindToSetupDivCancel:(UIStoryboardSegue *)unwindSegue
 {
 
 UIViewController* sourceViewController = unwindSegue.sourceViewController;

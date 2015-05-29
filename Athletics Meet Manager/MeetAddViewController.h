@@ -12,10 +12,10 @@
 
 @interface MeetAddViewController : UITableViewController <NSFetchedResultsControllerDelegate, UITextFieldDelegate>
 
-@property (strong, nonatomic) id detailItem;
+//@property (strong, nonatomic) id detailItem;
 
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+//@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+//@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (weak, nonatomic) IBOutlet UITextField *meetName;
 

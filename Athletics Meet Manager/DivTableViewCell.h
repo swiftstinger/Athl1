@@ -10,4 +10,8 @@
 
 @interface DivTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *divTitleLabel;
+
+
+
 @end
