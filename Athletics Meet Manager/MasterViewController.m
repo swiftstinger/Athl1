@@ -269,20 +269,46 @@ format.dateFormat = @"dd MMM yyyy";
         [meet setValue: [NSNumber numberWithInt:[sourceViewController.cEventLimitLabel.text intValue]]forKey:@"cEventLimit"];
             
         }
-
-        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Meet"];
-NSError *error = nil;
-NSUInteger meetID = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-        
-        
-        [meet setValue: [NSNumber numberWithUnsignedInteger:meetID] forKey: @"meetID"];
-
-        NSLog(@"meetname %@  meetID %@", meet.meetName, meet.meetID);
-        
         
         ////////
         
+        // Store meetID data
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+     
+     
+     
+     if (![defaults objectForKey:@"lastMeetID"]) {
+     
+     int idint = 0;
+     NSNumber *idnumber = [NSNumber numberWithInt:idint];
+     
+     
+     [defaults setObject:idnumber forKey:@"lastMeetID"];
+     
+     }
+       
+       NSNumber *oldnumber = [defaults objectForKey:@"lastMeetID"];
+       
+       
+       int oldint = [oldnumber intValue];
+       
+       int newint = oldint + 1;
+       
+       NSNumber *newnumber = [NSNumber numberWithInt:newint];
+       
+       [meet setValue: newnumber forKey: @"meetID"];
+       
         
+
+        NSLog(@"meetname %@  meetID %@", meet.meetName, meet.meetID);
+
+    [defaults setObject: newnumber forKey:@"lastMeetID"];
+     
+    [defaults synchronize];
+     
+    ////
+     
+    NSError *error = nil;
 
         // Save the context.
         
