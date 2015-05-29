@@ -26,6 +26,10 @@
 		1FD6B6561B1736AA00F05968 /* FinalResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6551B1736AA00F05968 /* FinalResultsViewController.m */; };
 		1FD6B6651B17438500F05968 /* DivAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6641B17438500F05968 /* DivAddViewController.m */; };
 		1FD6B6681B1747FA00F05968 /* DivTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6671B1747FA00F05968 /* DivTableViewCell.m */; };
+		1FD6B66D1B18847E00F05968 /* GEventAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B66C1B18847E00F05968 /* GEventAddViewController.m */; };
+		1FD6B6701B1884E200F05968 /* TeamAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B66F1B1884E200F05968 /* TeamAddViewController.m */; };
+		1FD6B6731B18851500F05968 /* GEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6721B18851500F05968 /* GEventTableViewCell.m */; };
+		1FD6B6761B18852E00F05968 /* TeamTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6751B18852E00F05968 /* TeamTableViewCell.m */; };
 		1FFB4F621B15342900C6309C /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F611B15342900C6309C /* Event.m */; };
 		1FFB4F651B15342900C6309C /* GEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F641B15342900C6309C /* GEvent.m */; };
 		1FFB4F681B15342A00C6309C /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F671B15342A00C6309C /* Team.m */; };
@@ -84,6 +88,14 @@
 		1FD6B6641B17438500F05968 /* DivAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DivAddViewController.m; sourceTree = "<group>"; };
 		1FD6B6661B1747FA00F05968 /* DivTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DivTableViewCell.h; sourceTree = "<group>"; };
 		1FD6B6671B1747FA00F05968 /* DivTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DivTableViewCell.m; sourceTree = "<group>"; };
+		1FD6B66B1B18847E00F05968 /* GEventAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEventAddViewController.h; sourceTree = "<group>"; };
+		1FD6B66C1B18847E00F05968 /* GEventAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEventAddViewController.m; sourceTree = "<group>"; };
+		1FD6B66E1B1884E200F05968 /* TeamAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamAddViewController.h; sourceTree = "<group>"; };
+		1FD6B66F1B1884E200F05968 /* TeamAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamAddViewController.m; sourceTree = "<group>"; };
+		1FD6B6711B18851500F05968 /* GEventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEventTableViewCell.h; sourceTree = "<group>"; };
+		1FD6B6721B18851500F05968 /* GEventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEventTableViewCell.m; sourceTree = "<group>"; };
+		1FD6B6741B18852E00F05968 /* TeamTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamTableViewCell.h; sourceTree = "<group>"; };
+		1FD6B6751B18852E00F05968 /* TeamTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamTableViewCell.m; sourceTree = "<group>"; };
 		1FFB4F601B15342900C6309C /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		1FFB4F611B15342900C6309C /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		1FFB4F631B15342900C6309C /* GEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEvent.h; sourceTree = "<group>"; };
@@ -257,8 +269,11 @@
 		1FD6B65D1B17388F00F05968 /* SetupGEvents */ = {
 			isa = PBXGroup;
 			children = (
+				1FD6B6691B1883E900F05968 /* GEventAdd */,
 				1FD6B64B1B17365300F05968 /* SetupGEventsViewController.h */,
 				1FD6B64C1B17365300F05968 /* SetupGEventsViewController.m */,
+				1FD6B6711B18851500F05968 /* GEventTableViewCell.h */,
+				1FD6B6721B18851500F05968 /* GEventTableViewCell.m */,
 			);
 			name = SetupGEvents;
 			sourceTree = "<group>";
@@ -266,8 +281,11 @@
 		1FD6B65E1B1738A500F05968 /* SetupTeams */ = {
 			isa = PBXGroup;
 			children = (
+				1FD6B66A1B1883FF00F05968 /* TeamAdd */,
 				1FD6B64E1B17366900F05968 /* SetupTeamsViewController.h */,
 				1FD6B64F1B17366900F05968 /* SetupTeamsViewController.m */,
+				1FD6B6741B18852E00F05968 /* TeamTableViewCell.h */,
+				1FD6B6751B18852E00F05968 /* TeamTableViewCell.m */,
 			);
 			name = SetupTeams;
 			sourceTree = "<group>";
@@ -297,6 +315,24 @@
 				1FD6B6641B17438500F05968 /* DivAddViewController.m */,
 			);
 			name = DivAdd;
+			sourceTree = "<group>";
+		};
+		1FD6B6691B1883E900F05968 /* GEventAdd */ = {
+			isa = PBXGroup;
+			children = (
+				1FD6B66B1B18847E00F05968 /* GEventAddViewController.h */,
+				1FD6B66C1B18847E00F05968 /* GEventAddViewController.m */,
+			);
+			name = GEventAdd;
+			sourceTree = "<group>";
+		};
+		1FD6B66A1B1883FF00F05968 /* TeamAdd */ = {
+			isa = PBXGroup;
+			children = (
+				1FD6B66E1B1884E200F05968 /* TeamAddViewController.h */,
+				1FD6B66F1B1884E200F05968 /* TeamAddViewController.m */,
+			);
+			name = TeamAdd;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -409,10 +445,13 @@
 				1FD6B6501B17366900F05968 /* SetupTeamsViewController.m in Sources */,
 				1FFB4F711B15342B00C6309C /* CEventScore.m in Sources */,
 				1FD6B64A1B17363C00F05968 /* SetupDivViewController.m in Sources */,
+				1FD6B6701B1884E200F05968 /* TeamAddViewController.m in Sources */,
 				1FD6B6471B17224300F05968 /* MeetMenuViewCell.m in Sources */,
 				1F095F331B0FB765000FE30A /* AppDelegate.m in Sources */,
+				1FD6B6761B18852E00F05968 /* TeamTableViewCell.m in Sources */,
 				1FD6B64D1B17365300F05968 /* SetupGEventsViewController.m in Sources */,
 				1FFB4F621B15342900C6309C /* Event.m in Sources */,
+				1FD6B6731B18851500F05968 /* GEventTableViewCell.m in Sources */,
 				1FD6B6681B1747FA00F05968 /* DivTableViewCell.m in Sources */,
 				1FD6B6651B17438500F05968 /* DivAddViewController.m in Sources */,
 				1FFB4F651B15342900C6309C /* GEvent.m in Sources */,
@@ -420,6 +459,7 @@
 				1FD022001B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodeld in Sources */,
 				1F095F301B0FB765000FE30A /* main.m in Sources */,
 				1FD6B6561B1736AA00F05968 /* FinalResultsViewController.m in Sources */,
+				1FD6B66D1B18847E00F05968 /* GEventAddViewController.m in Sources */,
 				1FD6B6531B17368300F05968 /* EnterResultsViewController.m in Sources */,
 				1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */,
 			);

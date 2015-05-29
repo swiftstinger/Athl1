@@ -85,7 +85,7 @@ NSLog(@"in view");
     return [sectionInfo numberOfObjects];
 }
 
-- (DTeamTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (TeamTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TeamTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TeamCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
@@ -238,7 +238,7 @@ NSLog(@"in view");
 {
 
 
-    if ([unwindSegue.sourceViewController isKindOfClass:[TeamsAddViewController class]])
+    if ([unwindSegue.sourceViewController isKindOfClass:[TeamAddViewController class]])
     {
         NSLog(@"Coming from TeamsAdd Done!");
         
@@ -247,7 +247,7 @@ NSLog(@"in view");
         Team *team = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
         
         
-        TeamsAddViewController *sourceViewController = unwindSegue.sourceViewController;
+        TeamAddViewController *sourceViewController = unwindSegue.sourceViewController;
         ////////
         /////   set values
         ///////
@@ -281,7 +281,7 @@ NSLog(@"in view");
 
 UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
-if ([sourceViewController isKindOfClass:[TeamsAddViewController class]])
+if ([sourceViewController isKindOfClass:[TeamAddViewController class]])
     {
         NSLog(@"Coming from TeamsAdd Cancel!");
     }

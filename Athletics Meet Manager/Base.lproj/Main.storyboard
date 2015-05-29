@@ -449,11 +449,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="C3W-Tb-mbk">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GEventCell" id="C3W-Tb-mbk" customClass="GEventTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C3W-Tb-mbk" id="wgW-5F-0Jb">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="EventTitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BxX-VE-rHZ">
+                                            <rect key="frame" x="8" y="11" width="452" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="gEventTitleLabel" destination="BxX-VE-rHZ" id="eq8-N9-6EC"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -508,11 +519,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="TZb-nH-CEb">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TeamCell" id="TZb-nH-CEb" customClass="TeamTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TZb-nH-CEb" id="MPu-6g-MbH">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="teamTitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCv-cW-UnJ">
+                                            <rect key="frame" x="8" y="11" width="452" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="teamTitleLabel" destination="DCv-cW-UnJ" id="xbr-ZI-4Zu"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -656,7 +678,7 @@
         <!--AddGEventDetails-->
         <scene sceneID="r96-MA-1Fq">
             <objects>
-                <tableViewController title="AddGEventDetails" id="qeN-Jl-Jeh" customClass="MeetAddViewController" sceneMemberID="viewController">
+                <tableViewController title="AddGEventDetails" id="qeN-Jl-Jeh" customClass="GEventAddViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="GLO-xl-Rnq">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -698,9 +720,6 @@
                                                 <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="J1I-yJ-H5V">
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="qeN-Jl-Jeh" eventType="valueChanged" id="vkI-DL-dgW"/>
-                                                    </connections>
                                                 </stepper>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -717,21 +736,17 @@
                     <navigationItem key="navigationItem" title="Event Details" id="XNe-K8-yP0">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="UEs-CG-lOn">
                             <connections>
-                                <action selector="cancel:" destination="qeN-Jl-Jeh" id="YTk-JD-aDq"/>
-                                <segue destination="JbH-z6-0yw" kind="unwind" unwindAction="unwindToMainCancel:" id="LsP-fP-w8j"/>
+                                <segue destination="JbH-z6-0yw" kind="unwind" unwindAction="unwindToSetupGEventCancel:" id="HHW-3s-hVb"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="8k4-GV-hTa">
                             <connections>
-                                <action selector="done:" destination="qeN-Jl-Jeh" id="M6d-9a-ZGG"/>
-                                <segue destination="JbH-z6-0yw" kind="unwind" unwindAction="unwindToMainDone:" id="zUW-q3-ORt"/>
+                                <segue destination="JbH-z6-0yw" kind="unwind" unwindAction="unwindToSetupGEventDone:" id="IEj-Z7-N2A"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cEventLimitLabel" destination="2l1-zz-GW1" id="Rdh-HV-GrI"/>
-                        <outlet property="ceventLimitStepper" destination="J1I-yJ-H5V" id="Vk1-OB-fWL"/>
-                        <outlet property="meetName" destination="Kw9-rG-R91" id="XTp-PX-kuv"/>
+                        <outlet property="gEventName" destination="Kw9-rG-R91" id="VAb-JK-ri8"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YJB-bv-mqZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -758,7 +773,7 @@
         <!--AddTeam Details-->
         <scene sceneID="eAJ-bp-y3v">
             <objects>
-                <tableViewController title="AddTeam Details" id="pYv-3w-DOe" customClass="MeetAddViewController" sceneMemberID="viewController">
+                <tableViewController title="AddTeam Details" id="pYv-3w-DOe" customClass="TeamAddViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="o8Q-Fa-NM5">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -819,21 +834,19 @@
                     <navigationItem key="navigationItem" title="Team Details" id="iCo-9z-foE">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ma1-l6-FYe">
                             <connections>
-                                <action selector="cancel:" destination="pYv-3w-DOe" id="8aR-ze-Y9b"/>
-                                <segue destination="Z2n-S5-t0h" kind="unwind" unwindAction="unwindToMainCancel:" id="gs4-ZL-9sm"/>
+                                <segue destination="Z2n-S5-t0h" kind="unwind" unwindAction="unwindToSetupTeamsCancel:" id="Mhw-TK-KoL"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="K0s-2l-YYF">
                             <connections>
-                                <action selector="done:" destination="pYv-3w-DOe" id="eKA-Sn-gXT"/>
-                                <segue destination="Z2n-S5-t0h" kind="unwind" unwindAction="unwindToMainDone:" id="bBi-gB-lmx"/>
+                                <segue destination="Z2n-S5-t0h" kind="unwind" unwindAction="unwindToSetupTeamsDone:" id="E2o-Bw-Sq4"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cEventLimitLabel" destination="bYU-4m-X30" id="b5Y-EQ-lpS"/>
                         <outlet property="ceventLimitStepper" destination="LI4-Q6-Ng3" id="qhq-B1-tS7"/>
-                        <outlet property="meetName" destination="Rr5-hB-vdE" id="f8Q-c4-ztj"/>
+                        <outlet property="teamName" destination="Rr5-hB-vdE" id="Xdh-YG-3ye"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="is3-AL-nlV" userLabel="First Responder" sceneMemberID="firstResponder"/>

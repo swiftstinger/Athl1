@@ -77,13 +77,23 @@
         
     }
   */
+  if (FALSE) {
+    
+}
+else
+{
+
+[[segue destinationViewController] setDetailItem:self.meetObject];
+        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+}
+  /*
     if ([[segue identifier] isEqualToString:@"divSetup"]) {
         
         [[segue destinationViewController] setDetailItem:self.meetObject];
         [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
 
     }
-    
+    */
     
 }
 

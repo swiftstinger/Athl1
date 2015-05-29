@@ -248,7 +248,7 @@ NSLog(@"in view");
         GEvent *gEvent = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
         
         
-        DivAddViewController *sourceViewController = unwindSegue.sourceViewController;
+        GEventAddViewController *sourceViewController = unwindSegue.sourceViewController;
         ////////
         /////   set values
         ///////
