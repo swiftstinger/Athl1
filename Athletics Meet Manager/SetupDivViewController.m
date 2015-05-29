@@ -12,6 +12,7 @@
 
 
 
+
 @interface SetupDivViewController ()
 
 @end
@@ -262,6 +263,39 @@ NSLog(@"in view");
         [div setValue: sourceViewController.divName.text forKey:@"divName"];
     
         }
+        
+        // Store meetID data
+        
+        
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+     Meet *meet = self.meetObject;
+     
+     int tempint =  [meet.meetID intValue];
+     
+     NSString * keystring = [NSString stringWithFormat:@"%dlastDivID",tempint];  ////
+     
+     NSLog(@"%@",keystring);
+     
+     if (![defaults objectForKey:keystring]) {                    /////
+     
+     int idint = 0;
+     NSNumber *idnumber = [NSNumber numberWithInt:idint];
+     [defaults setObject:idnumber forKey:keystring];             ///////
+     
+     }
+NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+       int oldint = [oldnumber intValue];
+       int newint = oldint + 1;
+       NSNumber *newnumber = [NSNumber numberWithInt:newint];
+       [div setValue: newnumber forKey: @"divID"];                  //////////
+        NSLog(@"divname %@  divID %@", div.divName, div.divID);
+
+    [defaults setObject: newnumber forKey:keystring];            /////////
+     
+    [defaults synchronize];
+     
+    ////
+
         
                 NSError *error = nil;
 
