@@ -256,13 +256,34 @@ NSLog(@"in view");
         [team setValue: sourceViewController.teamName.text forKey:@"teamName"];
     
         }
+        
+        
+        
+         //////
+        // link relationship
+        /////
+        
+        if (!(_meetObject.teams)) {
+            [_meetObject setValue:[NSSet setWithObject:team] forKey:@"teams"];
+        }
+        else
+        {
+        NSMutableSet *teamsset = [_meetObject mutableSetValueForKey:@"teams"];
+        [teamsset addObject:team];
+        }
+        
+        NSLog(@"teamsin meet %@ :  %@",_meetObject.meetName,[NSString stringWithFormat:@"%@",  @([[_meetObject valueForKey:@"teams"] count] ) ]);
+        
+        
+        //////
+        
           // Store GEventID data
         
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-     Meet *meet = self.meetObject;
+    
      
-     int tempint =  [meet.meetID intValue];
+     int tempint =  [_meetObject.meetID intValue];
      
      NSString * keystring = [NSString stringWithFormat:@"%dlastTeamID",tempint];  ////
      

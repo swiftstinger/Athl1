@@ -258,13 +258,32 @@ NSLog(@"in view");
     
         }
         
+        
+         //////
+        // link relationship
+        /////
+        
+        if (!(_meetObject.gEvents)) {
+            [_meetObject setValue:[NSSet setWithObject:gEvent] forKey:@"gEvents"];
+        }
+        else
+        {
+        NSMutableSet *geventsset = [_meetObject mutableSetValueForKey:@"gEvents"];
+        [geventsset addObject:gEvent];
+        }
+        
+        NSLog(@"gevents in meet %@ :  %@",_meetObject.meetName,[NSString stringWithFormat:@"%@",  @([[_meetObject valueForKey:@"gEvents"] count] ) ]);
+        
+        
+        //////
+        
         // Store GEventID data
         
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-     Meet *meet = self.meetObject;
      
-     int tempint =  [meet.meetID intValue];
+     
+     int tempint =  [_meetObject.meetID intValue];
      
      NSString * keystring = [NSString stringWithFormat:@"%dlastGEventID",tempint];  ////
      

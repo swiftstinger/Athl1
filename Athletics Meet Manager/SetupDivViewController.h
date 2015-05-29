@@ -15,6 +15,6 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) id detailItem;
-@property (strong, nonatomic) id meetObject;
+@property (strong, nonatomic) Meet* meetObject;
 
 @end

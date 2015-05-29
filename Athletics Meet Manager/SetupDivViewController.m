@@ -130,8 +130,13 @@ NSLog(@"in view");
      // limit to those entities that belong to the particular item
  //
  
-//NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"item.name like '%@'",self.item.name]];
-//    [fetch setPredicate:predicate];
+//NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"%@ == %@", @"meet.meetID", self.meetObject.meetID]];
+
+//NSString *idstring = [self.meetObject.meetID stringValue];
+
+NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meetObject];
+    [fetchRequest setPredicate:predicate];
+    
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
@@ -144,7 +149,7 @@ NSLog(@"in view");
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -264,13 +269,33 @@ NSLog(@"in view");
     
         }
         
+        //////
+        // link relationship
+        /////
+        
+        if (!(_meetObject.divisions)) {
+            [_meetObject setValue:[NSSet setWithObject:div] forKey:@"divisions"];
+        }
+        else
+        {
+        NSMutableSet *divisionsset = [_meetObject mutableSetValueForKey:@"divisions"];
+        [divisionsset addObject:div];
+        }
+        
+        NSLog(@"divisions in meet %@ :  %@",_meetObject.meetName,[NSString stringWithFormat:@"%@",  @([[_meetObject valueForKey:@"divisions"] count] ) ]);
+        
+        
+        //////
+        
+        
+        
         // Store divID data
         
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-     Meet *meet = self.meetObject;
+    
      
-     int tempint =  [meet.meetID intValue];
+     int tempint =  [_meetObject.meetID intValue];
      
      NSString * keystring = [NSString stringWithFormat:@"%dlastDivID",tempint];  ////
      
