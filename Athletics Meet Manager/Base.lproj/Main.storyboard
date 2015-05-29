@@ -217,10 +217,10 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b0Z-sr-z7l" id="JQw-T7-Hbx">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Final Results Tables" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="leg-Rf-h5c">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Final Results Tables" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="leg-Rf-h5c">
                                                     <rect key="frame" x="234" y="11" width="166" height="24"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="132" id="qIJ-sh-m2Q"/>
+                                                        <constraint firstAttribute="width" constant="166" id="qIJ-sh-m2Q"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -230,7 +230,7 @@
                                             <constraints>
                                                 <constraint firstItem="leg-Rf-h5c" firstAttribute="bottom" secondItem="JQw-T7-Hbx" secondAttribute="bottomMargin" id="C0t-YI-Tla"/>
                                                 <constraint firstItem="leg-Rf-h5c" firstAttribute="top" secondItem="JQw-T7-Hbx" secondAttribute="topMargin" constant="3" id="Pff-zW-XHT"/>
-                                                <constraint firstItem="leg-Rf-h5c" firstAttribute="centerX" secondItem="JQw-T7-Hbx" secondAttribute="centerX" id="hzi-pW-bPa"/>
+                                                <constraint firstItem="leg-Rf-h5c" firstAttribute="centerX" secondItem="JQw-T7-Hbx" secondAttribute="centerX" constant="17" id="hzi-pW-bPa"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -245,9 +245,10 @@
                             <outlet property="delegate" destination="K1t-Ae-hdm" id="Uzg-HS-QW8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="iaR-ri-1Td"/>
+                    <navigationItem key="navigationItem" title="Meet" id="iaR-ri-1Td"/>
                     <connections>
                         <outlet property="MeetMenuLabel" destination="I85-X5-9LE" id="ofi-xo-fiM"/>
+                        <outlet property="navBar" destination="iaR-ri-1Td" id="2SY-vJ-PMt"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="st3-kP-aYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -411,13 +412,20 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j6V-j6-Gp7" id="dyl-L1-IEx">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="diveTitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajo-bA-pOr">
-                                            <rect key="frame" x="0.0" y="8" width="452" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="diveTitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajo-bA-pOr">
+                                            <rect key="frame" x="8" y="8" width="452" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="452" id="hvD-dh-j1s"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ajo-bA-pOr" firstAttribute="top" secondItem="dyl-L1-IEx" secondAttribute="topMargin" id="4Kf-YS-CYY"/>
+                                        <constraint firstItem="ajo-bA-pOr" firstAttribute="leading" secondItem="dyl-L1-IEx" secondAttribute="leadingMargin" id="kCp-YH-sIo"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="divTitleLabel" destination="ajo-bA-pOr" id="h8c-tN-qAz"/>

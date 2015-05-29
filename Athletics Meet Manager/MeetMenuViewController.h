@@ -21,5 +21,6 @@
 
 
 @property (strong, nonatomic) id meetObject;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 @end

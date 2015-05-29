@@ -42,7 +42,9 @@
 
     // Update the user interface for the detail item.
     if (self.detailItem) {
+      _navBar.title = [self.meetObject valueForKey:@"meetName"];
       
+      NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
              /*
           self.titleField.text = [self.detailItem valueForKey:@"title"];
         self.episodeIDField.text = [NSString stringWithFormat:@"%d", [[self.detailItem valueForKey:@"episodeID"] integerValue]];
