@@ -125,10 +125,8 @@ NSLog(@"in view");
     [fetchRequest setEntity:entity];
     
      // limit to those entities that belong to the particular item
- //
- 
-//NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"item.name like '%@'",self.item.name]];
-//    [fetch setPredicate:predicate];
+NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meetObject];
+    [fetchRequest setPredicate:predicate];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
@@ -141,7 +139,7 @@ NSLog(@"in view");
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     

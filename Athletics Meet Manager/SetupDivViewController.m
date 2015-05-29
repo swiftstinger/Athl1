@@ -127,12 +127,7 @@ NSLog(@"in view");
     
     [fetchRequest setEntity:entity];
     
-     // limit to those entities that belong to the particular item
- //
- 
-//NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"%@ == %@", @"meet.meetID", self.meetObject.meetID]];
 
-//NSString *idstring = [self.meetObject.meetID stringValue];
 
 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meetObject];
     [fetchRequest setPredicate:predicate];
