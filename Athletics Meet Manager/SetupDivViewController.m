@@ -264,7 +264,7 @@ NSLog(@"in view");
     
         }
         
-        // Store meetID data
+        // Store divID data
         
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

@@ -258,6 +258,39 @@ NSLog(@"in view");
     
         }
         
+        // Store GEventID data
+        
+        
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+     Meet *meet = self.meetObject;
+     
+     int tempint =  [meet.meetID intValue];
+     
+     NSString * keystring = [NSString stringWithFormat:@"%dlastGEventID",tempint];  ////
+     
+     NSLog(@"%@",keystring);
+     
+     if (![defaults objectForKey:keystring]) {                    /////
+     
+     int idint = 0;
+     NSNumber *idnumber = [NSNumber numberWithInt:idint];
+     [defaults setObject:idnumber forKey:keystring];             ///////
+     
+     }
+NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+       int oldint = [oldnumber intValue];
+       int newint = oldint + 1;
+       NSNumber *newnumber = [NSNumber numberWithInt:newint];
+       [gEvent setValue: newnumber forKey: @"gEventID"];                  //////////
+        NSLog(@"genetname %@  geventID %@", gEvent.gEventName, gEvent.gEventID);
+
+    [defaults setObject: newnumber forKey:keystring];            /////////
+     
+    [defaults synchronize];
+     
+    ////
+
+        
                 NSError *error = nil;
 
         

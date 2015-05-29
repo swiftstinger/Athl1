@@ -256,6 +256,38 @@ NSLog(@"in view");
         [team setValue: sourceViewController.teamName.text forKey:@"teamName"];
     
         }
+          // Store GEventID data
+        
+        
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+     Meet *meet = self.meetObject;
+     
+     int tempint =  [meet.meetID intValue];
+     
+     NSString * keystring = [NSString stringWithFormat:@"%dlastTeamID",tempint];  ////
+     
+     NSLog(@"%@",keystring);
+     
+     if (![defaults objectForKey:keystring]) {                    /////
+     
+     int idint = 0;
+     NSNumber *idnumber = [NSNumber numberWithInt:idint];
+     [defaults setObject:idnumber forKey:keystring];             ///////
+     
+     }
+NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+       int oldint = [oldnumber intValue];
+       int newint = oldint + 1;
+       NSNumber *newnumber = [NSNumber numberWithInt:newint];
+       [team setValue: newnumber forKey: @"teamID"];                  //////////
+        NSLog(@"teamname %@  gteamID %@", team.teamName, team.teamID);
+
+    [defaults setObject: newnumber forKey:keystring];            /////////
+     
+    [defaults synchronize];
+     
+    ////
+    
         
                 NSError *error = nil;
 
