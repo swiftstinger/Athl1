@@ -59,6 +59,8 @@ NSLog(@"in view");
       NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
       
     }
+    
+    
 }
 
 - (void)viewDidLoad

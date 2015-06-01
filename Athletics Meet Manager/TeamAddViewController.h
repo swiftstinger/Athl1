@@ -11,5 +11,6 @@
 
 @interface TeamAddViewController : UITableViewController <NSFetchedResultsControllerDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *teamName;
+@property (weak, nonatomic) IBOutlet UITextField *teamAbr;
 
 @end

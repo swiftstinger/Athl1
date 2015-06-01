@@ -17,4 +17,6 @@
 @property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) Meet* meetObject;
 
+
+
 @end

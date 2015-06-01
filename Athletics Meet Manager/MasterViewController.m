@@ -237,6 +237,26 @@ format.dateFormat = @"dd MMM yyyy";
         [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
     }
     
+    if ([[segue identifier] isEqualToString:@"editMeet"]) {
+        NSLog(@"edit segue 1");
+       NSIndexPath *indexPath = self.indexPathForLongPressCell;
+      //  NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+       
+        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        NSLog(@"edit segue 3 %@",[object valueForKey:@"meetName"]);
+        
+        
+        UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
+    MeetAddViewController* meetAddController = [navController topViewController];
+        
+        
+        [meetAddController setDetailItem:object];
+        NSLog(@"edit segue 4");
+        [meetAddController setManagedObjectContext:self.managedObjectContext];
+        NSLog(@"edit segue 5");
+    }
+
+    
 }
 #pragma mark - MeetAddViewControllerUnwinds
 
@@ -271,6 +291,11 @@ format.dateFormat = @"dd MMM yyyy";
         }
         
         ////////
+        
+        
+        
+        
+        
         
         // Store meetID data
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -351,4 +376,28 @@ if ([sourceViewController isKindOfClass:[MeetAddViewController class]])
 }
 
 **/
+- (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender {
+
+// only when gesture was recognized, not when ended
+	if (sender.state == UIGestureRecognizerStateBegan)
+	{
+		CGPoint location = [sender locationInView:self.tableView];
+  self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
+        
+        
+        // get affected cell
+	//	MeetMenuViewCell *cell = (MeetMenuViewCell *)[sender view];
+ 
+		// get indexPath of cell
+		//self.indexPathForLongPressCell = [self.tableView indexPathForCell:cell];
+ 
+		// do something with this action
+		NSLog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
+        
+        [self performSegueWithIdentifier:@"editMeet" sender:self];
+	}
+
+
+}
+
 @end

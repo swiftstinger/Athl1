@@ -250,8 +250,16 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         /////   set values
         ///////
      
-           if (sourceViewController.gEventName) {
+        if (sourceViewController.gEventName) {
         [gEvent setValue: sourceViewController.gEventName.text forKey:@"gEventName"];
+    
+        }
+        if (sourceViewController.maxCompPerTeamLabel) {
+        [gEvent setValue: sourceViewController.maxCompPerTeamLabel.text forKey:@"competitorsPerTeam"];
+    
+        }
+        if (sourceViewController.gEventTypeValue) {
+        [gEvent setValue: sourceViewController.gEventTypeValue forKey:@"gEventType"];
     
         }
         

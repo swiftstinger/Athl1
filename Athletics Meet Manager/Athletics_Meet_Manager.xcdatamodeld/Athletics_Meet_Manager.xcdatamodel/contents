@@ -17,9 +17,8 @@
     <entity name="Competitor" representedClassName="Competitor" syncable="YES">
         <attribute name="compID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="compName" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="cEventScores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CEventScore" inverseName="competitor" inverseEntity="CEventScore" syncable="YES"/>
+        <relationship name="cEventScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CEventScore" inverseName="competitor" inverseEntity="CEventScore" syncable="YES"/>
         <relationship name="divisions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Division" inverseName="competitors" inverseEntity="Division" syncable="YES"/>
-        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="competitors" inverseEntity="Event" syncable="YES"/>
         <relationship name="gEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GEvent" inverseName="competitors" inverseEntity="GEvent" syncable="YES"/>
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="competitors" inverseEntity="Meet" syncable="YES"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="competitors" inverseEntity="Team" syncable="YES"/>
@@ -40,7 +39,6 @@
         <attribute name="eventID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="startTime" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="cEventScores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CEventScore" inverseName="event" inverseEntity="CEventScore" syncable="YES"/>
-        <relationship name="competitors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Competitor" inverseName="events" inverseEntity="Competitor" syncable="YES"/>
         <relationship name="division" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Division" inverseName="events" inverseEntity="Division" syncable="YES"/>
         <relationship name="gEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GEvent" inverseName="events" inverseEntity="GEvent" syncable="YES"/>
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="events" inverseEntity="Meet" syncable="YES"/>
@@ -61,20 +59,20 @@
     </entity>
     <entity name="Meet" representedClassName="Meet" syncable="YES">
         <attribute name="cEventLimit" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="divSDone" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="eventsSDone" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="divsDone" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="eventsDone" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="meetDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="meetEndTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="meetID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="meetName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="meetStartTime" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="teamSDone" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <relationship name="cEventsScores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CEventScore" inverseName="meet" inverseEntity="CEventScore" syncable="YES"/>
-        <relationship name="competitors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Competitor" inverseName="meet" inverseEntity="Competitor" syncable="YES"/>
-        <relationship name="divisions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Division" inverseName="meet" inverseEntity="Division" syncable="YES"/>
-        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="meet" inverseEntity="Event" syncable="YES"/>
-        <relationship name="gEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GEvent" inverseName="meet" inverseEntity="GEvent" syncable="YES"/>
-        <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="meet" inverseEntity="Team" syncable="YES"/>
+        <attribute name="teamsDone" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="cEventsScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CEventScore" inverseName="meet" inverseEntity="CEventScore" syncable="YES"/>
+        <relationship name="competitors" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Competitor" inverseName="meet" inverseEntity="Competitor" syncable="YES"/>
+        <relationship name="divisions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Division" inverseName="meet" inverseEntity="Division" syncable="YES"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Event" inverseName="meet" inverseEntity="Event" syncable="YES"/>
+        <relationship name="gEvents" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GEvent" inverseName="meet" inverseEntity="GEvent" syncable="YES"/>
+        <relationship name="teams" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Team" inverseName="meet" inverseEntity="Team" syncable="YES"/>
     </entity>
     <entity name="Team" representedClassName="Team" syncable="YES">
         <attribute name="teamAbr" optional="YES" attributeType="String" syncable="YES"/>
@@ -89,11 +87,11 @@
     </entity>
     <elements>
         <element name="CEventScore" positionX="-12071" positionY="-12879" width="128" height="223"/>
-        <element name="Competitor" positionX="-12267" positionY="-13032" width="128" height="163"/>
+        <element name="Competitor" positionX="-12267" positionY="-13032" width="128" height="150"/>
         <element name="Division" positionX="-12042" positionY="-13392" width="128" height="163"/>
-        <element name="Event" positionX="-11871" positionY="-13185" width="128" height="193"/>
+        <element name="Event" positionX="-11871" positionY="-13185" width="128" height="180"/>
         <element name="GEvent" positionX="-11486" positionY="-13366" width="128" height="208"/>
         <element name="Meet" positionX="-11999" positionY="-13671" width="128" height="270"/>
-        <element name="Team" positionX="-12303" positionY="-13399" width="128" height="178"/>
+        <element name="Team" positionX="-12303" positionY="-13399" width="128" height="180"/>
     </elements>
 </model>

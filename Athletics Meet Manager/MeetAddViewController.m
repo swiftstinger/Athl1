@@ -17,8 +17,59 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
-    
+    self.editing = false;
+    NSLog(@"timechecker");
+}
+
+
+#pragma mark - Managing the detail item
+
+- (void)setDetailItem:(id)newDetailItem
+{
+NSLog(@"in detail item");
+   if (_detailItem != newDetailItem) {
+        
+        NSLog(@"before edit set");
+        _detailItem = newDetailItem;
+        
+        NSLog(@"is editing");
+        self.isEditing = TRUE;
+        // Update the view.
+      [self configureView];
+    }
+}
+#pragma mark - Managing the managedobjectcontext item
+
+- (void)setManagedObjectContext:(NSManagedObjectContext *)newcontext
+{
+    if (_managedObjectContext != newcontext) {
+        _managedObjectContext = newcontext;
+        
+    }
+}
+
+- (void)configureView
+{
+
+    // Update the user interface for the detail item.
+    if (self.editing) {
+      _meetName.text = [self.detailItem valueForKey:@"meetName"];
+      
+      
+     self.cEventLimitLabel.text = [[self.detailItem valueForKey:@"cEventLimit"]description];
+      self.meetDate.date = [self.detailItem valueForKey:@"meetDate"];
+      
+      
+      //NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
+             /*
+          self.titleField.text = [self.detailItem valueForKey:@"title"];
+        self.episodeIDField.text = [NSString stringWithFormat:@"%d", [[self.detailItem valueForKey:@"episodeID"] integerValue]];
+        self.descriptionView.text = [self.detailItem valueForKey:@"desc"];
+        self.firstRunSegmentedControl.selectedSegmentIndex = [[self.detailItem valueForKey:@"firstRun"] boolValue];
+        self.showTimeLabel.text = [[self.detailItem valueForKey:@"showTime"] description];
+        
+        */
+   }
 }
 
 - (void)viewDidLoad {

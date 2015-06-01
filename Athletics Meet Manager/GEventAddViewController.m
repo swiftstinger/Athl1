@@ -40,6 +40,25 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)maxCompStepperValueChanged:(UIStepper *)sender
+{
+  NSUInteger value = sender.value;
+  self.maxCompPerTeamLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+}
+
+- (IBAction)gEventTypeSelecterValueChanged:(id)sender {
+
+self.gEventTypeValue= [sender titleForSegmentAtIndex:[sender selectedSegmentIndex]];
+// NSString * theTitle = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex];
+ 
+}
+
+
+
+
+   
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -55,5 +74,6 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
 - (void)resignOnTap:(id)iSender {
     [self.currentResponder resignFirstResponder];
 }
+
 
 @end

@@ -255,7 +255,10 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
     
         }
         
-        
+         if (sourceViewController.teamAbr) {
+        [team setValue: sourceViewController.teamAbr.text forKey:@"teamAbr"];
+    
+        }
         
          //////
         // link relationship

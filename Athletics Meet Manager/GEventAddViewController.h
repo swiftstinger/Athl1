@@ -12,5 +12,14 @@
 @interface GEventAddViewController : UITableViewController <NSFetchedResultsControllerDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *gEventName;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *gEventType;
+@property (weak, nonatomic) IBOutlet UILabel *maxCompPerTeamLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *maxCompStepper;
+
+- (IBAction)maxCompStepperValueChanged:(id)sender;
+- (IBAction)gEventTypeSelecterValueChanged:(id)sender;
+
+@property (weak, nonatomic) NSString* gEventTypeValue;
+
 
 @end
