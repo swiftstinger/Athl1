@@ -28,5 +28,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *cEventLimitLabel;
 
 @property BOOL isEditing;
+@property BOOL isOnTextField;
 
 @end

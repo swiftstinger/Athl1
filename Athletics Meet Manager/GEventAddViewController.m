@@ -69,10 +69,11 @@ self.gEventTypeValue= [sender titleForSegmentAtIndex:[sender selectedSegmentInde
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.currentResponder = textField;
+    
 }
 
 - (void)resignOnTap:(id)iSender {
-    [self.currentResponder resignFirstResponder];
+        [self.currentResponder resignFirstResponder];
 }
 
 

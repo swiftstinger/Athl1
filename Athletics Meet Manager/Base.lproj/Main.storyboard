@@ -100,7 +100,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="lXd-SU-uvL" kind="presentation" identifier="editMeet" modalTransitionStyle="crossDissolve" id="hZb-tn-gJS"/>
+                        <segue destination="lXd-SU-uvL" kind="presentation" identifier="editMeet" modalTransitionStyle="flipHorizontal" id="hZb-tn-gJS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>

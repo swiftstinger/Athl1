@@ -18,6 +18,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.editing = false;
+    _isOnTextField = false;
     NSLog(@"timechecker");
 }
 
@@ -181,17 +182,26 @@ NSLog(@"in detail item");
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+   
+   NSLog(@"beginedtiting");
     self.currentResponder = textField;
+    self.isOnTextField = true;
 }
 
 - (void)resignOnTap:(id)iSender {
-    [self.currentResponder resignFirstResponder];
+   
+    NSLog(@"resign on tap");
+    if (_isOnTextField) {
+      self.isOnTextField = false;
+      [self.currentResponder resignFirstResponder];
+    }
+    
 }
 
 
  
     
-    
+ /*
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -203,5 +213,5 @@ NSLog(@"in detail item");
     
 }
 
-
+*/
 @end

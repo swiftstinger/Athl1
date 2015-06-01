@@ -247,7 +247,7 @@ format.dateFormat = @"dd MMM yyyy";
         
         
         UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
-    MeetAddViewController* meetAddController = [navController topViewController];
+    MeetAddViewController* meetAddController = (MeetAddViewController*)[navController topViewController];
         
         
         [meetAddController setDetailItem:object];
@@ -268,12 +268,24 @@ format.dateFormat = @"dd MMM yyyy";
     {
         NSLog(@"Coming from MeetAdd Done!");
         
+        MeetAddViewController *sourceViewController = unwindSegue.sourceViewController;
+        
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-        Meet *meet = [NSEntityDescription insertNewObjectForEntityForName:@"Meet" inManagedObjectContext:context];
+    Meet *meet;
+    
+      if (!sourceViewController.editing) {
+
+    
+        meet = [NSEntityDescription insertNewObjectForEntityForName:@"Meet" inManagedObjectContext:context];
+        }
+        else
+        {
+        
+        meet = sourceViewController.detailItem;
+        }
         
         
-        MeetAddViewController *sourceViewController = unwindSegue.sourceViewController;
         ////////
         /////   set values
         ///////
@@ -293,7 +305,7 @@ format.dateFormat = @"dd MMM yyyy";
         ////////
         
         
-        
+        if (!sourceViewController.editing) {
         
         
         
@@ -332,7 +344,7 @@ format.dateFormat = @"dd MMM yyyy";
     [defaults synchronize];
      
     ////
-     
+     }
     NSError *error = nil;
 
         // Save the context.
