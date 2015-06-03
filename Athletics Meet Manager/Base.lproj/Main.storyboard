@@ -459,11 +459,16 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="longPressRecognizer" destination="2H5-pk-3rz" id="X1Z-jc-9Bo"/>
                         <segue destination="lO5-h7-G6N" kind="presentation" identifier="editDiv" modalTransitionStyle="flipHorizontal" id="Kin-H0-cmG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NIM-Ap-z1i" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="2H5-pk-3rz"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="2H5-pk-3rz">
+                    <connections>
+                        <action selector="longPressRecognizer:" destination="8Ir-gj-wqw" id="65G-ud-saB"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="196" y="354"/>
         </scene>
@@ -506,8 +511,16 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="NaG-ot-8A6" kind="presentation" identifier="editGEvent" modalTransitionStyle="flipHorizontal" id="zvu-dP-nHM"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XGJ-6a-Fps" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="ngM-ZW-f52">
+                    <connections>
+                        <action selector="longPressRecognizer:" destination="KGd-ro-0EY" id="Svy-UI-id6"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-192" y="1078"/>
         </scene>
@@ -577,8 +590,16 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="oKG-ro-3Rs" kind="presentation" identifier="editTeam" modalTransitionStyle="flipHorizontal" id="KE2-9o-S9o"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUZ-3S-zya" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="6H2-py-H9b">
+                    <connections>
+                        <action selector="longPressRecognizer:" destination="FDm-94-BHM" id="iOy-eg-1tU"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-488" y="1790"/>
         </scene>
@@ -935,8 +956,9 @@
                                 </tableViewCellContentView>
                                 <gestureRecognizers/>
                                 <connections>
+                                    <outlet property="competitorTitleLabel" destination="Y5z-Hq-Yhr" id="gIP-3o-1AV"/>
                                     <outletCollection property="gestureRecognizers" destination="qcw-yO-sEm" appends="YES" id="p7E-22-DTY"/>
-                                    <segue destination="PSi-Gm-V0S" kind="show" id="ugs-cx-h3e"/>
+                                    <segue destination="PSi-Gm-V0S" kind="show" identifier="eventSetupForC" id="ugs-cx-h3e"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -954,9 +976,16 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="4Ya-of-ba7" kind="presentation" identifier="editCompetitor" modalTransitionStyle="flipHorizontal" id="oMD-Bf-krW"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wxG-RD-Ebs" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="qcw-yO-sEm"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="qcw-yO-sEm">
+                    <connections>
+                        <action selector="longPressRecognizer:" destination="ted-pL-4s5" id="th5-eK-RfR"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="152" y="2492"/>
         </scene>
@@ -1181,6 +1210,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="competitorName" destination="ibU-w4-5rH" id="G3M-S6-fem"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="1784" y="2492"/>
@@ -1383,6 +1415,9 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="pjO-ql-D1X"/>
+        <segue reference="KE2-9o-S9o"/>
+        <segue reference="oMD-Bf-krW"/>
+        <segue reference="zvu-dP-nHM"/>
         <segue reference="Kin-H0-cmG"/>
     </inferredMetricsTieBreakers>
 </document>

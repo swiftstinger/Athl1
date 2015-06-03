@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "TeamAddViewController.h"
-#import "Meet.h"
+#import "CompetitorAddViewController.h"
+#import "Team.h"
 
 @interface SetupCompetitorsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Team* teamObject;
+- (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender;
 
+
+@property (weak, nonatomic) NSIndexPath * indexPathForLongPressCell;
 
 @end

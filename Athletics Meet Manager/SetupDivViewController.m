@@ -226,19 +226,36 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
 
   }
 
+
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  
-
-    if ([[segue identifier] isEqualToString:@"showDiv"]) {
+     if ([[segue identifier] isEqualToString:@"showDiv"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
     }
     
-}
+    if ([[segue identifier] isEqualToString:@"editDiv"]) {
+        
+       NSIndexPath *indexPath = self.indexPathForLongPressCell;
+        
+        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        
+        
+        UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
+    DivAddViewController* divAddController = (DivAddViewController*)[navController topViewController];
+        
+        
+        [divAddController setDetailItem:object];
+       
+        [divAddController setManagedObjectContext:self.managedObjectContext];
+       
+    }
 
+    
+}
 
 
 #pragma mark - MeetAddViewControllerUnwinds
@@ -350,4 +367,18 @@ if ([sourceViewController isKindOfClass:[DivAddViewController class]])
 }
 
 
+- (IBAction)longPressRecognizer:(UILongPressGestureRecognizer*)sender {
+
+if (sender.state == UIGestureRecognizerStateBegan)
+	{
+		CGPoint location = [sender locationInView:self.tableView];
+  self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
+        
+        
+		NSLog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
+        
+        [self performSegueWithIdentifier:@"editDiv" sender:self];
+	}
+
+}
 @end

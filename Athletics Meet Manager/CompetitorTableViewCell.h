@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CompetitorTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *competitorTitleLabel;
 
 @end

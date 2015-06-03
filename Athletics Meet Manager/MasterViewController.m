@@ -238,12 +238,11 @@ format.dateFormat = @"dd MMM yyyy";
     }
     
     if ([[segue identifier] isEqualToString:@"editMeet"]) {
-        NSLog(@"edit segue 1");
+        
        NSIndexPath *indexPath = self.indexPathForLongPressCell;
       //  NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
        
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        NSLog(@"edit segue 3 %@",[object valueForKey:@"meetName"]);
         
         
         UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
@@ -251,9 +250,9 @@ format.dateFormat = @"dd MMM yyyy";
         
         
         [meetAddController setDetailItem:object];
-        NSLog(@"edit segue 4");
+       
         [meetAddController setManagedObjectContext:self.managedObjectContext];
-        NSLog(@"edit segue 5");
+       
     }
 
     

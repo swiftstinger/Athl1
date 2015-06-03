@@ -17,10 +17,11 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (weak, nonatomic) NSIndexPath * indexPathForLongPressCell;
 
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender;
 
-@property (weak, nonatomic) NSIndexPath * indexPathForLongPressCell;
+
 
 @end
 

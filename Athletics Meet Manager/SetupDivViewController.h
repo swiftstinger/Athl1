@@ -20,4 +20,6 @@
 
 @property (weak, nonatomic) NSIndexPath * indexPathForLongPressCell;
 
+- (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender;
+
 @end

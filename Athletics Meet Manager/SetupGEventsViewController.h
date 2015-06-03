@@ -18,4 +18,9 @@
 @property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) Meet* meetObject;
 
+ 
+@property (weak, nonatomic) NSIndexPath * indexPathForLongPressCell;
+
+- (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender;
+
 @end

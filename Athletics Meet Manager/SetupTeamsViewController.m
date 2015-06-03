@@ -225,6 +225,23 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         [[segue destinationViewController] setDetailItem:object];
     }
     
+     if ([[segue identifier] isEqualToString:@"editTeam"]) {
+        
+       NSIndexPath *indexPath = self.indexPathForLongPressCell;
+        
+        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        
+        
+        UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
+    TeamAddViewController* teamAddController = (TeamAddViewController*)[navController topViewController];
+        
+        
+        [teamAddController setDetailItem:object];
+       
+        [teamAddController setManagedObjectContext:self.managedObjectContext];
+       
+    }
+    
 }
 
 
@@ -342,4 +359,18 @@ if ([sourceViewController isKindOfClass:[TeamAddViewController class]])
 }
 
 
+- (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender {
+
+if (sender.state == UIGestureRecognizerStateBegan)
+	{
+		CGPoint location = [sender locationInView:self.tableView];
+  self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
+        
+        
+		NSLog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
+        
+        [self performSegueWithIdentifier:@"editDiv" sender:self];
+	}
+
+}
 @end
