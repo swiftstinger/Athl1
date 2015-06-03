@@ -41,6 +41,7 @@
 		1FD6B6981B1F373100F05968 /* EventScoreSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6971B1F373100F05968 /* EventScoreSheetViewController.m */; };
 		1FD6B69C1B1F37A200F05968 /* EventScoreAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B69B1B1F37A200F05968 /* EventScoreAddViewController.m */; };
 		1FD6B69F1B1F37E300F05968 /* EventScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B69E1B1F37E300F05968 /* EventScoreTableViewCell.m */; };
+		1FD6B6A21B1F429500F05968 /* CompetitorScoreEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6A11B1F429500F05968 /* CompetitorScoreEnterViewController.m */; };
 		1FFB4F621B15342900C6309C /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F611B15342900C6309C /* Event.m */; };
 		1FFB4F651B15342900C6309C /* GEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F641B15342900C6309C /* GEvent.m */; };
 		1FFB4F681B15342A00C6309C /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F671B15342A00C6309C /* Team.m */; };
@@ -129,6 +130,8 @@
 		1FD6B69B1B1F37A200F05968 /* EventScoreAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventScoreAddViewController.m; sourceTree = "<group>"; };
 		1FD6B69D1B1F37E300F05968 /* EventScoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventScoreTableViewCell.h; sourceTree = "<group>"; };
 		1FD6B69E1B1F37E300F05968 /* EventScoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventScoreTableViewCell.m; sourceTree = "<group>"; };
+		1FD6B6A01B1F429500F05968 /* CompetitorScoreEnterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompetitorScoreEnterViewController.h; sourceTree = "<group>"; };
+		1FD6B6A11B1F429500F05968 /* CompetitorScoreEnterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompetitorScoreEnterViewController.m; sourceTree = "<group>"; };
 		1FFB4F601B15342900C6309C /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		1FFB4F611B15342900C6309C /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		1FFB4F631B15342900C6309C /* GEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEvent.h; sourceTree = "<group>"; };
@@ -442,6 +445,8 @@
 			children = (
 				1FD6B69A1B1F37A200F05968 /* EventScoreAddViewController.h */,
 				1FD6B69B1B1F37A200F05968 /* EventScoreAddViewController.m */,
+				1FD6B6A01B1F429500F05968 /* CompetitorScoreEnterViewController.h */,
+				1FD6B6A11B1F429500F05968 /* CompetitorScoreEnterViewController.m */,
 			);
 			name = EventScoreAdd;
 			sourceTree = "<group>";
@@ -547,6 +552,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FD6B6A21B1F429500F05968 /* CompetitorScoreEnterViewController.m in Sources */,
 				1FFB4F7A1B15359500C6309C /* Meet.m in Sources */,
 				1FD6B6411B171F4200F05968 /* MeetMenuViewController.m in Sources */,
 				1FD6B69C1B1F37A200F05968 /* EventScoreAddViewController.m in Sources */,
