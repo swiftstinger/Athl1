@@ -20,9 +20,49 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.editing = false;
+    _isOnTextField = false;
     
     
 }
+
+#pragma mark - Managing the detail item
+
+- (void)setDetailItem:(id)newDetailItem
+{
+NSLog(@"in detail item");
+   if (_detailItem != newDetailItem) {
+        
+        NSLog(@"before edit set");
+        _detailItem = newDetailItem;
+        
+        NSLog(@"is editing");
+        self.isEditing = TRUE;
+        // Update the view.
+      [self configureView];
+    }
+}
+#pragma mark - Managing the managedobjectcontext item
+
+- (void)setManagedObjectContext:(NSManagedObjectContext *)newcontext
+{
+    if (_managedObjectContext != newcontext) {
+        _managedObjectContext = newcontext;
+        
+    }
+}
+
+- (void)configureView
+{
+
+    // Update the user interface for the detail item.
+    if (self.editing) {
+      _divName.text = [self.detailItem valueForKey:@"divName"];
+      
+      
+   }
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,10 +93,15 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.currentResponder = textField;
+    self.isOnTextField = true;
 }
 
 - (void)resignOnTap:(id)iSender {
     [self.currentResponder resignFirstResponder];
+    if (_isOnTextField) {
+      self.isOnTextField = false;
+      [self.currentResponder resignFirstResponder];
+    }
 }
 
 

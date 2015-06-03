@@ -19,7 +19,7 @@
     [super awakeFromNib];
     self.editing = false;
     _isOnTextField = false;
-    NSLog(@"timechecker");
+    
 }
 
 

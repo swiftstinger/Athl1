@@ -13,5 +13,13 @@
 
 
 @property (weak, nonatomic) IBOutlet UITextField *divName;
+@property (strong, nonatomic) id detailItem;
+
+//@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property BOOL isEditing;
+@property BOOL isOnTextField;
+
 
 @end
