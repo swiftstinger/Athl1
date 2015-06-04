@@ -55,7 +55,7 @@
 - (void)configureView
 {
 
-NSLog(@"in view");
+
     // Update the user interface for the detail item.
     if (self.detailItem) {
       NSLog(@"competitor item %@", [self.competitorObject valueForKey:@"compName"]);
@@ -274,6 +274,11 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
          //////
         // link relationships
         /////
+        if (sourceViewController.event) {
+        Event* event = sourceViewController.event;
+        
+     [ceventscore setValue:event forKey:@"event"];
+        }
         
         if (!(self.competitorObject.cEventScores)) {
             [self.competitorObject setValue:[NSSet setWithObject:ceventscore] forKey:@"cEventScores"];
@@ -287,7 +292,16 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
         NSLog(@"eventscores in competitor %@ :  %@",self.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[self.competitorObject valueForKey:@"cEventScores"] count] ) ]);
         
         
+       
+        
+        
+        [ceventscore setValue:self.competitorObject.meet forKey:@"meet"];
+       
+        NSLog(@"ceventscore in meet %@ :  %@",self.competitorObject.meet.meetName,[NSString stringWithFormat:@"%@",  @([[self.competitorObject.meet valueForKey:@"cEventsScores"] count] ) ]);
+        
         //////
+        
+        
         
           // Store EventID data
         
