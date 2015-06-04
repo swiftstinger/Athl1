@@ -215,7 +215,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
 - (void)configureCell:(EventScoreTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    Event *event = (Event*)object;
+    CEventScore *ceventscore = (CEventScore*)object;
   
      GEvent* gevent  = (GEvent*)ceventscore.event.gEvent;
    NSString *geventname = gevent.gEventName;
@@ -225,7 +225,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
    NSString *eventname = [NSString stringWithFormat:@"%@ %@", geventname, divisionname];
 
    
-  cell.eventTitleLabel.text = eventname;
+  //cell.eventTitleLabel.text = eventname;
 
   }
 #pragma mark - Segues
