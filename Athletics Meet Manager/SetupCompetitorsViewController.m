@@ -9,6 +9,7 @@
 #import "SetupCompetitorsViewController.h"
 #import "CompetitorTableViewCell.h"
 #import "Competitor.h"
+#import "Meet.h"
 
 @interface SetupCompetitorsViewController ()
 
@@ -248,7 +249,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
 
 #pragma mark - MeetAddViewControllerUnwinds
 
-- (IBAction)unwindToSetupTeamsDone:(UIStoryboardSegue *)unwindSegue
+- (IBAction)unwindToSetupCompetitorsDone:(UIStoryboardSegue *)unwindSegue
 {
 
 
@@ -289,6 +290,11 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
         NSLog(@"comps in team %@ :  %@",_teamObject.teamName,[NSString stringWithFormat:@"%@",  @([[_teamObject valueForKey:@"competitors"] count] ) ]);
         
         
+        [competitor setValue:_teamObject.meet forKey:@"meet"];
+       
+        NSLog(@"comps in meet %@ :  %@",_teamObject.meet.meetName,[NSString stringWithFormat:@"%@",  @([[_teamObject.meet valueForKey:@"competitors"] count] ) ]);
+
+        
         //////
         
           // Store CompID data
@@ -296,10 +302,10 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+   //  [_meetObject.meetID intValue];
+     int tempint =  [_teamObject.meet.meetID intValue];
      
-     int tempint =  [_teamObject.teamID intValue];
-     
-     NSString * keystring = [NSString stringWithFormat:@"%dlastTeamID",tempint];  ////
+     NSString * keystring = [NSString stringWithFormat:@"%dlastCompID",tempint];  ////
      
      NSLog(@"%@",keystring);
      
@@ -343,7 +349,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
    
 
 }
-- (IBAction)unwindToSetupTeamsCancel:(UIStoryboardSegue *)unwindSegue
+- (IBAction)unwindToSetupCompetitorsCancel:(UIStoryboardSegue *)unwindSegue
 {
 
 UIViewController* sourceViewController = unwindSegue.sourceViewController;

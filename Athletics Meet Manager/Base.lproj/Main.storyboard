@@ -998,7 +998,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="16t-Vw-QHT" customClass="EventForCTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventForCCell" id="16t-Vw-QHT" customClass="EventForCTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="16t-Vw-QHT" id="fpU-5g-dPW">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -1012,6 +1012,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="eventTitleLabel" destination="1ah-Tk-dxv" id="Lpp-aF-biT"/>
                                     <segue destination="s78-6m-EOz" kind="show" identifier="showEventResult" id="gxZ-ad-71p"/>
                                 </connections>
                             </tableViewCell>

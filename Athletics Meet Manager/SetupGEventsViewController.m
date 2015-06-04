@@ -272,8 +272,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         [gEvent setValue: sourceViewController.gEventName.text forKey:@"gEventName"];
     
         }
-        if (sourceViewController.maxCompPerTeamLabel) {
-        [gEvent setValue: sourceViewController.maxCompPerTeamLabel.text forKey:@"competitorsPerTeam"];
+        if (sourceViewController.maxCompStepper) {
+        [gEvent setValue: [NSNumber numberWithInt:[sourceViewController.maxCompPerTeamLabel.text intValue]] forKey:@"competitorsPerTeam"];
     
         }
         if (sourceViewController.gEventTypeValue) {
@@ -365,6 +365,7 @@ if ([sourceViewController isKindOfClass:[GEventAddViewController class]])
 
 
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer*)sender {
+NSLog(@"in longpress");
 
 if (sender.state == UIGestureRecognizerStateBegan)
 	{

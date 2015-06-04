@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
+#import "EventForCAddViewController.h"
+#import "Meet.h"
 
-@interface EventScoreSheetViewController : UITableViewController
+@interface EventScoreSheetViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Meet* meetObject;
+
 
 @end

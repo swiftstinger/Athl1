@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Event.h"
 
 @interface EventForCAddViewController : UITableViewController
+
+@property Event* event;
 
 @end

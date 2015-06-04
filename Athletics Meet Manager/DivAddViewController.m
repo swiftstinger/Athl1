@@ -21,7 +21,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.editing = false;
-    _isOnTextField = false;
+    self.isOnTextField = false;
     
     
 }
@@ -30,15 +30,12 @@
 
 - (void)setDetailItem:(id)newDetailItem
 {
-NSLog(@"in detail item");
-   if (_detailItem != newDetailItem) {
-        
-        NSLog(@"before edit set");
-        _detailItem = newDetailItem;
-        
-        NSLog(@"is editing");
+
+   if (self.detailItem != newDetailItem) {
+
+        self.detailItem = newDetailItem;
         self.isEditing = TRUE;
-        // Update the view.
+      
       [self configureView];
     }
 }
@@ -46,7 +43,7 @@ NSLog(@"in detail item");
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)newcontext
 {
-    if (_managedObjectContext != newcontext) {
+    if (self.managedObjectContext != newcontext) {
         _managedObjectContext = newcontext;
         
     }

@@ -295,7 +295,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         
         //////
         
-          // Store GEventID data
+          // Store teamID data
         
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -319,7 +319,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
        int newint = oldint + 1;
        NSNumber *newnumber = [NSNumber numberWithInt:newint];
        [team setValue: newnumber forKey: @"teamID"];                  //////////
-        NSLog(@"teamname %@  gteamID %@", team.teamName, team.teamID);
+        NSLog(@"teamname %@  teamID %@", team.teamName, team.teamID);
 
     [defaults setObject: newnumber forKey:keystring];            /////////
      

@@ -57,6 +57,8 @@ NSLog(@"in detail item");
       _meetName.text = [self.detailItem valueForKey:@"meetName"];
       
       
+      self.ceventLimitStepper.value = [[self.detailItem valueForKey:@"cEventLimit"] intValue];
+      
      self.cEventLimitLabel.text = [[self.detailItem valueForKey:@"cEventLimit"]description];
       self.meetDate.date = [self.detailItem valueForKey:@"meetDate"];
       

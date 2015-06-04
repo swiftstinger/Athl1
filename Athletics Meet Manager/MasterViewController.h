@@ -11,7 +11,7 @@
 #import "MeetAddViewController.h"
 //#import "MeetViewController.h"
 
-//@interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate,MeetAddViewControllerDelegate>
+//@interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 

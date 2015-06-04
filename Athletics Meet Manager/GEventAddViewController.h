@@ -21,5 +21,12 @@
 
 @property (weak, nonatomic) NSString* gEventTypeValue;
 
+@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property BOOL isEditing;
+@property BOOL isOnTextField;
+
+
 
 @end

@@ -17,9 +17,66 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.editing = false;
+    _isOnTextField = false;
     
     
 }
+
+#pragma mark - Managing the detail item
+
+- (void)setDetailItem:(id)newDetailItem
+{
+
+   if (_detailItem != newDetailItem) {
+
+        _detailItem = newDetailItem;
+        self.isEditing = TRUE;
+      
+      [self configureView];
+    }
+}
+#pragma mark - Managing the managedobjectcontext item
+
+- (void)setManagedObjectContext:(NSManagedObjectContext *)newcontext
+{
+    if (_managedObjectContext != newcontext) {
+        _managedObjectContext = newcontext;
+        
+    }
+}
+
+- (void)configureView
+{
+
+    // Update the user interface for the detail item.
+    if (self.editing) {
+      _gEventName.text = [self.detailItem valueForKey:@"gEventName"];
+      
+      self.maxCompStepper.value = [[self.detailItem valueForKey:@"competitorsPerTeam"] intValue];
+      
+     self.maxCompPerTeamLabel.text = [[self.detailItem valueForKey:@"competitorsPerTeam"]description];
+      
+      
+     
+      self.gEventTypeValue  = [self.detailItem valueForKey:@"gEventType"];
+
+      if ([self.gEventTypeValue isEqualToString: [self.gEventType titleForSegmentAtIndex:0]])
+      {
+        self.gEventType.selectedSegmentIndex = 0;
+        
+        }
+         if ([self.gEventTypeValue isEqualToString: [self.gEventType titleForSegmentAtIndex:1]])
+      {
+        self.gEventType.selectedSegmentIndex = 1;
+        
+        }
+      
+      
+      
+   }
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -69,11 +126,15 @@ self.gEventTypeValue= [sender titleForSegmentAtIndex:[sender selectedSegmentInde
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.currentResponder = textField;
-    
+    self.isOnTextField = true;
 }
 
 - (void)resignOnTap:(id)iSender {
-        [self.currentResponder resignFirstResponder];
+    [self.currentResponder resignFirstResponder];
+    if (_isOnTextField) {
+      self.isOnTextField = false;
+      [self.currentResponder resignFirstResponder];
+    }
 }
 
 
