@@ -689,7 +689,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventScore" id="pdh-yn-JPo" customClass="EventScoreTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cEventScoreCell" id="pdh-yn-JPo" customClass="EventScoreTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pdh-yn-JPo" id="LSW-Mk-ees">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -721,6 +721,10 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="competitorNameLabel" destination="c0f-cJ-e3E" id="Flg-Cq-CVa"/>
+                                    <outlet property="competitorPlaceLabel" destination="Fok-C1-p6D" id="rCZ-Py-B2e"/>
+                                    <outlet property="competitorResultLabel" destination="thY-zd-3jy" id="Loq-qi-kSK"/>
+                                    <outlet property="competitorScoreLabel" destination="oSt-EX-VHH" id="rct-YR-jzC"/>
                                     <segue destination="kPh-lM-lGI" kind="show" identifier="enterResult" id="rgO-wr-L1q"/>
                                 </connections>
                             </tableViewCell>
@@ -1358,6 +1362,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="compNameField" destination="p2a-qa-qT3" id="lut-pe-hDm"/>
+                        <outlet property="resultField" destination="LWS-Qe-kyV" id="BzD-5S-p9V"/>
+                        <outlet property="teamAbrField" destination="1oz-W9-Po1" id="Ueh-3p-z7x"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="5425" y="694"/>

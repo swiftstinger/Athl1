@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CEventScore.h"
 
 @interface CompetitorScoreEnterViewController : UITableViewController
+
+@property (strong, nonatomic) CEventScore* cEventScore;
+@property  double result;
 
 @end

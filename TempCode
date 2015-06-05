@@ -1,4 +1,10 @@
 
+
+
+Enterresultsviewcontroller next
+
+
+
 Update events if in addiv, adteam, addEvent, done if gevent and team bool = yes
 Updates on done I think is good
 
@@ -9,7 +15,10 @@ Updates on done I think is good
 
 
 
-
+NSLog(@"eventscores in competitor before %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
+        ceventscore.competitor = sourceViewController.competitorObject;
+        
+        NSLog(@"eventscores in competitor after %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
 
 
 

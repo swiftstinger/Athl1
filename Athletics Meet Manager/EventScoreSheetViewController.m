@@ -7,8 +7,10 @@
 //
 
 #import "EventScoreSheetViewController.h"
+#import "CompetitorScoreEnterViewController.h"
 #import "EventScoreTableViewCell.h"
 #import "CEventScore.h"
+#import "Competitor.h"
 #import "GEvent.h"
 #import "Division.h"
 #import "Event.h"
@@ -217,15 +219,19 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     
     CEventScore *ceventscore = (CEventScore*)object;
   
-     GEvent* gevent  = (GEvent*)ceventscore.event.gEvent;
-   NSString *geventname = gevent.gEventName;
-   Division* division  = (Division*)ceventscore.event.gEvent;
-   NSString *divisionname = division.divName;
-   
-   NSString *eventname = [NSString stringWithFormat:@"%@ %@", geventname, divisionname];
+     NSString* compName  = ceventscore.competitor.compName;
+     cell.competitorNameLabel.text = compName;
+    if (ceventscore.result) {
+    cell.competitorResultLabel.text = [ceventscore.result description];
+    }
+    if (ceventscore.placing) {
+    cell.competitorPlaceLabel.text = [ceventscore.placing description];
+    }
+    if (ceventscore.score) {
+    cell.competitorScoreLabel.text = [ceventscore.score description];
+    }
 
-   
-  //cell.eventTitleLabel.text = eventname;
+
 
   }
 #pragma mark - Segues
@@ -233,7 +239,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  
 
-    if ([[segue identifier] isEqualToString:@"showEventResult"]) {
+    if ([[segue identifier] isEqualToString:@"enterResult"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
@@ -248,44 +254,69 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
 
 #pragma mark - MeetAddViewControllerUnwinds
 
-- (IBAction)unwindToSetupEventsForCDone:(UIStoryboardSegue *)unwindSegue
+- (IBAction)unwindToEventScoreSheetDone:(UIStoryboardSegue *)unwindSegue
 {
 
 
-    if ([unwindSegue.sourceViewController isKindOfClass:[EventForCAddViewController class]])
+    if ([unwindSegue.sourceViewController isKindOfClass:[EventScoreAddViewController class]])
     {
-        NSLog(@"Coming from EventsForCAdd Done!");
+        NSLog(@"Coming from EventScoreAdd Done!");
         
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
         CEventScore *ceventscore = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
         
         
-        EventForCAddViewController *sourceViewController = unwindSegue.sourceViewController;
+        EventScoreAddViewController *sourceViewController = unwindSegue.sourceViewController;
         ////////
         /////   set values
         ///////
      
+       
         
         
+        
+        
+        //validation in source
+                ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result]   ;
         
         
          //////
         // link relationships
         /////
         
-        if (!(self.competitorObject.cEventScores)) {
-            [self.competitorObject setValue:[NSSet setWithObject:ceventscore] forKey:@"cEventScores"];
+       // test link  // fixme
+        
+        /*
+                     NSLog(@"eventscores in competitor before %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
+        ceventscore.competitor = sourceViewController.competitorObject;
+        
+        NSLog(@"eventscores in competitor after %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
+        */
+         if (!(sourceViewController.competitorObject.cEventScores)) {
+            [sourceViewController.competitorObject setValue:[NSSet setWithObject:ceventscore] forKey:@"cEventScores"];
         }
         else
         {
-        NSMutableSet *cEventScoresset = [self.competitorObject mutableSetValueForKey:@"cEventScores"];
+        NSMutableSet *cEventScoresset = [sourceViewController.competitorObject mutableSetValueForKey:@"cEventScores"];
+        [cEventScoresset addObject:ceventscore];
+        }
+         NSLog(@"eventscores in competitor after %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
+       
+         if (!(self.eventObject.cEventScores)) {
+            [self.eventObject setValue:[NSSet setWithObject:ceventscore] forKey:@"cEventScores"];
+        }
+        else
+        {
+        NSMutableSet *cEventScoresset = [self.eventObject mutableSetValueForKey:@"cEventScores"];
         [cEventScoresset addObject:ceventscore];
         }
         
-        NSLog(@"eventscores in competitor %@ :  %@",self.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[self.competitorObject valueForKey:@"cEventScores"] count] ) ]);
+        NSLog(@"eventscores in event %@ :  %@",self.eventObject.eventID,[NSString stringWithFormat:@"%@",  @([[self.eventObject valueForKey:@"cEventScores"] count] ) ]);
         
+        //directassign
         
+        ceventscore.meet = self.eventObject.meet;
         //////
         
           // Store EventID data
@@ -294,7 +325,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
      
-     int tempint =  [self.competitorObject.meet.meetID intValue];
+     int tempint =  [self.eventObject.meet.meetID intValue];
      
      NSString * keystring = [NSString stringWithFormat:@"%dlastcEventScoreID",tempint];  ////
      
@@ -312,7 +343,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
        int newint = oldint + 1;
        NSNumber *newnumber = [NSNumber numberWithInt:newint];
        [ceventscore setValue: newnumber forKey: @"cEventScoreID"];                  //////////
-        NSLog(@"compname %@  cEventScoreID %@", self.competitorObject.compName, ceventscore.cEventScoreID);
+        NSLog(@"compname %@  cEventScoreID %@", sourceViewController.competitorObject.compName, ceventscore.cEventScoreID);
 
     [defaults setObject: newnumber forKey:keystring];            /////////
      
@@ -338,16 +369,64 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
     }
    
    
+   if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorScoreEnterViewController class]])
+    {
+        NSLog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
+        
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+        
+        CompetitorScoreEnterViewController *sourceViewController = unwindSegue.sourceViewController;
+        
+        CEventScore *ceventscore = sourceViewController.cEventScore;
+        
+        
+        ////////
+        /////   set values
+        ///////
+        
+        //validation in source
+                ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result]   ;
+        
+        
+            ////
+    
+        
+                NSError *error = nil;
+
+        
+        
+
+        // Save the context.
+        
+            if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+        
+    }
+   
+   
 
 }
-- (IBAction)unwindToSetupEventsForCCancel:(UIStoryboardSegue *)unwindSegue
+- (IBAction)unwindToEventScoreSheetCancel:(UIStoryboardSegue *)unwindSegue
 {
 
 UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
-if ([sourceViewController isKindOfClass:[EventForCAddViewController class]])
+if ([sourceViewController isKindOfClass:[EventScoreAddViewController class]])
     {
-        NSLog(@"Coming from cEventScoreAdd Cancel!");
+        NSLog(@"Coming from cEventScoreAdd  in eventscoresheet Cancel!");
+    }
+    
+    if ([sourceViewController isKindOfClass:[CompetitorScoreEnterViewController class]])
+    {
+        NSLog(@"Coming from competitorscoreneter  in eventscoresheet Cancel!");
     }
 }
+
+
+
 @end
