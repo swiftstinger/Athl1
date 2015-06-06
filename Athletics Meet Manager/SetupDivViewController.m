@@ -299,6 +299,10 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         NSLog(@"divisions in meet %@ :  %@",_meetObject.meetName,[NSString stringWithFormat:@"%@",  @([[_meetObject valueForKey:@"divisions"] count] ) ]);
         
         
+        
+        
+       
+        
         //////
         
 
@@ -367,9 +371,10 @@ if ([sourceViewController isKindOfClass:[DivAddViewController class]])
     }
 }
 
-
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer*)sender {
 
+
+NSLog(@"long press fire");
 if (sender.state == UIGestureRecognizerStateBegan)
 	{
 		CGPoint location = [sender locationInView:self.tableView];

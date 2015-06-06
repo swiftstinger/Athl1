@@ -430,9 +430,6 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
-                                            <connections>
-                                                <outletCollection property="gestureRecognizers" destination="2H5-pk-3rz" appends="YES" id="1Wz-qO-YnM"/>
-                                            </connections>
                                         </label>
                                     </subviews>
                                     <constraints>
@@ -440,8 +437,10 @@
                                         <constraint firstItem="ajo-bA-pOr" firstAttribute="leading" secondItem="dyl-L1-IEx" secondAttribute="leadingMargin" id="kCp-YH-sIo"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <gestureRecognizers/>
                                 <connections>
                                     <outlet property="divTitleLabel" destination="ajo-bA-pOr" id="h8c-tN-qAz"/>
+                                    <outletCollection property="gestureRecognizers" destination="2H5-pk-3rz" appends="YES" id="nd4-4p-scx"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -459,7 +458,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="longPressRecognizer" destination="2H5-pk-3rz" id="X1Z-jc-9Bo"/>
                         <segue destination="lO5-h7-G6N" kind="presentation" identifier="editDiv" modalTransitionStyle="flipHorizontal" id="Kin-H0-cmG"/>
                     </connections>
                 </tableViewController>
@@ -620,7 +618,7 @@
                             </segments>
                         </segmentedControl>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="MwJ-pp-F7x" customClass="EventResultTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventResultCell" id="MwJ-pp-F7x" customClass="EventResultTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MwJ-pp-F7x" id="OoG-iy-DAs">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -634,7 +632,8 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Sm8-SY-0ms" kind="show" id="fZE-8a-4pG"/>
+                                    <outlet property="eventNameLabel" destination="c4F-Vp-2IR" id="NKX-4O-v3b"/>
+                                    <segue destination="Sm8-SY-0ms" kind="show" identifier="showEventScoreSheet" id="fZE-8a-4pG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

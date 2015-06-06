@@ -388,7 +388,7 @@ if ([sourceViewController isKindOfClass:[MeetAddViewController class]])
 
 **/
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender {
-
+NSLog(@"long press fire");
 // only when gesture was recognized, not when ended
 	if (sender.state == UIGestureRecognizerStateBegan)
 	{
