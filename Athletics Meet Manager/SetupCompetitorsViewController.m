@@ -23,7 +23,7 @@
 {
     if (_managedObjectContext != newcontext) {
         _managedObjectContext = newcontext;
-        
+        NSLog(@"competitorview in team moc");
     }
 }
 
@@ -55,7 +55,8 @@ NSLog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
       NSLog(@"team item %@", [self.teamObject valueForKey:@"teamName"]);
-      
+      _navBar.title = [self.teamObject valueForKey:@"teamName"];
+
     }
     
     
@@ -121,10 +122,13 @@ NSLog(@"in view");
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
+    
+    NSLog(@"1");
+    
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Competitor" inManagedObjectContext:self.managedObjectContext];
-    
+      NSLog(@"2");
     [fetchRequest setEntity:entity];
-    
+      NSLog(@"3");
      // limit to those entities that belong to the particular item
 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _teamObject];
     [fetchRequest setPredicate:predicate];
@@ -151,7 +155,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
 	}
-    
+      NSLog(@"4");
     return _fetchedResultsController;
 }    
 
@@ -223,6 +227,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
+        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
     }
     
      if ([[segue identifier] isEqualToString:@"editCompetitor"]) {
@@ -280,7 +285,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
         ///////
      
            if (sourceViewController.competitorName) {
-        [competitor setValue: sourceViewController.competitorName.text forKey:@"competitorName"];
+        [competitor setValue: sourceViewController.competitorName.text forKey:@"compName"];
     
         }
         
@@ -385,7 +390,7 @@ if (sender.state == UIGestureRecognizerStateBegan)
         
 		NSLog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
         
-        [self performSegueWithIdentifier:@"editDiv" sender:self];
+        [self performSegueWithIdentifier:@"editCompetitor" sender:self];
 	}
 
 }

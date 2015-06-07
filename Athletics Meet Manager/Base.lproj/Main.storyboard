@@ -576,7 +576,7 @@
                                 <connections>
                                     <outlet property="teamTitleLabel" destination="DCv-cW-UnJ" id="xbr-ZI-4Zu"/>
                                     <outletCollection property="gestureRecognizers" destination="6H2-py-H9b" appends="YES" id="R1Y-em-iGx"/>
-                                    <segue destination="ted-pL-4s5" kind="show" identifier="competitorSetup" id="Vhy-Mh-B6i"/>
+                                    <segue destination="ted-pL-4s5" kind="show" identifier="showTeam" id="Vhy-Mh-B6i"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -984,6 +984,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="navBar" destination="0PB-vq-3LA" id="yAZ-N4-ORa"/>
                         <segue destination="4Ya-of-ba7" kind="presentation" identifier="editCompetitor" modalTransitionStyle="flipHorizontal" id="oMD-Bf-krW"/>
                     </connections>
                 </tableViewController>
@@ -1036,6 +1037,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="navBar" destination="s6T-5U-e17" id="AYP-ym-1VH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pQG-4x-FBi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1209,12 +1213,12 @@
                     <navigationItem key="navigationItem" title="Competitor Details" id="fQ1-fb-2q0">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vfm-Ak-X1b">
                             <connections>
-                                <segue destination="aR6-bh-8el" kind="unwind" unwindAction="unwindToSetupTeamsCancel:" id="3AE-Ss-b4v"/>
+                                <segue destination="aR6-bh-8el" kind="unwind" unwindAction="unwindToSetupCompetitorsCancel:" id="LbI-2b-vhx"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="Yox-2Z-wEK">
                             <connections>
-                                <segue destination="aR6-bh-8el" kind="unwind" unwindAction="unwindToSetupTeamsDone:" id="BOj-Pt-RXS"/>
+                                <segue destination="aR6-bh-8el" kind="unwind" unwindAction="unwindToSetupCompetitorsDone:" id="RYu-FV-d1o"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1279,12 +1283,12 @@
                     <navigationItem key="navigationItem" title="Pick Event" id="QhI-dm-qYd">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="XIb-IN-wuQ">
                             <connections>
-                                <segue destination="Vks-jh-ps7" kind="unwind" unwindAction="unwindToSetupTeamsCancel:" id="HoO-8C-Nh6"/>
+                                <segue destination="Vks-jh-ps7" kind="unwind" unwindAction="unwindToSetupEventsForCCancel:" id="TCN-kZ-k1R"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="A2Z-I6-dhv">
                             <connections>
-                                <segue destination="Vks-jh-ps7" kind="unwind" unwindAction="unwindToSetupTeamsDone:" id="OUb-T5-o4I"/>
+                                <segue destination="Vks-jh-ps7" kind="unwind" unwindAction="unwindToSetupEventsForCDone:" id="SSz-f6-iQL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1356,12 +1360,12 @@
                     <navigationItem key="navigationItem" title="Competitor Results" id="FQ9-S4-hc9">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wut-Vl-S5c">
                             <connections>
-                                <segue destination="8pZ-A0-8aw" kind="unwind" unwindAction="unwindToSetupDivCancel:" id="aFW-mH-cYq"/>
+                                <segue destination="8pZ-A0-8aw" kind="unwind" unwindAction="unwindToEventScoreSheetCancel:" id="YyE-kr-cyN"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="wcz-Fc-Uvr">
                             <connections>
-                                <segue destination="8pZ-A0-8aw" kind="unwind" unwindAction="unwindToSetupDivDone:" id="olf-Gp-ppe"/>
+                                <segue destination="8pZ-A0-8aw" kind="unwind" unwindAction="unwindToEventScoreSheetDone:" id="o3F-OE-qTR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1412,12 +1416,12 @@
                     <navigationItem key="navigationItem" title="Competitor Results Update" id="1n7-cx-e5m">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="58b-Dg-bIG">
                             <connections>
-                                <segue destination="41e-Fa-Nv9" kind="unwind" unwindAction="unwindToSetupDivCancel:" id="znb-Ch-L7e"/>
+                                <segue destination="41e-Fa-Nv9" kind="unwind" unwindAction="unwindToEventScoreSheetCancel:" id="fG4-MI-PK9"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="ytF-7L-BF8">
                             <connections>
-                                <segue destination="41e-Fa-Nv9" kind="unwind" unwindAction="unwindToSetupDivDone:" id="zyX-pK-QDM"/>
+                                <segue destination="41e-Fa-Nv9" kind="unwind" unwindAction="unwindToEventScoreSheetDone:" id="Kzv-nh-6zg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

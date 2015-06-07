@@ -51,7 +51,7 @@
 
     // Update the user interface for the detail item.
     if (self.editing) {
-      _competitorName.text = [_detailItem valueForKey:@"competitorName"];
+      _competitorName.text = [_detailItem valueForKey:@"compName"];
       
       
    }

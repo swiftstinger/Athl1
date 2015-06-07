@@ -59,7 +59,7 @@
     // Update the user interface for the detail item.
     if (_detailItem) {
       NSLog(@"competitor item %@", [self.competitorObject valueForKey:@"compName"]);
-      
+      _navBar.title = [self.competitorObject valueForKey:@"compName"];
     }
     
     
@@ -238,7 +238,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
-        
+        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
         
     }
     

@@ -53,7 +53,10 @@
 NSLog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
-      NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
+     
+    //  _navBar.title = [self.meetObject valueForKey:@"meetName"];
+
+        NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
       
     }
 }
@@ -223,6 +226,10 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
+       
+        NSLog(@"in segue");
+          [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+        
     }
     
      if ([[segue identifier] isEqualToString:@"editTeam"]) {

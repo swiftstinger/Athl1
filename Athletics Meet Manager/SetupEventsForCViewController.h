@@ -18,6 +18,7 @@
 @property (strong, nonatomic) Competitor* competitorObject;
 
 
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 
 @end

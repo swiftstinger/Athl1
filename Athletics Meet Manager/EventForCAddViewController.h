@@ -9,7 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "Event.h"
 
-@interface EventForCAddViewController : UITableViewController
+@interface EventForCAddViewController : UITableViewController <NSFetchedResultsControllerDelegate, UITextFieldDelegate>
+@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property BOOL isEditing;
+@property BOOL isOnTextField;
+
 
 @property Event* event;
 
