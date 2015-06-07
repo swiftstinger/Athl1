@@ -28,9 +28,9 @@
 - (void)setDetailItem:(id)newDetailItem
 {
 
-   if (self.detailItem != newDetailItem) {
+   if (_detailItem != newDetailItem) {
 
-        self.detailItem = newDetailItem;
+        _detailItem = newDetailItem;
         self.isEditing = TRUE;
       
       [self configureView];
@@ -51,7 +51,7 @@
 
     // Update the user interface for the detail item.
     if (self.editing) {
-      _competitorName.text = [self.detailItem valueForKey:@"competitorName"];
+      _competitorName.text = [_detailItem valueForKey:@"competitorName"];
       
       
    }

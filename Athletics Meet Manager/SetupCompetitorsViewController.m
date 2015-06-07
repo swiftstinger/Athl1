@@ -53,7 +53,7 @@
 
 NSLog(@"in view");
     // Update the user interface for the detail item.
-    if (self.detailItem) {
+    if (_detailItem) {
       NSLog(@"team item %@", [self.teamObject valueForKey:@"teamName"]);
       
     }
@@ -259,10 +259,22 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
         
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-        Competitor *competitor = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
+        Competitor *competitor;
+       
+         CompetitorAddViewController *sourceViewController = unwindSegue.sourceViewController;
         
         
-        CompetitorAddViewController *sourceViewController = unwindSegue.sourceViewController;
+      if (!sourceViewController.editing) {
+
+    
+     competitor = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
+        }
+        else
+        {
+        
+        competitor = sourceViewController.detailItem;
+        }
+        
         ////////
         /////   set values
         ///////

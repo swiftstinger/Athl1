@@ -57,7 +57,7 @@
 
 
     // Update the user interface for the detail item.
-    if (self.detailItem) {
+    if (_detailItem) {
       NSLog(@"competitor item %@", [self.competitorObject valueForKey:@"compName"]);
       
     }

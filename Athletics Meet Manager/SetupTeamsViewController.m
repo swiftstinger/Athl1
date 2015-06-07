@@ -52,7 +52,7 @@
 
 NSLog(@"in view");
     // Update the user interface for the detail item.
-    if (self.detailItem) {
+    if (_detailItem) {
       NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
       
     }
@@ -259,10 +259,26 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-        Team *team = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
+     
         
         
         TeamAddViewController *sourceViewController = unwindSegue.sourceViewController;
+        
+        Team *team ;
+        
+        if (!sourceViewController.editing) {
+
+    
+       team = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
+        }
+        else
+        {
+        
+        team = sourceViewController.detailItem;
+        }
+        
+        
+        
         ////////
         /////   set values
         ///////
@@ -369,7 +385,7 @@ if (sender.state == UIGestureRecognizerStateBegan)
         
 		NSLog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
         
-        [self performSegueWithIdentifier:@"editDiv" sender:self];
+        [self performSegueWithIdentifier:@"editTeam" sender:self];
 	}
 
 }

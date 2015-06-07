@@ -41,16 +41,16 @@
 {
 
     // Update the user interface for the detail item.
-    if (self.detailItem) {
+    if (_detailItem) {
       _navBar.title = [self.meetObject valueForKey:@"meetName"];
       
       NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
              /*
-          self.titleField.text = [self.detailItem valueForKey:@"title"];
-        self.episodeIDField.text = [NSString stringWithFormat:@"%d", [[self.detailItem valueForKey:@"episodeID"] integerValue]];
-        self.descriptionView.text = [self.detailItem valueForKey:@"desc"];
-        self.firstRunSegmentedControl.selectedSegmentIndex = [[self.detailItem valueForKey:@"firstRun"] boolValue];
-        self.showTimeLabel.text = [[self.detailItem valueForKey:@"showTime"] description];
+          self.titleField.text = [_detailItem valueForKey:@"title"];
+        self.episodeIDField.text = [NSString stringWithFormat:@"%d", [[_detailItem valueForKey:@"episodeID"] integerValue]];
+        self.descriptionView.text = [_detailItem valueForKey:@"desc"];
+        self.firstRunSegmentedControl.selectedSegmentIndex = [[_detailItem valueForKey:@"firstRun"] boolValue];
+        self.showTimeLabel.text = [[_detailItem valueForKey:@"showTime"] description];
         
         */
     }

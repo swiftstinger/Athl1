@@ -51,15 +51,15 @@
 
     // Update the user interface for the detail item.
     if (self.editing) {
-      _gEventName.text = [self.detailItem valueForKey:@"gEventName"];
+      _gEventName.text = [_detailItem valueForKey:@"gEventName"];
       
-      self.maxCompStepper.value = [[self.detailItem valueForKey:@"competitorsPerTeam"] intValue];
+      self.maxCompStepper.value = [[_detailItem valueForKey:@"competitorsPerTeam"] intValue];
       
-     self.maxCompPerTeamLabel.text = [[self.detailItem valueForKey:@"competitorsPerTeam"]description];
+     self.maxCompPerTeamLabel.text = [[_detailItem valueForKey:@"competitorsPerTeam"]description];
       
       
      
-      self.gEventTypeValue  = [self.detailItem valueForKey:@"gEventType"];
+      self.gEventTypeValue  = [_detailItem valueForKey:@"gEventType"];
 
       if ([self.gEventTypeValue isEqualToString: [self.gEventType titleForSegmentAtIndex:0]])
       {

@@ -58,7 +58,7 @@
 
 
     // Update the user interface for the detail item.
-    if (self.detailItem) {
+    if (_detailItem) {
       NSLog(@"event item  id %@", [self.eventObject valueForKey:@"eventID"]);
       
     }

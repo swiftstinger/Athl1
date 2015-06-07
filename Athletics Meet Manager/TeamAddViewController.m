@@ -52,8 +52,8 @@
 
     // Update the user interface for the detail item.
     if (self.editing) {
-      self.teamName.text = [self.detailItem valueForKey:@"teamName"];
-      self.teamAbr.text = [self.detailItem valueForKey:@"teamAbr"];
+      self.teamName.text = [_detailItem valueForKey:@"teamName"];
+      self.teamAbr.text = [_detailItem valueForKey:@"teamAbr"];
       
       
    }

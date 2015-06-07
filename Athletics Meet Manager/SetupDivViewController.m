@@ -55,7 +55,7 @@
 
 NSLog(@"in view");
     // Update the user interface for the detail item.
-    if (self.detailItem) {
+    if (_detailItem) {
       NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
       
     }
@@ -240,18 +240,20 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
     if ([[segue identifier] isEqualToString:@"editDiv"]) {
         
        NSIndexPath *indexPath = self.indexPathForLongPressCell;
-        
+    
+//  NSIndexPath *indexPath =   [self.tableView indexPathForSelectedRow];
+       
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         
-        
+      
         UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
     DivAddViewController* divAddController = (DivAddViewController*)[navController topViewController];
         
-        
+       
         [divAddController setDetailItem:object];
        
         [divAddController setManagedObjectContext:self.managedObjectContext];
-       
+       NSLog(@"editdiv");
     }
 
     
@@ -270,10 +272,26 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-        Division *div = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
+    Division *div ;
+    DivAddViewController *sourceViewController = unwindSegue.sourceViewController;
+    
+      if (!sourceViewController.editing) {
+
+    
+       div = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
+        }
+        else
+        {
+        
+        div = sourceViewController.detailItem;
+        }
+
+    
+    
+       
         
         
-        DivAddViewController *sourceViewController = unwindSegue.sourceViewController;
+        
         ////////
         /////   set values
         ///////
@@ -374,9 +392,10 @@ if ([sourceViewController isKindOfClass:[DivAddViewController class]])
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer*)sender {
 
 
-NSLog(@"long press fire");
+
 if (sender.state == UIGestureRecognizerStateBegan)
 	{
+    
 		CGPoint location = [sender locationInView:self.tableView];
   self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
         

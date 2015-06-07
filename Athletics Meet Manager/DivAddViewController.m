@@ -31,9 +31,9 @@
 - (void)setDetailItem:(id)newDetailItem
 {
 
-   if (self.detailItem != newDetailItem) {
-
-        self.detailItem = newDetailItem;
+   if (_detailItem != newDetailItem) {
+NSLog(@"setdetailitem");
+        _detailItem = newDetailItem;
         self.isEditing = TRUE;
       
       [self configureView];
@@ -51,10 +51,11 @@
 
 - (void)configureView
 {
-
+NSLog(@"configureview");
     // Update the user interface for the detail item.
     if (self.editing) {
-      _divName.text = [self.detailItem valueForKey:@"divName"];
+    NSLog(@"configureview is editing");
+      _divName.text = [_detailItem valueForKey:@"divName"];
       
       
    }

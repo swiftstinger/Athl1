@@ -53,7 +53,7 @@
 
 NSLog(@"in view");
     // Update the user interface for the detail item.
-    if (self.detailItem) {
+    if (_detailItem) {
       NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
       
     }
@@ -259,11 +259,26 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         NSLog(@"Coming from GEventAdd Done!");
         
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+     GEventAddViewController *sourceViewController = unwindSegue.sourceViewController;
+    GEvent *gEvent;
     
-        GEvent *gEvent = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
+    if (!sourceViewController.editing) {
+
+    
+       gEvent = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
+        }
+        else
+        {
+        
+        gEvent = sourceViewController.detailItem;
+        }
+
+
+    
+       
         
         
-        GEventAddViewController *sourceViewController = unwindSegue.sourceViewController;
+       
         ////////
         /////   set values
         ///////
@@ -375,7 +390,7 @@ if (sender.state == UIGestureRecognizerStateBegan)
         
 		NSLog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
         
-        [self performSegueWithIdentifier:@"editDiv" sender:self];
+        [self performSegueWithIdentifier:@"editGEvent" sender:self];
 	}
 
 }

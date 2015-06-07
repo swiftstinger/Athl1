@@ -53,7 +53,7 @@
 
 
     // Update the user interface for the detail item.
-    if (self.detailItem) {
+    if (_detailItem) {
       NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
       
     }

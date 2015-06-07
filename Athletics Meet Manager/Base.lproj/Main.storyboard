@@ -492,8 +492,10 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <gestureRecognizers/>
                                 <connections>
                                     <outlet property="gEventTitleLabel" destination="BxX-VE-rHZ" id="eq8-N9-6EC"/>
+                                    <outletCollection property="gestureRecognizers" destination="ngM-ZW-f52" appends="YES" id="ai8-JX-pvq"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -570,8 +572,10 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <gestureRecognizers/>
                                 <connections>
                                     <outlet property="teamTitleLabel" destination="DCv-cW-UnJ" id="xbr-ZI-4Zu"/>
+                                    <outletCollection property="gestureRecognizers" destination="6H2-py-H9b" appends="YES" id="R1Y-em-iGx"/>
                                     <segue destination="ted-pL-4s5" kind="show" identifier="competitorSetup" id="Vhy-Mh-B6i"/>
                                 </connections>
                             </tableViewCell>
