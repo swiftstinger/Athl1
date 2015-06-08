@@ -907,7 +907,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="8k4-GV-hTa">
                             <connections>
-                                <segue destination="JbH-z6-0yw" kind="unwind" unwindAction="unwindToSetupGEventDone:" id="IEj-Z7-N2A"/>
+                                <segue destination="JbH-z6-0yw" kind="unwind" identifier="unwindToGEventDoneSegue" unwindAction="unwindToSetupGEventDone:" id="IEj-Z7-N2A"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1178,8 +1178,6 @@
         <!--AddCompetitor Details-->
         <scene sceneID="sRK-ge-b5M">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="U9G-yT-uMw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="aR6-bh-8el" userLabel="Exit" sceneMemberID="exit"/>
                 <tableViewController title="AddCompetitor Details" id="GLg-HY-OpF" customClass="CompetitorAddViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="AT0-du-m1A">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -1226,6 +1224,8 @@
                         <outlet property="competitorName" destination="ibU-w4-5rH" id="G3M-S6-fem"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U9G-yT-uMw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="aR6-bh-8el" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1784" y="2492"/>
         </scene>
@@ -1248,8 +1248,6 @@
         <!--AddEventsForC-->
         <scene sceneID="kLS-H5-Cac">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yh2-0C-dj1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="Vks-jh-ps7" userLabel="Exit" sceneMemberID="exit"/>
                 <tableViewController title="AddEventsForC" id="hnL-8I-6gi" customClass="EventForCAddViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="9xO-fG-7oO">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -1293,6 +1291,8 @@
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yh2-0C-dj1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Vks-jh-ps7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1784" y="3218"/>
         </scene>
@@ -1315,8 +1315,6 @@
         <!--AddEventScore Details-->
         <scene sceneID="9Oe-XU-zFN">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1VW-7u-ri6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="8pZ-A0-8aw" userLabel="Exit" sceneMemberID="exit"/>
                 <tableViewController title="AddEventScore Details" id="3pk-YG-4KO" customClass="EventScoreAddViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="9FV-bg-85b">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -1375,14 +1373,14 @@
                         <outlet property="teamAbrField" destination="1oz-W9-Po1" id="Ueh-3p-z7x"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1VW-7u-ri6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="8pZ-A0-8aw" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5425" y="694"/>
         </scene>
         <!--Competitor Score Add-->
         <scene sceneID="7qr-RH-FjP">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S8c-64-oyY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="41e-Fa-Nv9" userLabel="Exit" sceneMemberID="exit"/>
                 <tableViewController title="Competitor Score Add" id="kPh-lM-lGI" customClass="CompetitorScoreEnterViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="tnl-Qw-ZUk">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -1426,6 +1424,8 @@
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S8c-64-oyY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="41e-Fa-Nv9" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4706" y="1442"/>
         </scene>

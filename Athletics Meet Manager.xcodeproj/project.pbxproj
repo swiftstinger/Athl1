@@ -13,6 +13,7 @@
 		1F095F411B0FB765000FE30A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F401B0FB765000FE30A /* Images.xcassets */; };
 		1F095F441B0FB765000FE30A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F421B0FB765000FE30A /* LaunchScreen.xib */; };
 		1F095F501B0FB765000FE30A /* Athletics_Meet_ManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F095F4F1B0FB765000FE30A /* Athletics_Meet_ManagerTests.m */; };
+		1F10F8D51B2650E600F536B8 /* Meet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8D41B2650E600F536B8 /* Meet.m */; };
 		1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */; };
 		1FD022001B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */; };
 		1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */; };
@@ -48,7 +49,6 @@
 		1FFB4F6B1B15342A00C6309C /* Division.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F6A1B15342A00C6309C /* Division.m */; };
 		1FFB4F6E1B15342B00C6309C /* Competitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F6D1B15342B00C6309C /* Competitor.m */; };
 		1FFB4F711B15342B00C6309C /* CEventScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F701B15342B00C6309C /* CEventScore.m */; };
-		1FFB4F7A1B15359500C6309C /* Meet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB4F791B15359500C6309C /* Meet.m */; };
 		1FFB4F7C1B1535C100C6309C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFB4F7B1B1535C100C6309C /* CoreData.framework */; };
 		84B5B8431B15C81D00529756 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B5B8421B15C81D00529756 /* MasterViewController.m */; };
 /* End PBXBuildFile section */
@@ -76,6 +76,8 @@
 		1F095F491B0FB765000FE30A /* Athletics Meet ManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Athletics Meet ManagerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F095F4E1B0FB765000FE30A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F095F4F1B0FB765000FE30A /* Athletics_Meet_ManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Athletics_Meet_ManagerTests.m; sourceTree = "<group>"; };
+		1F10F8D31B2650E600F536B8 /* Meet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meet.h; sourceTree = "<group>"; };
+		1F10F8D41B2650E600F536B8 /* Meet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Meet.m; sourceTree = "<group>"; };
 		1FD021F81B13BA6900F40102 /* MeetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetTableViewCell.h; sourceTree = "<group>"; };
 		1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetTableViewCell.m; sourceTree = "<group>"; };
 		1FD021FF1B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Athletics_Meet_Manager.xcdatamodel; sourceTree = "<group>"; };
@@ -144,8 +146,6 @@
 		1FFB4F6D1B15342B00C6309C /* Competitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Competitor.m; sourceTree = "<group>"; };
 		1FFB4F6F1B15342B00C6309C /* CEventScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEventScore.h; sourceTree = "<group>"; };
 		1FFB4F701B15342B00C6309C /* CEventScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEventScore.m; sourceTree = "<group>"; };
-		1FFB4F781B15359500C6309C /* Meet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meet.h; sourceTree = "<group>"; };
-		1FFB4F791B15359500C6309C /* Meet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Meet.m; sourceTree = "<group>"; };
 		1FFB4F7B1B1535C100C6309C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		84B5B8421B15C81D00529756 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -249,8 +249,8 @@
 		1FD6B6581B1736D900F05968 /* DataObjects */ = {
 			isa = PBXGroup;
 			children = (
-				1FFB4F781B15359500C6309C /* Meet.h */,
-				1FFB4F791B15359500C6309C /* Meet.m */,
+				1F10F8D31B2650E600F536B8 /* Meet.h */,
+				1F10F8D41B2650E600F536B8 /* Meet.m */,
 				1FFB4F6F1B15342B00C6309C /* CEventScore.h */,
 				1FFB4F701B15342B00C6309C /* CEventScore.m */,
 				1FFB4F6C1B15342B00C6309C /* Competitor.h */,
@@ -553,7 +553,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FD6B6A21B1F429500F05968 /* CompetitorScoreEnterViewController.m in Sources */,
-				1FFB4F7A1B15359500C6309C /* Meet.m in Sources */,
 				1FD6B6411B171F4200F05968 /* MeetMenuViewController.m in Sources */,
 				1FD6B69C1B1F37A200F05968 /* EventScoreAddViewController.m in Sources */,
 				1FFB4F681B15342A00C6309C /* Team.m in Sources */,
@@ -563,6 +562,7 @@
 				84B5B8431B15C81D00529756 /* MasterViewController.m in Sources */,
 				1FD6B6501B17366900F05968 /* SetupTeamsViewController.m in Sources */,
 				1FFB4F711B15342B00C6309C /* CEventScore.m in Sources */,
+				1F10F8D51B2650E600F536B8 /* Meet.m in Sources */,
 				1FD6B64A1B17363C00F05968 /* SetupDivViewController.m in Sources */,
 				1FD6B6701B1884E200F05968 /* TeamAddViewController.m in Sources */,
 				1FD6B6471B17224300F05968 /* MeetMenuViewCell.m in Sources */,

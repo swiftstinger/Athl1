@@ -301,6 +301,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         [div setValue: sourceViewController.divName.text forKey:@"divName"];
     
         }
+        [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"divsDone"];
         
         //////
         // link relationship

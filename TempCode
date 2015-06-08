@@ -1,4 +1,6 @@
 
+cgange object model to kill links
+
 next
 
 
@@ -22,6 +24,10 @@ Updates on done I think is good
 3. add team add people screens 
 
 
+[entity setUseGPS:[NSNumber numberWithBool:YES]];
+And the other way around:
+
+BOOL isGPSOn = [[entity useGPS] boolValue];
 
 
 NSLog(@"eventscores in competitor before %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);

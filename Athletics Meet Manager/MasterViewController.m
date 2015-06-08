@@ -300,6 +300,11 @@ format.dateFormat = @"dd MMM yyyy";
         [meet setValue: [NSNumber numberWithInt:[sourceViewController.cEventLimitLabel.text intValue]]forKey:@"cEventLimit"];
             
         }
+        [meet setValue:[NSNumber numberWithBool:NO] forKey:@"divsDone"];
+
+        [meet setValue:[NSNumber numberWithBool:NO] forKey:@"eventsDone"];
+
+        [meet setValue:[NSNumber numberWithBool:NO] forKey:@"teamsDone"];
         
         ////////
         

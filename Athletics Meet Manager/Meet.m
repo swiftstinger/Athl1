@@ -2,7 +2,7 @@
 //  Meet.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 27/05/2015.
+//  Created by Ailsa Huysamen on 08/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -18,19 +18,19 @@
 @implementation Meet
 
 @dynamic cEventLimit;
-@dynamic divSDone;
-@dynamic eventsSDone;
+@dynamic divsDone;
+@dynamic eventsDone;
 @dynamic meetDate;
 @dynamic meetEndTime;
 @dynamic meetID;
 @dynamic meetName;
 @dynamic meetStartTime;
-@dynamic teamSDone;
-@dynamic teams;
-@dynamic divisions;
-@dynamic gEvents;
-@dynamic competitors;
-@dynamic events;
+@dynamic teamsDone;
 @dynamic cEventsScores;
+@dynamic competitors;
+@dynamic divisions;
+@dynamic events;
+@dynamic gEvents;
+@dynamic teams;
 
 @end

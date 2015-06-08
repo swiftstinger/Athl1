@@ -299,7 +299,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         [team setValue: sourceViewController.teamAbr.text forKey:@"teamAbr"];
     
         }
-        
+        [self.meetObject setValue:[NSNumber numberWithBool:NO] forKey:@"teamsDone"];
          //////
         // link relationship
         /////
