@@ -141,10 +141,9 @@ self.gEventTypeValue= [sender titleForSegmentAtIndex:[sender selectedSegmentInde
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
    
     
-    if ([identifier isEqualToString:@"unwindToGEventDoneSegue"]) {
+    if ([identifier isEqualToString:@"unwindToSetupGEventDoneSegue"]) {
         
         //checks
-        
         
         if (FALSE) {
         

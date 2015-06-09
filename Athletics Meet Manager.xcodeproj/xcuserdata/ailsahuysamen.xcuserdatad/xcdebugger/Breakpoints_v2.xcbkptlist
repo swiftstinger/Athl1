@@ -13,5 +13,53 @@
             stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Athletics Meet Manager/EventForCAddViewController.h"
+            timestampString = "455571314.234348"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "competitorItem"
+            landmarkType = "19">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[EventForCAddViewController isEditing]"
+                  moduleName = "Athletics Meet Manager"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ailsahuysamen/Documents/Rudi/Programming/ios/Athletics%20Meet%20Manager/Athletics%20Meet%20Manager/EventForCAddViewController.h"
+                  timestampString = "455569728.883798"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[EventForCAddViewController setIsEditing:]"
+                  moduleName = "Athletics Meet Manager"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ailsahuysamen/Documents/Rudi/Programming/ios/Athletics%20Meet%20Manager/Athletics%20Meet%20Manager/EventForCAddViewController.h"
+                  timestampString = "455569728.885575"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "19">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

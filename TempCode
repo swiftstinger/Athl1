@@ -23,11 +23,85 @@ Updates on done I think is good
 2. add view and edit screens for meet div gevent and team
 3. add team add people screens 
 
+/////////////////////
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ 
+
+
+    if ([[segue identifier] isEqualToString:@"addEventForC"]) {
+    
+    UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
+    EventForCAddViewController* compAddController = (EventForCAddViewController*)[navController topViewController];
+
+    
+        [compAddController setCompetitorItem:self.competitorObject];
+        [compAddController setManagedObjectContext:self.managedObjectContext];
+
+    
+    }
+    
+}
+
+
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+   
+    
+    if ([identifier isEqualToString:@"unwindToSetupEventsForCDoneSegue"]) {
+        
+        //checks
+        if (!self.isEditing) {
+            self.meet = self.competitorItem.meet;
+            int competitorEventLimit = [self.meet.cEventLimit intValue];
+    
+        int currentEventNumber = (int)[[self.competitorItem valueForKey:@"cEventScores"] count] ;
+            if (competitorEventLimit != 0) {
+            
+                    if (!(competitorEventLimit>currentEventNumber)) {
+    
+                NSLog(@"in shouldperformsegue no");
+                
+                UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Too many Events For Competitor"
+                                    message:@"Please delete an event or change the number of events allowed per competitor"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                return NO;
+                }
+                
+            }
+        
+   
+        }
+    }
+    
+    return YES;              
+}
+
+////////////////////
+
 
 [entity setUseGPS:[NSNumber numberWithBool:YES]];
 And the other way around:
 
 BOOL isGPSOn = [[entity useGPS] boolValue];
+
+
+
 
 
 NSLog(@"eventscores in competitor before %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);

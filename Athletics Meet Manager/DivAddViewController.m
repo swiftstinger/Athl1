@@ -101,6 +101,22 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
       [self.currentResponder resignFirstResponder];
     }
 }
-
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+   
+    
+    if ([identifier isEqualToString:@"unwindToSetupDivDoneSegue"]) {
+        
+        //checks
+        
+        if (FALSE) {
+        
+        NSLog(@"in shouldperformsegue no");
+        return NO;
+        }
+   
+    }
+    
+    return YES;              
+}
 
 @end

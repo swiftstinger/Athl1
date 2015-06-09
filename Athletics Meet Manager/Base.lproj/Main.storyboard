@@ -790,7 +790,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="1ap-f7-WbR">
                             <connections>
-                                <segue destination="fMA-cl-rVa" kind="unwind" unwindAction="unwindToSetupDivDone:" id="8JV-5T-EYk"/>
+                                <segue destination="fMA-cl-rVa" kind="unwind" identifier="unwindToSetupDivDoneSegue" unwindAction="unwindToSetupDivDone:" id="8JV-5T-EYk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -907,7 +907,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="8k4-GV-hTa">
                             <connections>
-                                <segue destination="JbH-z6-0yw" kind="unwind" identifier="unwindToGEventDoneSegue" unwindAction="unwindToSetupGEventDone:" id="IEj-Z7-N2A"/>
+                                <segue destination="JbH-z6-0yw" kind="unwind" identifier="unwindToSetupGEventDoneSegue" unwindAction="unwindToSetupGEventDone:" id="IEj-Z7-N2A"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1140,12 +1140,12 @@
                     <navigationItem key="navigationItem" title="Team Details" id="iCo-9z-foE">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ma1-l6-FYe">
                             <connections>
-                                <segue destination="Z2n-S5-t0h" kind="unwind" unwindAction="unwindToSetupTeamsCancel:" id="Mhw-TK-KoL"/>
+                                <segue destination="Z2n-S5-t0h" kind="unwind" unwindAction="unwindToSetupTeamCancel:" id="Mhw-TK-KoL"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="K0s-2l-YYF">
                             <connections>
-                                <segue destination="Z2n-S5-t0h" kind="unwind" unwindAction="unwindToSetupTeamsDone:" id="E2o-Bw-Sq4"/>
+                                <segue destination="Z2n-S5-t0h" kind="unwind" identifier="unwindToSetupTeamDone" unwindAction="unwindToSetupTeamDone:" id="E2o-Bw-Sq4"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1216,7 +1216,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="Yox-2Z-wEK">
                             <connections>
-                                <segue destination="aR6-bh-8el" kind="unwind" unwindAction="unwindToSetupCompetitorsDone:" id="RYu-FV-d1o"/>
+                                <segue destination="aR6-bh-8el" kind="unwind" identifier="unwindToSetupCompetitorsDoneSegue" unwindAction="unwindToSetupCompetitorsDone:" id="RYu-FV-d1o"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1286,7 +1286,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="A2Z-I6-dhv">
                             <connections>
-                                <segue destination="Vks-jh-ps7" kind="unwind" unwindAction="unwindToSetupEventsForCDone:" id="SSz-f6-iQL"/>
+                                <segue destination="Vks-jh-ps7" kind="unwind" identifier="unwindToSetupEventsForCDoneSegue" unwindAction="unwindToSetupEventsForCDone:" id="SSz-f6-iQL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -8,15 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "Event.h"
+#import "Competitor.h"
+#import "Meet.h"
 
 @interface EventForCAddViewController : UITableViewController <NSFetchedResultsControllerDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Competitor* competitorItem;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property BOOL isEditing;
 @property BOOL isOnTextField;
 
-
+@property Meet* meet;
 @property Event* event;
 
 @end

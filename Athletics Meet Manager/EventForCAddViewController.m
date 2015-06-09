@@ -45,6 +45,18 @@
         
     }
 }
+- (void)setCompetitorItem:(Competitor*)newCompetitorItem
+{
+
+   if (_competitorItem != newCompetitorItem) {
+
+        _competitorItem = newCompetitorItem;
+       
+      
+      
+    }
+}
+
 
 - (void)configureView
 {
@@ -98,4 +110,54 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
     }
 }
 */
+/*
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+   
+    
+    if ([identifier isEqualToString:@"unwindToSetupEventsForCDoneSegue"]) {
+        
+        //checks
+        if (!self.isEditing) {
+            self.meet = self.competitorItem.meet;
+            int competitorEventLimit = [self.meet.cEventLimit intValue];
+    
+        int currentEventNumber = (int)[[self.competitorItem valueForKey:@"cEventScores"] count] ;
+            if (competitorEventLimit != 0) {
+            
+                    if (!(competitorEventLimit>currentEventNumber)) {
+    
+                NSLog(@"in shouldperformsegue no");
+                
+                UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Too many Events For Competitor"
+                                    message:@"Please delete an event or change the number of events allowed per competitor"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                return NO;
+                }
+                
+            }
+        
+   
+        }
+    }
+    
+    return YES;              
+}
+*/
+
 @end

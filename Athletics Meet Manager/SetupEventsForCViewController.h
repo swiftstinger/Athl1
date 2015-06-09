@@ -17,7 +17,7 @@
 @property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) Competitor* competitorObject;
 
-
+@property Meet* meet;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 
