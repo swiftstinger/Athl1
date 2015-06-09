@@ -3,6 +3,7 @@ cgange object model to kill links
 
 next
 
+add events on done buttons
 
 
 not done:
@@ -11,8 +12,7 @@ eventscoreadd
 competitorscore enter
 
 
-
-hook up unwinds
+set eventsDone and teamsDone and divsDone if last one deleted
 
 
 
@@ -100,8 +100,8 @@ And the other way around:
 
 BOOL isGPSOn = [[entity useGPS] boolValue];
 
-
-
+[self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"divsDone"];
+[[self.meetObject valueForKey: @"divsDone"] boolvalue]
 
 
 NSLog(@"eventscores in competitor before %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MeetMenuViewCell.h"
 #import <CoreData/CoreData.h>
+#import "Meet.h"
 
 
 @interface MeetMenuViewController : UITableViewController
@@ -20,7 +21,11 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 
-@property (strong, nonatomic) id meetObject;
+@property (strong, nonatomic) Meet* meetObject;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
+@property (weak, nonatomic) IBOutlet MeetMenuViewCell *groupDivCell;
+@property (weak, nonatomic) IBOutlet MeetMenuViewCell *gEventCell;
+@property (weak, nonatomic) IBOutlet MeetMenuViewCell *enterTeamCell;
+
 
 @end

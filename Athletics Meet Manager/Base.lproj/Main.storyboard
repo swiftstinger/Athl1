@@ -257,6 +257,9 @@
                     <navigationItem key="navigationItem" title="Meet" id="iaR-ri-1Td"/>
                     <connections>
                         <outlet property="MeetMenuLabel" destination="I85-X5-9LE" id="ofi-xo-fiM"/>
+                        <outlet property="enterTeamCell" destination="Cgu-hz-ypT" id="VjN-4r-kAl"/>
+                        <outlet property="gEventCell" destination="OJa-F2-EQR" id="fEZ-yf-zmo"/>
+                        <outlet property="groupDivCell" destination="4Q4-QV-CcC" id="d6d-An-4mJ"/>
                         <outlet property="navBar" destination="iaR-ri-1Td" id="2SY-vJ-PMt"/>
                     </connections>
                 </tableViewController>
@@ -1431,10 +1434,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="kWb-zD-Ztb"/>
         <segue reference="pjO-ql-D1X"/>
-        <segue reference="KE2-9o-S9o"/>
-        <segue reference="oMD-Bf-krW"/>
-        <segue reference="zvu-dP-nHM"/>
         <segue reference="Kin-H0-cmG"/>
+        <segue reference="zvu-dP-nHM"/>
+        <segue reference="oMD-Bf-krW"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -298,7 +298,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
     
         }
         
-        [self.meetObject setValue:[NSNumber numberWithBool:NO] forKey:@"eventsDone"];
+        [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"eventsDone"];
          //////
         // link relationship
         /////

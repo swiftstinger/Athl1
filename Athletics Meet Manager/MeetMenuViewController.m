@@ -53,9 +53,42 @@
         self.showTimeLabel.text = [[_detailItem valueForKey:@"showTime"] description];
         
         */
+      
+        
+        
     }
 }
+- (void)viewWillAppear:(BOOL)animated
+{
 
+if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
+            NSLog(@"meet divs done");
+            self.groupDivCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+        else
+        {
+            self.groupDivCell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        if ([[self.meetObject valueForKey: @"eventsDone"] boolValue]) {
+            self.gEventCell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+        else
+        {
+            self.gEventCell.accessoryType = UITableViewCellAccessoryDetailButton;
+        }
+        if ([[self.meetObject valueForKey: @"teamsDone"] boolValue]) {
+            self.enterTeamCell.accessoryType = UITableViewCellAccessoryCheckmark;
+            
+        }
+        else
+        {
+        NSLog(@"meet team not done done");
+            self.enterTeamCell.accessoryType = UITableViewCellAccessoryNone;
+        }
+
+
+
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -99,6 +132,105 @@ else
     
 }
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+   
+    
+    if ([identifier isEqualToString:@"gEventsSetup"]) {
+        
+        //checks
+        bool divsdone = [[self.meetObject valueForKey: @"divsDone"] boolValue];
+        
+        if (!divsdone) {
+            
+                UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"No Group Divisions Set Up"
+                                    message:@"Please set up at least one Group Division for this Meet"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                return NO;
+                }
+                
+    }
+    if ([identifier isEqualToString:@"teamsSetup"]) {
+        
+        //checks
+        bool divsdone = [[self.meetObject valueForKey: @"divsDone"] boolValue];
+        bool eventsdone = [[self.meetObject valueForKey: @"eventsDone"] boolValue];
+        
+        if (!divsdone && !eventsdone) {
+            
+            UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"No Group Divisions or Events Set Up"
+                                    message:@"Please set up at least one Group Division and at least on Event for this Meet"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                return NO;
+            
+        }
+        else
+        {
+        
+        
+            if (!eventsdone) {
+            
+                UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"No Events Set Up"
+                                    message:@"Please set up at least one Event for this Meet"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                return NO;
+
+            
+            }
+          
+        }
+                
+    }
+
+        
+   
+    
+    return YES;              
+}
 
 
 @end
