@@ -88,7 +88,7 @@
 
 - (EventResultTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    EventResultTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eventResultCell" forIndexPath:indexPath];
+    EventResultTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"resultEventCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -134,8 +134,22 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-   NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"eventID" ascending:YES];
-   NSArray *sortDescriptors = @[sortDescriptor];
+    
+        ////////
+        ///////
+    
+                // Edit for segmented control
+    NSString *sortKey = [self.segmentedControl selectedSegmentIndex] == 0 ? @"division" : @"gEvent";
+    NSSortDescriptor *sortDescriptor1 = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
+    
+    sortKey = [self.segmentedControl selectedSegmentIndex] == 0 ? @"gEvent" : @"division";
+    
+        ////////
+        ////////
+    
+    
+   NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
+   NSArray *sortDescriptors = @[sortDescriptor1,sortDescriptor2];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
@@ -234,7 +248,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
-        
+        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
         
     }
     
@@ -243,4 +257,10 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
 
 
 
+- (IBAction)segmentedControlValueChanged:(id)sender {
+
+self.fetchedResultsController = nil;
+    
+    [self.tableView reloadData];
+}
 @end

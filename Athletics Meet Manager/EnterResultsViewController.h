@@ -17,5 +17,7 @@
 @property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) Meet* meetObject;
 
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+- (IBAction)segmentedControlValueChanged:(id)sender;
 
 @end

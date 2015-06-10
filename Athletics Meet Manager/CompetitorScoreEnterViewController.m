@@ -14,6 +14,8 @@
 
 @implementation CompetitorScoreEnterViewController
 
+//_navBar.title = [self.competitorObject valueForKey:@"compName"];
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

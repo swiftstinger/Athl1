@@ -64,7 +64,7 @@ NSLog(@"configureview");
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.divName becomeFirstResponder];
    
     
     [_divName setDelegate:self];

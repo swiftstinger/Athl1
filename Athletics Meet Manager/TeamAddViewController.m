@@ -61,7 +61,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.teamName becomeFirstResponder];
    
     
     [_teamName setDelegate:self];

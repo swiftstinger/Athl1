@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) CEventScore* cEventScore;
 @property  double result;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 @end

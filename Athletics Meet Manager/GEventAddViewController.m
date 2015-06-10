@@ -81,7 +81,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-   
+   [self.gEventName becomeFirstResponder];
     
     [_gEventName setDelegate:self];
     

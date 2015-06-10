@@ -78,7 +78,7 @@ NSLog(@"in detail item");
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+   // [self.meetName becomeFirstResponder];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

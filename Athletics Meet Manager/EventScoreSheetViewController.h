@@ -17,5 +17,6 @@
 @property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) Event* eventObject;
 
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 @end

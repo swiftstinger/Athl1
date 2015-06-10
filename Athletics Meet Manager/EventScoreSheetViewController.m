@@ -61,6 +61,9 @@
     if (_detailItem) {
       NSLog(@"event item  id %@", [self.eventObject valueForKey:@"eventID"]);
       
+      NSString *eventname = [NSString stringWithFormat:@"%@ %@",self.eventObject.gEvent.gEventName, self.eventObject.division.divName];
+      _navBar.title = eventname;
+
     }
     
     
@@ -244,7 +247,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
         
-        
+        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
     }
     
 }

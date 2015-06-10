@@ -1,9 +1,9 @@
 
-cgange object model to kill links
+
 
 next
 
-add events on done buttons
+
 
 
 not done:
@@ -13,6 +13,15 @@ competitorscore enter
 
 
 set eventsDone and teamsDone and divsDone if last one deleted
+
+handle deletes?  Events delete lets warn
+
+
+add done button for results or flip switch
+
+add check marks for if result is done
+
+add calculations after score add
 
 
 
