@@ -9,6 +9,8 @@
 #import "SetupGEventsViewController.h"
 #import "GEventTableViewCell.h"
 #import "GEvent.h"
+#import "Division.h"
+#import "Event.h"
 
 
 @interface SetupGEventsViewController ()
@@ -299,7 +301,88 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         }
         
         [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"eventsDone"];
-         //////
+        
+        
+        
+        /////////
+        /// Set Up and link Events
+        ////////
+        
+        if (!sourceViewController.isEditing) {
+            
+            NSError *error;
+        
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+            NSEntityDescription *entity = [NSEntityDescription
+    entityForName:@"Division" inManagedObjectContext:self.managedObjectContext];
+            [fetchRequest setEntity:entity];
+            NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+            
+            for (Division *div in fetchedObjects) {
+                
+                Event *event = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+                event.meet = self.meetObject;
+                event.gEvent = gEvent;
+                event.division = div;
+                event.eventEdited = [NSNumber numberWithBool:NO];
+                event.eventDone = [NSNumber numberWithBool:NO];
+            NSLog(@"event created with name %@ %@", event.gEvent.gEventName,event.division.divName);
+                
+                
+                 ////////// event id
+                
+                    NSUserDefaults *defaults1 = [NSUserDefaults standardUserDefaults];
+    
+     
+                    int tempint1 =  [_meetObject.meetID intValue];
+     
+                    NSString * keystring1 = [NSString stringWithFormat:@"%dlastEventID",tempint1];  ////
+     
+                    NSLog(@"%@",keystring1);
+     
+                    if (![defaults1 objectForKey:keystring1]) {                    /////
+     
+                        int idint1 = 0;
+                        NSNumber *idnumber1 = [NSNumber numberWithInt:idint1];
+                        [defaults1 setObject:idnumber1 forKey:keystring1];             ///////
+     
+                        }
+                    NSNumber *oldnumber1 = [defaults1 objectForKey:keystring1];   ///
+                    int oldint1 = [oldnumber1 intValue];
+                    int newint1 = oldint1 + 1;
+                    NSNumber *newnumber1 = [NSNumber numberWithInt:newint1];
+                    [event setValue: newnumber1 forKey: @"eventID"];                  //////////
+                    NSLog(@" eventID %@",  event.eventID);
+
+                    [defaults1 setObject: newnumber1 forKey:keystring1];            /////////
+     
+                    [defaults1 synchronize];
+     
+                    ////
+
+        
+                int numberofevents = (int)[[self.meetObject valueForKey:@"events"] count] ;
+
+        
+        
+
+     
+                   NSLog(@"events in meet = %d",numberofevents);
+
+            }
+        
+            
+        
+        }
+        
+
+        
+        
+        
+        
+        
+    
+        //////
         // link relationship
         /////
         

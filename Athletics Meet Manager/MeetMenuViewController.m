@@ -74,7 +74,7 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
         }
         else
         {
-            self.gEventCell.accessoryType = UITableViewCellAccessoryDetailButton;
+            self.gEventCell.accessoryType = UITableViewCellAccessoryNone;
         }
         if ([[self.meetObject valueForKey: @"teamsDone"] boolValue]) {
             self.enterTeamCell.accessoryType = UITableViewCellAccessoryCheckmark;
