@@ -58,8 +58,7 @@
 
     // Update the user interface for the detail item.
     if (_detailItem) {
-      NSLog(@"competitor item %@", [self.competitorObject valueForKey:@"compName"]);
-      _navBar.title = [self.competitorObject valueForKey:@"compName"];
+     
     }
     
     
@@ -158,7 +157,9 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
 	}
     
     return _fetchedResultsController;
-}    
+
+}
+
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
@@ -220,7 +221,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
   
      GEvent* gevent  = (GEvent*)ceventscore.event.gEvent;
    NSString *geventname = gevent.gEventName;
-   Division* division  = (Division*)ceventscore.event.gEvent;
+   Division* division  = (Division*)ceventscore.event.division;
    NSString *divisionname = division.divName;
    
    NSString *eventname = [NSString stringWithFormat:@"%@ %@", geventname, divisionname];
@@ -315,17 +316,29 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
     {
         NSLog(@"Coming from EventsForCAdd Done!");
         
+        
+        
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
         CEventScore *ceventscore = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
         
         
         EventForCAddViewController *sourceViewController = unwindSegue.sourceViewController;
+        
+        
+        //// Test
+        
+      //  NSLog(@"Gevent %@ Division %@ ",sourceViewController.event.gEvent.gEventName, sourceViewController.event.division.divName);
+
+        
+        
+        
+        ////
         ////////
-        /////   set values
+        /////   Fetch Event
         ///////
      
-        
+       // sourceViewController
         
         
         
@@ -333,36 +346,31 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
         // link relationships
         /////
         if (sourceViewController.event) {
-        Event* event = sourceViewController.event;
-        
-     [ceventscore setValue:event forKey:@"event"];
-        }
-        
-        if (!(self.competitorObject.cEventScores)) {
-            [self.competitorObject setValue:[NSSet setWithObject:ceventscore] forKey:@"cEventScores"];
-        }
-        else
-        {
-        NSMutableSet *cEventScoresset = [self.competitorObject mutableSetValueForKey:@"cEventScores"];
-        [cEventScoresset addObject:ceventscore];
-        }
-        
-        NSLog(@"eventscores in competitor %@ :  %@",self.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[self.competitorObject valueForKey:@"cEventScores"] count] ) ]);
-        
-        
        
+       
+          Event* event = sourceViewController.event;
+         
+        [ceventscore setValue:event forKey:@"event"];
+         
+
+        }
         
+            
+        [ceventscore setValue:self.competitorObject forKey:@"competitor"];
+        
+         [ceventscore setValue:self.competitorObject.team forKey:@"team"];
         
         [ceventscore setValue:self.competitorObject.meet forKey:@"meet"];
        
-        NSLog(@"ceventscore in meet %@ :  %@",self.competitorObject.meet.meetName,[NSString stringWithFormat:@"%@",  @([[self.competitorObject.meet valueForKey:@"cEventsScores"] count] ) ]);
+       
         
         //////
         
         
         
           // Store EventID data
-        
+//  if (!sourceViewController.editing) {
+      
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -371,7 +379,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
      
      NSString * keystring = [NSString stringWithFormat:@"%dlastcEventScoreID",tempint];  ////
      
-     NSLog(@"%@",keystring);
+    
      
      if (![defaults objectForKey:keystring]) {                    /////
      
@@ -385,14 +393,13 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
        int newint = oldint + 1;
        NSNumber *newnumber = [NSNumber numberWithInt:newint];
        [ceventscore setValue: newnumber forKey: @"cEventScoreID"];                  //////////
-        NSLog(@"compname %@  cEventScoreID %@", self.competitorObject.compName, ceventscore.cEventScoreID);
-
+      
     [defaults setObject: newnumber forKey:keystring];            /////////
      
     [defaults synchronize];
-     
+// }
     ////
-    
+  
         
                 NSError *error = nil;
 

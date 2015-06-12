@@ -10,5 +10,6 @@
 
 @interface EventResultTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *divisionNameLabel;
 
 @end

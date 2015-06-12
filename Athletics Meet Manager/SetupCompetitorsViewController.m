@@ -23,7 +23,7 @@
 {
     if (_managedObjectContext != newcontext) {
         _managedObjectContext = newcontext;
-        NSLog(@"competitorview in team moc");
+       
     }
 }
 
@@ -54,7 +54,7 @@
 NSLog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
-      NSLog(@"team item %@", [self.teamObject valueForKey:@"teamName"]);
+      
       _navBar.title = [self.teamObject valueForKey:@"teamName"];
 
     }
@@ -123,12 +123,11 @@ NSLog(@"in view");
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
     
-    NSLog(@"1");
+   
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Competitor" inManagedObjectContext:self.managedObjectContext];
-      NSLog(@"2");
-    [fetchRequest setEntity:entity];
-      NSLog(@"3");
+          [fetchRequest setEntity:entity];
+     ;
      // limit to those entities that belong to the particular item
 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _teamObject];
     [fetchRequest setPredicate:predicate];
@@ -155,7 +154,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
 	}
-      NSLog(@"4");
+    
     return _fetchedResultsController;
 }    
 
@@ -304,27 +303,28 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
         [competitorsset addObject:competitor];
         }
         
-        NSLog(@"comps in team %@ :  %@",_teamObject.teamName,[NSString stringWithFormat:@"%@",  @([[_teamObject valueForKey:@"competitors"] count] ) ]);
+       
         
         
         [competitor setValue:_teamObject.meet forKey:@"meet"];
        
-        NSLog(@"comps in meet %@ :  %@",_teamObject.meet.meetName,[NSString stringWithFormat:@"%@",  @([[_teamObject.meet valueForKey:@"competitors"] count] ) ]);
+        
 
         
         //////
         
           // Store CompID data
-        
+ if (!sourceViewController.editing) {
+     
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-   //  [_meetObject.meetID intValue];
+  
      int tempint =  [_teamObject.meet.meetID intValue];
      
      NSString * keystring = [NSString stringWithFormat:@"%dlastCompID",tempint];  ////
      
-     NSLog(@"%@",keystring);
+     
      
      if (![defaults objectForKey:keystring]) {                    /////
      
@@ -338,12 +338,12 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
        int newint = oldint + 1;
        NSNumber *newnumber = [NSNumber numberWithInt:newint];
        [competitor setValue: newnumber forKey: @"compID"];                  //////////
-        NSLog(@"compname %@  compID %@", competitor.compName, competitor.compID);
+     
 
     [defaults setObject: newnumber forKey:keystring];            /////////
      
     [defaults synchronize];
-     
+  }
     ////
     
         

@@ -233,10 +233,11 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
    Division* division  = (Division*)event.division;
    NSString *divisionname = division.divName;
    
-   NSString *eventname = [NSString stringWithFormat:@"%@ %@", geventname, divisionname];
+ //  NSString *eventname = [NSString stringWithFormat:@"%@ - %@", geventname, divisionname];
 
    
-  cell.eventNameLabel.text = eventname;
+  cell.eventNameLabel.text = geventname;
+  cell.divisionNameLabel.text = divisionname;
 
   }
 #pragma mark - Segues

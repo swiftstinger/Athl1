@@ -323,7 +323,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
         //////
         
           // Store EventID data
-        
+  
+      
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -351,7 +352,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
     [defaults setObject: newnumber forKey:keystring];            /////////
      
     [defaults synchronize];
-     
+ 
     ////
     
         

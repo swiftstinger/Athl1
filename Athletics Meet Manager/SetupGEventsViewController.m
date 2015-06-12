@@ -56,7 +56,6 @@
 NSLog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
-      NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
       
     }
 }
@@ -326,7 +325,6 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
                 event.division = div;
                 event.eventEdited = [NSNumber numberWithBool:NO];
                 event.eventDone = [NSNumber numberWithBool:NO];
-            NSLog(@"event created with name %@ %@", event.gEvent.gEventName,event.division.divName);
                 
                 
                  ////////// event id
@@ -395,7 +393,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         [geventsset addObject:gEvent];
         }
         
-        NSLog(@"gevents in meet %@ :  %@",_meetObject.meetName,[NSString stringWithFormat:@"%@",  @([[_meetObject valueForKey:@"gEvents"] count] ) ]);
+      
         
         
         //////
@@ -424,7 +422,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
        int newint = oldint + 1;
        NSNumber *newnumber = [NSNumber numberWithInt:newint];
        [gEvent setValue: newnumber forKey: @"gEventID"];                  //////////
-        NSLog(@"genetname %@  geventID %@", gEvent.gEventName, gEvent.gEventID);
+       
 
     [defaults setObject: newnumber forKey:keystring];            /////////
      

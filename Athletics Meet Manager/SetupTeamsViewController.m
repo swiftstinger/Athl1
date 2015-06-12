@@ -56,8 +56,6 @@ NSLog(@"in view");
      
     //  _navBar.title = [self.meetObject valueForKey:@"meetName"];
 
-        NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
-      
     }
 }
 
@@ -313,13 +311,14 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         [teamsset addObject:team];
         }
         
-        NSLog(@"teamsin meet %@ :  %@",_meetObject.meetName,[NSString stringWithFormat:@"%@",  @([[_meetObject valueForKey:@"teams"] count] ) ]);
+       
         
         
         //////
         
           // Store teamID data
-        
+  if (!sourceViewController.editing) {
+      
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -328,7 +327,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
      
      NSString * keystring = [NSString stringWithFormat:@"%dlastTeamID",tempint];  ////
      
-     NSLog(@"%@",keystring);
+    
      
      if (![defaults objectForKey:keystring]) {                    /////
      
@@ -337,17 +336,17 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
      [defaults setObject:idnumber forKey:keystring];             ///////
      
      }
-NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+    NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
        int oldint = [oldnumber intValue];
        int newint = oldint + 1;
        NSNumber *newnumber = [NSNumber numberWithInt:newint];
        [team setValue: newnumber forKey: @"teamID"];                  //////////
-        NSLog(@"teamname %@  teamID %@", team.teamName, team.teamID);
+      
 
     [defaults setObject: newnumber forKey:keystring];            /////////
      
     [defaults synchronize];
-     
+  }
     ////
     
         

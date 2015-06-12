@@ -44,8 +44,7 @@
     if (_detailItem) {
       _navBar.title = [self.meetObject valueForKey:@"meetName"];
       
-      NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
-             /*
+               /*
           self.titleField.text = [_detailItem valueForKey:@"title"];
         self.episodeIDField.text = [NSString stringWithFormat:@"%d", [[_detailItem valueForKey:@"episodeID"] integerValue]];
         self.descriptionView.text = [_detailItem valueForKey:@"desc"];
@@ -62,7 +61,7 @@
 {
 
 if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
-            NSLog(@"meet divs done");
+    
             self.groupDivCell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
         else
@@ -82,7 +81,7 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
         }
         else
         {
-        NSLog(@"meet team not done done");
+       
             self.enterTeamCell.accessoryType = UITableViewCellAccessoryNone;
         }
 

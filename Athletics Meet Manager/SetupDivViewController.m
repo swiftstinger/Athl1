@@ -58,8 +58,7 @@
 NSLog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
-      NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
-      
+        
     }
     
     
@@ -328,7 +327,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
                 event.division = div;
                 event.eventEdited = [NSNumber numberWithBool:NO];
                 event.eventDone = [NSNumber numberWithBool:NO];
-                NSLog(@"event created with name %@ %@", event.gEvent.gEventName,event.division.divName);
+                
                
                 
                 ////////// event id
@@ -354,8 +353,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
                     int newint1 = oldint1 + 1;
                     NSNumber *newnumber1 = [NSNumber numberWithInt:newint1];
                     [event setValue: newnumber1 forKey: @"eventID"];                  //////////
-                    NSLog(@" eventID %@",  event.eventID);
-
+                
                     [defaults1 setObject: newnumber1 forKey:keystring1];            /////////
      
                     [defaults1 synchronize];
@@ -391,7 +389,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         [divisionsset addObject:div];
         }
         
-        NSLog(@"divisions in meet %@ :  %@",_meetObject.meetName,[NSString stringWithFormat:@"%@",  @([[_meetObject valueForKey:@"divisions"] count] ) ]);
+       
         
         
         
@@ -427,7 +425,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
        int newint = oldint + 1;
        NSNumber *newnumber = [NSNumber numberWithInt:newint];
        [div setValue: newnumber forKey: @"divID"];                  //////////
-        NSLog(@"divname %@  divID %@", div.divName, div.divID);
+      
 
     [defaults setObject: newnumber forKey:keystring];            /////////
      
