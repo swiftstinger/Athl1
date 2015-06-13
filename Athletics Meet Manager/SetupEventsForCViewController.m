@@ -335,13 +335,22 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
         
         ////
         ////////
-        /////   Fetch Event
+        /////   set values
         ///////
-     
-       // sourceViewController
-        
-        
-        
+    
+       [ceventscore setValue: nil forKey:@"result"];
+       [ceventscore setValue:nil forKey:@"personalBest"];
+       [ceventscore setValue:nil forKey:@"placing"];
+       [ceventscore setValue:nil forKey:@"score"];
+       [ceventscore setValue:nil forKey:@"resultEntered"];
+      
+        /*
+       [ceventscore setValue:[NSNumber numberWithDouble:0] forKey:@"result"];
+       [ceventscore setValue:[NSNumber numberWithDouble:0] forKey:@"personalBest"];
+       [ceventscore setValue:[NSNumber numberWithInt: 0] forKey:@"placing"];
+       [ceventscore setValue:[NSNumber numberWithInt: 0] forKey:@"score"];
+       [ceventscore setValue:[NSNumber numberWithBool: NO] forKey:@"resultEntered"];
+       */
          //////
         // link relationships
         /////

@@ -1477,7 +1477,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CUv-xw-1Ne" id="o7u-Y6-VFJ">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Insert Result" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XO8-pw-cTQ">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Insert Result" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XO8-pw-cTQ">
                                                     <rect key="frame" x="8" y="0.0" width="301" height="58"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -1502,12 +1502,13 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="ytF-7L-BF8">
                             <connections>
-                                <segue destination="41e-Fa-Nv9" kind="unwind" unwindAction="unwindToEventScoreSheetDone:" id="Kzv-nh-6zg"/>
+                                <segue destination="41e-Fa-Nv9" kind="unwind" identifier="unwindToEventScoreSheetDoneSegue" unwindAction="unwindToEventScoreSheetDone:" id="Kzv-nh-6zg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="navBar" destination="1n7-cx-e5m" id="nKA-B5-aNp"/>
+                        <outlet property="resultTextField" destination="XO8-pw-cTQ" id="RcW-li-gxB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S8c-64-oyY" userLabel="First Responder" sceneMemberID="firstResponder"/>

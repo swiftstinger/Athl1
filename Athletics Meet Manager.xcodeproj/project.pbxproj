@@ -15,11 +15,11 @@
 		1F095F501B0FB765000FE30A /* Athletics_Meet_ManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F095F4F1B0FB765000FE30A /* Athletics_Meet_ManagerTests.m */; };
 		1F10F8D81B28BBF300F536B8 /* GEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8D71B28BBF300F536B8 /* GEvent.m */; };
 		1F10F8DB1B28BBF400F536B8 /* Competitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8DA1B28BBF400F536B8 /* Competitor.m */; };
-		1F10F8DE1B28BBF400F536B8 /* CEventScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8DD1B28BBF400F536B8 /* CEventScore.m */; };
 		1F10F8E11B28BBF400F536B8 /* Meet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8E01B28BBF400F536B8 /* Meet.m */; };
 		1F10F8E41B28BBF400F536B8 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8E31B28BBF400F536B8 /* Event.m */; };
 		1F10F8E71B28BBF400F536B8 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8E61B28BBF400F536B8 /* Team.m */; };
 		1F10F8EA1B28BBF400F536B8 /* Division.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8E91B28BBF400F536B8 /* Division.m */; };
+		1F10F8ED1B2C159E00F536B8 /* CEventScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8EC1B2C159E00F536B8 /* CEventScore.m */; };
 		1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */; };
 		1FD022001B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */; };
 		1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */; };
@@ -80,8 +80,6 @@
 		1F10F8D71B28BBF300F536B8 /* GEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEvent.m; sourceTree = "<group>"; };
 		1F10F8D91B28BBF400F536B8 /* Competitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Competitor.h; sourceTree = "<group>"; };
 		1F10F8DA1B28BBF400F536B8 /* Competitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Competitor.m; sourceTree = "<group>"; };
-		1F10F8DC1B28BBF400F536B8 /* CEventScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEventScore.h; sourceTree = "<group>"; };
-		1F10F8DD1B28BBF400F536B8 /* CEventScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEventScore.m; sourceTree = "<group>"; };
 		1F10F8DF1B28BBF400F536B8 /* Meet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meet.h; sourceTree = "<group>"; };
 		1F10F8E01B28BBF400F536B8 /* Meet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Meet.m; sourceTree = "<group>"; };
 		1F10F8E21B28BBF400F536B8 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
@@ -90,6 +88,8 @@
 		1F10F8E61B28BBF400F536B8 /* Team.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Team.m; sourceTree = "<group>"; };
 		1F10F8E81B28BBF400F536B8 /* Division.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Division.h; sourceTree = "<group>"; };
 		1F10F8E91B28BBF400F536B8 /* Division.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Division.m; sourceTree = "<group>"; };
+		1F10F8EB1B2C159E00F536B8 /* CEventScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEventScore.h; sourceTree = "<group>"; };
+		1F10F8EC1B2C159E00F536B8 /* CEventScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEventScore.m; sourceTree = "<group>"; };
 		1FD021F81B13BA6900F40102 /* MeetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetTableViewCell.h; sourceTree = "<group>"; };
 		1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetTableViewCell.m; sourceTree = "<group>"; };
 		1FD021FF1B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Athletics_Meet_Manager.xcdatamodel; sourceTree = "<group>"; };
@@ -249,6 +249,8 @@
 		1FD6B6581B1736D900F05968 /* DataObjects */ = {
 			isa = PBXGroup;
 			children = (
+				1F10F8EB1B2C159E00F536B8 /* CEventScore.h */,
+				1F10F8EC1B2C159E00F536B8 /* CEventScore.m */,
 				1F10F8E81B28BBF400F536B8 /* Division.h */,
 				1F10F8E91B28BBF400F536B8 /* Division.m */,
 				1F10F8E51B28BBF400F536B8 /* Team.h */,
@@ -257,8 +259,6 @@
 				1F10F8E31B28BBF400F536B8 /* Event.m */,
 				1F10F8DF1B28BBF400F536B8 /* Meet.h */,
 				1F10F8E01B28BBF400F536B8 /* Meet.m */,
-				1F10F8DC1B28BBF400F536B8 /* CEventScore.h */,
-				1F10F8DD1B28BBF400F536B8 /* CEventScore.m */,
 				1F10F8D91B28BBF400F536B8 /* Competitor.h */,
 				1F10F8DA1B28BBF400F536B8 /* Competitor.m */,
 				1F10F8D61B28BBF300F536B8 /* GEvent.h */,
@@ -581,7 +581,7 @@
 				1FD6B6981B1F373100F05968 /* EventScoreSheetViewController.m in Sources */,
 				1FD6B6821B1E46CB00F05968 /* CompetitorAddViewController.m in Sources */,
 				1F10F8EA1B28BBF400F536B8 /* Division.m in Sources */,
-				1F10F8DE1B28BBF400F536B8 /* CEventScore.m in Sources */,
+				1F10F8ED1B2C159E00F536B8 /* CEventScore.m in Sources */,
 				1F10F8D81B28BBF300F536B8 /* GEvent.m in Sources */,
 				1FD022001B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodeld in Sources */,
 				1F095F301B0FB765000FE30A /* main.m in Sources */,

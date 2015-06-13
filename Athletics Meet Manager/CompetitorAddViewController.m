@@ -61,7 +61,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-   
+   [self.competitorName becomeFirstResponder];
     
     [_competitorName setDelegate:self];
     

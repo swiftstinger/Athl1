@@ -224,16 +224,33 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
   
      NSString* compName  = ceventscore.competitor.compName;
      cell.competitorNameLabel.text = compName;
+    
+    
     if (ceventscore.result) {
-    cell.competitorResultLabel.text = [ceventscore.result description];
+       cell.competitorResultLabel.text = [ceventscore.result description];
+       NSLog(@"results %@", ceventscore.result);
+    }
+    else
+    {
+        cell.competitorResultLabel.text = @"";
     }
     if (ceventscore.placing) {
-    cell.competitorPlaceLabel.text = [ceventscore.placing description];
+        cell.competitorPlaceLabel.text = [ceventscore.placing description];
+    }
+    else
+    {
+        cell.competitorPlaceLabel.text = @"";
     }
     if (ceventscore.score) {
-    cell.competitorScoreLabel.text = [ceventscore.score description];
+        cell.competitorScoreLabel.text = [ceventscore.score description];
+    }
+    else
+    {
+        cell.competitorScoreLabel.text = @"";
     }
 
+
+    
 
 
   }
@@ -274,55 +291,41 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
         ////////
         /////   set values
         ///////
+     [ceventscore setValue: nil forKey:@"result"];
+       [ceventscore setValue:nil forKey:@"personalBest"];
+       [ceventscore setValue:nil forKey:@"placing"];
+       [ceventscore setValue:nil forKey:@"score"];
+       [ceventscore setValue:nil forKey:@"resultEntered"];
+    
      
-       
-        
+       /*
+     
+        [ceventscore setValue:[NSNumber numberWithDouble:0] forKey:@"results"];
+       [ceventscore setValue:[NSNumber numberWithDouble:0] forKey:@"personalBest"];
+       [ceventscore setValue:[NSNumber numberWithInt: 0] forKey:@"placing"];
+       [ceventscore setValue:[NSNumber numberWithInt: 0] forKey:@"score"];
+       [ceventscore setValue:[NSNumber numberWithBool: NO] forKey:@"resultEntered"];
+      */
         
         
         
         //validation in source
-                ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result]   ;
+             //   ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result]   ;
         
         
          //////
         // link relationships
         /////
         
-       // test link  // fixme
-        
-        /*
-                     NSLog(@"eventscores in competitor before %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
-        ceventscore.competitor = sourceViewController.competitorObject;
-        
-        NSLog(@"eventscores in competitor after %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
-        */
-         if (!(sourceViewController.competitorObject.cEventScores)) {
-            [sourceViewController.competitorObject setValue:[NSSet setWithObject:ceventscore] forKey:@"cEventScores"];
-        }
-        else
-        {
-        NSMutableSet *cEventScoresset = [sourceViewController.competitorObject mutableSetValueForKey:@"cEventScores"];
-        [cEventScoresset addObject:ceventscore];
-        }
-         NSLog(@"eventscores in competitor after %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
        
-         if (!(self.eventObject.cEventScores)) {
-            [self.eventObject setValue:[NSSet setWithObject:ceventscore] forKey:@"cEventScores"];
-        }
-        else
-        {
-        NSMutableSet *cEventScoresset = [self.eventObject mutableSetValueForKey:@"cEventScores"];
-        [cEventScoresset addObject:ceventscore];
-        }
         
-        NSLog(@"eventscores in event %@ :  %@",self.eventObject.eventID,[NSString stringWithFormat:@"%@",  @([[self.eventObject valueForKey:@"cEventScores"] count] ) ]);
-        
-        //directassign
-        
+        ceventscore.competitor = sourceViewController.competitorObject;
+        ceventscore.event = self.eventObject;
         ceventscore.meet = self.eventObject.meet;
+        ceventscore.team = sourceViewController.competitorObject.team;
         //////
         
-          // Store EventID data
+          // Store cEventsScoreID data
   
       
         
@@ -390,8 +393,9 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
         ///////
         
         //validation in source
-                ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result]   ;
-        
+        NSLog(@"source results %f",sourceViewController.result);
+        ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result];
+    
         
             ////
     
