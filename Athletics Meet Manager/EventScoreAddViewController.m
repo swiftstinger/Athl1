@@ -180,7 +180,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSString *sortKey =  @"compID";
+    NSString *sortKey =  @"teamName";
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
