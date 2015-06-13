@@ -37,7 +37,7 @@
 
    if (_detailItem != newDetailItem) {
 
-        _detailItem = newDetailItem;
+       // _detailItem = newDetailItem;
       //  self.isEditing = TRUE;
       
       [self configureView];
@@ -93,73 +93,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-- (NSArray*)setDivPickerData {
 
-if (_divPickerData != nil) {
-        return _divPickerData;
-    }
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Division" inManagedObjectContext:self.managedObjectContext];
-    
-    [fetchRequest setEntity:entity];
-    
-     // limit to those entities that belong to the particular item
-NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.competitorObject.meet];
-    [fetchRequest setPredicate:predicate];
-    
-    // Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
-    
-    // Edit the sort key as appropriate.
-   NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"divID" ascending:YES];
-   NSArray *sortDescriptors = @[sortDescriptor];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    
-    NSError *requestError = nil;
-
-    NSArray*  divArray = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&requestError] mutableCopy];
-
-    if (requestError) { NSLog(@"%@" , [requestError localizedDescription]); }
-    return divArray;
-}
-
-- (NSArray*)setEventPickerData {
-
-if (_eventPickerData != nil) {
-        return _eventPickerData;
-    }
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
-    
-    [fetchRequest setEntity:entity];
-    
-     // limit to those entities that belong to the particular item
-NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.competitorObject.meet];
-    [fetchRequest setPredicate:predicate];
-    
-    // Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
-    
-    // Edit the sort key as appropriate.
-   NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"eventID" ascending:YES];
-   NSArray *sortDescriptors = @[sortDescriptor];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    
-    NSError *requestError = nil;
-
-    NSArray*  eventArray = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&requestError] mutableCopy];
-
-    if (requestError) { NSLog(@"%@" , [requestError localizedDescription]); }
-    return eventArray;
-}
-*/
 
 #pragma mark - Fetched results controllers
 
@@ -399,7 +333,7 @@ if(pickerView.tag == divpicker)
    
             Team *team = self.competitorObject.team;
             int limitperteam = [self.gevent.competitorsPerTeam intValue ];
-    
+     if (limitperteam != 0) {
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
         NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
 
@@ -429,7 +363,7 @@ if(pickerView.tag == divpicker)
         int currentEventNumber = (int)eventscorecount ;
         
      
-            if (limitperteam != 0) {
+        
             
                     if (!(limitperteam>currentEventNumber)) {
     

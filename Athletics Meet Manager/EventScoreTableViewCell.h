@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface EventScoreTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UILabel *competitorNameLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *competitorTeamLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *competitorResultLabel;
 @property (weak, nonatomic) IBOutlet UILabel *competitorPlaceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *competitorScoreLabel;

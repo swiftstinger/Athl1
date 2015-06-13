@@ -15,6 +15,7 @@
     <entity name="Competitor" representedClassName="Competitor" syncable="YES">
         <attribute name="compID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="compName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="cEventScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CEventScore" inverseName="competitor" inverseEntity="CEventScore" syncable="YES"/>
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="competitors" inverseEntity="Meet" syncable="YES"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="competitors" inverseEntity="Team" syncable="YES"/>
@@ -71,7 +72,7 @@
     </entity>
     <elements>
         <element name="CEventScore" positionX="-12071" positionY="-12879" width="128" height="195"/>
-        <element name="Competitor" positionX="-12267" positionY="-13032" width="128" height="120"/>
+        <element name="Competitor" positionX="-12267" positionY="-13032" width="128" height="135"/>
         <element name="Division" positionX="-12042" positionY="-13392" width="128" height="105"/>
         <element name="Event" positionX="-11871" positionY="-13185" width="128" height="165"/>
         <element name="GEvent" positionX="-11486" positionY="-13366" width="128" height="150"/>

@@ -8,6 +8,7 @@
 
 #import "EventScoreSheetViewController.h"
 #import "CompetitorScoreEnterViewController.h"
+#import "CompetitorAddInResultSheetViewController.h"
 #import "EventScoreTableViewCell.h"
 #import "CEventScore.h"
 #import "Competitor.h"
@@ -223,7 +224,10 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     CEventScore *ceventscore = (CEventScore*)object;
   
      NSString* compName  = ceventscore.competitor.compName;
+    NSString* compTeam  = ceventscore.competitor.teamName;
      cell.competitorNameLabel.text = compName;
+    cell.competitorTeamLabel.text = compTeam;
+    
     
     
     if (ceventscore.result) {
@@ -287,7 +291,171 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
 
 - (IBAction)unwindToEventScoreSheetDone:(UIStoryboardSegue *)unwindSegue
 {
+    if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorAddInResultSheetViewController class]])
+    {
+        NSLog(@"Coming from CompertitorAddInResults Done!");
+        
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    CompetitorAddInResultSheetViewController *sourceViewController = unwindSegue.sourceViewController;
+    
+    /////
+    // ad new competitor chosen in source
+    ////
+    ////
+    ////
+    ////
+    ///
+        
 
+    
+     Competitor* newcompetitorObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
+        
+        
+        ////////
+        /////   set values
+        ///////
+     
+           if (sourceViewController.competitorName) {
+        [newcompetitorObject setValue: sourceViewController.competitorName.text forKey:@"compName"];
+    
+        }
+        
+        
+        
+         //////
+        // link relationships
+        /////
+        
+        newcompetitorObject.team = sourceViewController.team;
+        newcompetitorObject.meet = self.eventObject.meet;
+        newcompetitorObject.teamName = sourceViewController.team.teamName;
+       
+        
+        
+        
+        
+        //////
+        
+          // Store CompID data
+
+     
+        
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+  
+     int tempint =  [self.eventObject.meet.meetID intValue];
+     
+     NSString * keystring = [NSString stringWithFormat:@"%dlastCompID",tempint];  ////
+     
+     
+     
+     if (![defaults objectForKey:keystring]) {                    /////
+     
+     int idint = 0;
+     NSNumber *idnumber = [NSNumber numberWithInt:idint];
+     [defaults setObject:idnumber forKey:keystring];             ///////
+     
+     }
+NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+       int oldint = [oldnumber intValue];
+       int newint = oldint + 1;
+       NSNumber *newnumber = [NSNumber numberWithInt:newint];
+       [newcompetitorObject setValue: newnumber forKey: @"compID"];                  //////////
+     
+
+    [defaults setObject: newnumber forKey:keystring];            /////////
+     
+    [defaults synchronize];
+  
+    ////
+    
+    
+    
+    ////////
+    ///////
+    ///////
+    ///////
+    //////
+    //////
+    
+    
+        CEventScore *ceventscore = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
+        
+        
+        
+        
+        
+        ////////
+        /////   set values
+        ///////
+        [ceventscore setValue: nil forKey:@"result"];
+       [ceventscore setValue:nil forKey:@"personalBest"];
+       [ceventscore setValue:nil forKey:@"placing"];
+       [ceventscore setValue:nil forKey:@"score"];
+       [ceventscore setValue:nil forKey:@"resultEntered"];
+        
+        
+         //////
+        // link relationships
+        /////
+        
+       
+        
+        ceventscore.competitor = newcompetitorObject;
+        ceventscore.event = self.eventObject;
+        ceventscore.meet = self.eventObject.meet;
+        ceventscore.team = sourceViewController.team;
+        //////
+        
+                 // Store cEventsScoreID data
+  
+      
+        
+    defaults = [NSUserDefaults standardUserDefaults];
+    
+     
+      tempint =  [self.eventObject.meet.meetID intValue];
+     
+      keystring = [NSString stringWithFormat:@"%dlastcEventScoreID",tempint];  ////
+     
+     NSLog(@"%@",keystring);
+     
+     if (![defaults objectForKey:keystring]) {                    /////
+     
+     int idint = 0;
+     NSNumber *idnumber = [NSNumber numberWithInt:idint];
+     [defaults setObject:idnumber forKey:keystring];             ///////
+     
+     }
+        oldnumber = [defaults objectForKey:keystring];   ///
+        oldint = [oldnumber intValue];
+        newint = oldint + 1;
+        newnumber = [NSNumber numberWithInt:newint];
+       [ceventscore setValue: newnumber forKey: @"cEventScoreID"];                  //////////
+       
+
+    [defaults setObject: newnumber forKey:keystring];            /////////
+     
+    [defaults synchronize];
+ 
+    ////
+    
+        
+                NSError *error = nil;
+
+        
+        
+
+        // Save the context.
+        
+            if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+        
+    }
 
     if ([unwindSegue.sourceViewController isKindOfClass:[EventScoreAddViewController class]])
     {

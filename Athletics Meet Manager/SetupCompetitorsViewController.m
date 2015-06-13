@@ -308,7 +308,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
         
         [competitor setValue:_teamObject.meet forKey:@"meet"];
        
-        
+        [competitor setValue:_teamObject.teamName forKey:@"teamName"];
 
         
         //////
