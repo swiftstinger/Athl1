@@ -59,7 +59,7 @@
 
     // Update the user interface for the detail item.
     if (_detailItem) {
-      NSLog(@"event item  id %@", [self.eventObject valueForKey:@"eventID"]);
+     
       
       NSString *eventname = [NSString stringWithFormat:@"%@ %@",self.eventObject.gEvent.gEventName, self.eventObject.division.divName];
       _navBar.title = eventname;
@@ -265,6 +265,17 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
         [[segue destinationViewController] setDetailItem:object];
         
         [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+    }
+    
+    if ([[segue identifier] isEqualToString:@"eventScoreAdd"]) {
+        
+        UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
+        EventScoreAddViewController* eventScoreAddController = (EventScoreAddViewController*)[navController topViewController];
+        
+        
+        [eventScoreAddController setDetailItem:self.eventObject];
+         NSLog(@"not added context");
+        [eventScoreAddController setManagedObjectContext:self.managedObjectContext];
     }
     
 }

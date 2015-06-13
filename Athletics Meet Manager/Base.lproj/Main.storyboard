@@ -797,7 +797,7 @@
                     <navigationItem key="navigationItem" title="EventNameUpdate" id="yqP-FZ-o7e">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ip4-xv-NKT">
                             <connections>
-                                <segue destination="e70-Pp-djT" kind="presentation" identifier="addEventScore" modalTransitionStyle="flipHorizontal" id="Eb5-AW-5r9"/>
+                                <segue destination="e70-Pp-djT" kind="presentation" identifier="eventScoreAdd" modalTransitionStyle="flipHorizontal" id="Eb5-AW-5r9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1399,67 +1399,77 @@
         <scene sceneID="9Oe-XU-zFN">
             <objects>
                 <tableViewController title="AddEventScore Details" id="3pk-YG-4KO" customClass="EventScoreAddViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="9FV-bg-85b">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="9FV-bg-85b">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <sections>
-                            <tableViewSection headerTitle="Enter Details" id="5RN-9Z-NOw">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="59" id="eGc-hf-5PJ">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eGc-hf-5PJ" id="uoh-pz-H0c">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Competitor Name" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p2a-qa-qT3">
-                                                    <rect key="frame" x="8" y="0.0" width="237" height="58"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Team Abr" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1oz-W9-Po1">
-                                                    <rect key="frame" x="244" y="0.0" width="114" height="58"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Result" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LWS-Qe-kyV">
-                                                    <rect key="frame" x="357" y="0.0" width="243" height="58"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="CR1-da-MbV">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="3pk-YG-4KO" id="w1I-hg-gDn"/>
+                            </connections>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchCell" rowHeight="59" id="eGc-hf-5PJ" customClass="CompChooseTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eGc-hf-5PJ" id="uoh-pz-H0c">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Competitor Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJX-2f-9iY">
+                                            <rect key="frame" x="8" y="0.0" width="320" height="58"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TeamAbr" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hco-Ph-Q8Q">
+                                            <rect key="frame" x="336" y="0.0" width="256" height="58"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="CompNameLabel" destination="BJX-2f-9iY" id="2mk-hp-qiq"/>
+                                    <outlet property="CompTeamAbrLabel" destination="Hco-Ph-Q8Q" id="RMR-dX-Hr7"/>
+                                    <segue destination="8pZ-A0-8aw" kind="unwind" identifier="CompSelectedSegue" unwindAction="unwindToEventScoreSheetDone:" id="dra-ak-FEF"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
                         <connections>
                             <outlet property="dataSource" destination="3pk-YG-4KO" id="FEX-Iu-ary"/>
                             <outlet property="delegate" destination="3pk-YG-4KO" id="qgz-zZ-TZL"/>
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Competitor Results" id="FQ9-S4-hc9">
+                    <navigationItem key="navigationItem" title="Choose or Add Competitor" id="FQ9-S4-hc9">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wut-Vl-S5c">
                             <connections>
-                                <segue destination="8pZ-A0-8aw" kind="unwind" unwindAction="unwindToEventScoreSheetCancel:" id="YyE-kr-cyN"/>
+                                <segue destination="8pZ-A0-8aw" kind="unwind" unwindAction="unwindToEventScoreSheetDone:" id="YyE-kr-cyN"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="wcz-Fc-Uvr">
-                            <connections>
-                                <segue destination="8pZ-A0-8aw" kind="unwind" unwindAction="unwindToEventScoreSheetDone:" id="o3F-OE-qTR"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="wcz-Fc-Uvr"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="compNameField" destination="p2a-qa-qT3" id="lut-pe-hDm"/>
-                        <outlet property="resultField" destination="LWS-Qe-kyV" id="BzD-5S-p9V"/>
-                        <outlet property="teamAbrField" destination="1oz-W9-Po1" id="Ueh-3p-z7x"/>
+                        <outlet property="searchDisplayController" destination="Oe7-UM-Enm" id="Y0Z-LA-Ps0"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1VW-7u-ri6" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="8pZ-A0-8aw" userLabel="Exit" sceneMemberID="exit"/>
+                <searchDisplayController id="Oe7-UM-Enm">
+                    <connections>
+                        <outlet property="delegate" destination="3pk-YG-4KO" id="UaJ-9y-iAA"/>
+                        <outlet property="searchBar" destination="CR1-da-MbV" id="hCw-0F-T8q"/>
+                        <outlet property="searchContentsController" destination="3pk-YG-4KO" id="LcM-Rb-QcJ"/>
+                        <outlet property="searchResultsDataSource" destination="3pk-YG-4KO" id="vHB-zI-iSV"/>
+                        <outlet property="searchResultsDelegate" destination="3pk-YG-4KO" id="YtC-l4-WHu"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="5425" y="694"/>
+            <point key="canvasLocation" x="5467" y="694"/>
         </scene>
         <!--Competitor Score Add-->
         <scene sceneID="7qr-RH-FjP">

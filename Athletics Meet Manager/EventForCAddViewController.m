@@ -59,7 +59,7 @@
 
         _competitorItem = newCompetitorItem;
        self.competitorObject = _competitorItem;
-      
+     
       
     }
 }

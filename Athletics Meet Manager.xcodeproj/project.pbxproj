@@ -20,6 +20,7 @@
 		1F10F8E71B28BBF400F536B8 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8E61B28BBF400F536B8 /* Team.m */; };
 		1F10F8EA1B28BBF400F536B8 /* Division.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8E91B28BBF400F536B8 /* Division.m */; };
 		1F10F8ED1B2C159E00F536B8 /* CEventScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8EC1B2C159E00F536B8 /* CEventScore.m */; };
+		1FA7E9E71B2C4A5400B924EF /* CompChooseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA7E9E61B2C4A5400B924EF /* CompChooseTableViewCell.m */; };
 		1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */; };
 		1FD022001B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */; };
 		1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */; };
@@ -90,6 +91,8 @@
 		1F10F8E91B28BBF400F536B8 /* Division.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Division.m; sourceTree = "<group>"; };
 		1F10F8EB1B2C159E00F536B8 /* CEventScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEventScore.h; sourceTree = "<group>"; };
 		1F10F8EC1B2C159E00F536B8 /* CEventScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEventScore.m; sourceTree = "<group>"; };
+		1FA7E9E51B2C4A5400B924EF /* CompChooseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompChooseTableViewCell.h; sourceTree = "<group>"; };
+		1FA7E9E61B2C4A5400B924EF /* CompChooseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompChooseTableViewCell.m; sourceTree = "<group>"; };
 		1FD021F81B13BA6900F40102 /* MeetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetTableViewCell.h; sourceTree = "<group>"; };
 		1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetTableViewCell.m; sourceTree = "<group>"; };
 		1FD021FF1B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Athletics_Meet_Manager.xcdatamodel; sourceTree = "<group>"; };
@@ -235,6 +238,15 @@
 				1F095F4E1B0FB765000FE30A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1FA7E9E81B2C4C6000B924EF /* EnterScore */ = {
+			isa = PBXGroup;
+			children = (
+				1FD6B6A01B1F429500F05968 /* CompetitorScoreEnterViewController.h */,
+				1FD6B6A11B1F429500F05968 /* CompetitorScoreEnterViewController.m */,
+			);
+			name = EnterScore;
 			sourceTree = "<group>";
 		};
 		1FD6B6571B1736B400F05968 /* MeetAdd */ = {
@@ -431,6 +443,7 @@
 		1FD6B6951B1F36F200F05968 /* EventScoreSheet */ = {
 			isa = PBXGroup;
 			children = (
+				1FA7E9E81B2C4C6000B924EF /* EnterScore */,
 				1FD6B6991B1F375B00F05968 /* EventScoreAdd */,
 				1FD6B6961B1F373100F05968 /* EventScoreSheetViewController.h */,
 				1FD6B6971B1F373100F05968 /* EventScoreSheetViewController.m */,
@@ -445,8 +458,8 @@
 			children = (
 				1FD6B69A1B1F37A200F05968 /* EventScoreAddViewController.h */,
 				1FD6B69B1B1F37A200F05968 /* EventScoreAddViewController.m */,
-				1FD6B6A01B1F429500F05968 /* CompetitorScoreEnterViewController.h */,
-				1FD6B6A11B1F429500F05968 /* CompetitorScoreEnterViewController.m */,
+				1FA7E9E51B2C4A5400B924EF /* CompChooseTableViewCell.h */,
+				1FA7E9E61B2C4A5400B924EF /* CompChooseTableViewCell.m */,
 			);
 			name = EventScoreAdd;
 			sourceTree = "<group>";
@@ -565,6 +578,7 @@
 				1FD6B64A1B17363C00F05968 /* SetupDivViewController.m in Sources */,
 				1F10F8E11B28BBF400F536B8 /* Meet.m in Sources */,
 				1FD6B6701B1884E200F05968 /* TeamAddViewController.m in Sources */,
+				1FA7E9E71B2C4A5400B924EF /* CompChooseTableViewCell.m in Sources */,
 				1FD6B6471B17224300F05968 /* MeetMenuViewCell.m in Sources */,
 				1FD6B68D1B1E559C00F05968 /* EventForCAddViewController.m in Sources */,
 				1F095F331B0FB765000FE30A /* AppDelegate.m in Sources */,
