@@ -66,14 +66,14 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
         }
         else
         {
-            self.groupDivCell.accessoryType = UITableViewCellAccessoryNone;
+            self.groupDivCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         if ([[self.meetObject valueForKey: @"eventsDone"] boolValue]) {
             self.gEventCell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
         else
         {
-            self.gEventCell.accessoryType = UITableViewCellAccessoryNone;
+            self.gEventCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         if ([[self.meetObject valueForKey: @"teamsDone"] boolValue]) {
             self.enterTeamCell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -82,7 +82,7 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
         else
         {
        
-            self.enterTeamCell.accessoryType = UITableViewCellAccessoryNone;
+            self.enterTeamCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
 
 
