@@ -101,16 +101,16 @@
     return [sectionInfo numberOfObjects];
 }
 
-- (CompChooseTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CompChooseTableViewCell *cell = nil;
+    UITableViewCell *cell = nil;
     if ([tableView isEqual:self.tableView]) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"SearchCell" forIndexPath:indexPath];
     }
     else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"SearchCell"];
         if (cell == nil) {
-            cell = [[CompChooseTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchCell"];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchCell"];
         }
     }
     
@@ -339,12 +339,12 @@
 }
  */
 
-- (void)fetchedResultsController:(NSFetchedResultsController *)controller configureCell:(CompChooseTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)fetchedResultsController:(NSFetchedResultsController *)controller configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [controller objectAtIndexPath:indexPath];
     Competitor* comp = (Competitor*) object;
-    cell.CompNameLabel.text = [[comp valueForKey:@"compName"] description];
-     cell.CompTeamAbrLabel.text = [comp.team.teamAbr description];
+    cell.textLabel.text = [[comp valueForKey:@"compName"] description];
+    // cell.CompTeamAbrLabel.text = [comp.team.teamAbr description];
 }
 
 #pragma mark -
