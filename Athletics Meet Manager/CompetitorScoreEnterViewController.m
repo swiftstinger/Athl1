@@ -158,12 +158,34 @@ NSLog(@"event id %@",event.eventID);
     
     int count = 0;
     int score;
+    int placing;
+    int lastplacegiven = 0;
+    int lastscoregiven = 0;
+    NSNumber *lastResult = 0;
+    NSNumber *currentResult;
     for(CEventScore *object in results) {
-        
-        
+       
+         currentResult = object.result;
+       // [number1 doubleValue] < [number2 doubleValue]
+        if ([currentResult doubleValue] == [lastResult doubleValue]) {
+        NSLog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
+            score = lastscoregiven;
+            placing = lastplacegiven;
+        }
+        else
+        {
+        NSLog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
         score = topresult - count;
+        placing = count + 1;
+        }
+        
         count++;
-        object.placing = [NSNumber numberWithInt:count];
+        
+        lastplacegiven = placing;
+        lastscoregiven = score;
+        lastResult = currentResult;
+        
+        object.placing = [NSNumber numberWithInt:placing];
         
         object.score = [NSNumber numberWithInt:score];
 
@@ -225,7 +247,7 @@ return intvalue;
         NSNumber *resultNumber = [f numberFromString:self.resultTextField.text];
         self.result =[resultNumber doubleValue];
         
-        
+        self.cEventScore.result = [NSNumber numberWithDouble:self.result];
         
         
         if (FALSE) {
