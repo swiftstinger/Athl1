@@ -143,7 +143,9 @@ self.gEventTypeValue= [sender titleForSegmentAtIndex:[sender selectedSegmentInde
     
     if ([identifier isEqualToString:@"unwindToSetupGEventDoneSegue"]) {
         
+        self.gEventTypeValue = [self.gEventType titleForSegmentAtIndex:[self.gEventType selectedSegmentIndex]];
         //checks
+        NSLog(@"GEventType: %@",self.gEventTypeValue);
         
         if (FALSE) {
         

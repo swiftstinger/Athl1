@@ -625,7 +625,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MwJ-pp-F7x" id="OoG-iy-DAs">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DivisionName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WxA-N9-cDH">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="DivisionName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WxA-N9-cDH">
                                             <rect key="frame" x="8" y="11" width="277" height="22"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1506,7 +1506,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="ytF-7L-BF8">
                             <connections>
-                                <segue destination="41e-Fa-Nv9" kind="unwind" identifier="resultEnteredSegue" unwindAction="unwindToEventScoreSheetDone:" id="Kzv-nh-6zg"/>
+                                <segue destination="41e-Fa-Nv9" kind="unwind" identifier="unwindToEventScoreSheetDoneSegue" unwindAction="unwindToEventScoreSheetDone:" id="Kzv-nh-6zg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

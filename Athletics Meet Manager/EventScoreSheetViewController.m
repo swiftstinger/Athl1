@@ -388,11 +388,11 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
         ////////
         /////   set values
         ///////
-        [ceventscore setValue: nil forKey:@"result"];
-       [ceventscore setValue:nil forKey:@"personalBest"];
-       [ceventscore setValue:nil forKey:@"placing"];
-       [ceventscore setValue:nil forKey:@"score"];
-       [ceventscore setValue:nil forKey:@"resultEntered"];
+        [ceventscore setValue: NULL forKey:@"result"];
+       [ceventscore setValue:NULL forKey:@"personalBest"];
+       [ceventscore setValue:NULL forKey:@"placing"];
+       [ceventscore setValue:NULL forKey:@"score"];
+       [ceventscore setValue:NULL forKey:@"resultEntered"];
         
         
          //////
@@ -470,11 +470,11 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
         ////////
         /////   set values
         ///////
-     [ceventscore setValue: nil forKey:@"result"];
-       [ceventscore setValue:nil forKey:@"personalBest"];
-       [ceventscore setValue:nil forKey:@"placing"];
-       [ceventscore setValue:nil forKey:@"score"];
-       [ceventscore setValue:nil forKey:@"resultEntered"];
+     [ceventscore setValue: NULL forKey:@"result"];
+       [ceventscore setValue:NULL forKey:@"personalBest"];
+       [ceventscore setValue:NULL forKey:@"placing"];
+       [ceventscore setValue:NULL forKey:@"score"];
+       [ceventscore setValue:NULL forKey:@"resultEntered"];
     
      
        /*
