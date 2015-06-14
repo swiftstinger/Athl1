@@ -288,22 +288,15 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
     
         }
         
-        
+        if (!sourceViewController.editing) {
         
          //////
         // link relationships
         /////
         
-        if (!(_teamObject.competitors)) {
-            [_teamObject setValue:[NSSet setWithObject:competitor] forKey:@"competitors"];
-        }
-        else
-        {
-        NSMutableSet *competitorsset = [_teamObject mutableSetValueForKey:@"competitors"];
-        [competitorsset addObject:competitor];
-        }
-        
        
+        
+       competitor.team = self.teamObject;
         
         
         [competitor setValue:_teamObject.meet forKey:@"meet"];
@@ -314,7 +307,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
         //////
         
           // Store CompID data
- if (!sourceViewController.editing) {
+ 
      
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

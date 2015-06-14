@@ -373,21 +373,14 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         
             
         
-        }
+        
         
         
         //////
         // link relationship
         /////
         
-        if (!(_meetObject.divisions)) {
-            [_meetObject setValue:[NSSet setWithObject:div] forKey:@"divisions"];
-        }
-        else
-        {
-        NSMutableSet *divisionsset = [_meetObject mutableSetValueForKey:@"divisions"];
-        [divisionsset addObject:div];
-        }
+       div.meet = self.meetObject;
         
        
         
@@ -432,7 +425,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
     [defaults synchronize];
      
     ////
-
+        }
         
                 NSError *error = nil;
 

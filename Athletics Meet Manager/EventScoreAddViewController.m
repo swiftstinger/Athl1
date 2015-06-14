@@ -398,7 +398,30 @@ NSLog(@"competitor selected and object name is %@", self.competitorObject.compNa
         
         
         
+        if ([[self.competitorObject valueForKeyPath:@"cEventScores.event"] containsObject:self.eventObject]) {
+            
+            UIAlertController * alert =   [UIAlertController
+                                    alertControllerWithTitle:@"Chosen competitor is already competing in this event."
+                                    message:@"Please pick a different competitor"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+            return NO;
+        }
         
+
    
         
        

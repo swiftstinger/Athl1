@@ -9,6 +9,7 @@
 #import "SetupTeamsViewController.h"
 #import "TeamTableViewCell.h"
 #import "Team.h"
+#import "Competitor.h"
 
 @interface SetupTeamsViewController ()
 
@@ -297,27 +298,20 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         [team setValue: sourceViewController.teamAbr.text forKey:@"teamAbr"];
     
         }
-        [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"teamsDone"];
+       if (!sourceViewController.editing) {
+        
+            [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"teamsDone"];
          //////
         // link relationship
         /////
-        
-        if (!(_meetObject.teams)) {
-            [_meetObject setValue:[NSSet setWithObject:team] forKey:@"teams"];
-        }
-        else
-        {
-        NSMutableSet *teamsset = [_meetObject mutableSetValueForKey:@"teams"];
-        [teamsset addObject:team];
-        }
-        
+        team.meet = self.meetObject;
        
         
         
         //////
         
           // Store teamID data
-  if (!sourceViewController.editing) {
+ 
       
         
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -346,6 +340,16 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
     [defaults setObject: newnumber forKey:keystring];            /////////
      
     [defaults synchronize];
+  }
+  else
+  {
+  
+    for(Competitor* comp in team.competitors) {
+       ;
+      
+       comp.teamName = comp.team.teamName;
+           }
+  
   }
     ////
     

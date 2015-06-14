@@ -371,7 +371,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         
             
         
-        }
+        
         
 
         
@@ -384,15 +384,9 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         // link relationship
         /////
         
-        if (!(_meetObject.gEvents)) {
-            [_meetObject setValue:[NSSet setWithObject:gEvent] forKey:@"gEvents"];
-        }
-        else
-        {
-        NSMutableSet *geventsset = [_meetObject mutableSetValueForKey:@"gEvents"];
-        [geventsset addObject:gEvent];
-        }
+        gEvent.meet = self.meetObject;
         
+               
       
         
         
@@ -429,7 +423,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
     [defaults synchronize];
      
     ////
-
+        }
         
                 NSError *error = nil;
 

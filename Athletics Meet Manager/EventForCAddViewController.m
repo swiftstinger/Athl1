@@ -327,9 +327,42 @@ if(pickerView.tag == divpicker)
 
         self.event = [self selectedEvent];
         
+        // check duplicate events
+        
+     /*
+
+        if ([[self.competitorObject valueForKeyPath:@"c.name"] containsObject:cityName]) {
+            // ...
+        }
+        
+      */
+       // self.competitorObject.cEventScores
+        
+        if ([[self.competitorObject valueForKeyPath:@"cEventScores.event"] containsObject:self.event]) {
+            
+            UIAlertController * alert =   [UIAlertController
+                                    alertControllerWithTitle:@"This competitor is already in chosen event"
+                                    message:@"Please pick a different event"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+            return NO;
+        }
         
         
-        //checks
+        //check if too many people from this team involved
    
             Team *team = self.competitorObject.team;
             int limitperteam = [self.gevent.competitorsPerTeam intValue ];
@@ -388,13 +421,17 @@ if(pickerView.tag == divpicker)
      
                 [self presentViewController:alert animated:YES completion:nil];
                 return NO;
-                }
+                    }
                 
             }
         
    
         
     }
+    
+   
+    
+    
     
     return YES;              
 }
