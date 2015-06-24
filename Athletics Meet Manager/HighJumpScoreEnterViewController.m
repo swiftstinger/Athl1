@@ -1,23 +1,20 @@
 //
-//  CompetitorScoreEnterViewController.m
+//  HighJumpScoreEnterViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 03/06/2015.
+//  Created by Ailsa Huysamen on 23/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
-#import "CompetitorScoreEnterViewController.h"
+#import "HighJumpScoreEnterViewController.h"
 #import "GEvent.h"
 #import "Event.h"
 
-@interface CompetitorScoreEnterViewController ()
+@interface HighJumpScoreEnterViewController ()
 @property (nonatomic, assign) id currentResponder;
-
 @end
 
-@implementation CompetitorScoreEnterViewController
-
-//_navBar.title = [self.competitorObject valueForKey:@"compName"];
+@implementation HighJumpScoreEnterViewController
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -60,7 +57,7 @@
     // Update the user interface for the detail item.
     if (self.editing) {
       _resultTextField.text = [[self.cEventScore valueForKey:@"result"] description];
-      
+      _placingTextField.text = [[self.cEventScore valueForKey:@"placing"] description];
       
    }
 }
@@ -69,7 +66,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.resultTextField setKeyboardType:UIKeyboardTypeDecimalPad];
-   [self.resultTextField becomeFirstResponder];
+    [self.placingTextField setKeyboardType:UIKeyboardTypeDecimalPad];
+    [self.resultTextField becomeFirstResponder];
     
     [_resultTextField setDelegate:self];
     
@@ -135,6 +133,10 @@ NSLog(@"event id %@",event.eventID);
                     sorter = highestToLowest;
     
                 }
+                else if ([event.gEvent.gEventType isEqualToString:@"High Jump"]){
+                    sorter = highestToLowest;
+    
+                }
                 else
                 {
                     NSLog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
@@ -149,7 +151,7 @@ NSLog(@"event id %@",event.eventID);
             NSError *error;
                 NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     
- 
+    
     int competitorPointsMultiplier = [event.gEvent.competitorsPerTeam intValue];
     int topresult;
     
@@ -166,6 +168,23 @@ NSLog(@"event id %@",event.eventID);
 
     }
     
+    for(CEventScore *object in results) {
+
+
+        int place = [object.placing intValue];
+        int score = topresult - (place-1);
+        
+        object.score = [NSNumber numberWithInt:score];
+    }
+    /*
+    //resultworkout
+ 
+    int competitorPointsMultiplier = [event.gEvent.competitorsPerTeam intValue];
+    
+    int numberOfTeams = [self getTeamNumberWithEventObject: event];
+    
+    int topresult = competitorPointsMultiplier * numberOfTeams;
+    
     int count = 0;
     int score;
     int placing;
@@ -173,6 +192,8 @@ NSLog(@"event id %@",event.eventID);
     int lastscoregiven = 0;
     NSNumber *lastResult = 0;
     NSNumber *currentResult;
+    
+    
     for(CEventScore *object in results) {
        
          currentResult = object.result;
@@ -201,6 +222,14 @@ NSLog(@"event id %@",event.eventID);
 
         NSLog(@" score ranking =  %@  and Points =  %@",object.placing,object.score);
     }
+    
+    */
+    //resultworkout
+ 
+   
+    
+
+
     
 
 }
@@ -255,10 +284,11 @@ return intvalue;
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
         f.numberStyle = NSNumberFormatterDecimalStyle;
         NSNumber *resultNumber = [f numberFromString:self.resultTextField.text];
+        NSNumber *placeNumber = [f numberFromString:self.placingTextField.text];
         self.result =[resultNumber doubleValue];
-        
+        self.place =[placeNumber doubleValue];
         self.cEventScore.result = [NSNumber numberWithDouble:self.result];
-        
+        self.cEventScore.placing = [NSNumber numberWithDouble:self.place];
         
         if (FALSE) {
         
@@ -270,5 +300,6 @@ return intvalue;
     
     return YES;              
 }
+
 
 @end

@@ -19,6 +19,7 @@
 		1F10F8E71B28BBF400F536B8 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8E61B28BBF400F536B8 /* Team.m */; };
 		1F10F8EA1B28BBF400F536B8 /* Division.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8E91B28BBF400F536B8 /* Division.m */; };
 		1F10F8ED1B2C159E00F536B8 /* CEventScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F10F8EC1B2C159E00F536B8 /* CEventScore.m */; };
+		1FC88E801B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */; };
 		1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */; };
 		1FD022001B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */; };
 		1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */; };
@@ -89,6 +90,8 @@
 		1F10F8E91B28BBF400F536B8 /* Division.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Division.m; sourceTree = "<group>"; };
 		1F10F8EB1B2C159E00F536B8 /* CEventScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEventScore.h; sourceTree = "<group>"; };
 		1F10F8EC1B2C159E00F536B8 /* CEventScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEventScore.m; sourceTree = "<group>"; };
+		1FC88E7E1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighJumpScoreEnterViewController.h; sourceTree = "<group>"; };
+		1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighJumpScoreEnterViewController.m; sourceTree = "<group>"; };
 		1FD021F81B13BA6900F40102 /* MeetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetTableViewCell.h; sourceTree = "<group>"; };
 		1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetTableViewCell.m; sourceTree = "<group>"; };
 		1FD021FF1B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Athletics_Meet_Manager.xcdatamodel; sourceTree = "<group>"; };
@@ -245,6 +248,8 @@
 			children = (
 				1FD6B6A01B1F429500F05968 /* CompetitorScoreEnterViewController.h */,
 				1FD6B6A11B1F429500F05968 /* CompetitorScoreEnterViewController.m */,
+				1FC88E7E1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.h */,
+				1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */,
 			);
 			name = EnterScore;
 			sourceTree = "<group>";
@@ -575,6 +580,7 @@
 			files = (
 				1FD6B6A21B1F429500F05968 /* CompetitorScoreEnterViewController.m in Sources */,
 				1FD6B6411B171F4200F05968 /* MeetMenuViewController.m in Sources */,
+				1FC88E801B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m in Sources */,
 				1FD6B69C1B1F37A200F05968 /* EventScoreAddViewController.m in Sources */,
 				1FD6B6911B1E5C3600F05968 /* CEventResultViewController.m in Sources */,
 				1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */,

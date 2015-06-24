@@ -1381,7 +1381,6 @@
                                     <outlet property="competitorResultLabel" destination="thY-zd-3jy" id="Loq-qi-kSK"/>
                                     <outlet property="competitorScoreLabel" destination="oSt-EX-VHH" id="rct-YR-jzC"/>
                                     <outlet property="competitorTeamLabel" destination="RCR-si-66g" id="BR9-rG-0UN"/>
-                                    <segue destination="kPh-lM-lGI" kind="show" identifier="enterResult" id="rgO-wr-L1q"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1399,6 +1398,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="navBar" destination="yqP-FZ-o7e" id="dQT-Yx-mei"/>
+                        <segue destination="kPh-lM-lGI" kind="show" identifier="enterResult" id="sNL-Hc-2GC"/>
+                        <segue destination="cfI-Qx-DQR" kind="show" identifier="enterHighJumpResult" id="e0k-I9-e32"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qVm-ZJ-q8n" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1509,10 +1510,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="nD0-3H-bAb">
-                                                    <rect key="frame" x="8" y="25" width="123" height="29"/>
+                                                    <rect key="frame" x="8" y="25" width="236" height="29"/>
                                                     <segments>
                                                         <segment title="Track"/>
                                                         <segment title="Field"/>
+                                                        <segment title="High Jump"/>
                                                     </segments>
                                                     <connections>
                                                         <action selector="gEventTypeSelecterValueChanged:" destination="qeN-Jl-Jeh" eventType="valueChanged" id="Lxd-Ve-PIE"/>
@@ -2340,6 +2342,79 @@
                 <exit id="6N5-VO-EGg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6715" y="-90"/>
+        </scene>
+        <!--Competitor Score Add-->
+        <scene sceneID="G31-C7-gQ2">
+            <objects>
+                <tableViewController title="Competitor Score Add" id="cfI-Qx-DQR" customClass="HighJumpScoreEnterViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="yok-na-YOb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection headerTitle="Enter Result" id="6UU-8T-ZcQ">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="59" id="0By-ca-1Q0">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0By-ca-1Q0" id="2lN-pN-BMK">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Insert Result" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nYU-LA-BMz">
+                                                    <rect key="frame" x="8" y="0.0" width="301" height="58"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Enter Competitor Ranking In Case Of Tied Result" id="V0b-kW-Qfq">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="59" id="Jcc-aG-Mn7">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jcc-aG-Mn7" id="wB2-7i-QUQ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Insert Placing" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qLu-HE-0ZL">
+                                                    <rect key="frame" x="8" y="0.0" width="301" height="58"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="cfI-Qx-DQR" id="Bl2-Hl-Z5T"/>
+                            <outlet property="delegate" destination="cfI-Qx-DQR" id="Qgg-LC-0KA"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Competitor Results Update" id="C3v-1k-IL0">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="efy-fg-xTI">
+                            <connections>
+                                <segue destination="OTZ-ot-RZn" kind="unwind" unwindAction="unwindToEventScoreSheetCancel:" id="fHI-Vb-DKQ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="zuh-49-Lw3">
+                            <connections>
+                                <segue destination="OTZ-ot-RZn" kind="unwind" identifier="unwindToEventScoreSheetDoneSegue" unwindAction="unwindToEventScoreSheetDone:" id="PsH-Pf-Cl8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="navBar" destination="C3v-1k-IL0" id="mwH-Nv-WK5"/>
+                        <outlet property="placingTextField" destination="qLu-HE-0ZL" id="Rkp-c0-Czu"/>
+                        <outlet property="resultTextField" destination="nYU-LA-BMz" id="DSh-VF-fDc"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NcO-cc-d2O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="OTZ-ot-RZn" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="4706" y="2172"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

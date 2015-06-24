@@ -1,6 +1,16 @@
 
+update scoring options
 
-high jump ad place or make ayout
+add check for if result is correct in high jump?
+mabe check but still edit result
+mabe enter results only available in editing and then if value is different, ceventscore.highjumpPlacingManual = true
+in score work out, if highJumpPlacing manual then result = highjumppacing manual, otherwise work out
+
+handle duplicates and intricacies of how to carry on placing
+
+
+
+high jump ad place or make layout
 
 
 

@@ -8,6 +8,7 @@
 
 #import "EventScoreSheetViewController.h"
 #import "CompetitorScoreEnterViewController.h"
+#import "HighJumpScoreEnterViewController.h"
 #import "CompetitorAddInResultSheetViewController.h"
 #import "EventScoreTableViewCell.h"
 #import "CEventScore.h"
@@ -260,6 +261,38 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
   }
 #pragma mark - Segues
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        CEventScore * ceventscore = (CEventScore*)object;
+
+        NSString *eventtypestring = ceventscore.event.gEvent.gEventType;
+   
+                if ([eventtypestring isEqualToString:@"Track"] ) {
+                        [self performSegueWithIdentifier:@"enterResult" sender:self];
+
+                }
+                else if ([eventtypestring isEqualToString:@"Field"]){
+                     [self performSegueWithIdentifier:@"enterResult" sender:self];
+
+    
+                }
+                else if ([eventtypestring isEqualToString:@"High Jump"]){
+                     [self performSegueWithIdentifier:@"enterHighJumpResult" sender:self];
+    
+                }
+                else
+                {
+                    NSLog(@"whooooops geventtyp not either %@", eventtypestring);
+                }
+
+
+
+    
+    NSLog(@"in tap and event is %@", eventtypestring);
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  
 
@@ -270,6 +303,14 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
         
         [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
     }
+    if ([[segue identifier] isEqualToString:@"enterHighJumpResult"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        [[segue destinationViewController] setDetailItem:object];
+        
+        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+    }
+
     
     if ([[segue identifier] isEqualToString:@"eventScoreAdd"]) {
         
@@ -292,7 +333,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
 - (IBAction)unwindToEventScoreSheetDone:(UIStoryboardSegue *)unwindSegue
 {
     if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorAddInResultSheetViewController class]])
-    {
+        {
         NSLog(@"Coming from CompertitorAddInResults Done!");
         
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
@@ -456,9 +497,9 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
             }
         
     }
-
+    
     if ([unwindSegue.sourceViewController isKindOfClass:[EventScoreAddViewController class]])
-    {
+        {
         NSLog(@"Coming from EventScoreAdd Done!");
         
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
@@ -595,7 +636,46 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
         
     }
    
-   
+   if ([unwindSegue.sourceViewController isKindOfClass:[HighJumpScoreEnterViewController class]])
+    {
+        NSLog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
+        
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+        
+        CompetitorScoreEnterViewController *sourceViewController = unwindSegue.sourceViewController;
+        
+        CEventScore *ceventscore = sourceViewController.cEventScore;
+        
+        
+        ////////
+        /////   set values
+        ///////
+        
+        //validation in source
+        NSLog(@"source results %f",sourceViewController.result);
+        ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result];
+    
+        
+            ////
+    
+        
+                NSError *error = nil;
+
+        
+        
+
+        // Save the context.
+        
+            if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+        
+    }
+
 
 }
 - (IBAction)unwindToEventScoreSheetCancel:(UIStoryboardSegue *)unwindSegue
