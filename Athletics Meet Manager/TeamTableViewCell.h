@@ -10,5 +10,6 @@
 
 @interface TeamTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *teamTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfCompetitorsLabel;
 
 @end

@@ -53,7 +53,7 @@
 
 NSLog(@"in view");
     // Update the user interface for the detail item.
-    if (_detailItem) {
+    if (self.teamObject) {
       
       _navBar.title = [self.teamObject valueForKey:@"teamName"];
 
@@ -215,8 +215,42 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
           cell.competitorTitleLabel.text = [[object valueForKey:@"compName"] description];
-
+    
+        cell.numberOfEventsLabel.text = [NSString stringWithFormat:@"Events: %@",  @([[object valueForKey:@"cEventScores"] count] )];
+    
   }
+  /*
+-(NSString*) checkNumberOfEventsForCompetitor: (Competitor*)comp {
+
+NSString *eventstring;
+
+NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+        NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+
+            NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(team == %@)", comp.team];
+            NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(competitor == %@)", comp];
+            NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+            NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+            [fetchRequest setPredicate:andPred];
+
+
+            NSError *err;
+            NSUInteger eventscorecount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&err];
+        
+        
+            if(eventscorecount == NSNotFound) {
+                //Handle error
+            }
+        eventstring = [NSString stringWithFormat:@"Events : %d ",eventscorecount];
+
+
+return eventstring;
+}
+*/
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

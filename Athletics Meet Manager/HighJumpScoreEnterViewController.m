@@ -35,6 +35,7 @@
        self.cEventScore = _detailItem;
        if (self.cEventScore.result) {
             self.isEditing = TRUE;
+            NSLog(@"self.editing = true");
         }
        
       
@@ -58,7 +59,9 @@
     if (self.editing) {
       _resultTextField.text = [[self.cEventScore valueForKey:@"result"] description];
       _placingTextField.text = [[self.cEventScore valueForKey:@"placing"] description];
+    
       
+        
    }
 }
 
@@ -168,6 +171,7 @@ NSLog(@"event id %@",event.eventID);
 
     }
     
+    /*
     for(CEventScore *object in results) {
 
 
@@ -176,6 +180,8 @@ NSLog(@"event id %@",event.eventID);
         
         object.score = [NSNumber numberWithInt:score];
     }
+    */
+  
     /*
     //resultworkout
  
@@ -184,10 +190,10 @@ NSLog(@"event id %@",event.eventID);
     int numberOfTeams = [self getTeamNumberWithEventObject: event];
     
     int topresult = competitorPointsMultiplier * numberOfTeams;
-    
+    */
     int count = 0;
     int score;
-    int placing;
+    double placing;
     int lastplacegiven = 0;
     int lastscoregiven = 0;
     NSNumber *lastResult = 0;
@@ -198,23 +204,32 @@ NSLog(@"event id %@",event.eventID);
        
          currentResult = object.result;
        // [number1 doubleValue] < [number2 doubleValue]
-        if ([currentResult doubleValue] == [lastResult doubleValue]) {
-        NSLog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
-            score = lastscoregiven;
-            placing = lastplacegiven;
+       if (![object.highJumpPlacingManual boolValue]) {
+        
+            if ([currentResult doubleValue] == [lastResult doubleValue]) {
+                NSLog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
+                score = lastscoregiven;
+                placing = lastplacegiven;
+            }
+            else
+            {
+                NSLog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
+                score = topresult - count;
+                placing = count + 1;
+            }
+            lastplacegiven = placing;
+            lastscoregiven = score;
+            lastResult = currentResult;
         }
         else
         {
-        NSLog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
-        score = topresult - count;
-        placing = count + 1;
+            placing = [object.placing intValue];
+            score = topresult - (placing -1);
         }
         
         count++;
         
-        lastplacegiven = placing;
-        lastscoregiven = score;
-        lastResult = currentResult;
+        
         
         object.placing = [NSNumber numberWithInt:placing];
         
@@ -223,7 +238,7 @@ NSLog(@"event id %@",event.eventID);
         NSLog(@" score ranking =  %@  and Points =  %@",object.placing,object.score);
     }
     
-    */
+    
     //resultworkout
  
    
@@ -288,7 +303,15 @@ return intvalue;
         self.result =[resultNumber doubleValue];
         self.place =[placeNumber doubleValue];
         self.cEventScore.result = [NSNumber numberWithDouble:self.result];
-        self.cEventScore.placing = [NSNumber numberWithDouble:self.place];
+        double oldplace = [self.cEventScore.placing doubleValue];
+        
+        if (oldplace != self.place) {
+            self.cEventScore.placing = [NSNumber numberWithDouble:self.place];
+            self.cEventScore.highJumpPlacingManual = [NSNumber numberWithBool:YES];
+        }
+        
+        
+        
         
         if (FALSE) {
         
@@ -299,6 +322,17 @@ return intvalue;
     }
     
     return YES;              
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // If the showAllSections is NO, then we want only two sections.
+    // Otherwise, we want our table to have four sections.
+    if (!self.editing) {
+        return 1;
+    }
+    else{
+        return 2;
+    }
 }
 
 

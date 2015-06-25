@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
-@interface CEventResultViewController : UITableViewController
+#import "Event.h"
+
+@interface CEventResultViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Event* eventObject;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 @end

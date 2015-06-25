@@ -10,5 +10,6 @@
 
 @interface CompetitorTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *competitorTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfEventsLabel;
 
 @end

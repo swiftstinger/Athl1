@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CEventScore" representedClassName="CEventScore" syncable="YES">
         <attribute name="cEventScoreID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="highJumpPlacingManual" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="personalBest" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="placing" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="result" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -71,7 +72,7 @@
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="teams" inverseEntity="Meet" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CEventScore" positionX="-12071" positionY="-12879" width="128" height="195"/>
+        <element name="CEventScore" positionX="-12071" positionY="-12879" width="128" height="210"/>
         <element name="Competitor" positionX="-12267" positionY="-13032" width="128" height="135"/>
         <element name="Division" positionX="-12042" positionY="-13392" width="128" height="105"/>
         <element name="Event" positionX="-11871" positionY="-13185" width="128" height="165"/>

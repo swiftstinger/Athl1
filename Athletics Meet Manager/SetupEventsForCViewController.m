@@ -57,8 +57,10 @@
 
 
     // Update the user interface for the detail item.
-    if (_detailItem) {
-     
+    if (self.competitorObject) {
+      
+      _navBar.title = self.competitorObject.compName;
+
     }
     
     
@@ -238,7 +240,10 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
     if ([[segue identifier] isEqualToString:@"showEventResult"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
+        CEventScore* ceventscore = (CEventScore*) object;
+        
+        
+        [[segue destinationViewController] setDetailItem:ceventscore.event];
         [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
         
     }

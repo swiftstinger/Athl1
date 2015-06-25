@@ -213,6 +213,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
           cell.teamTitleLabel.text = [[object valueForKey:@"teamName"] description];
+    
+          cell.numberOfCompetitorsLabel.text = [NSString stringWithFormat:@"Competitors: %@",  @([[object valueForKey:@"competitors"] count] )];
 
   }
 

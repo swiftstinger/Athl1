@@ -1,37 +1,26 @@
 
 update scoring options
 
-add check for if result is correct in high jump?
-mabe check but still edit result
-mabe enter results only available in editing and then if value is different, ceventscore.highjumpPlacingManual = true
-in score work out, if highJumpPlacing manual then result = highjumppacing manual, otherwise work out
-
-handle duplicates and intricacies of how to carry on placing
+score add
 
 
 
-high jump ad place or make layout
+high jump  make layout
 
 
 
 Drag values out of controllers not on change
+check all
 
 
 
 
 
-competitor name in events add
 
 comp input events prompt cehck all flow for label needs
 
-cometitor name in add events for c
 
-add label events for c
 
-results enter change cell to subtitle
-next
-
-Team setup set number of competitors
 
 
 not done:
@@ -53,7 +42,7 @@ add check marks for if result is done
 
 
 
-austhetic spacing
+austhetic spacing to do
 
 
 

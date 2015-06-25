@@ -19,6 +19,7 @@
 
 
 
+
 @property (strong, nonatomic) CEventScore* cEventScore;
 @property  double result;
 @property  double place;
