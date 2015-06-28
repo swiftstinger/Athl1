@@ -1,77 +1,28 @@
 //
-//  FinalResultsViewController.m
+//  TeamEventResultsViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 28/05/2015.
+//  Created by Ailsa Huysamen on 28/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
-#import "FinalResultsViewController.h"
+#import "TeamEventResultsViewController.h"
 
-@interface FinalResultsViewController ()
+@interface TeamEventResultsViewController ()
 
 @end
 
-@implementation FinalResultsViewController
+@implementation TeamEventResultsViewController
 
-#pragma mark - Managing the managedobjectcontext item
-
-- (void)setManagedObjectContext:(NSManagedObjectContext *)newcontext
-{
-    if (_managedObjectContext != newcontext) {
-        _managedObjectContext = newcontext;
-        
-    }
-}
-
-#pragma mark - Managing the detail item
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-}
-
-- (void)setDetailItem:(id)newDetailItem
-{
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-        _meetObject = _detailItem;
-        // Update the view.
-        [self configureView];
-        
-       
-        
-    }
-}
-
-
-
-- (void)configureView
-{
-
-NSLog(@"in view");
-    // Update the user interface for the detail item.
-    if (_detailItem) {
-        
-    }
-    
-    
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     
-  //  self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
     
-    [self configureView];
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-- (void) viewDidAppear:(BOOL)animated {
-
-
-}
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

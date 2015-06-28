@@ -8,6 +8,7 @@
 
 #import "MeetMenuViewController.h"
 #import "MeetMenuViewCell.h"
+#import "FinalResultsViewController.h"
 
 @interface MeetMenuViewController ()
 
@@ -104,22 +105,35 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  
- /*
- 
-    if ([[segue identifier] isEqualToString:@"addMeet"]) {
-        
-        
-    }
-  */
-  if (FALSE) {
+
+if (FALSE) {
     
 }
 else
 {
-
-[[segue destinationViewController] setDetailItem:self.meetObject];
-        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+    if ([[segue identifier] isEqualToString:@"finalResults"]) {
+        NSLog(@"final results");
+        
+        
+      
+        UITabBarController *barController = (UITabBarController*)[segue destinationViewController];
+        FinalResultsViewController* finalResultsController = (FinalResultsViewController*)[barController.viewControllers objectAtIndex:0];
+       
+        [finalResultsController setDetailItem:self.meetObject];
+       
+       [finalResultsController setManagedObjectContext:self.managedObjectContext];
+     /*
+        NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
+        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+    */
 }
+
+    else
+    {
+
+        [[segue destinationViewController] setDetailItem:self.meetObject];
+        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+    }
   /*
     if ([[segue identifier] isEqualToString:@"divSetup"]) {
         
@@ -128,7 +142,7 @@ else
 
     }
     */
-    
+}
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {

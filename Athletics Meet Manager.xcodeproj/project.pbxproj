@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0633A51B40853100110D26 /* TeamFinalResultsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0633A41B40853100110D26 /* TeamFinalResultsTableViewCell.m */; };
+		1F0633AB1B40937100110D26 /* TeamDivResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0633AA1B40937100110D26 /* TeamDivResultTableViewCell.m */; };
+		1F0633AE1B40953100110D26 /* TeamDivResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0633AD1B40953100110D26 /* TeamDivResultViewController.m */; };
+		1F0633B11B409B9600110D26 /* TeamEventResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0633B01B409B9600110D26 /* TeamEventResultsViewController.m */; };
+		1F0633B51B409C4500110D26 /* TeamEventResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0633B41B409C4500110D26 /* TeamEventResultTableViewCell.m */; };
+		1F0633B91B409CF500110D26 /* TeamCompetitorResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0633B81B409CF500110D26 /* TeamCompetitorResultTableViewCell.m */; };
+		1F0633BC1B409D4800110D26 /* TeamCompetitorResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0633BB1B409D4800110D26 /* TeamCompetitorResultsViewController.m */; };
 		1F095F301B0FB765000FE30A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F095F2F1B0FB765000FE30A /* main.m */; };
 		1F095F331B0FB765000FE30A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F095F321B0FB765000FE30A /* AppDelegate.m */; };
 		1F095F3F1B0FB765000FE30A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F3D1B0FB765000FE30A /* Main.storyboard */; };
@@ -67,6 +74,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F0633A31B40853100110D26 /* TeamFinalResultsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamFinalResultsTableViewCell.h; sourceTree = "<group>"; };
+		1F0633A41B40853100110D26 /* TeamFinalResultsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamFinalResultsTableViewCell.m; sourceTree = "<group>"; };
+		1F0633A91B40937100110D26 /* TeamDivResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDivResultTableViewCell.h; sourceTree = "<group>"; };
+		1F0633AA1B40937100110D26 /* TeamDivResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDivResultTableViewCell.m; sourceTree = "<group>"; };
+		1F0633AC1B40953100110D26 /* TeamDivResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDivResultViewController.h; sourceTree = "<group>"; };
+		1F0633AD1B40953100110D26 /* TeamDivResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDivResultViewController.m; sourceTree = "<group>"; };
+		1F0633AF1B409B9600110D26 /* TeamEventResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamEventResultsViewController.h; sourceTree = "<group>"; };
+		1F0633B01B409B9600110D26 /* TeamEventResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamEventResultsViewController.m; sourceTree = "<group>"; };
+		1F0633B31B409C4500110D26 /* TeamEventResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamEventResultTableViewCell.h; sourceTree = "<group>"; };
+		1F0633B41B409C4500110D26 /* TeamEventResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamEventResultTableViewCell.m; sourceTree = "<group>"; };
+		1F0633B71B409CF500110D26 /* TeamCompetitorResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamCompetitorResultTableViewCell.h; sourceTree = "<group>"; };
+		1F0633B81B409CF500110D26 /* TeamCompetitorResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamCompetitorResultTableViewCell.m; sourceTree = "<group>"; };
+		1F0633BA1B409D4800110D26 /* TeamCompetitorResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamCompetitorResultsViewController.h; sourceTree = "<group>"; };
+		1F0633BB1B409D4800110D26 /* TeamCompetitorResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamCompetitorResultsViewController.m; sourceTree = "<group>"; };
 		1F095F2A1B0FB765000FE30A /* Athletics Meet Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Athletics Meet Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F095F2E1B0FB765000FE30A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F095F2F1B0FB765000FE30A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -178,6 +199,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F0633A61B4091FC00110D26 /* TeamFinalResults */ = {
+			isa = PBXGroup;
+			children = (
+				1F0633A81B40924000110D26 /* TeamDivResults */,
+				1FD6B6541B1736AA00F05968 /* FinalResultsViewController.h */,
+				1FD6B6551B1736AA00F05968 /* FinalResultsViewController.m */,
+				1F0633A31B40853100110D26 /* TeamFinalResultsTableViewCell.h */,
+				1F0633A41B40853100110D26 /* TeamFinalResultsTableViewCell.m */,
+			);
+			name = TeamFinalResults;
+			sourceTree = "<group>";
+		};
+		1F0633A71B40923100110D26 /* DivFinalResults */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = DivFinalResults;
+			sourceTree = "<group>";
+		};
+		1F0633A81B40924000110D26 /* TeamDivResults */ = {
+			isa = PBXGroup;
+			children = (
+				1F0633B21B409BAD00110D26 /* TeamEventResuts */,
+				1F0633AC1B40953100110D26 /* TeamDivResultViewController.h */,
+				1F0633AD1B40953100110D26 /* TeamDivResultViewController.m */,
+				1F0633A91B40937100110D26 /* TeamDivResultTableViewCell.h */,
+				1F0633AA1B40937100110D26 /* TeamDivResultTableViewCell.m */,
+			);
+			name = TeamDivResults;
+			sourceTree = "<group>";
+		};
+		1F0633B21B409BAD00110D26 /* TeamEventResuts */ = {
+			isa = PBXGroup;
+			children = (
+				1F0633B61B409CC000110D26 /* TeamCompetitorResults */,
+				1F0633AF1B409B9600110D26 /* TeamEventResultsViewController.h */,
+				1F0633B01B409B9600110D26 /* TeamEventResultsViewController.m */,
+				1F0633B31B409C4500110D26 /* TeamEventResultTableViewCell.h */,
+				1F0633B41B409C4500110D26 /* TeamEventResultTableViewCell.m */,
+			);
+			name = TeamEventResuts;
+			sourceTree = "<group>";
+		};
+		1F0633B61B409CC000110D26 /* TeamCompetitorResults */ = {
+			isa = PBXGroup;
+			children = (
+				1F0633BA1B409D4800110D26 /* TeamCompetitorResultsViewController.h */,
+				1F0633BB1B409D4800110D26 /* TeamCompetitorResultsViewController.m */,
+				1F0633B71B409CF500110D26 /* TeamCompetitorResultTableViewCell.h */,
+				1F0633B81B409CF500110D26 /* TeamCompetitorResultTableViewCell.m */,
+			);
+			name = TeamCompetitorResults;
+			sourceTree = "<group>";
+		};
 		1F095F211B0FB765000FE30A = {
 			isa = PBXGroup;
 			children = (
@@ -362,8 +437,8 @@
 		1FD6B6601B1738D400F05968 /* FinalResultsTables */ = {
 			isa = PBXGroup;
 			children = (
-				1FD6B6541B1736AA00F05968 /* FinalResultsViewController.h */,
-				1FD6B6551B1736AA00F05968 /* FinalResultsViewController.m */,
+				1F0633A71B40923100110D26 /* DivFinalResults */,
+				1F0633A61B4091FC00110D26 /* TeamFinalResults */,
 			);
 			name = FinalResultsTables;
 			sourceTree = "<group>";
@@ -583,6 +658,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F0633B91B409CF500110D26 /* TeamCompetitorResultTableViewCell.m in Sources */,
+				1F0633AE1B40953100110D26 /* TeamDivResultViewController.m in Sources */,
 				1FD6B6A21B1F429500F05968 /* CompetitorScoreEnterViewController.m in Sources */,
 				1FD6B6411B171F4200F05968 /* MeetMenuViewController.m in Sources */,
 				1FC88E801B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m in Sources */,
@@ -611,6 +688,7 @@
 				1FD6B6651B17438500F05968 /* DivAddViewController.m in Sources */,
 				1FD6B6891B1E554B00F05968 /* EventForCTableViewCell.m in Sources */,
 				1FD6B69F1B1F37E300F05968 /* EventScoreTableViewCell.m in Sources */,
+				1F0633BC1B409D4800110D26 /* TeamCompetitorResultsViewController.m in Sources */,
 				1FD6B6861B1E551F00F05968 /* SetupEventsForCViewController.m in Sources */,
 				1FD6B6981B1F373100F05968 /* EventScoreSheetViewController.m in Sources */,
 				1FD6B6821B1E46CB00F05968 /* CompetitorAddViewController.m in Sources */,
@@ -619,8 +697,12 @@
 				1F10F8D81B28BBF300F536B8 /* GEvent.m in Sources */,
 				1FD022001B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodeld in Sources */,
 				1F095F301B0FB765000FE30A /* main.m in Sources */,
+				1F0633A51B40853100110D26 /* TeamFinalResultsTableViewCell.m in Sources */,
+				1F0633B51B409C4500110D26 /* TeamEventResultTableViewCell.m in Sources */,
 				1FD6B6561B1736AA00F05968 /* FinalResultsViewController.m in Sources */,
 				1FD6B66D1B18847E00F05968 /* GEventAddViewController.m in Sources */,
+				1F0633AB1B40937100110D26 /* TeamDivResultTableViewCell.m in Sources */,
+				1F0633B11B409B9600110D26 /* TeamEventResultsViewController.m in Sources */,
 				1FD6B6531B17368300F05968 /* EnterResultsViewController.m in Sources */,
 				1FD6B67B1B1E44DE00F05968 /* SetupCompetitorsViewController.m in Sources */,
 				1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */,
