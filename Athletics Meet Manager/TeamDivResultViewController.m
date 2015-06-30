@@ -7,6 +7,7 @@
 //
 
 #import "TeamDivResultViewController.h"
+#import "TeamEventResultsViewController.h"
 #import "TeamDivResultTableViewCell.h"
 #import "Division.h"
 #import "CEventScore.h"
@@ -302,6 +303,8 @@ NSString* divScoreString = [self sumResultsForDiv:divobject InTeam: _teamObject]
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
+        
+        [[segue destinationViewController] setTeamDetailItem:_teamObject];
        
         NSLog(@"in segue");
           [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];

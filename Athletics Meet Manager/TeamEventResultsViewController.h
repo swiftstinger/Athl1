@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
+#import "Division.h"
+#import "Team.h"
 
-@interface TeamEventResultsViewController : UITableViewController
+
+@interface TeamEventResultsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) id teamDetailItem;
+@property (strong, nonatomic) Team* teamObject;
+@property (strong, nonatomic) Division* divObject;
+
 
 @end

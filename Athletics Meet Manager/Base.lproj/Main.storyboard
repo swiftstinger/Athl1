@@ -3262,7 +3262,6 @@
                                 <connections>
                                     <outlet property="nameLabel" destination="ETG-KT-0IN" id="hjS-pT-wea"/>
                                     <outlet property="scoreLabel" destination="Hah-A6-bbq" id="sSs-PT-8hG"/>
-                                    <outlet property="titleLabel" destination="ETG-KT-0IN" id="dCT-f7-AMQ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

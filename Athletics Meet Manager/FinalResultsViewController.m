@@ -7,6 +7,7 @@
 //
 
 #import "FinalResultsViewController.h"
+#import "TeamDivResultViewController.h"
 #import "TeamFinalResultsTableViewCell.h"
 #import "Team.h"
 #import "CEventScore.h"
