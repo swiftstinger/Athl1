@@ -24,6 +24,9 @@
     if (_detailItem != newDetailItem) {
         _detailItem = newDetailItem;
         _meetObject = _detailItem;
+        
+        
+        
         // Update the view.
         [self configureView];
     }

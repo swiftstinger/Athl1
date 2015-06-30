@@ -2,7 +2,7 @@
 //  Team.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 10/06/2015.
+//  Created by Ailsa Huysamen on 30/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -17,6 +17,8 @@
 @dynamic teamAbr;
 @dynamic teamID;
 @dynamic teamName;
+@dynamic teamScore;
+@dynamic teamPlace;
 @dynamic cEventScores;
 @dynamic competitors;
 @dynamic meet;
