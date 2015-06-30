@@ -363,14 +363,12 @@ NSLog(@"configurecell");
   
         cell.teamLabel.text = [[teamobject valueForKey:@"teamName"] description];
     
-        cell.scoreLabel.text = [[teamobject valueForKey:@"teamScore"] description];
+        cell.scoreLabel.text = [NSString stringWithFormat:@" Score: %@",  [[teamobject valueForKey:@"teamScore"] description]];
+
     
-        cell.placeLabel.text = [[teamobject valueForKey:@"teamPlace"] description];
+        cell.placeLabel.text = [NSString stringWithFormat:@" Place: %@",  [[teamobject valueForKey:@"teamPlace"] description]];
 
 
-//cell.scoreLabel.text = [NSString stringWithFormat:@"%@",  scoreString];
-    
-      //  cell.placeLabel.text = [NSString stringWithFormat:@"%@",  placeString];
 
   }
 
@@ -383,7 +381,7 @@ NSLog(@"configurecell");
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  
 
-    if ([[segue identifier] isEqualToString:@"showTeam"]) {
+    if ([[segue identifier] isEqualToString:@"showTeamDivResults"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];

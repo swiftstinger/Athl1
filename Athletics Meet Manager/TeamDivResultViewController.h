@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TeamDivResultViewController : UITableViewController
+#import <CoreData/CoreData.h>
+
+#import "Team.h"
+
+@interface TeamDivResultViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Team* teamObject;
+
 
 @end
