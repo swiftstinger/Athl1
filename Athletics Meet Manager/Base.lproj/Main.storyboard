@@ -10,10 +10,13 @@
         <!--Main Navigation Controller-->
         <scene sceneID="cUi-kZ-frf">
             <objects>
-                <navigationController title="Main Navigation Controller" id="rS3-R9-Ivy" sceneMemberID="viewController">
+                <navigationController title="Main Navigation Controller" toolbarHidden="NO" id="rS3-R9-Ivy" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="yXu-0R-QUA">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="iTm-Ws-s4E">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="pGg-6v-bdr" kind="relationship" relationship="rootViewController" id="RxB-wf-QIq"/>
                     </connections>
@@ -1498,6 +1501,13 @@
                             <outlet property="delegate" destination="Sm8-SY-0ms" id="5wn-5Q-mQd"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem systemItem="done" id="gCf-Fh-4XD">
+                            <connections>
+                                <segue destination="gQK-sw-Xze" kind="unwind" identifier="unwindToEnterResultsSegue" unwindAction="unwindToEnterResultsDone:" id="qcC-hH-A0A"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="EventNameUpdate" id="yqP-FZ-o7e">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ip4-xv-NKT">
                             <connections>
@@ -1512,6 +1522,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qVm-ZJ-q8n" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="gQK-sw-Xze" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3852" y="1146"/>
         </scene>

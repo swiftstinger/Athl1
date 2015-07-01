@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "EventScoreSheetViewController.h"
 #import "Meet.h"
+#import "EventResultTableViewCell.h"
 
 @interface EnterResultsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -20,4 +21,5 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 - (IBAction)segmentedControlValueChanged:(id)sender;
 
+@property (weak, nonatomic) NSIndexPath *lastpathselected;
 @end

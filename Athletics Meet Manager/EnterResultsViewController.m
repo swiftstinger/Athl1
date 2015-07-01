@@ -7,7 +7,7 @@
 //
 
 #import "EnterResultsViewController.h"
-#import "EventResultTableViewCell.h"
+
 #import "GEvent.h"
 #import "Division.h"
 
@@ -94,7 +94,7 @@
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -238,8 +238,14 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
    
   cell.eventNameLabel.text = geventname;
   cell.divisionNameLabel.text = divisionname;
-
+  if ([event.eventDone boolValue]){
+    
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+  
+  
   }
+
+}
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -247,10 +253,12 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
 
     if ([[segue identifier] isEqualToString:@"showEventScoreSheet"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        self.lastpathselected = indexPath;
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
         [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
         
+      
     }
     
 }
@@ -263,5 +271,20 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
 self.fetchedResultsController = nil;
     
     [self.tableView reloadData];
+}
+
+
+- (IBAction)unwindToEnterResultsDone:(UIStoryboardSegue *)unwindSegue
+{
+    if ([unwindSegue.sourceViewController isKindOfClass:[EventScoreSheetViewController class]])
+        {
+        NSLog(@"Coming from Eventscoresheetviewcontroller Done!");
+        
+      
+        
+        
+        
+    }
+
 }
 @end
