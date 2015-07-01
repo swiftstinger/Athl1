@@ -20,6 +20,7 @@
 @property (strong, nonatomic) id teamDetailItem;
 @property (strong, nonatomic) Team* teamObject;
 @property (strong, nonatomic) Division* divObject;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 
 @end

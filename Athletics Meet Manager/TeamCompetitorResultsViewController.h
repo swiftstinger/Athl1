@@ -22,5 +22,6 @@
 @property (strong, nonatomic) Team* teamObject;
 @property (strong, nonatomic) Division* divObject;
 @property (strong, nonatomic) GEvent* gEventObject;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 @end

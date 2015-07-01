@@ -60,7 +60,7 @@
 NSLog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
-        
+        _navBar.title = @"FINAL RESULTS";
     }
     
     
@@ -238,12 +238,14 @@ NSLog(@"viewdidappear");
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+       
+        
+          NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
         [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
             
         NSError *error = nil;
@@ -253,6 +255,7 @@ NSLog(@"viewdidappear");
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+        
     }
 }
 

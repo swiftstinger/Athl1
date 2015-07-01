@@ -549,8 +549,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="wOa-Le-djC">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FINAL TEAM RESULTS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TeG-h8-efw">
+                                    <rect key="frame" x="0.0" y="8" width="600" height="36"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="teamCell" id="4fQ-jd-Duz" customClass="TeamFinalResultsTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="teamCell" id="4fQ-jd-Duz" customClass="TeamFinalResultsTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4fQ-jd-Duz" id="ITn-w1-Mi1">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -589,7 +602,6 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Results Per Team" id="yil-uP-fZk"/>
-                    <navigationItem key="navigationItem" title="FINAL RESULTS" id="gMv-BE-sSn"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wkW-3n-hId" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -605,7 +617,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="divCell" id="lbW-z5-rqw" customClass="TeamDivResultTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="divCell" id="lbW-z5-rqw" customClass="TeamDivResultTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lbW-z5-rqw" id="f0K-bM-MzV">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -637,6 +649,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="TeamName" id="STe-Ta-H8d"/>
+                    <connections>
+                        <outlet property="navBar" destination="STe-Ta-H8d" id="0kP-J0-8lc"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZdP-t3-haP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3194,7 +3209,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventCell" id="QJW-Lq-Uox" customClass="TeamEventResultTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="eventCell" id="QJW-Lq-Uox" customClass="TeamEventResultTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QJW-Lq-Uox" id="xHK-Vs-xyH">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -3226,6 +3241,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="DivisionName" id="rMt-3x-78j"/>
+                    <connections>
+                        <outlet property="navBar" destination="rMt-3x-78j" id="5cS-HA-TT1"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fx0-m0-Vtz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3271,6 +3289,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="EventName" id="pBG-f9-dwp"/>
+                    <connections>
+                        <outlet property="navBar" destination="pBG-f9-dwp" id="xuR-lI-yiH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pde-2j-6DT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

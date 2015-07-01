@@ -18,6 +18,7 @@
 @property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) Meet* meetObject;
 
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 
 
 @end
