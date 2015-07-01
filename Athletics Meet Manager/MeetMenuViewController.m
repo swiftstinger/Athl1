@@ -237,12 +237,226 @@ else
 
             
             }
+            else if (!divsdone)
+            {
+              UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"No Divisions Set Up"
+                                    message:@"Please set up at least one Division for this Meet"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                return NO;
+
+            }
           
         }
                 
     }
 
+    if ([identifier isEqualToString:@"enterResults"]) {
         
+        //checks
+        bool divsdone = [[self.meetObject valueForKey: @"divsDone"] boolValue];
+        bool eventsdone = [[self.meetObject valueForKey: @"eventsDone"] boolValue];
+        bool teamsdone = [[self.meetObject valueForKey: @"teamsDone"] boolValue];
+        
+        if (!divsdone && !eventsdone && !teamsdone) {
+            
+            UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"No Group Divisions, Events or Teams Set Up"
+                                    message:@"Please set up at least one Group Division, Event and Team for this Meet"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                return NO;
+            
+        }
+        else
+        {
+            if (!divsdone && !eventsdone) {
+            
+                UIAlertController * alert=   [UIAlertController
+                                        alertControllerWithTitle:@"No Group Divisions or Events Set Up"
+                                        message:@"Please set up at least one Group Division and at least on Event for this Meet"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                        [alert addAction:ok];
+     
+                        [self presentViewController:alert animated:YES completion:nil];
+                        return NO;
+            
+            }
+            else if (!divsdone && !teamsdone) {
+            
+                UIAlertController * alert=   [UIAlertController
+                                        alertControllerWithTitle:@"No Group Divisions or Teams Set Up"
+                                        message:@"Please set up at least one Group Division and at least on Team for this Meet"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                        [alert addAction:ok];
+     
+                        [self presentViewController:alert animated:YES completion:nil];
+                        return NO;
+            
+            
+            
+            
+            
+            }
+            else if (!eventsdone && !teamsdone) {
+            
+                UIAlertController * alert=   [UIAlertController
+                                        alertControllerWithTitle:@"No Group Events or Teams Set Up"
+                                        message:@"Please set up at least one Event and at least on Team for this Meet"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                        [alert addAction:ok];
+     
+                        [self presentViewController:alert animated:YES completion:nil];
+                        return NO;
+            
+            
+            
+            
+            
+            }
+
+            else
+            {
+        
+        
+                if (!eventsdone) {
+            
+                    UIAlertController * alert=   [UIAlertController
+                                        alertControllerWithTitle:@"No Events Set Up"
+                                        message:@"Please set up at least one Event for this Meet"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+                    [self presentViewController:alert animated:YES completion:nil];
+                    return NO;
+
+            
+                }
+                else if (!divsdone)
+                {
+                UIAlertController * alert=   [UIAlertController
+                                        alertControllerWithTitle:@"No Divisions Set Up"
+                                        message:@"Please set up at least one Division for this Meet"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+                    [self presentViewController:alert animated:YES completion:nil];
+                    return NO;
+
+                }
+                else if (!teamsdone)
+                {
+                UIAlertController * alert=   [UIAlertController
+                                        alertControllerWithTitle:@"No Teams Set Up"
+                                        message:@"Please set up at least one Team for this Meet"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+                    [self presentViewController:alert animated:YES completion:nil];
+                    return NO;
+
+                }
+
+          
+            }
+        
+            
+        }
+                
+    }
    
     
     return YES;              

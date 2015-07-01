@@ -104,8 +104,14 @@ NSLog(@"in view");
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-            
+   
+      
+      context = [self checkBeforeDeleteDivObject: [self.fetchedResultsController objectAtIndexPath:indexPath] InContext:context];
+       
+       //  [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+ 
+        
         NSError *error = nil;
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
@@ -114,6 +120,98 @@ NSLog(@"in view");
             abort();
         }
     }
+}
+
+- (NSManagedObjectContext*) checkBeforeDeleteDivObject: (Division*) div InContext: (NSManagedObjectContext*) context
+
+{
+
+    NSSet *events = div.events;
+    int count = 0;
+    for (Event *event in events) {
+        NSLog(@"event name : %@  edited: %@",event.gEvent.gEventName,event.eventEdited);
+
+        if ([event.eventEdited boolValue]) {
+        
+            count = count +1;
+            NSLog(@"edited count: %d",count);
+        }
+    
+    
+    }
+
+    if (count > 0) {
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Confirm Delete"
+                                    message:@"Some events in this Division already have competitors or scores entered. Deleting this division will delete these events and any scores entered. This cannot be undone. This action will not delete any competitors"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* delete = [UIAlertAction
+                        actionWithTitle:@"DELETE"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            Meet* thismeet = div.meet;
+        
+                            NSSet *divSet = thismeet.divisions;
+        
+                
+                            if ([divSet count] < 2) {
+            
+            
+                                thismeet.divsDone = [NSNumber numberWithBool:NO];
+        
+                            }
+        
+                            
+                        
+                            [context deleteObject:div];
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+                        UIAlertAction* cancel = [UIAlertAction
+                        actionWithTitle:@"CANCEL"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+    
+                [alert addAction:delete];
+                [alert addAction:cancel];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
+    {
+    
+     Meet* thismeet = div.meet;
+        
+                            NSSet *divSet = thismeet.divisions;
+        
+                
+                            if ([divSet count] < 2) {
+            
+            
+                                thismeet.divsDone = [NSNumber numberWithBool:NO];
+        
+                            }
+        
+                            
+                        
+                            [context deleteObject:div];
+    }
+
+
+
+ return context;
 }
 
 #pragma mark - Fetched results controller
@@ -317,6 +415,12 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
             NSEntityDescription *entity = [NSEntityDescription
     entityForName:@"GEvent" inManagedObjectContext:self.managedObjectContext];
             [fetchRequest setEntity:entity];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.meetObject];
+    [fetchRequest setPredicate:predicate];
+
+            
+            
             NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
             
             for (GEvent *gevent in fetchedObjects) {
@@ -328,7 +432,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
                 event.eventEdited = [NSNumber numberWithBool:NO];
                 event.eventDone = [NSNumber numberWithBool:NO];
                 
-               
+               NSLog(@"event name : %@  edited: %@",gevent.gEventName,event.eventEdited);
                 
                 ////////// event id
                 

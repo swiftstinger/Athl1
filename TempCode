@@ -34,17 +34,14 @@ comp input events prompt cehck all flow for label needs
 not done:
 
 
-
+work out scores on load? in results or on edit competitors?
 
 
 set eventsDone and teamsDone and divsDone if last one deleted
 
-handle deletes?  Events delete lets warn
+handle deletes?  Events delete lets warn *********
 
 
-add done button for results or flip switch
-
-add check marks for if result is done
 
 
 
@@ -55,6 +52,11 @@ austhetic spacing to do
 
 
 /////////////////////
+
+
+for(Team *object in results) {
+}
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  

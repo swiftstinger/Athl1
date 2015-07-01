@@ -100,7 +100,8 @@ NSLog(@"in view");
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+        context = [self checkBeforeDeleteTeamObject: [self.fetchedResultsController objectAtIndexPath:indexPath] InContext:context];
             
         NSError *error = nil;
         if (![context save:&error]) {
@@ -111,7 +112,97 @@ NSLog(@"in view");
         }
     }
 }
+- (NSManagedObjectContext*) checkBeforeDeleteTeamObject: (Team*) team InContext: (NSManagedObjectContext*) context
 
+{
+
+    NSSet *competitorarray = team.competitors;
+    int count = 0;
+    for (Competitor *comp in competitorarray) {
+        
+
+        if ([comp.cEventScores count] > 0) {
+        
+            count = count +1;
+           
+        }
+    
+    
+    }
+
+    if (count > 0) {
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Confirm Delete"
+                                    message:@"Some competitors in this Team have already been entered into events. Deleting this Team will delete these competitors and any scores entered for them. This cannot be undone."
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* delete = [UIAlertAction
+                        actionWithTitle:@"DELETE"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            Meet* thismeet = team.meet;
+        
+                            NSSet *teamSet = thismeet.teams;
+        
+                
+                            if ([teamSet count] < 2) {
+            
+            
+                                thismeet.teamsDone = [NSNumber numberWithBool:NO];
+        
+                            }
+        
+                            
+                        
+                            [context deleteObject:team];
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+                        UIAlertAction* cancel = [UIAlertAction
+                        actionWithTitle:@"CANCEL"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+    
+                [alert addAction:delete];
+                [alert addAction:cancel];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
+    {
+    
+                            Meet* thismeet = team.meet;
+        
+                            NSSet *teamSet = thismeet.teams;
+        
+                
+                            if ([teamSet count] < 2) {
+            
+            
+                                thismeet.teamsDone = [NSNumber numberWithBool:NO];
+        
+                            }
+        
+                            
+                        
+                            [context deleteObject:team];
+    }
+
+
+
+ return context;
+}
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController

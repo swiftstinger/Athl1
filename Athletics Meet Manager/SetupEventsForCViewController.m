@@ -366,6 +366,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
          
         [ceventscore setValue:event forKey:@"event"];
          
+         event.eventEdited = [NSNumber numberWithBool:YES];
 
         }
         

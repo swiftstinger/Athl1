@@ -100,8 +100,9 @@ NSLog(@"in view");
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-            
+       
+        
+          context = [self checkBeforeDeleteCompObject: [self.fetchedResultsController objectAtIndexPath:indexPath] InContext:context];
         NSError *error = nil;
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
@@ -111,7 +112,62 @@ NSLog(@"in view");
         }
     }
 }
+- (NSManagedObjectContext*) checkBeforeDeleteCompObject: (Competitor*) comp InContext: (NSManagedObjectContext*) context
 
+{
+
+  
+        
+
+
+    if ([comp.cEventScores count] > 0) {
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Confirm Delete"
+                                    message:@"This Competitor has already been entered into one or more events. Deleting this Competitor will remove it from these events as well as remove any scores entered. This cannot be undone."
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* delete = [UIAlertAction
+                        actionWithTitle:@"DELETE"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                        
+                            [context deleteObject:comp];
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+                        UIAlertAction* cancel = [UIAlertAction
+                        actionWithTitle:@"CANCEL"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+    
+                [alert addAction:delete];
+                [alert addAction:cancel];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
+    {
+        
+                            
+                        
+                            [context deleteObject:comp];
+    }
+
+
+
+ return context;
+}
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController

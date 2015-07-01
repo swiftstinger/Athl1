@@ -345,10 +345,12 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
 
 - (IBAction)unwindToEventScoreSheetDone:(UIStoryboardSegue *)unwindSegue
 {
+    
+    
     if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorAddInResultSheetViewController class]])
         {
         NSLog(@"Coming from CompertitorAddInResults Done!");
-        
+        self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     CompetitorAddInResultSheetViewController *sourceViewController = unwindSegue.sourceViewController;
     
@@ -514,7 +516,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
     if ([unwindSegue.sourceViewController isKindOfClass:[EventScoreAddViewController class]])
         {
         NSLog(@"Coming from EventScoreAdd Done!");
-        
+        self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
         CEventScore *ceventscore = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
@@ -612,7 +614,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
    if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorScoreEnterViewController class]])
     {
         NSLog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
-        
+        self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
         
@@ -652,7 +654,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
    if ([unwindSegue.sourceViewController isKindOfClass:[HighJumpScoreEnterViewController class]])
     {
         NSLog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
-        
+        self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
         

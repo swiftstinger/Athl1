@@ -417,7 +417,6 @@
 				1FD6B64F1B17366900F05968 /* SetupTeamsViewController.m */,
 				1FD6B6741B18852E00F05968 /* TeamTableViewCell.h */,
 				1FD6B6751B18852E00F05968 /* TeamTableViewCell.m */,
-				1FD6B6781B1E434900F05968 /* SetupCompetitors */,
 			);
 			name = SetupTeams;
 			sourceTree = "<group>";
@@ -464,6 +463,7 @@
 		1FD6B66A1B1883FF00F05968 /* TeamAdd */ = {
 			isa = PBXGroup;
 			children = (
+				1FD6B6781B1E434900F05968 /* SetupCompetitors */,
 				1FD6B66E1B1884E200F05968 /* TeamAddViewController.h */,
 				1FD6B66F1B1884E200F05968 /* TeamAddViewController.m */,
 			);
@@ -478,7 +478,6 @@
 				1FD6B67A1B1E44DE00F05968 /* SetupCompetitorsViewController.m */,
 				1FD6B67C1B1E453F00F05968 /* CompetitorTableViewCell.h */,
 				1FD6B67D1B1E453F00F05968 /* CompetitorTableViewCell.m */,
-				1FD6B6831B1E54E100F05968 /* SetupEventsForC */,
 			);
 			name = SetupCompetitors;
 			sourceTree = "<group>";
@@ -486,6 +485,7 @@
 		1FD6B67F1B1E462C00F05968 /* CompetitorAdd */ = {
 			isa = PBXGroup;
 			children = (
+				1FD6B6831B1E54E100F05968 /* SetupEventsForC */,
 				1FD6B6801B1E46CB00F05968 /* CompetitorAddViewController.h */,
 				1FD6B6811B1E46CB00F05968 /* CompetitorAddViewController.m */,
 			);
@@ -500,7 +500,6 @@
 				1FD6B6851B1E551F00F05968 /* SetupEventsForCViewController.m */,
 				1FD6B6871B1E554B00F05968 /* EventForCTableViewCell.h */,
 				1FD6B6881B1E554B00F05968 /* EventForCTableViewCell.m */,
-				1FD6B68E1B1E5BD800F05968 /* EventResultView */,
 			);
 			name = SetupEventsForC;
 			sourceTree = "<group>";
@@ -508,6 +507,7 @@
 		1FD6B68A1B1E556000F05968 /* EventForCAdd */ = {
 			isa = PBXGroup;
 			children = (
+				1FD6B68E1B1E5BD800F05968 /* EventResultView */,
 				1FD6B68B1B1E559C00F05968 /* EventForCAddViewController.h */,
 				1FD6B68C1B1E559C00F05968 /* EventForCAddViewController.m */,
 			);

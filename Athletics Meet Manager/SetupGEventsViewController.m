@@ -99,7 +99,8 @@ NSLog(@"in view");
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+        context = [self checkBeforeDeleteGEventObject: [self.fetchedResultsController objectAtIndexPath:indexPath] InContext:context];
             
         NSError *error = nil;
         if (![context save:&error]) {
@@ -110,7 +111,97 @@ NSLog(@"in view");
         }
     }
 }
+- (NSManagedObjectContext*) checkBeforeDeleteGEventObject: (GEvent*) gevent InContext: (NSManagedObjectContext*) context
 
+{
+
+    NSSet *events = gevent.events;
+    int count = 0;
+    for (Event *event in events) {
+        
+
+        if ([event.eventEdited boolValue]) {
+        
+            count = count +1;
+           
+        }
+    
+    
+    }
+
+    if (count > 0) {
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Confirm Delete"
+                                    message:@"Some events in this Event Group already have competitors or scores entered. Deleting this Event Group will delete these events and any scores entered. This cannot be undone. This action will not delete any competitors"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* delete = [UIAlertAction
+                        actionWithTitle:@"DELETE"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            Meet* thismeet = gevent.meet;
+        
+                            NSSet *geventSet = thismeet.gEvents;
+        
+                
+                            if ([geventSet count] < 2) {
+            
+            
+                                thismeet.eventsDone = [NSNumber numberWithBool:NO];
+        
+                            }
+        
+                            
+                        
+                            [context deleteObject:gevent];
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+                        UIAlertAction* cancel = [UIAlertAction
+                        actionWithTitle:@"CANCEL"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+    
+                [alert addAction:delete];
+                [alert addAction:cancel];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
+    {
+    
+     Meet* thismeet = gevent.meet;
+        
+                            NSSet *geventSet = thismeet.gEvents;
+        
+                
+                            if ([geventSet count] < 2) {
+            
+            
+                                thismeet.eventsDone = [NSNumber numberWithBool:NO];
+        
+                            }
+        
+                            
+                        
+                            [context deleteObject:gevent];
+    }
+
+
+
+ return context;
+}
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -315,6 +406,13 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
             NSEntityDescription *entity = [NSEntityDescription
     entityForName:@"Division" inManagedObjectContext:self.managedObjectContext];
             [fetchRequest setEntity:entity];
+           
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.meetObject];
+    [fetchRequest setPredicate:predicate];
+
+            
+            
+            
             NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
             
             for (Division *div in fetchedObjects) {
