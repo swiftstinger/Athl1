@@ -171,26 +171,7 @@ NSLog(@"event id %@",event.eventID);
 
     }
     
-    /*
-    for(CEventScore *object in results) {
-
-
-        int place = [object.placing intValue];
-        int score = topresult - (place-1);
-        
-        object.score = [NSNumber numberWithInt:score];
-    }
-    */
-  
-    /*
-    //resultworkout
- 
-    int competitorPointsMultiplier = [event.gEvent.competitorsPerTeam intValue];
-    
-    int numberOfTeams = [self getTeamNumberWithEventObject: event];
-    
-    int topresult = competitorPointsMultiplier * numberOfTeams;
-    */
+   
     int count = 0;
     int score;
     double placing;
@@ -198,7 +179,7 @@ NSLog(@"event id %@",event.eventID);
     int lastscoregiven = 0;
     NSNumber *lastResult = 0;
     NSNumber *currentResult;
-    
+    bool lastplacemanual = NO;
     
     for(CEventScore *object in results) {
        
@@ -208,23 +189,41 @@ NSLog(@"event id %@",event.eventID);
         
             if ([currentResult doubleValue] == [lastResult doubleValue]) {
                 NSLog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
+               
+                if (lastplacemanual){
+                    placing = lastplacegiven + 1;
+                    score = topresult - (placing -1);
+                    NSLog(@" manual and last place given %d", lastplacegiven);
+                                    }
+                else
+                {
                 score = lastscoregiven;
                 placing = lastplacegiven;
+                NSLog(@"not manual and last place given %d", lastplacegiven);
+
+                }
             }
             else
             {
                 NSLog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
                 score = topresult - count;
                 placing = count + 1;
+                NSLog(@"not manual and last place given %d", lastplacegiven);
             }
             lastplacegiven = placing;
             lastscoregiven = score;
             lastResult = currentResult;
+           lastplacemanual = NO;
+           
         }
         else
         {
+        
+        NSLog(@"manual");
             placing = [object.placing intValue];
             score = topresult - (placing -1);
+            lastResult = currentResult;
+           lastplacemanual = YES;
         }
         
         count++;

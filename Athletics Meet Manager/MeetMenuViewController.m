@@ -114,6 +114,7 @@ if (FALSE) {
 }
 else
 {
+
     if ([[segue identifier] isEqualToString:@"finalResults"]) {
         NSLog(@"final results");
         
@@ -136,6 +137,7 @@ else
 
         [[segue destinationViewController] setDetailItem:self.meetObject];
         [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+    NSLog(@"in segue in meetmenu prepareforsegue");
     }
   /*
     if ([[segue identifier] isEqualToString:@"divSetup"]) {

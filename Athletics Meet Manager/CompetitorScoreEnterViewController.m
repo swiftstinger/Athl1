@@ -240,7 +240,7 @@ return intvalue;
 
     
     if ([[segue identifier] isEqualToString:@"unwindToEventScoreSheetDoneSegue"]) {
-       [self resultsCalculate: self.cEventScore];
+      // [self resultsCalculate: self.cEventScore];
         
     }
     

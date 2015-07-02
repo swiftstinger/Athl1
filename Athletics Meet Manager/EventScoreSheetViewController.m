@@ -76,8 +76,313 @@
     [super viewDidLoad];
 	
     
+    if ([_eventObject.gEvent.gEventType isEqualToString:@"Track"] ) {
+        
+        [self resultsCalculateNormal];
+        
+    }
+    else if ([_eventObject.gEvent.gEventType isEqualToString:@"Field"]){
+        
+        [self resultsCalculateNormal];
+        
+    }
+    else if ([_eventObject.gEvent.gEventType isEqualToString:@"High Jump"]){
+    
+        [self resultsCalculateHighJump];
+    
+    }
+    else
+    {
+        NSLog(@"whooooops geventtyp not either %@", _eventObject.gEvent.gEventType);
+    }
+
+
+    
+    
+    
+    NSError *error = nil;
+        if (![self.managedObjectContext save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+
+    
+    
     [self configureView];
 }
+- (void) resultsCalculateHighJump {
+
+Event * event = _eventObject;
+NSLog(@"scores high jump");
+
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+            NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+           NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(result != NULL)", nil];
+            NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(event == %@)", event];
+            NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+            NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+            [fetchRequest setPredicate:andPred];
+    
+    
+               NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"result" ascending:NO];
+                NSSortDescriptor *lowestToHighest = [NSSortDescriptor sortDescriptorWithKey:@"result" ascending:YES];
+    
+                NSSortDescriptor *sorter;
+    
+                if ([event.gEvent.gEventType isEqualToString:@"Track"] ) {
+                    sorter = lowestToHighest;
+                }
+                else if ([event.gEvent.gEventType isEqualToString:@"Field"]){
+                    sorter = highestToLowest;
+    
+                }
+                else if ([event.gEvent.gEventType isEqualToString:@"High Jump"]){
+                    sorter = highestToLowest;
+    
+                }
+                else
+                {
+                    NSLog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
+                    }
+    
+    
+                NSArray *sortDescriptors = @[sorter];
+    
+                [fetchRequest setSortDescriptors:sortDescriptors];
+
+
+            NSError *error;
+                NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    
+    int competitorPointsMultiplier = [event.gEvent.competitorsPerTeam intValue];
+    int topresult;
+    
+    
+    if (competitorPointsMultiplier == 0) {
+    
+        topresult = [results count];
+    }
+    else
+    {
+        int numberOfTeams = [self getTeamNumberWithEventObject: event];
+    
+        topresult = competitorPointsMultiplier * numberOfTeams;
+
+    }
+    
+   
+    int count = 0;
+    int score;
+    double placing;
+    int lastplacegiven = 0;
+    int lastscoregiven = 0;
+    NSNumber *lastResult = 0;
+    NSNumber *currentResult;
+    BOOL lastplacemanual = NO;
+    
+    for(CEventScore *object in results) {
+       
+         currentResult = object.result;
+       // [number1 doubleValue] < [number2 doubleValue]
+       if (![object.highJumpPlacingManual boolValue]) {
+        
+            if ([currentResult doubleValue] == [lastResult doubleValue]) {
+                NSLog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
+               
+                if (lastplacemanual){
+                    placing = lastplacegiven + 1;
+                    score = topresult - (placing -1);
+                    NSLog(@" manual and last place given %d", lastplacegiven);
+                                    }
+                else
+                {
+                score = lastscoregiven;
+                placing = lastplacegiven;
+                NSLog(@"not manual and last place given %d", lastplacegiven);
+
+                }
+            }
+            else
+            {
+                NSLog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
+                score = topresult - count;
+                placing = count + 1;
+                NSLog(@"not manual and last place given %d", lastplacegiven);
+            }
+            lastplacegiven = placing;
+            lastscoregiven = score;
+            lastResult = currentResult;
+           lastplacemanual = NO;
+           
+        }
+        else
+        {
+        
+        NSLog(@"manual");
+            placing = [object.placing intValue];
+            score = topresult - (placing -1);
+            lastResult = currentResult;
+           lastplacemanual = YES;
+        }
+        
+        count++;
+        
+        
+        
+        object.placing = [NSNumber numberWithInt:placing];
+        
+        object.score = [NSNumber numberWithInt:score];
+
+        NSLog(@" score ranking =  %@  and Points =  %@",object.placing,object.score);
+    }
+    
+    
+    //resultworkout
+
+
+}
+
+- (void) resultsCalculateNormal {
+
+Event * event = _eventObject;
+NSLog(@"scores normal");
+
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+            NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+           NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(result != NULL)", nil];
+            NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(event == %@)", event];
+            NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+            NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+            [fetchRequest setPredicate:andPred];
+    
+    
+               NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"result" ascending:NO];
+                NSSortDescriptor *lowestToHighest = [NSSortDescriptor sortDescriptorWithKey:@"result" ascending:YES];
+    
+                NSSortDescriptor *sorter;
+    
+                if ([event.gEvent.gEventType isEqualToString:@"Track"] ) {
+                    sorter = lowestToHighest;
+                }
+                else if ([event.gEvent.gEventType isEqualToString:@"Field"]){
+                    sorter = highestToLowest;
+    
+                }
+                else
+                {
+                    NSLog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
+                    }
+    
+    
+                NSArray *sortDescriptors = @[sorter];
+    
+                [fetchRequest setSortDescriptors:sortDescriptors];
+
+
+            NSError *error;
+                NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+ 
+    int competitorPointsMultiplier = [event.gEvent.competitorsPerTeam intValue];
+    int topresult;
+    
+    
+    if (competitorPointsMultiplier == 0) {
+    
+        topresult = [results count];
+    }
+    else
+    {
+        int numberOfTeams = [self getTeamNumberWithEventObject: event];
+    
+        topresult = competitorPointsMultiplier * numberOfTeams;
+
+    }
+    
+    int count = 0;
+    int score;
+    int placing;
+    int lastplacegiven = 0;
+    int lastscoregiven = 0;
+    NSNumber *lastResult = 0;
+    NSNumber *currentResult;
+    for(CEventScore *object in results) {
+       
+         currentResult = object.result;
+       // [number1 doubleValue] < [number2 doubleValue]
+        if ([currentResult doubleValue] == [lastResult doubleValue]) {
+        NSLog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
+            score = lastscoregiven;
+            placing = lastplacegiven;
+        }
+        else
+        {
+        NSLog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
+        score = topresult - count;
+        placing = count + 1;
+        }
+        
+        count++;
+        
+        lastplacegiven = placing;
+        lastscoregiven = score;
+        lastResult = currentResult;
+        
+        object.placing = [NSNumber numberWithInt:placing];
+        
+        object.score = [NSNumber numberWithInt:score];
+
+        NSLog(@" score ranking =  %@  and Points =  %@",object.placing,object.score);
+    }
+    
+
+}
+
+-(int) getTeamNumberWithEventObject:(Event*) object {
+
+Meet* meet = object.meet;
+NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+        NSEntityDescription *description = [NSEntityDescription entityForName:@"Team" inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+
+            NSPredicate *pred = [NSPredicate predicateWithFormat:@"(meet == %@)", meet];
+           // NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(event == %@)", self.event];
+           // NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+          //  NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+            [fetchRequest setPredicate:pred];
+
+
+            NSError *err;
+            NSUInteger teamcount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&err];
+        
+        
+            if(teamcount == NSNotFound) {
+                //Handle error
+            }
+            int intvalue = (int)teamcount;
+
+return intvalue;
+
+}
+
+
+
+
+
 
 
 - (void)didReceiveMemoryWarning {
