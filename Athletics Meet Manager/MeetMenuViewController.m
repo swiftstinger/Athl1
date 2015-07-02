@@ -57,7 +57,8 @@
         
         */
       
-        
+       
+
         
     }
 }
@@ -97,6 +98,33 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
+    
+     NSLog(@"Teams in configure view: %lu",  (unsigned long)[self.meetObject.teams count]);
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+        NSEntityDescription *description = [NSEntityDescription entityForName:@"Team" inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+
+            NSPredicate *pred = [NSPredicate predicateWithFormat:@"(meet == %@)", self.meetObject];
+           // NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(event == %@)", self.event];
+           // NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+          //  NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+            [fetchRequest setPredicate:pred];
+
+
+            NSError *err;
+            NSUInteger teamcount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&err];
+        
+        
+            if(teamcount == NSNotFound) {
+                //Handle error
+            }
+            int intvalue = (int)teamcount;
+
+         NSLog(@"Teams in configure view from fetch : %d",  intvalue);
 }
 
 - (void)didReceiveMemoryWarning {

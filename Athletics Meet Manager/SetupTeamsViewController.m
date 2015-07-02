@@ -100,16 +100,17 @@ NSLog(@"in view");
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        
+      NSLog(@"Teams before delete: %lu",  (unsigned long)[self.meetObject.teams count]);
         context = [self checkBeforeDeleteTeamObject: [self.fetchedResultsController objectAtIndexPath:indexPath] InContext:context];
-            
+        NSLog(@"Teams before save: %lu",  (unsigned long)[self.meetObject.teams count]);
         NSError *error = nil;
-        if (![context save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
+                            if (![context save:&error]) {
+                                // Replace this implementation with code to handle the error appropriately.
+                                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                            abort();
+                            }
+                            NSLog(@"Tthis system unneccisary save: %lu",  (unsigned long)[self.meetObject.teams count]);
     }
 }
 - (NSManagedObjectContext*) checkBeforeDeleteTeamObject: (Team*) team InContext: (NSManagedObjectContext*) context
@@ -158,6 +159,16 @@ NSLog(@"in view");
                             
                         
                             [context deleteObject:team];
+                            
+                             NSError *error = nil;
+                            if (![context save:&error]) {
+                                // Replace this implementation with code to handle the error appropriately.
+                                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                            abort();
+                            }
+                            NSLog(@"Teams after delete and save in other system pressed: %lu",  (unsigned long)[self.meetObject.teams count]);
+                            
                             [alert dismissViewControllerAnimated:YES completion:nil];
                             
                              
@@ -197,6 +208,15 @@ NSLog(@"in view");
                             
                         
                             [context deleteObject:team];
+        
+                            NSError *error = nil;
+                            if (![context save:&error]) {
+                                // Replace this implementation with code to handle the error appropriately.
+                                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                            abort();
+                            }
+                            NSLog(@"Teams after delete and save in other system not pressed: %lu",  (unsigned long)[self.meetObject.teams count]);
     }
 
 
