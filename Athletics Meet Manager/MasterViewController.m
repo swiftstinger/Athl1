@@ -297,7 +297,7 @@ format.dateFormat = @"dd MMM yyyy";
             
         }
         if (sourceViewController.ceventLimitStepper) {
-        [meet setValue: [NSNumber numberWithInt:[sourceViewController.cEventLimitLabel.text intValue]]forKey:@"cEventLimit"];
+        [meet setValue: [NSNumber numberWithInteger:sourceViewController.ceventLimitStepper.value ]forKey:@"cEventLimit"];
             
         }
         

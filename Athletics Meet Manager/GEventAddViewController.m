@@ -60,6 +60,9 @@
       
      
       self.gEventTypeValue  = [_detailItem valueForKey:@"gEventType"];
+      
+      NSLog(@"geventtype in edit and is %@", self.gEventTypeValue);
+      NSLog(@"geventtype segemnt in edit and is %@", self.gEventTypeValue);
 
       if ([self.gEventTypeValue isEqualToString: [self.gEventType titleForSegmentAtIndex:0]])
       {
@@ -71,7 +74,11 @@
         self.gEventType.selectedSegmentIndex = 1;
         
         }
-      
+        if ([self.gEventTypeValue isEqualToString: [self.gEventType titleForSegmentAtIndex:2]])
+      {
+        self.gEventType.selectedSegmentIndex = 2;
+        
+        }
       
       
    }

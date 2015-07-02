@@ -399,13 +399,14 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
     
         }
         if (sourceViewController.maxCompStepper) {
-        [gEvent setValue: [NSNumber numberWithInt:[sourceViewController.maxCompPerTeamLabel.text intValue]] forKey:@"competitorsPerTeam"];
+        [gEvent setValue: [NSNumber numberWithInteger: sourceViewController.maxCompStepper.value] forKey:@"competitorsPerTeam"];
     
         }
-        if (sourceViewController.gEventTypeValue) {
-        [gEvent setValue: sourceViewController.gEventTypeValue forKey:@"gEventType"];
+        if (sourceViewController.gEventType) {
+        [gEvent setValue: [sourceViewController.gEventType titleForSegmentAtIndex:[sourceViewController.gEventType selectedSegmentIndex]] forKey:@"gEventType"];
     
-        }
+      
+          }
         
         [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"eventsDone"];
         
