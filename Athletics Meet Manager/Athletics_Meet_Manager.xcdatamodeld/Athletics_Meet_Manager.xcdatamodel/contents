@@ -63,6 +63,7 @@
         <attribute name="meetName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="meetStartTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="scoreForFirstPlace" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="scoreMultiplier" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="teamsDone" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="cEventsScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CEventScore" inverseName="meet" inverseEntity="CEventScore" syncable="YES"/>
         <relationship name="competitors" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Competitor" inverseName="meet" inverseEntity="Competitor" syncable="YES"/>
@@ -87,7 +88,7 @@
         <element name="Division" positionX="-12042" positionY="-13392" width="128" height="105"/>
         <element name="Event" positionX="-11871" positionY="-13185" width="128" height="165"/>
         <element name="GEvent" positionX="-11486" positionY="-13366" width="128" height="210"/>
-        <element name="Meet" positionX="-11999" positionY="-13671" width="128" height="330"/>
+        <element name="Meet" positionX="-11999" positionY="-13671" width="128" height="345"/>
         <element name="Team" positionX="-12303" positionY="-13399" width="128" height="165"/>
     </elements>
 </model>

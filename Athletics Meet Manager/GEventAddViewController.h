@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "Meet.h"
 
 @interface GEventAddViewController : UITableViewController <NSFetchedResultsControllerDelegate, UITextFieldDelegate>
 
@@ -60,6 +61,7 @@
 @property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+@property (strong, nonatomic) Meet* meetObject;
 @property BOOL isEditing;
 @property BOOL isOnTextField;
 

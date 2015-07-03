@@ -56,7 +56,7 @@
 		1FD6B69F1B1F37E300F05968 /* EventScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B69E1B1F37E300F05968 /* EventScoreTableViewCell.m */; };
 		1FD6B6A21B1F429500F05968 /* CompetitorScoreEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6A11B1F429500F05968 /* CompetitorScoreEnterViewController.m */; };
 		1FD882B81B46C2700064DA99 /* GEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD882B71B46C2700064DA99 /* GEvent.m */; };
-		1FD882BB1B46C2710064DA99 /* Meet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD882BA1B46C2710064DA99 /* Meet.m */; };
+		1FD882BE1B4711510064DA99 /* Meet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD882BD1B4711510064DA99 /* Meet.m */; };
 		1FDA11E91B2C83A600CBE9E6 /* Competitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDA11E81B2C83A600CBE9E6 /* Competitor.m */; };
 		1FDA11ED1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDA11EC1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m */; };
 		1FFB4F7C1B1535C100C6309C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFB4F7B1B1535C100C6309C /* CoreData.framework */; };
@@ -170,8 +170,8 @@
 		1FD6B6A11B1F429500F05968 /* CompetitorScoreEnterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompetitorScoreEnterViewController.m; sourceTree = "<group>"; };
 		1FD882B61B46C2700064DA99 /* GEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEvent.h; sourceTree = "<group>"; };
 		1FD882B71B46C2700064DA99 /* GEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEvent.m; sourceTree = "<group>"; };
-		1FD882B91B46C2710064DA99 /* Meet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meet.h; sourceTree = "<group>"; };
-		1FD882BA1B46C2710064DA99 /* Meet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Meet.m; sourceTree = "<group>"; };
+		1FD882BC1B4711510064DA99 /* Meet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meet.h; sourceTree = "<group>"; };
+		1FD882BD1B4711510064DA99 /* Meet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Meet.m; sourceTree = "<group>"; };
 		1FDA11E71B2C83A600CBE9E6 /* Competitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Competitor.h; sourceTree = "<group>"; };
 		1FDA11E81B2C83A600CBE9E6 /* Competitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Competitor.m; sourceTree = "<group>"; };
 		1FDA11EB1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompetitorAddInResultSheetViewController.h; sourceTree = "<group>"; };
@@ -344,8 +344,8 @@
 		1FD6B6581B1736D900F05968 /* DataObjects */ = {
 			isa = PBXGroup;
 			children = (
-				1FD882B91B46C2710064DA99 /* Meet.h */,
-				1FD882BA1B46C2710064DA99 /* Meet.m */,
+				1FD882BC1B4711510064DA99 /* Meet.h */,
+				1FD882BD1B4711510064DA99 /* Meet.m */,
 				1FD882B61B46C2700064DA99 /* GEvent.h */,
 				1FD882B71B46C2700064DA99 /* GEvent.m */,
 				1F0633BD1B4290B700110D26 /* Team.h */,
@@ -670,7 +670,7 @@
 				84B5B8431B15C81D00529756 /* MasterViewController.m in Sources */,
 				1FD6B6501B17366900F05968 /* SetupTeamsViewController.m in Sources */,
 				1FC88E831B3C82D400BD0A23 /* CEventScore.m in Sources */,
-				1FD882BB1B46C2710064DA99 /* Meet.m in Sources */,
+				1FD882BE1B4711510064DA99 /* Meet.m in Sources */,
 				1FDA11E91B2C83A600CBE9E6 /* Competitor.m in Sources */,
 				1FD6B64A1B17363C00F05968 /* SetupDivViewController.m in Sources */,
 				1FD6B6701B1884E200F05968 /* TeamAddViewController.m in Sources */,

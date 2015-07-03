@@ -66,6 +66,10 @@
       NSString *eventname = [NSString stringWithFormat:@"%@ %@",self.eventObject.gEvent.gEventName, self.eventObject.division.divName];
       _navBar.title = eventname;
 
+        NSLog(@"Event Name: %@ comp per team: %@  max scoring competitors: %@ scorefor first place: %@ decrementperplace: %@ scoreMultiplier: %@",self.eventObject.gEvent.gEventName, self.eventObject.gEvent.competitorsPerTeam,self.eventObject.gEvent.maxScoringCompetitors,self.eventObject.gEvent.scoreForFirstPlace,self.eventObject.gEvent.decrementPerPlace,self.eventObject.gEvent.scoreMultiplier);
+
+
+
     }
     
     

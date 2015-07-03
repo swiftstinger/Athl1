@@ -26,6 +26,7 @@
 @property (nonatomic, retain) NSNumber * scoreForFirstPlace;
 @property (nonatomic, retain) NSNumber * decrementPerPlace;
 @property (nonatomic, retain) NSNumber * competitorPerTeam;
+@property (nonatomic, retain) NSNumber * scoreMultiplier;
 @property (nonatomic, retain) NSSet *cEventsScores;
 @property (nonatomic, retain) NSSet *competitors;
 @property (nonatomic, retain) NSSet *divisions;

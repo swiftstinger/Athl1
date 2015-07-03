@@ -438,7 +438,8 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Score Awarded For First Place" footerTitle="0 = unlimited" id="vOH-bz-SWl">
+                            <tableViewSection headerTitle="Score Awarded For First Place" id="vOH-bz-SWl">
+                                <string key="footerTitle">If Score Awarded For First Place = 0 : Maximum score = Maximum Scoring Competitors Per Team * Number Of Teams In Meet. If Maximum Scoring Competitors Per Team also = 0 : Maximum score = Maximum Competitors Per Team * Number Of Teams.  If Max Competitors Per Team also = 0 : Maximum score = Total Number of Entrants In Event.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="uEF-Cr-xWK">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1860,7 +1861,8 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Score Awarded For First Place" footerTitle="0 = unlimited" id="Rm3-fK-loa">
+                            <tableViewSection headerTitle="Score Awarded For First Place" id="Rm3-fK-loa">
+                                <string key="footerTitle">If Score Awarded For First Place = 0 : Maximum score = Maximum Scoring Competitors Per Team * Number Of Teams In Meet. If Maximum Scoring Competitors Per Team also = 0 : Maximum score = Maximum Competitors Per Team * Number Of Teams.  If Max Competitors Per Team also = 0 : Maximum score = Total Number of Entrants In Event.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="EAp-GH-xaV">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1975,7 +1977,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YJB-bv-mqZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="JbH-z6-0yw" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1719" y="1053"/>
+            <point key="canvasLocation" x="1717" y="1078"/>
         </scene>
         <!--AddTeam Navigation Controller-->
         <scene sceneID="Zl8-5X-zcb">
@@ -3589,7 +3591,7 @@
         <segue reference="oMD-Bf-krW"/>
         <segue reference="pjO-ql-D1X"/>
         <segue reference="Kin-H0-cmG"/>
-        <segue reference="zvu-dP-nHM"/>
+        <segue reference="oBo-Wm-xkL"/>
         <segue reference="kWb-zD-Ztb"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -30,6 +30,7 @@
 @dynamic scoreForFirstPlace;
 @dynamic decrementPerPlace;
 @dynamic competitorPerTeam;
+@dynamic scoreMultiplier;
 @dynamic cEventsScores;
 @dynamic competitors;
 @dynamic divisions;

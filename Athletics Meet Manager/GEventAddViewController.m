@@ -8,7 +8,7 @@
 
 #import "GEventAddViewController.h"
 #import "GEvent.h"
-#import "Meet.h"
+
 
 @interface GEventAddViewController ()
 @property (nonatomic, assign) id currentResponder;
@@ -32,8 +32,22 @@
    if (_detailItem != newDetailItem) {
 
         _detailItem = newDetailItem;
+       
         self.isEditing = TRUE;
       
+      [self configureView];
+    }
+}
+
+
+- (void)setMeetObject:(Meet *)meetObject
+{
+
+   if (_meetObject != meetObject) {
+
+        _meetObject = meetObject;
+       
+       
       [self configureView];
     }
 }
@@ -51,6 +65,10 @@
 {
 
     // Update the user interface for the detail item.
+    
+    NSLog(@"comp per team: %@  max scoring competitors: %@ scorefor first place: %@ decrementperplace: %@ scoreMultiplier: %@", self.meetObject.competitorPerTeam,self.meetObject.maxScoringCompetitors,self.meetObject.scoreForFirstPlace,self.meetObject.decrementPerPlace,self.meetObject.scoreMultiplier);
+    
+    
     if (self.editing) {
       _gEventName.text = [_detailItem valueForKey:@"gEventName"];
       
@@ -86,7 +104,7 @@
      self.maxCompPerTeamLabel.text = [[_detailItem valueForKey:@"competitorsPerTeam"]description];
 
  
-      self.maxCompPerTeamStepper.value = [[_detailItem valueForKey:@"competitorPerTeam"] intValue];
+      self.maxCompPerTeamStepper.value = [[_detailItem valueForKey:@"competitorsPerTeam"] intValue];
       
       //maxScoringcomp
       
@@ -122,11 +140,14 @@
    }
    else
    {
+       
+       NSLog(@"in else");
+       
         // maxcomp
-       GEvent* gevent = (GEvent*) _detailItem;
-        Meet* meet =  gevent.meet;
+       
+        Meet* meet =  self.meetObject;
            
-     self.maxCompPerTeamLabel.text = [[meet valueForKey:@"competitorsPerTeam"]description];
+     self.maxCompPerTeamLabel.text = [[meet valueForKey:@"competitorPerTeam"]description];
 
  
       self.maxCompPerTeamStepper.value = [[meet valueForKey:@"competitorPerTeam"] intValue];
@@ -168,6 +189,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     
    [self.gEventName becomeFirstResponder];
     

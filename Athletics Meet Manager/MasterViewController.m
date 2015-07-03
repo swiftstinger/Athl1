@@ -303,7 +303,7 @@ format.dateFormat = @"dd MMM yyyy";
         
         
         if (sourceViewController.maxCompPerTeamStepper) {
-        [meet setValue: [NSNumber numberWithInteger: sourceViewController.maxCompPerTeamStepper.value] forKey:@"competitorsPerTeam"];
+        [meet setValue: [NSNumber numberWithInteger: sourceViewController.maxCompPerTeamStepper.value] forKey:@"competitorPerTeam"];
     
         }
 

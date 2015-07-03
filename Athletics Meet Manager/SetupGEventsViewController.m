@@ -346,11 +346,25 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         
         
         [gEventAddController setDetailItem:object];
+        
+        [gEventAddController setMeetObject:self.meetObject];
        
         [gEventAddController setManagedObjectContext:self.managedObjectContext];
        
     }
 
+if ([[segue identifier] isEqualToString:@"addGEvent"]) {
+        
+               
+        UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
+    GEventAddViewController* gEventAddController = (GEventAddViewController*)[navController topViewController];
+        
+        
+        [gEventAddController setMeetObject:self.meetObject];
+       
+        [gEventAddController setManagedObjectContext:self.managedObjectContext];
+       
+    }
 
 }
 
