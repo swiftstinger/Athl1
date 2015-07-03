@@ -13,10 +13,46 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *gEventName;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gEventType;
-@property (weak, nonatomic) IBOutlet UILabel *maxCompPerTeamLabel;
-@property (weak, nonatomic) IBOutlet UIStepper *maxCompStepper;
 
 - (IBAction)maxCompStepperValueChanged:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *maxCompPerTeamLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *maxCompPerTeamStepper;
+
+
+- (IBAction)maxScoringCompStepperValueChanged:(UIStepper *)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *maxScoringCompLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *maxScoringCompStepper;
+
+
+
+- (IBAction)scoreForFirstStepperValueChanged:(UIStepper *)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *scoreForFirstLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *scoreForFirstStepper;
+
+
+
+- (IBAction)scoreMultiplierStepperValueChanged:(UIStepper *)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *scoreMultiplierLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *scoreMultiplierStepper;
+
+
+
+- (IBAction)reductionPerPlaceStepperValueChanged:(UIStepper *)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *reductionPerPlaceLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *reductionPerPlaceStepper;
+
+
+
+
+
+
+
+
 - (IBAction)gEventTypeSelecterValueChanged:(id)sender;
 
 @property (weak, nonatomic) NSString* gEventTypeValue;

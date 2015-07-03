@@ -362,6 +362,160 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="2G8-51-hfH">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="7Ht-Lx-dRW">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Ht-Lx-dRW" id="hLb-Yg-Wyz">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" SET DEFAULT SCORING FOR EVENTS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOv-c8-cym">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="rOv-c8-cym" secondAttribute="bottom" constant="-9" id="Oln-30-ZXV"/>
+                                                <constraint firstItem="rOv-c8-cym" firstAttribute="top" secondItem="hLb-Yg-Wyz" secondAttribute="top" id="QF3-mW-IfG"/>
+                                                <constraint firstAttribute="trailing" secondItem="rOv-c8-cym" secondAttribute="trailing" id="RaN-99-17N"/>
+                                                <constraint firstItem="rOv-c8-cym" firstAttribute="leading" secondItem="hLb-Yg-Wyz" secondAttribute="leading" id="nst-xK-alY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Maximum Competitors Per Team" footerTitle="0 = unlimited" id="bcq-5B-QO6">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="xHj-Yu-Snc">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xHj-Yu-Snc" id="pDl-F5-sZL">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MAm-B6-D9I">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="cs4-w5-Par">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="sDp-AS-UWB"/>
+                                                        <action selector="maxCompPerTeamStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="pD1-oB-H6e"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Maximum Scoring Competitors Per Team" footerTitle="0 = unlimited" id="OYY-la-pVe">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="sg5-90-SrU">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sg5-90-SrU" id="OlR-wc-Dec">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P24-1l-0mE">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="hyP-vZ-w7o">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="zuT-dk-kUB"/>
+                                                        <action selector="maxScoringCompPerTeamStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="30u-pC-1wv"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Score Awarded For First Place" footerTitle="0 = unlimited" id="vOH-bz-SWl">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="uEF-Cr-xWK">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uEF-Cr-xWK" id="we5-Oq-JLy">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7IC-eP-Ilx">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="80E-3R-4tr">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="7pk-f7-70c"/>
+                                                        <action selector="firstPlaceScoreStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="pjC-go-vU4"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Reduction In Score For Each Subsequent Place" id="kwp-Qw-3Gj">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="CI2-ih-eSy">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CI2-ih-eSy" id="a7S-yb-akk">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pSK-v1-lo9">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="VpR-dL-MmG">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="gLi-9T-j2v"/>
+                                                        <action selector="reductionPerPlaceStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="ISp-lZ-8GC"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Score Multiplier" footerTitle="Set at 2 for particular event to have that event score double points. e.g. double points for relay events." id="DU7-wX-xPZ">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ieF-9U-8xV">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ieF-9U-8xV" id="tV3-SI-D4Y">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qae-9K-YHN">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Of9-e9-Ll9">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="mAK-Uv-sd8"/>
+                                                        <action selector="scoreMultiplierStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="5Zt-9d-U6o"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="T3l-tU-Cpz" id="WJU-7G-nw2"/>
@@ -386,8 +540,18 @@
                     <connections>
                         <outlet property="cEventLimitLabel" destination="7BD-3S-VHg" id="Nq2-gu-wlp"/>
                         <outlet property="ceventLimitStepper" destination="uqo-ti-zqf" id="fnn-qa-5MK"/>
+                        <outlet property="firstPlaceScoreLabel" destination="7IC-eP-Ilx" id="us7-P0-IuS"/>
+                        <outlet property="firstPlaceScoreStepper" destination="80E-3R-4tr" id="zVB-DF-KCx"/>
+                        <outlet property="maxCompPerTeamLabel" destination="MAm-B6-D9I" id="aM8-DJ-z4J"/>
+                        <outlet property="maxCompPerTeamStepper" destination="cs4-w5-Par" id="jcj-PG-jv0"/>
+                        <outlet property="maxScoringCompPerTeamLabel" destination="P24-1l-0mE" id="TBA-kt-5WH"/>
+                        <outlet property="maxScoringCompPerTeamStepper" destination="hyP-vZ-w7o" id="l2G-an-N7L"/>
                         <outlet property="meetDate" destination="Cvs-Gq-9Kc" id="6js-fi-1eW"/>
                         <outlet property="meetName" destination="rCd-xk-lKc" id="bpn-Li-8Tn"/>
+                        <outlet property="reductionPerPlaceLabel" destination="pSK-v1-lo9" id="3tm-JR-tMy"/>
+                        <outlet property="reductionPerPlaceStepper" destination="VpR-dL-MmG" id="1xg-Iv-A6Z"/>
+                        <outlet property="scoreMultiplierLabel" destination="qae-9K-YHN" id="oCz-tz-egG"/>
+                        <outlet property="scoreMultiplierStepper" destination="Of9-e9-Ll9" id="4CV-8p-BBM"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zDS-Vd-Ok9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1670,6 +1834,110 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Maximum Scoring Competitors Per Team" footerTitle="0 = unlimited" id="NJ7-hL-cwE">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="uur-sG-Goo">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uur-sG-Goo" id="Ggn-Hf-OWX">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zby-dt-0yN">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Uaq-Zc-ko8">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="AJm-li-MgP"/>
+                                                        <action selector="maxScoringCompStepperValueChanged:" destination="qeN-Jl-Jeh" eventType="valueChanged" id="Co9-Eh-CWT"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Score Awarded For First Place" footerTitle="0 = unlimited" id="Rm3-fK-loa">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="EAp-GH-xaV">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EAp-GH-xaV" id="aDQ-ts-LwG">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKy-zM-hnf">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="DQC-XE-fDw">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="r29-Kq-i6M"/>
+                                                        <action selector="scoreForFirstStepperValueChanged:" destination="qeN-Jl-Jeh" eventType="valueChanged" id="Cae-IL-4aQ"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Score Multiplier" footerTitle="Set at 2 for particular event to have that event score double points. e.g. double points for relay events." id="9S5-tD-rlh">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="SMC-d0-Fke">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SMC-d0-Fke" id="33t-rM-Ggr">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmk-4z-7Nk">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="gho-si-9gb">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="hIG-eE-Xav"/>
+                                                        <action selector="scoreMultiplierStepperValueChanged:" destination="qeN-Jl-Jeh" eventType="valueChanged" id="8Zk-hB-IWV"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Reduction In Score For Each Subsequent Place" id="K3a-88-MTs">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="WQI-wQ-gYX">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WQI-wQ-gYX" id="WSE-HN-Zc9">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avr-oj-eaV">
+                                                    <rect key="frame" x="25" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="XwO-bG-h4T">
+                                                    <rect key="frame" x="63" y="7" width="94" height="29"/>
+                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="ITC-Xc-Uj3"/>
+                                                        <action selector="reductionPerPlaceStepperValueChanged:" destination="qeN-Jl-Jeh" eventType="valueChanged" id="HoX-At-5FA"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="qeN-Jl-Jeh" id="BeR-p0-1dj"/>
@@ -1693,13 +1961,21 @@
                         <outlet property="gEventName" destination="Kw9-rG-R91" id="VAb-JK-ri8"/>
                         <outlet property="gEventType" destination="nD0-3H-bAb" id="HXV-C1-gec"/>
                         <outlet property="maxCompPerTeamLabel" destination="2l1-zz-GW1" id="M6U-NU-xlv"/>
-                        <outlet property="maxCompStepper" destination="J1I-yJ-H5V" id="GbY-Za-nGy"/>
+                        <outlet property="maxCompPerTeamStepper" destination="J1I-yJ-H5V" id="tJG-rM-raL"/>
+                        <outlet property="maxScoringCompLabel" destination="zby-dt-0yN" id="Bgc-JR-6LF"/>
+                        <outlet property="maxScoringCompStepper" destination="Uaq-Zc-ko8" id="nek-aL-4a3"/>
+                        <outlet property="reductionPerPlaceLabel" destination="avr-oj-eaV" id="CsK-Lc-GJn"/>
+                        <outlet property="reductionPerPlaceStepper" destination="XwO-bG-h4T" id="tzJ-Ny-OCY"/>
+                        <outlet property="scoreForFirstLabel" destination="HKy-zM-hnf" id="5vN-y3-VvE"/>
+                        <outlet property="scoreForFirstStepper" destination="DQC-XE-fDw" id="e5U-24-CoJ"/>
+                        <outlet property="scoreMultiplierLabel" destination="cmk-4z-7Nk" id="Ygu-Ro-UV4"/>
+                        <outlet property="scoreMultiplierStepper" destination="gho-si-9gb" id="ATq-Pr-9dS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YJB-bv-mqZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="JbH-z6-0yw" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1792" y="1078"/>
+            <point key="canvasLocation" x="1719" y="1053"/>
         </scene>
         <!--AddTeam Navigation Controller-->
         <scene sceneID="Zl8-5X-zcb">
@@ -3310,10 +3586,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="kWb-zD-Ztb"/>
+        <segue reference="oMD-Bf-krW"/>
         <segue reference="pjO-ql-D1X"/>
         <segue reference="Kin-H0-cmG"/>
         <segue reference="zvu-dP-nHM"/>
-        <segue reference="oMD-Bf-krW"/>
+        <segue reference="kWb-zD-Ztb"/>
     </inferredMetricsTieBreakers>
 </document>

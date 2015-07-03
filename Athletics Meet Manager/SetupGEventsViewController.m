@@ -398,17 +398,41 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         [gEvent setValue: sourceViewController.gEventName.text forKey:@"gEventName"];
     
         }
-        if (sourceViewController.maxCompStepper) {
-        [gEvent setValue: [NSNumber numberWithInteger: sourceViewController.maxCompStepper.value] forKey:@"competitorsPerTeam"];
-    
-        }
-        if (sourceViewController.gEventType) {
+                if (sourceViewController.gEventType) {
         [gEvent setValue: [sourceViewController.gEventType titleForSegmentAtIndex:[sourceViewController.gEventType selectedSegmentIndex]] forKey:@"gEventType"];
     
       
           }
         
         [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"eventsDone"];
+        
+        
+        if (sourceViewController.maxCompPerTeamStepper) {
+        [gEvent setValue: [NSNumber numberWithInteger: sourceViewController.maxCompPerTeamStepper.value] forKey:@"competitorsPerTeam"];
+    
+        }
+
+        
+        if (sourceViewController.maxScoringCompStepper) {
+        [gEvent setValue: [NSNumber numberWithInteger: sourceViewController.maxScoringCompStepper.value] forKey:@"maxScoringCompetitors"];
+    
+        }
+        
+        if (sourceViewController.scoreForFirstStepper) {
+        [gEvent setValue: [NSNumber numberWithInteger: sourceViewController.scoreForFirstStepper.value] forKey:@"scoreForFirstPlace"];
+    
+        }
+        
+        if (sourceViewController.reductionPerPlaceStepper) {
+        [gEvent setValue: [NSNumber numberWithInteger: sourceViewController.reductionPerPlaceStepper.value] forKey:@"decrementPerPlace"];
+    
+        }
+        
+        
+         if (sourceViewController.scoreMultiplierStepper) {
+        [gEvent setValue: [NSNumber numberWithInteger: sourceViewController.scoreMultiplierStepper.value] forKey:@"scoreMultiplier"];
+    
+        }
         
         
         

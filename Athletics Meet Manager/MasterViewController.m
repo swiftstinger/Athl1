@@ -301,6 +301,38 @@ format.dateFormat = @"dd MMM yyyy";
             
         }
         
+        
+        if (sourceViewController.maxCompPerTeamStepper) {
+        [meet setValue: [NSNumber numberWithInteger: sourceViewController.maxCompPerTeamStepper.value] forKey:@"competitorsPerTeam"];
+    
+        }
+
+        
+        if (sourceViewController.maxScoringCompPerTeamStepper) {
+        [meet setValue: [NSNumber numberWithInteger: sourceViewController.maxScoringCompPerTeamStepper.value] forKey:@"maxScoringCompetitors"];
+    
+        }
+        
+        if (sourceViewController.firstPlaceScoreStepper) {
+        [meet setValue: [NSNumber numberWithInteger: sourceViewController.firstPlaceScoreStepper.value] forKey:@"scoreForFirstPlace"];
+    
+        }
+        
+        if (sourceViewController.reductionPerPlaceStepper) {
+        [meet setValue: [NSNumber numberWithInteger: sourceViewController.reductionPerPlaceStepper.value] forKey:@"decrementPerPlace"];
+    
+        }
+        
+        
+         if (sourceViewController.scoreMultiplierStepper) {
+        [meet setValue: [NSNumber numberWithInteger: sourceViewController.scoreMultiplierStepper.value] forKey:@"scoreMultiplier"];
+    
+        }
+        
+        
+        
+        
+        
         ////////
         
         

@@ -27,6 +27,37 @@
 @property (weak, nonatomic) IBOutlet UIStepper *ceventLimitStepper;
 @property (weak, nonatomic) IBOutlet UILabel *cEventLimitLabel;
 
+
+- (IBAction)maxCompPerTeamStepperValueChanged:(UIStepper *)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *maxCompPerTeamLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *maxCompPerTeamStepper;
+
+
+- (IBAction)maxScoringCompPerTeamStepperValueChanged:(UIStepper *)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *maxScoringCompPerTeamLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *maxScoringCompPerTeamStepper;
+
+
+- (IBAction)firstPlaceScoreStepperValueChanged:(UIStepper *)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *firstPlaceScoreLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *firstPlaceScoreStepper;
+
+
+- (IBAction)reductionPerPlaceStepperValueChanged:(UIStepper *)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *reductionPerPlaceLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *reductionPerPlaceStepper;
+
+
+- (IBAction)scoreMultiplierStepperValueChanged:(UIStepper *)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *scoreMultiplierLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *scoreMultiplierStepper;
+
+
 @property BOOL isEditing;
 @property BOOL isOnTextField;
 

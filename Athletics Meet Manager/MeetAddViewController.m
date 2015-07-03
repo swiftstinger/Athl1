@@ -60,18 +60,100 @@ NSLog(@"in detail item");
       self.ceventLimitStepper.value = [[_detailItem valueForKey:@"cEventLimit"] intValue];
       
      self.cEventLimitLabel.text = [[_detailItem valueForKey:@"cEventLimit"]description];
+      
+      
+      
       self.meetDate.date = [_detailItem valueForKey:@"meetDate"];
       
       
-      //NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
-             /*
-          self.titleField.text = [_detailItem valueForKey:@"title"];
-        self.episodeIDField.text = [NSString stringWithFormat:@"%d", [[_detailItem valueForKey:@"episodeID"] integerValue]];
-        self.descriptionView.text = [_detailItem valueForKey:@"desc"];
-        self.firstRunSegmentedControl.selectedSegmentIndex = [[_detailItem valueForKey:@"firstRun"] boolValue];
-        self.showTimeLabel.text = [[_detailItem valueForKey:@"showTime"] description];
-        
-        */
+      // maxcomp
+           
+     self.maxCompPerTeamLabel.text = [[_detailItem valueForKey:@"competitorsPerTeam"]description];
+
+ 
+      self.maxCompPerTeamStepper.value = [[_detailItem valueForKey:@"competitorPerTeam"] intValue];
+      
+      //maxScoringcomp
+      
+      self.maxScoringCompPerTeamLabel.text = [[_detailItem valueForKey:@"maxScoringCompetitors"]description];
+      
+      self.maxScoringCompPerTeamStepper.value = [[_detailItem valueForKey:@"maxScoringCompetitors"] intValue];
+      
+     
+      
+      
+      //firstplacescore
+      
+      self.firstPlaceScoreLabel.text = [[_detailItem valueForKey:@"scoreForFirstPlace"]description];
+      
+      self.firstPlaceScoreStepper.value = [[_detailItem valueForKey:@"scoreForFirstPlace"] intValue];
+      
+      
+      //reductionPerplace
+      
+      self.reductionPerPlaceLabel.text = [[_detailItem valueForKey:@"decrementPerPlace"]description];
+      
+      self.reductionPerPlaceStepper.value = [[_detailItem valueForKey:@"decrementPerPlace"] intValue];
+      
+      
+      //ScoreMultiplier
+      
+      self.scoreMultiplierLabel.text = [[_detailItem valueForKey:@"scoreMultiplier"]description];
+      
+      self.scoreMultiplierStepper.value = [[_detailItem valueForKey:@"scoreMultiplier"] intValue];
+      
+      
+   }
+   else
+   {
+   
+   NSLog(@"/////////////////////////////////");
+   NSLog(@"/////////////////////////////////");
+   NSLog(@"/////////////////////////////////");
+   NSLog(@"/////////////////////////////////");
+   NSLog(@"/////////////////////////////////");
+   
+   
+        self.ceventLimitStepper.value = 0;
+        self.cEventLimitLabel.text = @"0";
+   
+        // maxcomp
+       
+        self.maxCompPerTeamLabel.text = @"2";
+
+ 
+        self.maxCompPerTeamStepper.value = 2;
+      
+        //maxScoringcomp
+      
+        self.maxScoringCompPerTeamLabel.text = @"2";
+      
+        self.maxScoringCompPerTeamStepper.value = 2;
+      
+     
+      
+      
+        //firstplacescore
+      
+        self.firstPlaceScoreLabel.text = @"0";
+      
+        self.firstPlaceScoreStepper.value = 0;
+      
+      
+        //reductionPerplace
+      
+        self.reductionPerPlaceLabel.text = @"1";
+      
+        self.reductionPerPlaceStepper.value = 1;
+      
+      
+        //ScoreMultiplier
+      
+        self.scoreMultiplierLabel.text = @"1";
+      
+        self.scoreMultiplierStepper.value = 1;
+   
+   
    }
 }
 
@@ -87,7 +169,7 @@ NSLog(@"in detail item");
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [_meetName setDelegate:self];
    
-    
+    [self configureView];
    
  
        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
@@ -169,12 +251,7 @@ NSLog(@"in detail item");
     // Pass the selected object to the new view controller.
 }
 */
-- (IBAction)cEventLimitStepperValueChanged:(UIStepper *)sender
-{
-  NSUInteger value = sender.value;
-  self.cEventLimitLabel.text = [NSString stringWithFormat:@"%@",@(value)];
- 
-}
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -216,4 +293,41 @@ NSLog(@"in detail item");
 }
 
 */
+
+- (IBAction)cEventLimitStepperValueChanged:(UIStepper *)sender
+{
+  NSUInteger value = sender.value;
+  self.cEventLimitLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+}
+
+- (IBAction)maxCompPerTeamStepperValueChanged:(UIStepper *)sender {
+  NSUInteger value = sender.value;
+  self.maxCompPerTeamLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+}
+- (IBAction)maxScoringCompPerTeamStepperValueChanged:(UIStepper *)sender {
+  NSUInteger value = sender.value;
+  self.maxScoringCompPerTeamLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+
+}
+- (IBAction)firstPlaceScoreStepperValueChanged:(UIStepper *)sender {
+  NSUInteger value = sender.value;
+  self.firstPlaceScoreLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+
+}
+- (IBAction)reductionPerPlaceStepperValueChanged:(UIStepper *)sender {
+  NSUInteger value = sender.value;
+  self.reductionPerPlaceLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+
+}
+- (IBAction)scoreMultiplierStepperValueChanged:(UIStepper *)sender {
+  NSUInteger value = sender.value;
+  self.scoreMultiplierLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+
+}
 @end

@@ -8,6 +8,7 @@
 
 #import "GEventAddViewController.h"
 #import "GEvent.h"
+#import "Meet.h"
 
 @interface GEventAddViewController ()
 @property (nonatomic, assign) id currentResponder;
@@ -53,9 +54,7 @@
     if (self.editing) {
       _gEventName.text = [_detailItem valueForKey:@"gEventName"];
       
-      self.maxCompStepper.value = [[_detailItem valueForKey:@"competitorsPerTeam"] intValue];
       
-     self.maxCompPerTeamLabel.text = [[_detailItem valueForKey:@"competitorsPerTeam"]description];
       
       
      
@@ -81,7 +80,89 @@
         }
       
       
+       
+      // maxcomp
+           
+     self.maxCompPerTeamLabel.text = [[_detailItem valueForKey:@"competitorsPerTeam"]description];
+
+ 
+      self.maxCompPerTeamStepper.value = [[_detailItem valueForKey:@"competitorPerTeam"] intValue];
+      
+      //maxScoringcomp
+      
+      self.maxScoringCompLabel.text = [[_detailItem valueForKey:@"maxScoringCompetitors"]description];
+      
+      self.maxScoringCompStepper.value = [[_detailItem valueForKey:@"maxScoringCompetitors"] intValue];
+      
+     
+      
+      
+      //firstplacescore
+      
+      self.scoreForFirstLabel.text = [[_detailItem valueForKey:@"scoreForFirstPlace"]description];
+      
+      self.scoreForFirstStepper.value = [[_detailItem valueForKey:@"scoreForFirstPlace"] intValue];
+      
+      
+      //reductionPerplace
+      
+      self.reductionPerPlaceLabel.text = [[_detailItem valueForKey:@"decrementPerPlace"]description];
+      
+      self.reductionPerPlaceStepper.value = [[_detailItem valueForKey:@"decrementPerPlace"] intValue];
+      
+      
+      //ScoreMultiplier
+      
+      self.scoreMultiplierLabel.text = [[_detailItem valueForKey:@"scoreMultiplier"]description];
+      
+      self.scoreMultiplierStepper.value = [[_detailItem valueForKey:@"scoreMultiplier"] intValue];
+      
+      
+      
    }
+   else
+   {
+        // maxcomp
+       GEvent* gevent = (GEvent*) _detailItem;
+        Meet* meet =  gevent.meet;
+           
+     self.maxCompPerTeamLabel.text = [[meet valueForKey:@"competitorsPerTeam"]description];
+
+ 
+      self.maxCompPerTeamStepper.value = [[meet valueForKey:@"competitorPerTeam"] intValue];
+      
+      //maxScoringcomp
+      
+      self.maxScoringCompLabel.text = [[meet valueForKey:@"maxScoringCompetitors"]description];
+      
+      self.maxScoringCompStepper.value = [[meet valueForKey:@"maxScoringCompetitors"] intValue];
+      
+     
+      
+      
+      //firstplacescore
+      
+      self.scoreForFirstLabel.text = [[meet valueForKey:@"scoreForFirstPlace"]description];
+      
+      self.scoreForFirstStepper.value = [[meet valueForKey:@"scoreForFirstPlace"] intValue];
+      
+      
+      //reductionPerplace
+      
+      self.reductionPerPlaceLabel.text = [[meet valueForKey:@"decrementPerPlace"]description];
+      
+      self.reductionPerPlaceStepper.value = [[meet valueForKey:@"decrementPerPlace"] intValue];
+      
+      
+      //ScoreMultiplier
+      
+      self.scoreMultiplierLabel.text = [[meet valueForKey:@"scoreMultiplier"]description];
+      
+      self.scoreMultiplierStepper.value = [[meet valueForKey:@"scoreMultiplier"] intValue];
+   
+   }
+   
+   
 }
 
 
@@ -104,12 +185,7 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)maxCompStepperValueChanged:(UIStepper *)sender
-{
-  NSUInteger value = sender.value;
-  self.maxCompPerTeamLabel.text = [NSString stringWithFormat:@"%@",@(value)];
- 
-}
+
 
 - (IBAction)gEventTypeSelecterValueChanged:(id)sender {
 
@@ -165,4 +241,35 @@ self.gEventTypeValue= [sender titleForSegmentAtIndex:[sender selectedSegmentInde
     return YES;              
 }
 
+
+- (IBAction)maxCompStepperValueChanged:(UIStepper *)sender
+{
+  NSUInteger value = sender.value;
+  self.maxCompPerTeamLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+}
+- (IBAction)maxScoringCompStepperValueChanged:(UIStepper *)sender {
+  NSUInteger value = sender.value;
+  self.maxScoringCompLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+
+}
+- (IBAction)scoreForFirstStepperValueChanged:(UIStepper *)sender {
+  NSUInteger value = sender.value;
+  self.scoreForFirstLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+
+}
+- (IBAction)scoreMultiplierStepperValueChanged:(UIStepper *)sender {
+  NSUInteger value = sender.value;
+  self.scoreMultiplierLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+
+}
+- (IBAction)reductionPerPlaceStepperValueChanged:(UIStepper *)sender {
+  NSUInteger value = sender.value;
+  self.reductionPerPlaceLabel.text = [NSString stringWithFormat:@"%@",@(value)];
+ 
+
+}
 @end

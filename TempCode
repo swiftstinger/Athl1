@@ -1,5 +1,32 @@
 
+Each event
+max comp per team
 
+add to team and gevent objects
+
+competitorPerTeam
+
+maxScoringCompetitors
+scoreForFirstPlace
+decrementPerPlace
+scoreMultiplier
+
+1. Max scoring competitors per team  default 0 all score
+
+2. score for 1st place   (if 0 score will be max scoring competitors per team times number of teams in event.  If max competitors per team also = 0 then Score for first place will be  max comp per team times number of teams.  If max comp per team is also = 0 then max score will equal the number of entrants in each )
+3. decrease in points for each successive place
+default = 1
+
+4  Score multiplier for particular event
+(Score for each competitor will be multiplied with this value.  e.g. to have relays score double points enter 2)
+
+
+
+add to meet to set defaults
+
+scoring defaults per event
+
+//////////
 
 scoring based on number of competitors
 
@@ -43,9 +70,11 @@ set save as default option at bottom (lets do first option first and then after 
 
 ////
 
+Max
 
 
-high jump  make layout
+
+
 
 
 
@@ -70,7 +99,7 @@ not done:
 
 austhetic spacing to do
 
-
+?high jump  make layout?
 
 /////////////////////
 
