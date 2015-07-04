@@ -1,13 +1,5 @@
 
-max scoring comp work out
 
-
-
-
-Each event
-max comp per team
-
-add to team and gevent objects
 
 competitorPerTeam
 
@@ -31,25 +23,6 @@ default = 1
 
 scoring defaults per event
 
-//////////
-
-
-
-
-///
-
-
-
-give defaults in meet menu based on last choice?  have to do scoring options
-
-scoring based on number teams times nubmer of competitor for each event
-
-scoring based on number of teams times multiplier [insert]
-
-scoring based on custom top [top]
-
-
-decrease by [enter] for each place after first
 
 
 //////
@@ -61,31 +34,7 @@ set save as default option at bottom (lets do first option first and then after 
 
 
 
-
-
 ////
-
-Max
-
-
-
-
-
-
-
-Drag values out of controllers not on change
-check all done
-
-done
-
-eventforcadd two wheels done done
-competitor add in results 1 wheel done
-
-geventadd viewcontroller stepper done and selecter done plus label
-
-meetadd viewcontroller date picker   done  and stepper done
-
-
 
 not done:
 
@@ -97,6 +46,14 @@ austhetic spacing to do
 ?high jump  make layout?
 
 /////////////////////
+
+
+
+
+
+
+
+
 
 
 for(Team *object in results) {
