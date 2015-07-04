@@ -68,7 +68,7 @@ NSLog(@"in detail item");
       
       // maxcomp
            
-     self.maxCompPerTeamLabel.text = [[_detailItem valueForKey:@"competitorsPerTeam"]description];
+     self.maxCompPerTeamLabel.text = [[_detailItem valueForKey:@"competitorPerTeam"]description];
 
  
       self.maxCompPerTeamStepper.value = [[_detailItem valueForKey:@"competitorPerTeam"] intValue];

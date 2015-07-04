@@ -785,7 +785,7 @@ if ([sourceViewController isKindOfClass:[EventScoreAddViewController class]])
 }
 - (void) resultsCalculate {
 Event * event = _eventObject;
-NSLog(@"scores high jump");
+
 
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
             NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
@@ -829,25 +829,48 @@ NSLog(@"scores high jump");
 
             NSError *error;
                 NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+   
     
     
-    int competitorPointsMultiplier = [event.gEvent.competitorsPerTeam intValue];
-    int topresult;
+   /////
+   int topresult;
+   int decreaseMultiplier = [event.gEvent.decrementPerPlace intValue];
+   
+    int numberOfTeams = [self getTeamNumberWithEventObject: event];
     
     
-    if (competitorPointsMultiplier == 0) {
-    
-        topresult = [results count];
+    if ([event.gEvent.scoreForFirstPlace intValue] != 0) {
+        topresult = [event.gEvent.scoreForFirstPlace intValue];
+        NSLog(@"top results set");
     }
     else
     {
-        int numberOfTeams = [self getTeamNumberWithEventObject: event];
+       if  ([event.gEvent.maxScoringCompetitors intValue] != 0) {
+       
+            topresult = [event.gEvent.maxScoringCompetitors intValue] * numberOfTeams;
+            NSLog(@"top results maxscore");
+       
+       }
+       else
+       {
+            if ([event.gEvent.competitorsPerTeam intValue] != 0) {
     
-        topresult = competitorPointsMultiplier * numberOfTeams;
-
+                topresult = [event.gEvent.competitorsPerTeam intValue] * numberOfTeams;
+                NSLog(@"top results cperteam");
+            }
+            else
+            {
+                topresult = [results count];
+                NSLog(@"top results count");
+            }
+           
+       }
+        
+    
     }
-    int decreaseMultiplier = 1;
     
+    
+    //////
     
     
    
