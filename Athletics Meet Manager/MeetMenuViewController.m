@@ -99,7 +99,7 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
     
-     NSLog(@"Teams in configure view: %lu",  (unsigned long)[self.meetObject.teams count]);
+   //  NSLog(@"Teams in configure view: %lu",  (unsigned long)[self.meetObject.teams count]);
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
         NSEntityDescription *description = [NSEntityDescription entityForName:@"Team" inManagedObjectContext: self.managedObjectContext];
@@ -124,7 +124,7 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
             }
             int intvalue = (int)teamcount;
 
-         NSLog(@"Teams in configure view from fetch : %d",  intvalue);
+      //   NSLog(@"Teams in configure view from fetch : %d",  intvalue);
 }
 
 - (void)didReceiveMemoryWarning {

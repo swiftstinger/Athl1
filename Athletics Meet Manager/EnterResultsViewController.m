@@ -54,7 +54,7 @@
 
     // Update the user interface for the detail item.
     if (_detailItem) {
-      NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
+      //NSLog(@"meet item %@", [self.meetObject valueForKey:@"meetName"]);
       
     }
     
@@ -119,7 +119,7 @@
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-    NSLog(@"in fetched resultscontr");
+  
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];

@@ -66,7 +66,7 @@
       NSString *eventname = [NSString stringWithFormat:@"%@ %@",self.eventObject.gEvent.gEventName, self.eventObject.division.divName];
       _navBar.title = eventname;
 
-        NSLog(@"Event Name: %@ comp per team: %@  max scoring competitors: %@ scorefor first place: %@ decrementperplace: %@ scoreMultiplier: %@",self.eventObject.gEvent.gEventName, self.eventObject.gEvent.competitorsPerTeam,self.eventObject.gEvent.maxScoringCompetitors,self.eventObject.gEvent.scoreForFirstPlace,self.eventObject.gEvent.decrementPerPlace,self.eventObject.gEvent.scoreMultiplier);
+      //  NSLog(@"Event Name: %@ comp per team: %@  max scoring competitors: %@ scorefor first place: %@ decrementperplace: %@ scoreMultiplier: %@",self.eventObject.gEvent.gEventName, self.eventObject.gEvent.competitorsPerTeam,self.eventObject.gEvent.maxScoringCompetitors,self.eventObject.gEvent.scoreForFirstPlace,self.eventObject.gEvent.decrementPerPlace,self.eventObject.gEvent.scoreMultiplier);
 
 
 
@@ -835,20 +835,23 @@ Event * event = _eventObject;
    /////
    int topresult;
    int decreaseMultiplier = [event.gEvent.decrementPerPlace intValue];
+   int scoreMultiplier = [event.gEvent.scoreMultiplier intValue];
+   
+    
    
     int numberOfTeams = [self getTeamNumberWithEventObject: event];
     
     
     if ([event.gEvent.scoreForFirstPlace intValue] != 0) {
         topresult = [event.gEvent.scoreForFirstPlace intValue];
-        NSLog(@"top results set");
+       // NSLog(@"top results set");
     }
     else
     {
        if  ([event.gEvent.maxScoringCompetitors intValue] != 0) {
        
             topresult = [event.gEvent.maxScoringCompetitors intValue] * numberOfTeams;
-            NSLog(@"top results maxscore");
+           // NSLog(@"top results maxscore");
        
        }
        else
@@ -856,12 +859,12 @@ Event * event = _eventObject;
             if ([event.gEvent.competitorsPerTeam intValue] != 0) {
     
                 topresult = [event.gEvent.competitorsPerTeam intValue] * numberOfTeams;
-                NSLog(@"top results cperteam");
+              //  NSLog(@"top results cperteam");
             }
             else
             {
                 topresult = [results count];
-                NSLog(@"top results count");
+              //  NSLog(@"top results count");
             }
            
        }
@@ -871,8 +874,39 @@ Event * event = _eventObject;
     
     
     //////
+    /*
+    NSMutableDictionary *teamDictionary = [[NSMutableDictionary alloc] initWithCapacity: [event.meet.teams count]];
     
+ 
     
+
+    
+    if ([teamDictionary objectForKey:@"Honda"]){
+    
+        if (([[teamDictionary objectForKey:@"Honda"] intValue] < maxScoringComps)) {
+            NSLog(@"honda and not too many %@  max %@",[teamDictionary objectForKey:@"Honda"],[NSNumber numberWithInt:maxScoringComps]);
+            int temp = [[teamDictionary objectForKey:@"Honda"] intValue]+1;
+            [teamDictionary setValue:[NSNumber numberWithInt:temp] forKey:@"Honda"];
+
+        }
+        else
+        {
+            NSLog(@"honda and too many %@  max %@",[teamDictionary objectForKey:@"Honda"],[NSNumber numberWithInt:maxScoringComps]);
+        
+        }
+    
+        
+        
+    }
+    else
+    {
+        NSLog(@"not honda %@",[teamDictionary objectForKey:@"Honda"]);
+        [teamDictionary setValue:[NSNumber numberWithInt:1] forKey:@"Honda"];
+    }
+ 
+    */
+    
+    ////
    
     int count = 0;
     int score;
@@ -882,67 +916,114 @@ Event * event = _eventObject;
     NSNumber *lastResult = 0;
     NSNumber *currentResult;
     BOOL lastplacemanual = NO;
+    int maxScoringComps = [event.gEvent.maxScoringCompetitors intValue];
+     NSMutableDictionary *teamDictionary = [[NSMutableDictionary alloc] initWithCapacity: [event.meet.teams count]];
+        NSNumber* teamIDNumber;
+        NSString* teamID;
+    
     
     for(CEventScore *object in results) {
        
-         currentResult = object.result;
-       // [number1 doubleValue] < [number2 doubleValue]
-       if (![object.highJumpPlacingManual boolValue]) {
+       teamIDNumber = object.team.teamID;
+       teamID = [teamIDNumber stringValue];
         
-            if ([currentResult doubleValue] == [lastResult doubleValue]) {
-                NSLog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
-               
-                if (lastplacemanual){
-                    placing = lastplacegiven + 1;
-                    score = topresult - ((placing - 1) * decreaseMultiplier);
-                    NSLog(@" manual and last place given %d", lastplacegiven);
-                                    }
+        if (![teamDictionary objectForKey:teamID]){
+            NSLog(@"not team name %@ ",object.team.teamName);
+            [teamDictionary setValue:[NSNumber numberWithInt:0] forKey:teamID];
+        }
+    
+        if (([[teamDictionary objectForKey:teamID] intValue] < maxScoringComps)) {
+                
+                NSLog(@"team name %@ and not too many %@  max %@",object.team.teamName,[teamDictionary objectForKey:teamID],[NSNumber numberWithInt:maxScoringComps]);
+            int temp = [[teamDictionary objectForKey:teamID] intValue]+1;
+            [teamDictionary setValue:[NSNumber numberWithInt:temp] forKey:teamID];
+        
+        
+        
+            currentResult = object.result;
+            
+            
+            
+            
+            
+            // [number1 doubleValue] < [number2 doubleValue]
+           if (![object.highJumpPlacingManual boolValue]) {
+            
+                if ([currentResult doubleValue] == [lastResult doubleValue]) {
+                   // NSLog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
+                   
+                    if (lastplacemanual){
+                        placing = lastplacegiven + 1;
+                        score = topresult - ((placing - 1) * decreaseMultiplier);
+                      //  NSLog(@" manual and last place given %d", lastplacegiven);
+                                        }
+                    else
+                    {
+                    score = lastscoregiven;
+                    placing = lastplacegiven;
+                   // NSLog(@"not manual and last place given %d", lastplacegiven);
+
+                    }
+                }
                 else
                 {
-                score = lastscoregiven;
-                placing = lastplacegiven;
-                NSLog(@"not manual and last place given %d", lastplacegiven);
-
+                   // NSLog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
+                    
+                    placing = count + 1;
+                    score = topresult - ((placing - 1) * decreaseMultiplier);
+                    
+                   // NSLog(@"not manual and last place given %d", lastplacegiven);
                 }
+                lastplacegiven = placing;
+                lastscoregiven = score;
+                lastResult = currentResult;
+               lastplacemanual = NO;
+               
             }
             else
             {
-                NSLog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
-                
-                placing = count + 1;
+            
+          //  NSLog(@"manual");
+                placing = [object.placing intValue];
                 score = topresult - ((placing - 1) * decreaseMultiplier);
-                
-                NSLog(@"not manual and last place given %d", lastplacegiven);
+                lastResult = currentResult;
+               lastplacemanual = YES;
             }
-            lastplacegiven = placing;
-            lastscoregiven = score;
-            lastResult = currentResult;
-           lastplacemanual = NO;
-           
+            
+            count++;
+            
+            
+            
+            object.placing = [NSNumber numberWithInt:placing];
+            
+            if (!(score > 0)) {
+                score = 0;
+            }
+            
+            score = score * scoreMultiplier;
+            
+            object.score = [NSNumber numberWithInt:score];
+
+          //  NSLog(@" score ranking =  %@  and Points =  %@",object.placing,object.score);
+            
+            
+        
+        
         }
         else
         {
+            NSLog(@"team name %@ and  too many %@  max %@",object.team.teamName,[teamDictionary objectForKey:teamID],[NSNumber numberWithInt:maxScoringComps]);
         
-        NSLog(@"manual");
-            placing = [object.placing intValue];
-            score = topresult - ((placing - 1) * decreaseMultiplier);
-            lastResult = currentResult;
-           lastplacemanual = YES;
+            object.placing = nil;
+            object.score = nil;
         }
-        
-        count++;
-        
+    
         
         
-        object.placing = [NSNumber numberWithInt:placing];
         
-        if (!(score > 0)) {
-            score = 0;
-        }
         
-        object.score = [NSNumber numberWithInt:score];
-
-        NSLog(@" score ranking =  %@  and Points =  %@",object.placing,object.score);
+        
+        
     }
 
 }
