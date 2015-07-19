@@ -773,10 +773,13 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4fQ-jd-Duz" id="ITn-w1-Mi1">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UN3-cI-pe4">
-                                            <rect key="frame" x="40" y="11" width="150" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team with placeholder" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UN3-cI-pe4">
+                                            <rect key="frame" x="40" y="11" width="300" height="21"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="150" id="m2F-RD-dae"/>
+                                                <constraint firstAttribute="width" constant="300" id="m2F-RD-dae">
+                                                    <variation key="widthClass=compact" constant="300"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                                                </constraint>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -820,6 +823,7 @@
                                         <constraint firstItem="UN3-cI-pe4" firstAttribute="leading" secondItem="ITn-w1-Mi1" secondAttribute="leading" constant="40" id="X4o-eO-yUu"/>
                                         <constraint firstAttribute="trailing" secondItem="cRI-0s-cWl" secondAttribute="trailing" constant="200" id="bO1-wx-m9k">
                                             <variation key="widthClass=compact" constant="100"/>
+                                            <variation key="heightClass=regular-widthClass=compact" constant="70"/>
                                         </constraint>
                                         <constraint firstAttribute="trailing" secondItem="08t-Gh-A1y" secondAttribute="trailing" constant="20" id="hFs-WQ-wPK">
                                             <variation key="widthClass=compact" constant="10"/>
