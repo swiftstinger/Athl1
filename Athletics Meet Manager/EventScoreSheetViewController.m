@@ -2,7 +2,7 @@
 //  EventScoreSheetViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 03/06/2015.
+//  Created by Rudi Huysamen on 03/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -66,7 +66,7 @@
       NSString *eventname = [NSString stringWithFormat:@"%@ %@",self.eventObject.gEvent.gEventName, self.eventObject.division.divName];
       _navBar.title = eventname;
 
-      //  NSLog(@"Event Name: %@ comp per team: %@  max scoring competitors: %@ scorefor first place: %@ decrementperplace: %@ scoreMultiplier: %@",self.eventObject.gEvent.gEventName, self.eventObject.gEvent.competitorsPerTeam,self.eventObject.gEvent.maxScoringCompetitors,self.eventObject.gEvent.scoreForFirstPlace,self.eventObject.gEvent.decrementPerPlace,self.eventObject.gEvent.scoreMultiplier);
+      //  // nslog(@"Event Name: %@ comp per team: %@  max scoring competitors: %@ scorefor first place: %@ decrementperplace: %@ scoreMultiplier: %@",self.eventObject.gEvent.gEventName, self.eventObject.gEvent.competitorsPerTeam,self.eventObject.gEvent.maxScoringCompetitors,self.eventObject.gEvent.scoreForFirstPlace,self.eventObject.gEvent.decrementPerPlace,self.eventObject.gEvent.scoreMultiplier);
 
 
 
@@ -138,8 +138,8 @@
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+          //  abort();
         }
     }
 }
@@ -181,8 +181,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	  //  abort();
 	}
     
     return _fetchedResultsController;
@@ -259,7 +259,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     
     if (ceventscore.result) {
        cell.competitorResultLabel.text = [ceventscore.result description];
-       NSLog(@"results %@", ceventscore.result);
+       // nslog(@"results %@", ceventscore.result);
     }
     else
     {
@@ -310,13 +310,13 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
                 }
                 else
                 {
-                    NSLog(@"whooooops geventtyp not either %@", eventtypestring);
+                    // nslog(@"whooooops geventtyp not either %@", eventtypestring);
                 }
 
 
 
     
-    NSLog(@"in tap and event is %@", eventtypestring);
+    // nslog(@"in tap and event is %@", eventtypestring);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -345,7 +345,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
         
         
         [eventScoreAddController setDetailItem:self.eventObject];
-         NSLog(@"not added context");
+         // nslog(@"not added context");
         [eventScoreAddController setManagedObjectContext:self.managedObjectContext];
     }
     
@@ -357,8 +357,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
         if (![self.managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+          //  abort();
         }
     }
     
@@ -375,7 +375,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     
     if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorAddInResultSheetViewController class]])
         {
-        NSLog(@"Coming from CompertitorAddInResults Done!");
+        // nslog(@"Coming from CompertitorAddInResults Done!");
         self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     CompetitorAddInResultSheetViewController *sourceViewController = unwindSegue.sourceViewController;
@@ -500,7 +500,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
      
       keystring = [NSString stringWithFormat:@"%dlastcEventScoreID",tempint];  ////
      
-     NSLog(@"%@",keystring);
+     // nslog(@"%@",keystring);
      
      if (![defaults objectForKey:keystring]) {                    /////
      
@@ -533,7 +533,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
         
@@ -541,7 +541,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
     
     if ([unwindSegue.sourceViewController isKindOfClass:[EventScoreAddViewController class]])
         {
-        NSLog(@"Coming from EventScoreAdd Done!");
+        // nslog(@"Coming from EventScoreAdd Done!");
         self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
@@ -597,7 +597,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
      
      NSString * keystring = [NSString stringWithFormat:@"%dlastcEventScoreID",tempint];  ////
      
-     NSLog(@"%@",keystring);
+     // nslog(@"%@",keystring);
      
      if (![defaults objectForKey:keystring]) {                    /////
      
@@ -611,7 +611,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
        int newint = oldint + 1;
        NSNumber *newnumber = [NSNumber numberWithInt:newint];
        [ceventscore setValue: newnumber forKey: @"cEventScoreID"];                  //////////
-        NSLog(@"compname %@  cEventScoreID %@", sourceViewController.competitorObject.compName, ceventscore.cEventScoreID);
+        // nslog(@"compname %@  cEventScoreID %@", sourceViewController.competitorObject.compName, ceventscore.cEventScoreID);
 
     [defaults setObject: newnumber forKey:keystring];            /////////
      
@@ -630,7 +630,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
         
@@ -639,7 +639,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
    
    if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorScoreEnterViewController class]])
     {
-        NSLog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
+        // nslog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
         self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
@@ -654,7 +654,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
         ///////
         
         //validation in source
-        NSLog(@"source results %f",sourceViewController.result);
+        // nslog(@"source results %f",sourceViewController.result);
         ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result];
     
         
@@ -671,7 +671,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
         
@@ -679,7 +679,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
    
    if ([unwindSegue.sourceViewController isKindOfClass:[HighJumpScoreEnterViewController class]])
     {
-        NSLog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
+        // nslog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
         self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
@@ -694,7 +694,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
         ///////
         
         //validation in source
-        NSLog(@"source results %f",sourceViewController.result);
+        // nslog(@"source results %f",sourceViewController.result);
         ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result];
     
         
@@ -711,7 +711,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
         
@@ -726,12 +726,12 @@ UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
 if ([sourceViewController isKindOfClass:[EventScoreAddViewController class]])
     {
-        NSLog(@"Coming from cEventScoreAdd  in eventscoresheet Cancel!");
+        // nslog(@"Coming from cEventScoreAdd  in eventscoresheet Cancel!");
     }
     
     if ([sourceViewController isKindOfClass:[CompetitorScoreEnterViewController class]])
     {
-        NSLog(@"Coming from competitorscoreneter  in eventscoresheet Cancel!");
+        // nslog(@"Coming from competitorscoreneter  in eventscoresheet Cancel!");
     }
 }
 
@@ -765,7 +765,7 @@ if ([sourceViewController isKindOfClass:[EventScoreAddViewController class]])
     }
     else
     {
-        NSLog(@"whooooops geventtyp not either %@", _eventObject.gEvent.gEventType);
+        // nslog(@"whooooops geventtyp not either %@", _eventObject.gEvent.gEventType);
     }
 
 
@@ -776,8 +776,8 @@ if ([sourceViewController isKindOfClass:[EventScoreAddViewController class]])
         if (![self.managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+           // abort();
         }
 
 
@@ -818,7 +818,7 @@ Event * event = _eventObject;
                 }
                 else
                 {
-                    NSLog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
+                    // nslog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
                     }
     
     
@@ -844,14 +844,14 @@ Event * event = _eventObject;
     
     if ([event.gEvent.scoreForFirstPlace intValue] != 0) {
         topresult = [event.gEvent.scoreForFirstPlace intValue];
-       // NSLog(@"top results set");
+       // // nslog(@"top results set");
     }
     else
     {
        if  ([event.gEvent.maxScoringCompetitors intValue] != 0) {
        
             topresult = [event.gEvent.maxScoringCompetitors intValue] * numberOfTeams;
-           // NSLog(@"top results maxscore");
+           // // nslog(@"top results maxscore");
        
        }
        else
@@ -859,12 +859,12 @@ Event * event = _eventObject;
             if ([event.gEvent.competitorsPerTeam intValue] != 0) {
     
                 topresult = [event.gEvent.competitorsPerTeam intValue] * numberOfTeams;
-              //  NSLog(@"top results cperteam");
+              //  // nslog(@"top results cperteam");
             }
             else
             {
                 topresult = [results count];
-              //  NSLog(@"top results count");
+              //  // nslog(@"top results count");
             }
            
        }
@@ -884,14 +884,14 @@ Event * event = _eventObject;
     if ([teamDictionary objectForKey:@"Honda"]){
     
         if (([[teamDictionary objectForKey:@"Honda"] intValue] < maxScoringComps)) {
-            NSLog(@"honda and not too many %@  max %@",[teamDictionary objectForKey:@"Honda"],[NSNumber numberWithInt:maxScoringComps]);
+            // nslog(@"honda and not too many %@  max %@",[teamDictionary objectForKey:@"Honda"],[NSNumber numberWithInt:maxScoringComps]);
             int temp = [[teamDictionary objectForKey:@"Honda"] intValue]+1;
             [teamDictionary setValue:[NSNumber numberWithInt:temp] forKey:@"Honda"];
 
         }
         else
         {
-            NSLog(@"honda and too many %@  max %@",[teamDictionary objectForKey:@"Honda"],[NSNumber numberWithInt:maxScoringComps]);
+            // nslog(@"honda and too many %@  max %@",[teamDictionary objectForKey:@"Honda"],[NSNumber numberWithInt:maxScoringComps]);
         
         }
     
@@ -900,7 +900,7 @@ Event * event = _eventObject;
     }
     else
     {
-        NSLog(@"not honda %@",[teamDictionary objectForKey:@"Honda"]);
+        // nslog(@"not honda %@",[teamDictionary objectForKey:@"Honda"]);
         [teamDictionary setValue:[NSNumber numberWithInt:1] forKey:@"Honda"];
     }
  
@@ -928,13 +928,13 @@ Event * event = _eventObject;
        teamID = [teamIDNumber stringValue];
         
         if (![teamDictionary objectForKey:teamID]){
-            NSLog(@"not team name %@ ",object.team.teamName);
+            // nslog(@"not team name %@ ",object.team.teamName);
             [teamDictionary setValue:[NSNumber numberWithInt:0] forKey:teamID];
         }
     
         if (([[teamDictionary objectForKey:teamID] intValue] < maxScoringComps)) {
                 
-                NSLog(@"team name %@ and not too many %@  max %@",object.team.teamName,[teamDictionary objectForKey:teamID],[NSNumber numberWithInt:maxScoringComps]);
+                // nslog(@"team name %@ and not too many %@  max %@",object.team.teamName,[teamDictionary objectForKey:teamID],[NSNumber numberWithInt:maxScoringComps]);
             int temp = [[teamDictionary objectForKey:teamID] intValue]+1;
             [teamDictionary setValue:[NSNumber numberWithInt:temp] forKey:teamID];
         
@@ -950,29 +950,29 @@ Event * event = _eventObject;
            if (![object.highJumpPlacingManual boolValue]) {
             
                 if ([currentResult doubleValue] == [lastResult doubleValue]) {
-                   // NSLog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
+                   // // nslog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
                    
                     if (lastplacemanual){
                         placing = lastplacegiven + 1;
                         score = topresult - ((placing - 1) * decreaseMultiplier);
-                      //  NSLog(@" manual and last place given %d", lastplacegiven);
+                      //  // nslog(@" manual and last place given %d", lastplacegiven);
                                         }
                     else
                     {
                     score = lastscoregiven;
                     placing = lastplacegiven;
-                   // NSLog(@"not manual and last place given %d", lastplacegiven);
+                   // // nslog(@"not manual and last place given %d", lastplacegiven);
 
                     }
                 }
                 else
                 {
-                   // NSLog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
+                   // // nslog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
                     
                     placing = count + 1;
                     score = topresult - ((placing - 1) * decreaseMultiplier);
                     
-                   // NSLog(@"not manual and last place given %d", lastplacegiven);
+                   // // nslog(@"not manual and last place given %d", lastplacegiven);
                 }
                 lastplacegiven = placing;
                 lastscoregiven = score;
@@ -983,7 +983,7 @@ Event * event = _eventObject;
             else
             {
             
-          //  NSLog(@"manual");
+          //  // nslog(@"manual");
                 placing = [object.placing intValue];
                 score = topresult - ((placing - 1) * decreaseMultiplier);
                 lastResult = currentResult;
@@ -1004,7 +1004,7 @@ Event * event = _eventObject;
             
             object.score = [NSNumber numberWithInt:score];
 
-          //  NSLog(@" score ranking =  %@  and Points =  %@",object.placing,object.score);
+          //  // nslog(@" score ranking =  %@  and Points =  %@",object.placing,object.score);
             
             
         
@@ -1012,7 +1012,7 @@ Event * event = _eventObject;
         }
         else
         {
-            NSLog(@"team name %@ and  too many %@  max %@",object.team.teamName,[teamDictionary objectForKey:teamID],[NSNumber numberWithInt:maxScoringComps]);
+            // nslog(@"team name %@ and  too many %@  max %@",object.team.teamName,[teamDictionary objectForKey:teamID],[NSNumber numberWithInt:maxScoringComps]);
         
             object.placing = nil;
             object.score = nil;

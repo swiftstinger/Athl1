@@ -2,7 +2,7 @@
 //  MasterViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 22/05/2015.
+//  Created by Rudi Huysamen on 22/05/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -55,8 +55,8 @@
     if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+        // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+       // abort();
     }
 }
 
@@ -93,8 +93,8 @@
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+          //  abort();
         }
     }
 }
@@ -150,8 +150,8 @@ format.dateFormat = @"dd MMM yyyy";
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	  //  abort();
 	}
     
     return _fetchedResultsController;
@@ -265,7 +265,7 @@ format.dateFormat = @"dd MMM yyyy";
 
     if ([unwindSegue.sourceViewController isKindOfClass:[MeetAddViewController class]])
     {
-        NSLog(@"Coming from MeetAdd Done!");
+        // nslog(@"Coming from MeetAdd Done!");
         
         MeetAddViewController *sourceViewController = unwindSegue.sourceViewController;
         
@@ -373,7 +373,7 @@ format.dateFormat = @"dd MMM yyyy";
        
         
 
-        NSLog(@"meetname %@  meetID %@", meet.meetName, meet.meetID);
+        // nslog(@"meetname %@  meetID %@", meet.meetName, meet.meetID);
 
     [defaults setObject: newnumber forKey:@"lastMeetID"];
      
@@ -388,7 +388,7 @@ format.dateFormat = @"dd MMM yyyy";
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
         
@@ -404,7 +404,7 @@ UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
 if ([sourceViewController isKindOfClass:[MeetAddViewController class]])
     {
-        NSLog(@"Coming from MeetAdd Cancel!");
+        // nslog(@"Coming from MeetAdd Cancel!");
     }
 }
 
@@ -425,7 +425,7 @@ if ([sourceViewController isKindOfClass:[MeetAddViewController class]])
 
 **/
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender {
-NSLog(@"long press fire");
+// nslog(@"long press fire");
 // only when gesture was recognized, not when ended
 	if (sender.state == UIGestureRecognizerStateBegan)
 	{
@@ -440,7 +440,7 @@ NSLog(@"long press fire");
 		//self.indexPathForLongPressCell = [self.tableView indexPathForCell:cell];
  
 		// do something with this action
-		NSLog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
+		// nslog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
         
         [self performSegueWithIdentifier:@"editMeet" sender:self];
 	}

@@ -2,7 +2,7 @@
 //  EventScoreAddViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 03/06/2015.
+//  Created by Rudi Huysamen on 03/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -24,10 +24,10 @@
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)newcontext
 {
- NSLog(@"not added context");
+ // nslog(@"not added context");
     if (_managedObjectContext != newcontext) {
         _managedObjectContext = newcontext;
-        NSLog(@"adding context");
+        // nslog(@"adding context");
     }
 }
 
@@ -137,8 +137,8 @@
         if (![context save:&error]) {
              // Replace this implementation with code to handle the error appropriately.
              // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+           // abort();
         }
     }   
 }
@@ -196,8 +196,8 @@
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	   // abort();
 	}
     
     return _fetchedResultsController;
@@ -272,8 +272,8 @@
 	if (![self.searchFetchedResultsController performFetch:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	  //  abort();
 	}
     
     return _searchFetchedResultsController;
@@ -381,7 +381,7 @@
 }
 */
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-   NSLog(@"hahhhhhhhhhhhhhhhhhh");
+   // nslog(@"hahhhhhhhhhhhhhhhhhh");
     
     if ([identifier isEqualToString:@"competitorSelectedSegue"]) {
         
@@ -391,7 +391,7 @@
         NSManagedObject *object = [[self fetchedResultsControllerForTableView:tableView] objectAtIndexPath:indexPath];
         
         self.competitorObject = (Competitor*)object;
-NSLog(@"competitor selected and object name is %@", self.competitorObject.compName);
+// nslog(@"competitor selected and object name is %@", self.competitorObject.compName);
       //  self.eventObject
         
         
@@ -576,7 +576,7 @@ NSLog(@"competitor selected and object name is %@", self.competitorObject.compNa
         
         
         [competitorAddController setDetailItem:self.eventObject];
-         NSLog(@"not added context");
+         // nslog(@"not added context");
         [competitorAddController setManagedObjectContext:self.managedObjectContext];
     }
     
@@ -589,7 +589,7 @@ UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
 if ([sourceViewController isKindOfClass:[CompetitorAddInResultSheetViewController class]])
     {
-        NSLog(@"Coming from CompertitorAddInResults Cancel!");
+        // nslog(@"Coming from CompertitorAddInResults Cancel!");
     }
     
    

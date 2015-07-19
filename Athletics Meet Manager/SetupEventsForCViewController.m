@@ -2,7 +2,7 @@
 //  SetupEventsForCViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 02/06/2015.
+//  Created by Rudi Huysamen on 02/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -111,8 +111,8 @@
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+           // abort();
         }
     }
 }
@@ -154,8 +154,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	  //  abort();
 	}
     
     return _fetchedResultsController;
@@ -278,7 +278,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
             
                     if (!(competitorEventLimit>currentEventNumber)) {
     
-                NSLog(@"in shouldperformsegue no");
+                // nslog(@"in shouldperformsegue no");
                 
                 UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"Too many Events For Competitor"
@@ -319,7 +319,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
 
     if ([unwindSegue.sourceViewController isKindOfClass:[EventForCAddViewController class]])
     {
-        NSLog(@"Coming from EventsForCAdd Done!");
+        // nslog(@"Coming from EventsForCAdd Done!");
         
         
         
@@ -333,7 +333,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
         
         //// Test
         
-      //  NSLog(@"Gevent %@ Division %@ ",sourceViewController.event.gEvent.gEventName, sourceViewController.event.division.divName);
+      //  // nslog(@"Gevent %@ Division %@ ",sourceViewController.event.gEvent.gEventName, sourceViewController.event.division.divName);
 
         
         
@@ -426,7 +426,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
         
@@ -442,7 +442,7 @@ UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
 if ([sourceViewController isKindOfClass:[EventForCAddViewController class]])
     {
-        NSLog(@"Coming from cEventScoreAdd Cancel!");
+        // nslog(@"Coming from cEventScoreAdd Cancel!");
     }
 }
 

@@ -2,7 +2,7 @@
 //  EventForCAddViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 02/06/2015.
+//  Created by Rudi Huysamen on 02/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -132,8 +132,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
 	if (![self.divFetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	   // abort();
 	}
     
     return _divFetchedResultsController;
@@ -175,8 +175,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
 	if (![self.gEventFetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	   // abort();
 	}
     
     return _gEventFetchedResultsController;
@@ -193,7 +193,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
     [fetchRequest setEntity:entity];
    
      // limit to those entities that belong to the particular item
-    NSLog(@"division: %@  gEvents %@", self.division.divName, self.gevent.gEventName);
+    // nslog(@"division: %@  gEvents %@", self.division.divName, self.gevent.gEventName);
     
 NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(division == %@)",self.division];
 NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(gEvent == %@)",self.gevent];
@@ -283,13 +283,13 @@ if(pickerView.tag == divpicker)
     
     if(pickerView.tag == divpicker)
      {
-     NSLog(@"divpicker");
+     // nslog(@"divpicker");
        self.division =  [[[self divFetchedResultsController] fetchedObjects] objectAtIndex:row];
 
      }
      else if(pickerView.tag == eventpicker)
      {
-     NSLog(@"eventpicker");
+     // nslog(@"eventpicker");
         self.gevent =   [[[self gEventFetchedResultsController] fetchedObjects] objectAtIndex:row];
         }
     

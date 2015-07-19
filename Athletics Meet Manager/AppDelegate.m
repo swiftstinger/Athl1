@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 22/05/2015.
+//  Created by Rudi Huysamen on 22/05/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -92,8 +92,8 @@
         error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
         // Replace this with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+        // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+       // abort();
     }
     
     return _persistentStoreCoordinator;
@@ -124,8 +124,8 @@
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+           // abort();
         }
     }
 }

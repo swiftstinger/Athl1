@@ -2,7 +2,7 @@
 //  HighJumpScoreEnterViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 23/06/2015.
+//  Created by Rudi Huysamen on 23/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -35,7 +35,7 @@
        self.cEventScore = _detailItem;
        if (self.cEventScore.result) {
             self.isEditing = TRUE;
-            NSLog(@"self.editing = true");
+            // nslog(@"self.editing = true");
         }
        
       
@@ -90,7 +90,7 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     
-    NSLog(@"close keyboard?");
+    // nslog(@"close keyboard?");
     return YES;
 }
 
@@ -109,7 +109,7 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
 - (void) resultsCalculate: (CEventScore*)thisscore {
 
 Event * event = thisscore.event;
-NSLog(@"event id %@",event.eventID);
+// nslog(@"event id %@",event.eventID);
 
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
             NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
@@ -142,7 +142,7 @@ NSLog(@"event id %@",event.eventID);
                 }
                 else
                 {
-                    NSLog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
+                    // nslog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
                     }
     
     
@@ -188,27 +188,27 @@ NSLog(@"event id %@",event.eventID);
        if (![object.highJumpPlacingManual boolValue]) {
         
             if ([currentResult doubleValue] == [lastResult doubleValue]) {
-                NSLog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
+                // nslog(@"same lastResult %@ currentResult %@", lastResult,currentResult);
                
                 if (lastplacemanual){
                     placing = lastplacegiven + 1;
                     score = topresult - (placing -1);
-                    NSLog(@" manual and last place given %d", lastplacegiven);
+                    // nslog(@" manual and last place given %d", lastplacegiven);
                                     }
                 else
                 {
                 score = lastscoregiven;
                 placing = lastplacegiven;
-                NSLog(@"not manual and last place given %d", lastplacegiven);
+                // nslog(@"not manual and last place given %d", lastplacegiven);
 
                 }
             }
             else
             {
-                NSLog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
+                // nslog(@"not same lastResult %@ currentResult %@", lastResult,currentResult);
                 score = topresult - count;
                 placing = count + 1;
-                NSLog(@"not manual and last place given %d", lastplacegiven);
+                // nslog(@"not manual and last place given %d", lastplacegiven);
             }
             lastplacegiven = placing;
             lastscoregiven = score;
@@ -219,7 +219,7 @@ NSLog(@"event id %@",event.eventID);
         else
         {
         
-        NSLog(@"manual");
+        // nslog(@"manual");
             placing = [object.placing intValue];
             score = topresult - (placing -1);
             lastResult = currentResult;
@@ -234,7 +234,7 @@ NSLog(@"event id %@",event.eventID);
         
         object.score = [NSNumber numberWithInt:score];
 
-        NSLog(@" score ranking =  %@  and Points =  %@",object.placing,object.score);
+        // nslog(@" score ranking =  %@  and Points =  %@",object.placing,object.score);
     }
     
     
@@ -291,7 +291,7 @@ return intvalue;
 
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-   NSLog(@"here");
+   // nslog(@"here");
     
     if ([identifier isEqualToString:@"unwindToEventScoreSheetDoneSegue"]) {
         
@@ -314,7 +314,7 @@ return intvalue;
         
         if (FALSE) {
         
-        NSLog(@"in shouldperformsegue no");
+        // nslog(@"in shouldperformsegue no");
         return NO;
         }
    

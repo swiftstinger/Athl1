@@ -2,7 +2,7 @@
 //  SetupGEventsViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 28/05/2015.
+//  Created by Rudi Huysamen on 28/05/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -53,7 +53,7 @@
 - (void)configureView
 {
 
-NSLog(@"in view");
+// nslog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
       
@@ -106,8 +106,8 @@ NSLog(@"in view");
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+         //   abort();
         }
     }
 }
@@ -162,8 +162,8 @@ NSLog(@"in view");
                             if (![context save:&error]) {
                             // Replace this implementation with code to handle the error appropriately.
                             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                            abort();
+                            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+                           // abort();
                             }
                             
                             [alert dismissViewControllerAnimated:YES completion:nil];
@@ -210,8 +210,8 @@ NSLog(@"in view");
                             if (![context save:&error]) {
                             // Replace this implementation with code to handle the error appropriately.
                             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                            abort();
+                            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+                           // abort();
                             }
     }
 
@@ -255,8 +255,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	   // abort();
 	}
     
     return _fetchedResultsController;
@@ -380,7 +380,7 @@ if ([[segue identifier] isEqualToString:@"addGEvent"]) {
 
     if ([unwindSegue.sourceViewController isKindOfClass:[GEventAddViewController class]])
     {
-        NSLog(@"Coming from GEventAdd Done!");
+        // nslog(@"Coming from GEventAdd Done!");
         
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
      GEventAddViewController *sourceViewController = unwindSegue.sourceViewController;
@@ -490,7 +490,7 @@ if ([[segue identifier] isEqualToString:@"addGEvent"]) {
      
                     NSString * keystring1 = [NSString stringWithFormat:@"%dlastEventID",tempint1];  ////
      
-                    NSLog(@"%@",keystring1);
+                    // nslog(@"%@",keystring1);
      
                     if (![defaults1 objectForKey:keystring1]) {                    /////
      
@@ -504,7 +504,7 @@ if ([[segue identifier] isEqualToString:@"addGEvent"]) {
                     int newint1 = oldint1 + 1;
                     NSNumber *newnumber1 = [NSNumber numberWithInt:newint1];
                     [event setValue: newnumber1 forKey: @"eventID"];                  //////////
-                    NSLog(@" eventID %@",  event.eventID);
+                    // nslog(@" eventID %@",  event.eventID);
 
                     [defaults1 setObject: newnumber1 forKey:keystring1];            /////////
      
@@ -519,7 +519,7 @@ if ([[segue identifier] isEqualToString:@"addGEvent"]) {
         
 
      
-                   NSLog(@"events in meet = %d",numberofevents);
+                   // nslog(@"events in meet = %d",numberofevents);
 
             }
         
@@ -556,7 +556,7 @@ if ([[segue identifier] isEqualToString:@"addGEvent"]) {
      
      NSString * keystring = [NSString stringWithFormat:@"%dlastGEventID",tempint];  ////
      
-     NSLog(@"%@",keystring);
+     // nslog(@"%@",keystring);
      
      if (![defaults objectForKey:keystring]) {                    /////
      
@@ -589,7 +589,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
         
@@ -605,13 +605,13 @@ UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
 if ([sourceViewController isKindOfClass:[GEventAddViewController class]])
     {
-        NSLog(@"Coming from GEventAdd Cancel!");
+        // nslog(@"Coming from GEventAdd Cancel!");
     }
 }
 
 
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer*)sender {
-NSLog(@"in longpress");
+// nslog(@"in longpress");
 
 if (sender.state == UIGestureRecognizerStateBegan)
 	{
@@ -619,7 +619,7 @@ if (sender.state == UIGestureRecognizerStateBegan)
   self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
         
         
-		NSLog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
+		// nslog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
         
         [self performSegueWithIdentifier:@"editGEvent" sender:self];
 	}

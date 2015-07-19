@@ -2,7 +2,7 @@
 //  CompetitorAddViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 02/06/2015.
+//  Created by Rudi Huysamen on 02/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -81,7 +81,7 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     
-    NSLog(@"close keyboard?");
+    // nslog(@"close keyboard?");
     return YES;
 }
 
@@ -106,7 +106,7 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
         
         if (FALSE) {
         
-        NSLog(@"in shouldperformsegue no");
+        // nslog(@"in shouldperformsegue no");
         return NO;
         }
    

@@ -2,7 +2,7 @@
 //  CompetitorAddInResultSheetViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 13/06/2015.
+//  Created by Rudi Huysamen on 13/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -120,8 +120,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	  //  abort();
 	}
     
     return _fetchedResultsController;
@@ -157,7 +157,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     
-    NSLog(@"close keyboard?");
+    // nslog(@"close keyboard?");
     return YES;
 }
 

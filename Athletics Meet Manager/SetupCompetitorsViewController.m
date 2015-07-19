@@ -2,7 +2,7 @@
 //  SetupCompetitorsViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 02/06/2015.
+//  Created by Rudi Huysamen on 02/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -51,7 +51,7 @@
 - (void)configureView
 {
 
-NSLog(@"in view");
+// nslog(@"in view");
     // Update the user interface for the detail item.
     if (self.teamObject) {
       
@@ -107,8 +107,8 @@ NSLog(@"in view");
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+           // abort();
         }
     }
 }
@@ -207,8 +207,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(team == %@)", _team
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	   // abort();
 	}
     
     return _fetchedResultsController;
@@ -349,7 +349,7 @@ return eventstring;
 
     if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorAddViewController class]])
     {
-        NSLog(@"Coming from CompetitorAdd Done!");
+        // nslog(@"Coming from CompetitorAdd Done!");
         
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
@@ -440,7 +440,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
         
@@ -456,7 +456,7 @@ UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
 if ([sourceViewController isKindOfClass:[CompetitorAddViewController class]])
     {
-        NSLog(@"Coming from CompetitorsAdd Cancel!");
+        // nslog(@"Coming from CompetitorsAdd Cancel!");
     }
 }
 
@@ -471,7 +471,7 @@ if (sender.state == UIGestureRecognizerStateBegan)
   self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
         
         
-		NSLog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
+		// nslog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
         
         [self performSegueWithIdentifier:@"editCompetitor" sender:self];
 	}

@@ -2,7 +2,7 @@
 //  TeamEventResultsViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 28/06/2015.
+//  Created by Rudi Huysamen on 28/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -139,8 +139,8 @@
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+          //  abort();
         }
     }
 }
@@ -152,7 +152,7 @@
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-    NSLog(@"fetchresultscontroller");
+    // nslog(@"fetchresultscontroller");
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"GEvent" inManagedObjectContext:self.managedObjectContext];
@@ -182,8 +182,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _team
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	  //  abort();
 	}
     
     return _fetchedResultsController;
@@ -247,7 +247,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _team
     
     GEvent * geventobject = (GEvent*) object;
   
-NSLog(@"configurecell");
+// nslog(@"configurecell");
 //
 
 NSString* eventScoreString = [self sumResultsForEvent:geventobject InDivision:_divObject InTeam:_teamObject];
@@ -323,7 +323,7 @@ NSString* eventScoreString = [self sumResultsForEvent:geventobject InDivision:_d
         
         [[segue destinationViewController] setDivDetailItem:_divObject];
        
-        NSLog(@"in segue");
+        // nslog(@"in segue");
           [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
         
     }

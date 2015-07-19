@@ -2,7 +2,7 @@
 //  Athletics_Meet_ManagerTests.m
 //  Athletics Meet ManagerTests
 //
-//  Created by Ailsa Huysamen on 22/05/2015.
+//  Created by Rudi Huysamen on 22/05/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 

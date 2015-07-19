@@ -2,7 +2,7 @@
 //  MeetAddViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 27/05/2015.
+//  Created by Rudi Huysamen on 27/05/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -27,13 +27,13 @@
 
 - (void)setDetailItem:(id)newDetailItem
 {
-NSLog(@"in detail item");
+// nslog(@"in detail item");
    if (_detailItem != newDetailItem) {
         
-        NSLog(@"before edit set");
+        // nslog(@"before edit set");
         _detailItem = newDetailItem;
         
-        NSLog(@"is editing");
+        // nslog(@"is editing");
         self.isEditing = TRUE;
         // Update the view.
       [self configureView];
@@ -107,11 +107,11 @@ NSLog(@"in detail item");
    else
    {
    
-   NSLog(@"/////////////////////////////////");
-   NSLog(@"/////////////////////////////////");
-   NSLog(@"/////////////////////////////////");
-   NSLog(@"/////////////////////////////////");
-   NSLog(@"/////////////////////////////////");
+   // nslog(@"/////////////////////////////////");
+   // nslog(@"/////////////////////////////////");
+   // nslog(@"/////////////////////////////////");
+   // nslog(@"/////////////////////////////////");
+   // nslog(@"/////////////////////////////////");
    
    
         self.ceventLimitStepper.value = 0;
@@ -256,20 +256,20 @@ NSLog(@"in detail item");
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     
-    NSLog(@"close keyboard?");
+    // nslog(@"close keyboard?");
     return YES;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
    
-   NSLog(@"beginedtiting");
+   // nslog(@"beginedtiting");
     self.currentResponder = textField;
     self.isOnTextField = true;
 }
 
 - (void)resignOnTap:(id)iSender {
    
-    NSLog(@"resign on tap");
+    // nslog(@"resign on tap");
     if (_isOnTextField) {
       self.isOnTextField = false;
       [self.currentResponder resignFirstResponder];

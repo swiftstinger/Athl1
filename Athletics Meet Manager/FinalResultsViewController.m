@@ -2,7 +2,7 @@
 //  FinalResultsViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 28/05/2015.
+//  Created by Rudi Huysamen on 28/05/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -33,7 +33,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    NSLog(@"nib");
+    // nslog(@"nib");
     
 }
 
@@ -49,7 +49,7 @@
         
     }
     
-    NSLog(@"setdetails");
+    // nslog(@"setdetails");
 }
 
 
@@ -57,7 +57,7 @@
 - (void)configureView
 {
 
-NSLog(@"in view");
+// nslog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
         _navBar.title = @"FINAL RESULTS";
@@ -91,7 +91,7 @@ NSLog(@"in view");
     
     [self configureView];
     
-    NSLog(@"viewdidload");
+    // nslog(@"viewdidload");
 }
 
 - (void) setPlaceForTeamsInMeet: (Meet*) meet {
@@ -135,13 +135,13 @@ NSLog(@"in view");
       //  score = score + [currentScore intValue];
         
         if ([currentScore intValue] == [lastScore intValue]) {
-            NSLog(@"same lastScore %@ currentScore %@", lastScore,currentScore);
+            // nslog(@"same lastScore %@ currentScore %@", lastScore,currentScore);
             
             placing = lastplacegiven;
         }
         else
         {
-        NSLog(@"not same lastScore %@ currentScore %@", lastScore,currentScore);
+        // nslog(@"not same lastScore %@ currentScore %@", lastScore,currentScore);
         
         placing = count + 1;
         }
@@ -153,7 +153,7 @@ NSLog(@"in view");
         
         object.teamPlace = [NSNumber numberWithInt:placing];
         
-        NSLog(@" team : %@  ranking =  %@  and Points =  %@",object.teamName, object.teamPlace,object.teamScore);
+        // nslog(@" team : %@  ranking =  %@  and Points =  %@",object.teamName, object.teamPlace,object.teamScore);
         
        
     }
@@ -202,14 +202,14 @@ NSLog(@"in view");
        }
 
 teamobject.teamScore = [NSNumber numberWithInt:score];
-NSLog(@" team : %@ score set at %@", teamobject.teamName,teamobject.teamScore);
+// nslog(@" team : %@ score set at %@", teamobject.teamName,teamobject.teamScore);
 
 }
 
 
 - (void) viewDidAppear:(BOOL)animated {
 
-NSLog(@"viewdidappear");
+// nslog(@"viewdidappear");
 }
 
 
@@ -252,8 +252,8 @@ NSLog(@"viewdidappear");
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+          //  abort();
         }
         
     }
@@ -266,7 +266,7 @@ NSLog(@"viewdidappear");
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-    NSLog(@"fetchresultscontroller");
+    // nslog(@"fetchresultscontroller");
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Team" inManagedObjectContext:self.managedObjectContext];
@@ -296,8 +296,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	   // abort();
 	}
     
     return _fetchedResultsController;
@@ -361,7 +361,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
     
     Team * teamobject = (Team*) object;
   
-NSLog(@"configurecell");
+// nslog(@"configurecell");
 //
 
   
@@ -390,7 +390,7 @@ NSLog(@"configurecell");
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
        
-        NSLog(@"in segue");
+        // nslog(@"in segue");
           [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
         
     }

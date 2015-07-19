@@ -2,7 +2,7 @@
 //  SetupDivViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 28/05/2015.
+//  Created by Rudi Huysamen on 28/05/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -55,7 +55,7 @@
 - (void)configureView
 {
 
-NSLog(@"in view");
+// nslog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
         
@@ -116,8 +116,8 @@ NSLog(@"in view");
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+          //  abort();
         }
     }
 }
@@ -129,12 +129,12 @@ NSLog(@"in view");
     NSSet *events = div.events;
     int count = 0;
     for (Event *event in events) {
-        NSLog(@"event name : %@  edited: %@",event.gEvent.gEventName,event.eventEdited);
+        // nslog(@"event name : %@  edited: %@",event.gEvent.gEventName,event.eventEdited);
 
         if ([event.eventEdited boolValue]) {
         
             count = count +1;
-            NSLog(@"edited count: %d",count);
+            // nslog(@"edited count: %d",count);
         }
     
     
@@ -173,8 +173,8 @@ NSLog(@"in view");
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+          //  abort();
         }
                             [alert dismissViewControllerAnimated:YES completion:nil];
                             
@@ -219,8 +219,8 @@ NSLog(@"in view");
                             if (![context save:&error]) {
                             // Replace this implementation with code to handle the error    appropriately.
                             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                            abort();
+                            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+                           // abort();
                             }
     }
 
@@ -268,8 +268,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	   // abort();
 	}
     
     return _fetchedResultsController;
@@ -368,7 +368,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         [divAddController setDetailItem:object];
        
         [divAddController setManagedObjectContext:self.managedObjectContext];
-       NSLog(@"editdiv");
+       // nslog(@"editdiv");
     }
 
     
@@ -383,7 +383,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
 
     if ([unwindSegue.sourceViewController isKindOfClass:[DivAddViewController class]])
     {
-        NSLog(@"Coming from DivAdd Done!");
+        // nslog(@"Coming from DivAdd Done!");
         
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
@@ -447,7 +447,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
                 event.eventEdited = [NSNumber numberWithBool:NO];
                 event.eventDone = [NSNumber numberWithBool:NO];
                 
-               NSLog(@"event name : %@  edited: %@",gevent.gEventName,event.eventEdited);
+               // nslog(@"event name : %@  edited: %@",gevent.gEventName,event.eventEdited);
                 
                 ////////// event id
                 
@@ -458,7 +458,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
      
                     NSString * keystring1 = [NSString stringWithFormat:@"%dlastEventID",tempint1];  ////
      
-                    NSLog(@"%@",keystring1);
+                    // nslog(@"%@",keystring1);
      
                     if (![defaults1 objectForKey:keystring1]) {                    /////
      
@@ -486,7 +486,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         
 
      
-                   NSLog(@"events in meet = %d",numberofevents);
+                   // nslog(@"events in meet = %d",numberofevents);
                 
             }
         
@@ -523,7 +523,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
      
      NSString * keystring = [NSString stringWithFormat:@"%dlastDivID",tempint];  ////
      
-     NSLog(@"%@",keystring);
+     // nslog(@"%@",keystring);
      
      if (![defaults objectForKey:keystring]) {                    /////
      
@@ -556,7 +556,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
         
@@ -572,7 +572,7 @@ UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
 if ([sourceViewController isKindOfClass:[DivAddViewController class]])
     {
-        NSLog(@"Coming from DivAdd Cancel!");
+        // nslog(@"Coming from DivAdd Cancel!");
     }
 }
 
@@ -587,7 +587,7 @@ if (sender.state == UIGestureRecognizerStateBegan)
   self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
         
         
-		NSLog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
+		// nslog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
         
         [self performSegueWithIdentifier:@"editDiv" sender:self];
 	}

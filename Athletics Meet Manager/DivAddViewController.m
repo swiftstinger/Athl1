@@ -2,7 +2,7 @@
 //  DivAddViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 28/05/2015.
+//  Created by Rudi Huysamen on 28/05/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -32,7 +32,7 @@
 {
 
    if (_detailItem != newDetailItem) {
-NSLog(@"setdetailitem");
+// nslog(@"setdetailitem");
         _detailItem = newDetailItem;
         self.isEditing = TRUE;
       
@@ -51,10 +51,10 @@ NSLog(@"setdetailitem");
 
 - (void)configureView
 {
-NSLog(@"configureview");
+// nslog(@"configureview");
     // Update the user interface for the detail item.
     if (self.editing) {
-    NSLog(@"configureview is editing");
+    // nslog(@"configureview is editing");
       _divName.text = [_detailItem valueForKey:@"divName"];
       
       
@@ -85,7 +85,7 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     
-    NSLog(@"close keyboard?");
+    // nslog(@"close keyboard?");
     return YES;
 }
 
@@ -110,7 +110,7 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
         
         if (FALSE) {
         
-        NSLog(@"in shouldperformsegue no");
+        // nslog(@"in shouldperformsegue no");
         return NO;
         }
    

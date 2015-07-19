@@ -2,7 +2,7 @@
 //  GEventAddViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 29/05/2015.
+//  Created by Rudi Huysamen on 29/05/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -66,7 +66,7 @@
 
     // Update the user interface for the detail item.
     
-    NSLog(@"comp per team: %@  max scoring competitors: %@ scorefor first place: %@ decrementperplace: %@ scoreMultiplier: %@", self.meetObject.competitorPerTeam,self.meetObject.maxScoringCompetitors,self.meetObject.scoreForFirstPlace,self.meetObject.decrementPerPlace,self.meetObject.scoreMultiplier);
+    // nslog(@"comp per team: %@  max scoring competitors: %@ scorefor first place: %@ decrementperplace: %@ scoreMultiplier: %@", self.meetObject.competitorPerTeam,self.meetObject.maxScoringCompetitors,self.meetObject.scoreForFirstPlace,self.meetObject.decrementPerPlace,self.meetObject.scoreMultiplier);
     
     
     if (self.editing) {
@@ -78,8 +78,8 @@
      
       self.gEventTypeValue  = [_detailItem valueForKey:@"gEventType"];
       
-      NSLog(@"geventtype in edit and is %@", self.gEventTypeValue);
-      NSLog(@"geventtype segemnt in edit and is %@", self.gEventTypeValue);
+      // nslog(@"geventtype in edit and is %@", self.gEventTypeValue);
+      // nslog(@"geventtype segemnt in edit and is %@", self.gEventTypeValue);
 
       if ([self.gEventTypeValue isEqualToString: [self.gEventType titleForSegmentAtIndex:0]])
       {
@@ -141,7 +141,7 @@
    else
    {
        
-       NSLog(@"in else");
+       // nslog(@"in else");
        
         // maxcomp
        
@@ -225,7 +225,7 @@ self.gEventTypeValue= [sender titleForSegmentAtIndex:[sender selectedSegmentInde
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     
-    NSLog(@"close keyboard?");
+    // nslog(@"close keyboard?");
     return YES;
 }
 
@@ -250,11 +250,11 @@ self.gEventTypeValue= [sender titleForSegmentAtIndex:[sender selectedSegmentInde
         
         self.gEventTypeValue = [self.gEventType titleForSegmentAtIndex:[self.gEventType selectedSegmentIndex]];
         //checks
-        NSLog(@"GEventType: %@",self.gEventTypeValue);
+        // nslog(@"GEventType: %@",self.gEventTypeValue);
         
         if (FALSE) {
         
-        NSLog(@"in shouldperformsegue no");
+        // nslog(@"in shouldperformsegue no");
         return NO;
         }
    

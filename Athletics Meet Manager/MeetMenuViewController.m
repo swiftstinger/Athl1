@@ -2,7 +2,7 @@
 //  MeetMenuViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 28/05/2015.
+//  Created by Rudi Huysamen on 28/05/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -99,7 +99,7 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
     
-   //  NSLog(@"Teams in configure view: %lu",  (unsigned long)[self.meetObject.teams count]);
+   //  // nslog(@"Teams in configure view: %lu",  (unsigned long)[self.meetObject.teams count]);
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
         NSEntityDescription *description = [NSEntityDescription entityForName:@"Team" inManagedObjectContext: self.managedObjectContext];
@@ -124,7 +124,7 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
             }
             int intvalue = (int)teamcount;
 
-      //   NSLog(@"Teams in configure view from fetch : %d",  intvalue);
+      //   // nslog(@"Teams in configure view from fetch : %d",  intvalue);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -144,7 +144,7 @@ else
 {
 
     if ([[segue identifier] isEqualToString:@"finalResults"]) {
-        NSLog(@"final results");
+        // nslog(@"final results");
         
         
       
@@ -165,7 +165,7 @@ else
 
         [[segue destinationViewController] setDetailItem:self.meetObject];
         [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
-    NSLog(@"in segue in meetmenu prepareforsegue");
+    // nslog(@"in segue in meetmenu prepareforsegue");
     }
   /*
     if ([[segue identifier] isEqualToString:@"divSetup"]) {

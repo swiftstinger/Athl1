@@ -2,7 +2,7 @@
 //  TeamCompetitorResultsViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 28/06/2015.
+//  Created by Rudi Huysamen on 28/06/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -147,8 +147,8 @@
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+          //  abort();
         }
     }
 }
@@ -199,8 +199,8 @@ NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(score != NULL)", nil];
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	  //  abort();
 	}
     
     
@@ -294,7 +294,7 @@ Competitor* comp = ceventscoreobject.competitor;
         
         [[segue destinationViewController] setDivDetailItem:_divObject];
        
-        NSLog(@"in segue");
+        // nslog(@"in segue");
           [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
         
     }

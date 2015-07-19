@@ -2,7 +2,7 @@
 //  SetupTeamsViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 28/05/2015.
+//  Created by Rudi Huysamen on 28/05/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -51,7 +51,7 @@
 - (void)configureView
 {
 
-NSLog(@"in view");
+// nslog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
      
@@ -100,17 +100,17 @@ NSLog(@"in view");
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-      NSLog(@"Teams before delete: %lu",  (unsigned long)[self.meetObject.teams count]);
+      // nslog(@"Teams before delete: %lu",  (unsigned long)[self.meetObject.teams count]);
         context = [self checkBeforeDeleteTeamObject: [self.fetchedResultsController objectAtIndexPath:indexPath] InContext:context];
-        NSLog(@"Teams before save: %lu",  (unsigned long)[self.meetObject.teams count]);
+        // nslog(@"Teams before save: %lu",  (unsigned long)[self.meetObject.teams count]);
         NSError *error = nil;
                             if (![context save:&error]) {
                                 // Replace this implementation with code to handle the error appropriately.
                                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                            abort();
+                                // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+                           // abort();
                             }
-                            NSLog(@"Tthis system unneccisary save: %lu",  (unsigned long)[self.meetObject.teams count]);
+                            // nslog(@"Tthis system unneccisary save: %lu",  (unsigned long)[self.meetObject.teams count]);
     }
 }
 - (NSManagedObjectContext*) checkBeforeDeleteTeamObject: (Team*) team InContext: (NSManagedObjectContext*) context
@@ -164,10 +164,10 @@ NSLog(@"in view");
                             if (![context save:&error]) {
                                 // Replace this implementation with code to handle the error appropriately.
                                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                            abort();
+                                // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+                          //  abort();
                             }
-                            NSLog(@"Teams after delete and save in other system pressed: %lu",  (unsigned long)[self.meetObject.teams count]);
+                            // nslog(@"Teams after delete and save in other system pressed: %lu",  (unsigned long)[self.meetObject.teams count]);
                             
                             [alert dismissViewControllerAnimated:YES completion:nil];
                             
@@ -213,10 +213,10 @@ NSLog(@"in view");
                             if (![context save:&error]) {
                                 // Replace this implementation with code to handle the error appropriately.
                                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                            abort();
+                                // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+                         //   abort();
                             }
-                            NSLog(@"Teams after delete and save in other system not pressed: %lu",  (unsigned long)[self.meetObject.teams count]);
+                            // nslog(@"Teams after delete and save in other system not pressed: %lu",  (unsigned long)[self.meetObject.teams count]);
     }
 
 
@@ -260,8 +260,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
 	if (![self.fetchedResultsController performFetch:&error]) {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+	  //  abort();
 	}
     
     return _fetchedResultsController;
@@ -339,7 +339,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
        
-        NSLog(@"in segue");
+        // nslog(@"in segue");
           [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
         
     }
@@ -374,7 +374,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
 
     if ([unwindSegue.sourceViewController isKindOfClass:[TeamAddViewController class]])
     {
-        NSLog(@"Coming from TeamsAdd Done!");
+        // nslog(@"Coming from TeamsAdd Done!");
         
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
@@ -477,7 +477,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
         
@@ -493,7 +493,7 @@ UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
 if ([sourceViewController isKindOfClass:[TeamAddViewController class]])
     {
-        NSLog(@"Coming from TeamsAdd Cancel!");
+        // nslog(@"Coming from TeamsAdd Cancel!");
     }
 }
 
@@ -506,7 +506,7 @@ if (sender.state == UIGestureRecognizerStateBegan)
   self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
         
         
-		NSLog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
+		// nslog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
         
         [self performSegueWithIdentifier:@"editTeam" sender:self];
 	}

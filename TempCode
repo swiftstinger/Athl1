@@ -1,5 +1,5 @@
 
-
+120 76 152
 
 competitorPerTeam
 
@@ -95,7 +95,7 @@ for(Team *object in results) {
             
                     if (!(competitorEventLimit>currentEventNumber)) {
     
-                NSLog(@"in shouldperformsegue no");
+                // nslog(@"in shouldperformsegue no");
                 
                 UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"Too many Events For Competitor"
@@ -139,10 +139,10 @@ BOOL isGPSOn = [[entity useGPS] boolValue];
 [[self.meetObject valueForKey: @"divsDone"] boolvalue]
 
 
-NSLog(@"eventscores in competitor before %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
+// nslog(@"eventscores in competitor before %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
         ceventscore.competitor = sourceViewController.competitorObject;
         
-        NSLog(@"eventscores in competitor after %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
+        // nslog(@"eventscores in competitor after %@ :  %@",sourceViewController.competitorObject.compName,[NSString stringWithFormat:@"%@",  @([[sourceViewController.competitorObject valueForKey:@"cEventScores"] count] ) ]);
 
 
 
@@ -255,7 +255,7 @@ cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[obj
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
 
          */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }    
 
@@ -293,7 +293,7 @@ cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[obj
        
         
 
-        NSLog(@"meetname %@  meetID %@", meet.meetName, meet.meetID);
+        // nslog(@"meetname %@  meetID %@", meet.meetName, meet.meetID);
 
     [defaults setObject: newnumber forKey:@"lastMeetID"];
      
