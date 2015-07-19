@@ -27,5 +27,7 @@
 @property (weak, nonatomic) IBOutlet MeetMenuViewCell *gEventCell;
 @property (weak, nonatomic) IBOutlet MeetMenuViewCell *enterTeamCell;
 
+- (IBAction)ExportResultsButton:(UIBarButtonItem *)sender;
+
 
 @end

@@ -302,6 +302,13 @@
                             <outlet property="delegate" destination="K1t-Ae-hdm" id="Uzg-HS-QW8"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Export Results" id="uwt-KP-V9X">
+                            <connections>
+                                <action selector="ExportResultsButton:" destination="K1t-Ae-hdm" id="2Lm-ha-PAm"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Meet" id="iaR-ri-1Td"/>
                     <connections>
                         <outlet property="MeetMenuLabel" destination="I85-X5-9LE" id="ofi-xo-fiM"/>

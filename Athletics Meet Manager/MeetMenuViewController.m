@@ -493,4 +493,202 @@ else
 }
 
 
+- (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {
+
+//check objects vs string values in itterations
+
+get all teams in meet in array
+
+new dictionary for divs
+
+
+loop divs in Meet
+{
+
+=== write new line
+
+
+new dictionary for teams  //set at after loop
+
+
+
+=== write div name //not comma
+
+    loop teamsarray
+    {
+    inttemp = 0;
+    set inttemp for value teamid in teamdict
+    === write , team name
+
+    }
+ 
+ set teamdict in div dict for value divid
+ 
+
+
+    Loop events in meet
+    {
+   === write new line
+      ===  write event name
+        teamdict =  divdict for value divid
+            loop teams in teamarray
+            {
+            
+                get all score with div and event and team
+                int resultstotal = 0;
+                loop scores
+                {
+                    resultstotal = resultstotal + score.score
+                }
+                === write ,resultstotal
+                
+                int teamvalue = teamdicst for value teamid
+                teamvalue = teamvalue + resultstotal
+                teamdict deleteentry for key teamid
+                teamdict set teamvalue for key teamid
+                
+                
+            }
+        divdict delete for key divid
+        divdict set teamdict for key divid
+    
+    }
+    
+=== write new line
+=== write Total
+
+    teamdict = divdict value for divid
+    loop team array {
+      
+      int = teamdict value for teamid
+      === write , int
+      
+      
+        
+      
+    }
+   
+    NSArray *sortedKeysArray =
+    [teamdict keysSortedByValueUsingSelector:@selector(compare:)];
+    
+    // sortedKeysArray contains: Geography, History, Mathematics, English ascending
+    teamindexnumber = [teamarray count];
+    NS Array *newsortedkeysarray;
+    
+    new  placedictionary
+    
+   int lastplace = nil;
+   int lastvalue = nil;
+    
+    for (i = 0; i < teamindexnumber; i++) {
+    
+    
+      
+     newsortedkeysarray[i] = sortedkeysarray[(teamindexnumber - 1) - i];
+      
+     
+       
+            if ([teamdict value for key [newsortedarray[i] ] == lastvalue)
+            {
+                placedictionary setvalue lastplace for newsortedarray[i];
+                
+                
+            
+            }
+            else
+            {
+                
+                placedictionary setvalue (i + 1) for newsortedarray[i];
+                lastplace = i + 1;
+                lastvalue = teamdict value for key newsortedarray[i];
+            }
+            
+
+      
+    }
+    
+   
+    
+    
+    
+    
+    
+=== write new line
+=== write Rank
+
+    loop team array {
+      
+      
+      === write , placedictionary value for teamid
+      
+      
+        
+      
+    }
+    
+===write line
+    loop team array {
+      
+      
+      === write ,
+      
+        
+      
+    }
+//end of div loop
+}
+
+
+
+}
+
+- (void) sumResultsForTeam: (Team*) teamobject
+{
+
+  
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+            NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+           NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(score != NULL)", nil];
+            NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(team == %@)", teamobject];
+            NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+            NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+            [fetchRequest setPredicate:andPred];
+    
+    
+               NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
+                       NSArray *sortDescriptors = @[highestToLowest];
+    
+                [fetchRequest setSortDescriptors:sortDescriptors];
+
+
+                NSError *error;
+                NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+ 
+    
+    
+    int score = 0;
+
+    NSNumber *currentScore;
+    for(CEventScore *object in results) {
+       
+         currentScore = object.score;
+        score = score + [currentScore intValue];
+        
+       }
+
+teamobject.teamScore = [NSNumber numberWithInt:score];
+// nslog(@" team : %@ score set at %@", teamobject.teamName,teamobject.teamScore);
+
+}
+
+
+
+
+
+
 @end
