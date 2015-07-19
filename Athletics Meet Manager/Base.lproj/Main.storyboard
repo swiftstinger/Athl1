@@ -1165,7 +1165,7 @@
                                     </variation>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" text="Score" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="Nnp-Ek-RVr">
-                                    <rect key="frame" x="500" y="14" width="75" height="17"/>
+                                    <rect key="frame" x="480" y="14" width="75" height="17"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="75" id="7Me-6U-Lqc"/>
                                     </constraints>
@@ -1195,7 +1195,7 @@
                                     </variation>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="qc5-sY-VZv">
-                                    <rect key="frame" x="350" y="14" width="75" height="17"/>
+                                    <rect key="frame" x="330" y="14" width="75" height="17"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="75" id="suN-KD-DlM"/>
                                     </constraints>
@@ -1214,13 +1214,17 @@
                                 <constraint firstAttribute="centerY" secondItem="qc5-sY-VZv" secondAttribute="centerY" id="7Cp-1s-eSe"/>
                                 <constraint firstAttribute="centerY" secondItem="Hdg-PK-vt3" secondAttribute="centerY" id="XIG-dS-r57"/>
                                 <constraint firstItem="Nbe-v2-urt" firstAttribute="leading" secondItem="4hC-xe-urQ" secondAttribute="leading" constant="200" id="Z6x-g6-GHW">
-                                    <variation key="widthClass=regular" constant="300"/>
+                                    <variation key="widthClass=compact" constant="250"/>
+                                    <variation key="widthClass=regular" constant="340"/>
                                 </constraint>
-                                <constraint firstItem="qc5-sY-VZv" firstAttribute="leading" secondItem="4hC-xe-urQ" secondAttribute="leading" constant="350" id="fCO-p4-g7Q">
-                                    <variation key="widthClass=regular" constant="500"/>
+                                <constraint firstItem="qc5-sY-VZv" firstAttribute="leading" secondItem="4hC-xe-urQ" secondAttribute="leading" constant="330" id="fCO-p4-g7Q">
+                                    <variation key="widthClass=regular" constant="520"/>
+                                    <variation key="heightClass=compact-widthClass=regular" constant="490"/>
                                 </constraint>
-                                <constraint firstItem="Nnp-Ek-RVr" firstAttribute="leading" secondItem="4hC-xe-urQ" secondAttribute="leading" constant="500" id="m7u-cA-0C2">
-                                    <variation key="widthClass=regular" constant="700"/>
+                                <constraint firstItem="Nnp-Ek-RVr" firstAttribute="leading" secondItem="4hC-xe-urQ" secondAttribute="leading" constant="480" id="m7u-cA-0C2">
+                                    <variation key="widthClass=regular" constant="690"/>
+                                    <variation key="heightClass=compact-widthClass=compact" constant="410"/>
+                                    <variation key="heightClass=compact-widthClass=regular" constant="640"/>
                                 </constraint>
                                 <constraint firstAttribute="centerY" secondItem="Nbe-v2-urt" secondAttribute="centerY" id="sLA-FL-JnA"/>
                             </constraints>
@@ -1255,10 +1259,12 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pdh-yn-JPo" id="LSW-Mk-ees">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4y-DR-evC">
-                                            <rect key="frame" x="30" y="0.0" width="160" height="20"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Rudi Huysamen von Placeholder" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4y-DR-evC">
+                                            <rect key="frame" x="30" y="0.0" width="300" height="20"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="160" id="WAI-OV-vvc"/>
+                                                <constraint firstAttribute="width" constant="300" id="WAI-OV-vvc">
+                                                    <variation key="widthClass=compact" constant="200"/>
+                                                </constraint>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1283,7 +1289,7 @@
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSt-EX-VHH">
-                                            <rect key="frame" x="500" y="13" width="75" height="17"/>
+                                            <rect key="frame" x="480" y="13" width="75" height="17"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="75" id="zrU-G4-BKE"/>
                                             </constraints>
@@ -1313,7 +1319,7 @@
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" text="Placing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fok-C1-p6D">
-                                            <rect key="frame" x="350" y="13" width="75" height="17"/>
+                                            <rect key="frame" x="330" y="13" width="75" height="17"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="75" id="qdh-Ia-lV7"/>
                                             </constraints>
@@ -1329,19 +1335,23 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="oSt-EX-VHH" firstAttribute="leading" secondItem="LSW-Mk-ees" secondAttribute="leading" constant="500" id="DXK-Xb-LpS">
-                                            <variation key="widthClass=regular" constant="700"/>
+                                        <constraint firstItem="oSt-EX-VHH" firstAttribute="leading" secondItem="LSW-Mk-ees" secondAttribute="leading" constant="480" id="DXK-Xb-LpS">
+                                            <variation key="widthClass=regular" constant="690"/>
+                                            <variation key="heightClass=compact-widthClass=compact" constant="410"/>
+                                            <variation key="heightClass=compact-widthClass=regular" constant="640"/>
                                         </constraint>
                                         <constraint firstAttribute="centerY" secondItem="thY-zd-3jy" secondAttribute="centerY" id="Odt-Kn-Pyc"/>
                                         <constraint firstItem="y4y-DR-evC" firstAttribute="leading" secondItem="LSW-Mk-ees" secondAttribute="leading" constant="30" id="R4J-ZJ-odn"/>
                                         <constraint firstItem="RCR-si-66g" firstAttribute="top" secondItem="LSW-Mk-ees" secondAttribute="top" constant="20" id="UMS-YQ-y4y"/>
                                         <constraint firstItem="RCR-si-66g" firstAttribute="leading" secondItem="LSW-Mk-ees" secondAttribute="leading" constant="30" id="fIm-Cc-dk2"/>
                                         <constraint firstItem="thY-zd-3jy" firstAttribute="leading" secondItem="LSW-Mk-ees" secondAttribute="leading" constant="200" id="l39-CU-S6Y">
-                                            <variation key="widthClass=regular" constant="300"/>
+                                            <variation key="widthClass=compact" constant="250"/>
+                                            <variation key="widthClass=regular" constant="340"/>
                                         </constraint>
                                         <constraint firstAttribute="centerY" secondItem="Fok-C1-p6D" secondAttribute="centerY" id="n52-L0-n0X"/>
-                                        <constraint firstItem="Fok-C1-p6D" firstAttribute="leading" secondItem="LSW-Mk-ees" secondAttribute="leading" constant="350" id="ofp-uc-tbF">
-                                            <variation key="widthClass=regular" constant="500"/>
+                                        <constraint firstItem="Fok-C1-p6D" firstAttribute="leading" secondItem="LSW-Mk-ees" secondAttribute="leading" constant="330" id="ofp-uc-tbF">
+                                            <variation key="widthClass=regular" constant="520"/>
+                                            <variation key="heightClass=compact-widthClass=regular" constant="490"/>
                                         </constraint>
                                         <constraint firstItem="y4y-DR-evC" firstAttribute="top" secondItem="LSW-Mk-ees" secondAttribute="top" id="pqG-9e-doY"/>
                                         <constraint firstAttribute="centerY" secondItem="oSt-EX-VHH" secondAttribute="centerY" id="wfk-VE-5Ng"/>
