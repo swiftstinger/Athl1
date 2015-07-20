@@ -10,9 +10,9 @@
 #import "MeetMenuViewCell.h"
 #import <CoreData/CoreData.h>
 #import "Meet.h"
+#import <MessageUI/MessageUI.h>
 
-
-@interface MeetMenuViewController : UITableViewController
+@interface MeetMenuViewController : UITableViewController <MFMailComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *MeetMenuLabel;
 @property (strong, nonatomic) id detailItem;

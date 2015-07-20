@@ -928,10 +928,160 @@ for (Event *eventobject in eventSet )
     }
     
 
-NSLog(@"%@",eventscsv);
+
+
+
+    NSString *emailTitle = @"Export Results";
+    
+    NSString* subjectString = [NSString stringWithFormat:@"Results From Athletics Meet %@", self.meetObject.meetName];
+    // Email Content
+    NSString *messageBody = [NSString stringWithFormat:@"Results From Athletics Meet %@ Recorded With Athletics Meet Manager IOS App", self.meetObject.meetName];;
+    // To address
+    
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setSubject:subjectString];
+    
+    [mc setMessageBody:messageBody isHTML:NO];
+    
+    [mc addAttachmentData:[resultscsv dataUsingEncoding:NSUTF8StringEncoding]
+    
+  //  [mailer addAttachmentData:[NSData dataWithContentsOfFile:@"PathToFile.csv"]
+                     mimeType:@"text/csv" 
+                     fileName:@"Overall Results.csv"];
+    
+    [mc addAttachmentData:[eventscsv dataUsingEncoding:NSUTF8StringEncoding]
+    
+  //  [mailer addAttachmentData:[NSData dataWithContentsOfFile:@"PathToFile.csv"]
+                     mimeType:@"text/csv" 
+                     fileName:@"Event Results.csv"];
+
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:NULL];
 
 }
 
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+
+UIAlertController * alert;
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+        {
+                     alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Cancelled"
+                                        message:@"Export Via Email Cancelled By User"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+                    [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail cancelled");
+           
+            break;
+        }
+        //
+        case MFMailComposeResultSaved:
+        {
+                    alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Mail Saved"
+                                        message:@"Email With Exported Results Saved For Later Sending"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+                    [self presentViewController:alert animated:YES completion:nil];
+
+           NSLog(@"Mail saved");
+            break;
+        }
+            
+           
+        case MFMailComposeResultSent:
+        {
+                     alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Succesfull"
+                                        message:@"Meet Results Exported Via Email And Mail Sent Succesfully"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+                    [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail sent");
+           
+            break;
+        }
+            //
+            
+        case MFMailComposeResultFailed:
+        {
+                    alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Failed"
+                                        message:@"Sending Mail Failed, Please Check Your Email Settings"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+                    [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+           
+            break;
+        }
+         //
+            
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:^{
+      [self presentViewController:alert animated:YES completion:nil];
+   }];
+    
+}
 
 
 
