@@ -13,6 +13,8 @@
 #import "Team.h"
 #import "GEvent.h"
 #import "CEventScore.h"
+#import "Event.h"
+#import "Competitor.h"
 
 @interface MeetMenuViewController ()
 
@@ -496,164 +498,13 @@ else
     return YES;              
 }
 
-/**
-- (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {
-
-//check objects vs string values in itterations
-
-get all teams in meet in array
-
-new dictionary for divs
-
-
-loop divs in Meet
-{
-
-=== write new line
-
-
-new dictionary for teams  //set at after loop
-
-
-
-=== write div name //not comma
-
-    loop teamsarray
-    {
-    inttemp = 0;
-    set inttemp for value teamid in teamdict
-    === write , team name
-
-    }
- 
- set teamdict in div dict for value divid
- 
-
-
-    Loop events in meet
-    {
-   === write new line
-      ===  write event name
-        teamdict =  divdict for value divid
-            loop teams in teamarray
-            {
-            
-                get all score with div and event and team
-                int resultstotal = 0;
-                loop scores
-                {
-                    resultstotal = resultstotal + score.score
-                }
-                === write ,resultstotal
-                
-                int teamvalue = teamdicst for value teamid
-                teamvalue = teamvalue + resultstotal
-                teamdict deleteentry for key teamid
-                teamdict set teamvalue for key teamid
-                
-                
-            }
-        divdict delete for key divid
-        divdict set teamdict for key divid
-    
-    }
-    
-=== write new line
-=== write Total
-
-    teamdict = divdict value for divid
-    loop team array {
-      
-      int = teamdict value for teamid
-      === write , int
-      
-      
-        
-      
-    }
-   
-    NSArray *sortedKeysArray =
-    [teamdict keysSortedByValueUsingSelector:@selector(compare:)];
-    
-    // sortedKeysArray contains: Geography, History, Mathematics, English ascending
-    teamindexnumber = [teamarray count];
-    NS Array *newsortedkeysarray;
-    
-    new  placedictionary
-    
-   int lastplace = nil;
-   int lastvalue = nil;
-    
-    for (i = 0; i < teamindexnumber; i++) {
-    
-    
-      
-     newsortedkeysarray[i] = sortedkeysarray[(teamindexnumber - 1) - i];
-      
-     
-       
-            if ([teamdict value for key [newsortedarray[i] ] == lastvalue)
-            {
-                placedictionary setvalue lastplace for newsortedarray[i];
-                
-                
-            
-            }
-            else
-            {
-                
-                placedictionary setvalue (i + 1) for newsortedarray[i];
-                lastplace = i + 1;
-                lastvalue = teamdict value for key newsortedarray[i];
-            }
-            
-
-      
-    }
-    
-   
-    
-    
-    
-    
-    
-=== write new line
-=== write Rank
-
-    loop team array {
-      
-      
-      === write , placedictionary value for teamid
-      
-      
-        
-      
-    }
-    
-===write line
-    loop team array {
-      
-      
-      === write ,
-      
-        
-      
-    }
-//end of div loop
-}
-
-
-
-}
-
-**/
 - (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {
 
 //check objects vs string values in itterations
 
 NSSet* teamSet = self.meetObject.teams;
 NSSet* divSet = self.meetObject.divisions;
-NSSet* eventSet = self.meetObject.gEvents;
+NSSet* gEventSet = self.meetObject.gEvents;
 
 
 //NSArray *teamsArray = [[NSMutableArray alloc] init];
@@ -710,7 +561,7 @@ for (Division *divobject in divSet )
  
 
 
-        for (GEvent *geventobject in eventSet )
+        for (GEvent *geventobject in gEventSet )
         {
             //=== write new line
             [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
@@ -898,7 +749,7 @@ for (Division *divobject in divSet )
 
         [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
         
-        for (int j = 0; j < [teamSet count]; j++)
+        for (int j = 0; j < ([teamSet count]-1); j++)
         
         {
             
@@ -913,7 +764,7 @@ for (Division *divobject in divSet )
 [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
  [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
         
-        for (int k = 0; k < [teamSet count]; k++)
+        for (int k = 0; k < ([teamSet count]-1); k++)
         
         {
             
@@ -1034,56 +885,52 @@ for (Division *divobject in divSet )
 
 
 
-NSLog(@"%@",resultscsv);
+//NSLog(@"%@",resultscsv);
 
 
-}
-/**
-- (void) sumResultsForTeam: (Team*) teamobject
-{
+///////////
 
-  
-  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
-            NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
+// event results
 
-            [fetchRequest setEntity:description];
 
-           NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(score != NULL)", nil];
-            NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(team == %@)", teamobject];
-            NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
-            NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+//////
 
-            [fetchRequest setPredicate:andPred];
+
+NSMutableString *eventscsv = [NSMutableString stringWithString:@""];
+
+NSSet* eventSet = self.meetObject.events;
+NSSet* scoreSet;
+for (Event *eventobject in eventSet )
+    {
+        [eventscsv appendString:[NSString stringWithFormat:@"%@,%@,Name, Team, Result, Placing, Score", eventobject.gEvent.gEventName,eventobject.division.divName]];
+    scoreSet = eventobject.cEventScores;
     
-    
-               NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
-                       NSArray *sortDescriptors = @[highestToLowest];
-    
-                [fetchRequest setSortDescriptors:sortDescriptors];
-
-
-                NSError *error;
-                NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
- 
-    
-    
-    int score = 0;
-
-    NSNumber *currentScore;
-    for(CEventScore *object in results) {
-       
-         currentScore = object.score;
-        score = score + [currentScore intValue];
+    for (CEventScore *scoreobject in scoreSet )
+        {
+            [eventscsv appendString:[NSString stringWithFormat:@"\n"]];
+            
+            [eventscsv appendString:[NSString stringWithFormat:@"%@,%@,%@,%@,%f,%d,%d", eventobject.gEvent.gEventName,eventobject.division.divName,scoreobject.competitor.compName,scoreobject.team.teamName,[scoreobject.result doubleValue],[scoreobject.placing intValue],[scoreobject.score intValue]]];
         
-       }
+        
+        
+        }
+    
+    [eventscsv appendString:[NSString stringWithFormat:@"\n"]];
+    for (int k = 0; k < 6; k++)
+        
+        {
+            
+            [eventscsv appendString:[NSString stringWithFormat:@","]];
+      
+        }
+    [eventscsv appendString:[NSString stringWithFormat:@"\n"]];
+    
+    }
+    
 
-teamobject.teamScore = [NSNumber numberWithInt:score];
-// nslog(@" team : %@ score set at %@", teamobject.teamName,teamobject.teamScore);
+NSLog(@"%@",eventscsv);
 
 }
-
-**/
 
 
 
