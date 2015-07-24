@@ -308,11 +308,20 @@
                                 <action selector="ExportResultsButton:" destination="K1t-Ae-hdm" id="2Lm-ha-PAm"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem systemItem="flexibleSpace" id="OPg-JV-e84"/>
+                        <barButtonItem title="Item" id="FFx-sy-dit"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Meet" id="iaR-ri-1Td"/>
+                    <navigationItem key="navigationItem" title="Meet" id="iaR-ri-1Td">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="pUT-va-rFK">
+                            <connections>
+                                <action selector="actionButtonPressed:" destination="K1t-Ae-hdm" id="ay1-gY-R23"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="MeetMenuLabel" destination="I85-X5-9LE" id="ofi-xo-fiM"/>
                         <outlet property="enterTeamCell" destination="Cgu-hz-ypT" id="VjN-4r-kAl"/>
+                        <outlet property="exportbutton" destination="pUT-va-rFK" id="lw5-Ls-b6a"/>
                         <outlet property="gEventCell" destination="OJa-F2-EQR" id="fEZ-yf-zmo"/>
                         <outlet property="groupDivCell" destination="4Q4-QV-CcC" id="d6d-An-4mJ"/>
                         <outlet property="navBar" destination="iaR-ri-1Td" id="2SY-vJ-PMt"/>
@@ -675,7 +684,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Group Divisions" id="3bp-av-lKE">
-                        <barButtonItem key="backBarButtonItem" title="hello" id="TVU-Ms-XOv"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="nJo-77-IqJ">
                             <connections>
                                 <segue destination="lO5-h7-G6N" kind="presentation" identifier="addDiv" modalTransitionStyle="flipHorizontal" id="HxQ-va-xu1"/>

@@ -29,5 +29,6 @@
 
 - (IBAction)ExportResultsButton:(UIBarButtonItem *)sender;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *exportbutton;
 
 @end

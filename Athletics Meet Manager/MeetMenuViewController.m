@@ -1082,7 +1082,68 @@ UIAlertController * alert;
    }];
     
 }
+- (IBAction)actionButtonPressed:(id)sender {
+/**
+NSString *docsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+// The file extension is important so that some mime magic happens!
+NSString *filePath = [docsPath stringByAppendingPathComponent:@"vcard.vcf"];
+NSURL *fileUrl     = [NSURL fileURLWithPath:filePath];
 
+[data writeToURL:fileUrl atomically:YES]; // save the file
+
+// Now pass the file URL in the activity items array
+UIActivityViewController *avc = [[UIActivityViewController alloc] initWithActivityItems:
+    @[@"Here's an attached vCard", fileUrl] applicationActivities:nil];
+[vc presentModalViewController:avc animated:YES];
+
+**/
+
+    NSString *textToShare = @"Look at this awesome website for aspiring iOS Developers!";
+    NSURL *myWebsite = [NSURL URLWithString:@"sdf"];
+ 
+  //  NSArray *objectsToShare = @[textToShare, myWebsite];
+     NSArray *objectsToShare = @[self.meetObject];
+ 
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+ /**
+    NSArray *excludeActivities = @[UIActivityTypePrint,
+                                   UIActivityTypeAssignToContact,
+                                   UIActivityTypeSaveToCameraRoll,
+                                   UIActivityTypeAddToReadingList,
+                                   UIActivityTypePostToFlickr,
+                                   UIActivityTypePostToVimeo];
+ 
+    activityVC.excludedActivityTypes = excludeActivities;
+ **/
+ 
+ if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+    [self presentViewController:activityVC animated:YES completion:nil];
+    }
+//if iPad
+else {
+    // Change Rect to position Popover
+    
+    
+    if ( [activityVC respondsToSelector:@selector(popoverPresentationController)] ) { // iOS8
+    activityVC.popoverPresentationController.barButtonItem = self.exportbutton;
+    
+    NSLog(@"1");
+    }else {
+    NSLog(@"2");
+    
+    }
+    [self presentViewController:activityVC animated:YES completion:nil];
+    
+    /**
+    UIPopoverController *popup = [[UIPopoverController alloc] initWithContentViewController:activityVC];
+    [popup presentPopoverFromRect:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/4, 0, 0)inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    **/
+    }
+ 
+ 
+  //
+  
+}
 
 
 @end

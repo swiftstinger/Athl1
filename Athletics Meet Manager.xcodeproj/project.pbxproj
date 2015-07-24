@@ -60,6 +60,7 @@
 		1FDA11E91B2C83A600CBE9E6 /* Competitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDA11E81B2C83A600CBE9E6 /* Competitor.m */; };
 		1FDA11ED1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDA11EC1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m */; };
 		1FDEC0DB1B48D35400B1CB21 /* Lanes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1FDEC0DA1B48D35400B1CB21 /* Lanes.jpg */; };
+		1FE6D9AE1B62686F00F921A6 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE6D9AD1B62686F00F921A6 /* CloudKit.framework */; };
 		1FFB4F7C1B1535C100C6309C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFB4F7B1B1535C100C6309C /* CoreData.framework */; };
 		84B5B8431B15C81D00529756 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B5B8421B15C81D00529756 /* MasterViewController.m */; };
 /* End PBXBuildFile section */
@@ -178,6 +179,8 @@
 		1FDA11EB1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompetitorAddInResultSheetViewController.h; sourceTree = "<group>"; };
 		1FDA11EC1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompetitorAddInResultSheetViewController.m; sourceTree = "<group>"; };
 		1FDEC0DA1B48D35400B1CB21 /* Lanes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Lanes.jpg; path = ../athleticsimages/Lanes.jpg; sourceTree = "<group>"; };
+		1FE6D9AC1B6267FB00F921A6 /* Athletics Meet Manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athletics Meet Manager.entitlements"; sourceTree = "<group>"; };
+		1FE6D9AD1B62686F00F921A6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		1FFB4F7B1B1535C100C6309C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		84B5B8421B15C81D00529756 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -188,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FFB4F7C1B1535C100C6309C /* CoreData.framework in Frameworks */,
+				1FE6D9AE1B62686F00F921A6 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +262,7 @@
 		1F095F211B0FB765000FE30A = {
 			isa = PBXGroup;
 			children = (
+				1FE6D9AD1B62686F00F921A6 /* CloudKit.framework */,
 				1FDEC0DA1B48D35400B1CB21 /* Lanes.jpg */,
 				1FD6B63A1B170DC700F05968 /* TempCode */,
 				1FFB4F7B1B1535C100C6309C /* CoreData.framework */,
@@ -279,6 +284,7 @@
 		1F095F2C1B0FB765000FE30A /* Athletics Meet Manager */ = {
 			isa = PBXGroup;
 			children = (
+				1FE6D9AC1B6267FB00F921A6 /* Athletics Meet Manager.entitlements */,
 				1FD6B6581B1736D900F05968 /* DataObjects */,
 				1FD6B6591B17372B00F05968 /* MainMenu */,
 				1FD6B65A1B17377000F05968 /* MeetMenu */,
@@ -610,6 +616,11 @@
 					1F095F291B0FB765000FE30A = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = RWW5DYYTYE;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					1F095F481B0FB765000FE30A = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -836,11 +847,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Athletics Meet Manager/Athletics Meet Manager.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Athletics Meet Manager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -849,11 +863,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Athletics Meet Manager/Athletics Meet Manager.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Athletics Meet Manager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "Athletics Meet Manager";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
