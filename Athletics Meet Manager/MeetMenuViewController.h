@@ -29,10 +29,11 @@
 
 - (IBAction)ExportResultsButton:(UIBarButtonItem *)sender;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *exportbutton;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sendPermissionButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareOnlineButton;
 @property (weak, nonatomic) IBOutlet MeetMenuViewCell *finalResultCell;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *exportResultsButton;
 
 
 @end

@@ -74,7 +74,7 @@
                                             </variation>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="20 June 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDF-n0-8wF">
-                                            <rect key="frame" x="20" y="20" width="200" height="15"/>
+                                            <rect key="frame" x="20" y="18" width="200" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="200" id="M5q-90-Q3u"/>
                                             </constraints>
@@ -96,23 +96,35 @@
                                                 <rect key="frame" x="646" y="18" width="114" height="17"/>
                                             </variation>
                                         </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="HOST" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TN3-RU-t5R">
+                                            <rect key="frame" x="20" y="30" width="50" height="14"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="50" id="RJl-Mi-E1V"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="0.16864028196382608" green="1" blue="0.11045889229273431" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="zDF-n0-8wF" firstAttribute="top" secondItem="d3P-M7-ByW" secondAttribute="top" constant="20" id="A33-Ag-7jA"/>
+                                        <constraint firstItem="zDF-n0-8wF" firstAttribute="top" secondItem="d3P-M7-ByW" secondAttribute="top" constant="18" id="A33-Ag-7jA"/>
                                         <constraint firstAttribute="centerY" secondItem="bhZ-2x-klV" secondAttribute="centerY" id="BC7-i5-5pa">
                                             <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
                                         </constraint>
                                         <constraint firstItem="exE-ZA-nDT" firstAttribute="leading" secondItem="d3P-M7-ByW" secondAttribute="leading" constant="20" id="BFE-ht-59A"/>
                                         <constraint firstItem="zDF-n0-8wF" firstAttribute="leading" secondItem="d3P-M7-ByW" secondAttribute="leading" constant="20" id="Tob-3E-39S"/>
+                                        <constraint firstItem="TN3-RU-t5R" firstAttribute="top" secondItem="zDF-n0-8wF" secondAttribute="bottom" constant="-3" id="dua-gl-Nmd"/>
                                         <constraint firstAttribute="trailing" secondItem="bhZ-2x-klV" secondAttribute="trailing" constant="10" id="kgD-dJ-fcN">
                                             <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
                                         </constraint>
+                                        <constraint firstItem="TN3-RU-t5R" firstAttribute="leading" secondItem="d3P-M7-ByW" secondAttribute="leading" constant="20" id="ukQ-dN-itj"/>
                                         <constraint firstItem="exE-ZA-nDT" firstAttribute="top" secondItem="d3P-M7-ByW" secondAttribute="top" id="uxm-SP-21D"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
+                                    <outlet property="hostLabel" destination="TN3-RU-t5R" id="1XW-ju-62Z"/>
                                     <outlet property="meetDateLabel" destination="zDF-n0-8wF" id="hOJ-2L-XqL"/>
                                     <outlet property="meetTitleLabel" destination="exE-ZA-nDT" id="88A-qs-fqZ"/>
                                     <outlet property="numberOfTeamsLabel" destination="bhZ-2x-klV" id="XZc-jy-BdY"/>
@@ -322,6 +334,7 @@
                     <connections>
                         <outlet property="MeetMenuLabel" destination="I85-X5-9LE" id="ofi-xo-fiM"/>
                         <outlet property="enterTeamCell" destination="Cgu-hz-ypT" id="VjN-4r-kAl"/>
+                        <outlet property="exportResultsButton" destination="uwt-KP-V9X" id="0hR-J3-o6f"/>
                         <outlet property="finalResultCell" destination="b0Z-sr-z7l" id="taX-7B-l2K"/>
                         <outlet property="gEventCell" destination="OJa-F2-EQR" id="fEZ-yf-zmo"/>
                         <outlet property="groupDivCell" destination="4Q4-QV-CcC" id="d6d-An-4mJ"/>

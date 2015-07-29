@@ -55,7 +55,7 @@
     if (_detailItem) {
       _navBar.title = [self.meetObject valueForKey:@"meetName"];
       
-   if ([self.meetObject.isOwner boolValue]) {
+   
       
         if (![self.meetObject.onlineMeet boolValue]) {
     
@@ -66,21 +66,22 @@
         }
         else
         {
+            if ([self.meetObject.isOwner boolValue]) {
     
     
-    
-            self.sendPermissionButton.enabled = YES;
-            self.shareOnlineButton.title = @"Unshare Meet";
-    
-        }
-    }
-    else
-    {
-        self.sendPermissionButton.enabled = NO;
-        self.shareOnlineButton.title = @"N/A";
-        self.shareOnlineButton.enabled = NO;
-    }
+                self.sendPermissionButton.enabled = YES;
+                self.shareOnlineButton.title = @"Unshare Meet";
+            }
+            else
+            {
+                self.sendPermissionButton.enabled = NO;
+                self.shareOnlineButton.title = @"N/A";
+                self.shareOnlineButton.enabled = NO;
+                self.exportResultsButton.enabled = NO;
+            }
 
+        }
+    
 
       
                /*
@@ -130,7 +131,7 @@ if ([self.meetObject.onlineMeet boolValue]) {
         self.groupDivCell.hidden = YES;
         self.gEventCell.hidden = YES;
         self.enterTeamCell.hidden = YES;
-        self.finalResultCell.hidden = YES;
+      //  self.finalResultCell.hidden = YES;
     }
 
 
@@ -1129,10 +1130,67 @@ NSLog(@"share meet button pressed");
 
 
 if (![self.meetObject.onlineMeet boolValue]) {
-    self.meetObject.onlineMeet = [NSNumber numberWithBool:YES];
-    self.sendPermissionButton.enabled = YES;
-    self.shareOnlineButton.title = @"Unshare Meet";
-    self.meetObject.isOwner = [NSNumber numberWithBool:YES];
+
+NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+            NSEntityDescription *description = [NSEntityDescription entityForName:@"Meet" inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+
+            NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(isOwner == YES)"];
+            
+
+            [fetchRequest setPredicate:pred1];
+
+
+            NSError *err;
+            NSUInteger eventscorecountforc = [self.managedObjectContext countForFetchRequest:fetchRequest error:&err];
+        
+        
+            if(eventscorecountforc == NSNotFound) {
+                //Handle error
+            }
+        
+    
+    
+    
+    
+            int currentEventNumber = (int)eventscorecountforc ;
+        
+     
+        
+            
+            if (!(2>currentEventNumber)) {
+    
+              // self.competitorObject = nil;
+                
+                UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Already Hosting Too Many Events"
+                                    message:@"Please unshare another event before sharing this event online"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                
+            }
+            else
+            {
+                self.meetObject.onlineMeet = [NSNumber numberWithBool:YES];
+                self.sendPermissionButton.enabled = YES;
+                self.shareOnlineButton.title = @"Unshare Meet";
+                self.meetObject.isOwner = [NSNumber numberWithBool:YES];
+            }
 }
 else
 {

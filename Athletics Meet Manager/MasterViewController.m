@@ -102,14 +102,36 @@
 - (void)configureCell:(MeetTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
+  Meet *meetobject = (Meet*) object;
+  
+  
     cell.meetTitleLabel.text = [[object valueForKey:@"meetName"] description];
 
     NSDate *fulldate = [object valueForKey:@"meetDate"];
     
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
-format.dateFormat = @"dd MMM yyyy";
+    format.dateFormat = @"dd MMM yyyy";
+    
 
+    if ([meetobject.onlineMeet boolValue]) {
+   
+        if ([meetobject.isOwner boolValue]) {
+            NSLog(@"is owner");
+             cell.hostLabel.hidden = NO;
+            
+        }
+        else
+        {
+           cell.hostLabel.hidden = YES;
+        }
+    }
+    else
+    {
+     cell.hostLabel.hidden = YES;
+     
+    }
 
+    NSLog(@"MEET NAME %@  owner value %hhd online %hhd", [[object valueForKey:@"meetName"] description],[[object valueForKey:@"isOwner"] boolValue],[[object valueForKey:@"onlineMeet"] boolValue]);
 
     
  //   [[object valueForKey:@"meetDate"] description];

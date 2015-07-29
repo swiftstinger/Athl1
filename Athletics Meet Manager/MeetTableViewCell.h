@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *meetDateLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *numberOfTeamsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *hostLabel;
 
 @end
