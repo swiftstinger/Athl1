@@ -36,26 +36,21 @@
                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Athletic Meets" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1X-dV-lqh">
-                                    <rect key="frame" x="170" y="11" width="250" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                    <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
-                                        <rect key="frame" x="170" y="11" width="450" height="21"/>
-                                    </variation>
-                                </label>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="8fj-SY-OO2">
+                                    <rect key="frame" x="206" y="8" width="189" height="29"/>
+                                    <segments>
+                                        <segment title="Local Meets"/>
+                                        <segment title="Online Meets"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="segmentedControlValueChanged:" destination="pGg-6v-bdr" eventType="valueChanged" id="oFB-gZ-YJw"/>
+                                    </connections>
+                                </segmentedControl>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="p1X-dV-lqh" firstAttribute="top" secondItem="bml-Xi-7rP" secondAttribute="top" constant="11" id="BU3-0G-8vQ"/>
-                                <constraint firstAttribute="bottom" secondItem="p1X-dV-lqh" secondAttribute="bottom" constant="12" id="XPl-vL-HHZ"/>
-                                <constraint firstItem="p1X-dV-lqh" firstAttribute="leading" secondItem="bml-Xi-7rP" secondAttribute="leading" constant="170" id="j5t-GG-jbZ">
-                                    <variation key="widthClass=compact" constant="90"/>
-                                </constraint>
-                                <constraint firstAttribute="trailing" secondItem="p1X-dV-lqh" secondAttribute="trailing" constant="180" id="xL3-SG-eh4">
-                                    <variation key="widthClass=compact" constant="89"/>
-                                </constraint>
+                                <constraint firstAttribute="centerY" secondItem="8fj-SY-OO2" secondAttribute="centerY" id="Ghy-ca-sgx"/>
+                                <constraint firstAttribute="centerX" secondItem="8fj-SY-OO2" secondAttribute="centerX" id="ZYb-Mf-O72"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -133,7 +128,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Atheletics Meet Manager" id="tQt-TN-PWz">
+                    <navigationItem key="navigationItem" title="Athletics Meet Manager" id="tQt-TN-PWz">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="WgD-FV-lNf">
                             <connections>
                                 <segue destination="lXd-SU-uvL" kind="presentation" identifier="addMeet" modalTransitionStyle="flipHorizontal" id="pjO-ql-D1X"/>
@@ -141,6 +136,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="WgD-FV-lNf" id="AKz-ja-uMR"/>
+                        <outlet property="segmentedControl" destination="8fj-SY-OO2" id="nu6-td-q12"/>
                         <segue destination="lXd-SU-uvL" kind="presentation" identifier="editMeet" modalTransitionStyle="flipHorizontal" id="hZb-tn-gJS"/>
                     </connections>
                 </tableViewController>
@@ -309,22 +306,28 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem systemItem="flexibleSpace" id="OPg-JV-e84"/>
-                        <barButtonItem title="Item" id="FFx-sy-dit"/>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" title="Meet" id="iaR-ri-1Td">
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="pUT-va-rFK">
+                        <barButtonItem title="Send Permission File" id="7qu-C5-M2C">
                             <connections>
-                                <action selector="actionButtonPressed:" destination="K1t-Ae-hdm" id="ay1-gY-R23"/>
+                                <action selector="sendPermissionButtonPressed:" destination="K1t-Ae-hdm" id="pod-tA-g7C"/>
                             </connections>
                         </barButtonItem>
-                    </navigationItem>
+                        <barButtonItem systemItem="flexibleSpace" id="53R-kT-lPC"/>
+                        <barButtonItem title="Share Online" id="FFx-sy-dit">
+                            <connections>
+                                <action selector="shareMeetButtonPressed:" destination="K1t-Ae-hdm" id="f04-Q6-NfA"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Meet" id="iaR-ri-1Td"/>
                     <connections>
                         <outlet property="MeetMenuLabel" destination="I85-X5-9LE" id="ofi-xo-fiM"/>
                         <outlet property="enterTeamCell" destination="Cgu-hz-ypT" id="VjN-4r-kAl"/>
-                        <outlet property="exportbutton" destination="pUT-va-rFK" id="lw5-Ls-b6a"/>
+                        <outlet property="finalResultCell" destination="b0Z-sr-z7l" id="taX-7B-l2K"/>
                         <outlet property="gEventCell" destination="OJa-F2-EQR" id="fEZ-yf-zmo"/>
                         <outlet property="groupDivCell" destination="4Q4-QV-CcC" id="d6d-An-4mJ"/>
                         <outlet property="navBar" destination="iaR-ri-1Td" id="2SY-vJ-PMt"/>
+                        <outlet property="sendPermissionButton" destination="7qu-C5-M2C" id="rNP-6u-cO9"/>
+                        <outlet property="shareOnlineButton" destination="FFx-sy-dit" id="FHI-lG-gup"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="st3-kP-aYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -691,6 +694,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="nJo-77-IqJ" id="pvL-DA-TQh"/>
                         <segue destination="lO5-h7-G6N" kind="presentation" identifier="editDiv" modalTransitionStyle="flipHorizontal" id="Kin-H0-cmG"/>
                     </connections>
                 </tableViewController>

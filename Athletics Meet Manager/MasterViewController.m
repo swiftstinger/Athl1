@@ -134,6 +134,28 @@ format.dateFormat = @"dd MMM yyyy";
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
+    
+    bool isOnlineMeet = [self.segmentedControl selectedSegmentIndex] == 0 ? FALSE : TRUE;
+    
+    if (!isOnlineMeet) {
+        NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"onlineMeet == FALSE"];
+        NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"onlineMeet = nil"];
+       
+       
+       NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+            NSPredicate *orPred = [NSCompoundPredicate orPredicateWithSubpredicates:preds];
+
+       
+       [fetchRequest setPredicate:orPred];
+        }
+    else
+    {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(onlineMeet == TRUE)"];
+    [fetchRequest setPredicate:predicate];
+
+    }
+    
+    
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"meetDate" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
@@ -142,7 +164,7 @@ format.dateFormat = @"dd MMM yyyy";
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -343,6 +365,8 @@ format.dateFormat = @"dd MMM yyyy";
         [meet setValue:[NSNumber numberWithBool:NO] forKey:@"eventsDone"];
 
         [meet setValue:[NSNumber numberWithBool:NO] forKey:@"teamsDone"];
+        
+     //   [meet setValue:[NSNumber numberWithBool:YES] forKey:@"onlineMeet"];
 
         
         // Store meetID data
@@ -448,4 +472,27 @@ if ([sourceViewController isKindOfClass:[MeetAddViewController class]])
 
 }
 
+- (IBAction)segmentedControlValueChanged:(UISegmentedControl *)sender {
+
+self.fetchedResultsController = nil;
+    
+    [self.tableView reloadData];
+    bool isOnlineMeet = [self.segmentedControl selectedSegmentIndex] == 0 ? FALSE : TRUE;
+    
+    if (!isOnlineMeet) {
+    
+    
+    //self.navigationItem.rightBarButtonItem = addButton;
+    self.addButton.enabled = YES;
+    
+    }
+    else
+    {
+    
+      self.addButton.enabled = NO;
+        
+    }
+    
+
+}
 @end

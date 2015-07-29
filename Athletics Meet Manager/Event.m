@@ -2,7 +2,7 @@
 //  Event.m
 //  Athletics Meet Manager
 //
-//  Created by Rudi Huysamen on 10/06/2015.
+//  Created by Ailsa Huysamen on 29/07/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -19,6 +19,8 @@
 @dynamic eventEdited;
 @dynamic eventID;
 @dynamic startTime;
+@dynamic updateByUser;
+@dynamic updateDateAndTime;
 @dynamic cEventScores;
 @dynamic division;
 @dynamic gEvent;

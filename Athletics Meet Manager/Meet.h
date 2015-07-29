@@ -2,7 +2,7 @@
 //  Meet.h
 //  Athletics Meet Manager
 //
-//  Created by Rudi Huysamen on 03/07/2015.
+//  Created by Ailsa Huysamen on 29/07/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -14,19 +14,23 @@
 @interface Meet : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * cEventLimit;
+@property (nonatomic, retain) NSNumber * competitorPerTeam;
+@property (nonatomic, retain) NSNumber * decrementPerPlace;
 @property (nonatomic, retain) NSNumber * divsDone;
 @property (nonatomic, retain) NSNumber * eventsDone;
+@property (nonatomic, retain) NSNumber * maxScoringCompetitors;
 @property (nonatomic, retain) NSDate * meetDate;
 @property (nonatomic, retain) NSDate * meetEndTime;
 @property (nonatomic, retain) NSNumber * meetID;
 @property (nonatomic, retain) NSString * meetName;
 @property (nonatomic, retain) NSDate * meetStartTime;
-@property (nonatomic, retain) NSNumber * teamsDone;
-@property (nonatomic, retain) NSNumber * maxScoringCompetitors;
 @property (nonatomic, retain) NSNumber * scoreForFirstPlace;
-@property (nonatomic, retain) NSNumber * decrementPerPlace;
-@property (nonatomic, retain) NSNumber * competitorPerTeam;
 @property (nonatomic, retain) NSNumber * scoreMultiplier;
+@property (nonatomic, retain) NSNumber * teamsDone;
+@property (nonatomic, retain) NSNumber * onlineMeet;
+@property (nonatomic, retain) NSDate * updateDateAndTime;
+@property (nonatomic, retain) NSString * updateByUser;
+@property (nonatomic, retain) NSNumber * isOwner;
 @property (nonatomic, retain) NSSet *cEventsScores;
 @property (nonatomic, retain) NSSet *competitors;
 @property (nonatomic, retain) NSSet *divisions;

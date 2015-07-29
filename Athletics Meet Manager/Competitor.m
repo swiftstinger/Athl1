@@ -2,7 +2,7 @@
 //  Competitor.m
 //  Athletics Meet Manager
 //
-//  Created by Rudi Huysamen on 13/06/2015.
+//  Created by Ailsa Huysamen on 29/07/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -17,6 +17,8 @@
 @dynamic compID;
 @dynamic compName;
 @dynamic teamName;
+@dynamic updateByUser;
+@dynamic updateDateAndTime;
 @dynamic cEventScores;
 @dynamic meet;
 @dynamic team;

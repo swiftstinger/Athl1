@@ -58,7 +58,10 @@
 // nslog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
+        if ([self.meetObject.onlineMeet boolValue]) {
         
+            self.addButton.enabled = NO;
+        }
     }
     
     
@@ -337,6 +340,12 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
           cell.divTitleLabel.text = [[object valueForKey:@"divName"] description];
+    
+        if ([self.meetObject.onlineMeet boolValue]) {
+    
+          cell.userInteractionEnabled = NO;
+          
+          }
 
   }
 
@@ -578,19 +587,25 @@ if ([sourceViewController isKindOfClass:[DivAddViewController class]])
 
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer*)sender {
 
-
-
-if (sender.state == UIGestureRecognizerStateBegan)
-	{
+    if (![self.meetObject.onlineMeet boolValue]) {
+        if (sender.state == UIGestureRecognizerStateBegan)
+        {
     
-		CGPoint location = [sender locationInView:self.tableView];
-  self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
+            CGPoint location = [sender locationInView:self.tableView];
+            self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
         
         
-		// nslog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
+            // nslog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
         
-        [self performSegueWithIdentifier:@"editDiv" sender:self];
+            [self performSegueWithIdentifier:@"editDiv" sender:self];
+        }
 	}
+    else
+    {
+        NSLog(@"online meet handle error");
+    }
+
 
 }
+
 @end

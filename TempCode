@@ -1,31 +1,11 @@
 
-fix score doubles not int?
+onlinemeet handle error with popup?
 
+competitors add timestamp
 
+add seperate section for handling input records
 
-120 76 152
-
-competitorPerTeam
-
-maxScoringCompetitors
-scoreForFirstPlace
-decrementPerPlace
-scoreMultiplier
-
-1. Max scoring competitors per team  default 0 all score
-
-2. score for 1st place   (if 0 score will be max scoring competitors per team times number of teams in event.  If max competitors per team also = 0 then Score for first place will be  max comp per team times number of teams.  If max comp per team is also = 0 then max score will equal the number of entrants in each )
-3. decrease in points for each successive place
-default = 1
-
-4  Score multiplier for particular event
-(Score for each competitor will be multiplied with this value.  e.g. to have relays score double points enter 2)
-
-
-
-
-
-scoring defaults per event
+add merge competitors section (hou kop met all die verskillende areas wat moet merge en verander..)
 
 
 

@@ -2,7 +2,7 @@
 //  CEventScore.h
 //  Athletics Meet Manager
 //
-//  Created by Rudi Huysamen on 25/06/2015.
+//  Created by Ailsa Huysamen on 29/07/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -14,12 +14,14 @@
 @interface CEventScore : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * cEventScoreID;
+@property (nonatomic, retain) NSNumber * highJumpPlacingManual;
 @property (nonatomic, retain) NSNumber * personalBest;
 @property (nonatomic, retain) NSNumber * placing;
 @property (nonatomic, retain) NSNumber * result;
 @property (nonatomic, retain) NSNumber * resultEntered;
 @property (nonatomic, retain) NSNumber * score;
-@property (nonatomic, retain) NSNumber * highJumpPlacingManual;
+@property (nonatomic, retain) NSString * updateByUser;
+@property (nonatomic, retain) NSDate * updateDateAndTime;
 @property (nonatomic, retain) Competitor *competitor;
 @property (nonatomic, retain) Event *event;
 @property (nonatomic, retain) Meet *meet;

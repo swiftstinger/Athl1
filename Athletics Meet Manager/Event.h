@@ -2,7 +2,7 @@
 //  Event.h
 //  Athletics Meet Manager
 //
-//  Created by Rudi Huysamen on 10/06/2015.
+//  Created by Ailsa Huysamen on 29/07/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -17,6 +17,8 @@
 @property (nonatomic, retain) NSNumber * eventEdited;
 @property (nonatomic, retain) NSNumber * eventID;
 @property (nonatomic, retain) NSDate * startTime;
+@property (nonatomic, retain) NSString * updateByUser;
+@property (nonatomic, retain) NSDate * updateDateAndTime;
 @property (nonatomic, retain) NSSet *cEventScores;
 @property (nonatomic, retain) Division *division;
 @property (nonatomic, retain) GEvent *gEvent;

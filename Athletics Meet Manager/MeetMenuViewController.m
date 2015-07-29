@@ -15,6 +15,7 @@
 #import "CEventScore.h"
 #import "Event.h"
 #import "Competitor.h"
+#import <CloudKit/CloudKit.h> 
 
 @interface MeetMenuViewController ()
 
@@ -53,6 +54,34 @@
     // Update the user interface for the detail item.
     if (_detailItem) {
       _navBar.title = [self.meetObject valueForKey:@"meetName"];
+      
+   if ([self.meetObject.isOwner boolValue]) {
+      
+        if (![self.meetObject.onlineMeet boolValue]) {
+    
+    
+            self.sendPermissionButton.enabled = NO;
+            self.shareOnlineButton.title = @"Share Online";
+    
+        }
+        else
+        {
+    
+    
+    
+            self.sendPermissionButton.enabled = YES;
+            self.shareOnlineButton.title = @"Unshare Meet";
+    
+        }
+    }
+    else
+    {
+        self.sendPermissionButton.enabled = NO;
+        self.shareOnlineButton.title = @"N/A";
+        self.shareOnlineButton.enabled = NO;
+    }
+
+
       
                /*
           self.titleField.text = [_detailItem valueForKey:@"title"];
@@ -96,7 +125,17 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
             self.enterTeamCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
 
+if ([self.meetObject.onlineMeet boolValue]) {
+    if (![self.meetObject.isOwner boolValue]) {
+        self.groupDivCell.hidden = YES;
+        self.gEventCell.hidden = YES;
+        self.enterTeamCell.hidden = YES;
+        self.finalResultCell.hidden = YES;
+    }
 
+
+
+}
 
 }
 - (void)viewDidLoad
@@ -1082,68 +1121,46 @@ UIAlertController * alert;
    }];
     
 }
-- (IBAction)actionButtonPressed:(id)sender {
-/**
-NSString *docsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-// The file extension is important so that some mime magic happens!
-NSString *filePath = [docsPath stringByAppendingPathComponent:@"vcard.vcf"];
-NSURL *fileUrl     = [NSURL fileURLWithPath:filePath];
 
-[data writeToURL:fileUrl atomically:YES]; // save the file
+- (IBAction)shareMeetButtonPressed:(id)sender {
 
-// Now pass the file URL in the activity items array
-UIActivityViewController *avc = [[UIActivityViewController alloc] initWithActivityItems:
-    @[@"Here's an attached vCard", fileUrl] applicationActivities:nil];
-[vc presentModalViewController:avc animated:YES];
+NSLog(@"share meet button pressed");
 
-**/
 
-    NSString *textToShare = @"Look at this awesome website for aspiring iOS Developers!";
-    NSURL *myWebsite = [NSURL URLWithString:@"sdf"];
- 
-  //  NSArray *objectsToShare = @[textToShare, myWebsite];
-     NSArray *objectsToShare = @[self.meetObject];
- 
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
- /**
-    NSArray *excludeActivities = @[UIActivityTypePrint,
-                                   UIActivityTypeAssignToContact,
-                                   UIActivityTypeSaveToCameraRoll,
-                                   UIActivityTypeAddToReadingList,
-                                   UIActivityTypePostToFlickr,
-                                   UIActivityTypePostToVimeo];
- 
-    activityVC.excludedActivityTypes = excludeActivities;
- **/
- 
- if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-    [self presentViewController:activityVC animated:YES completion:nil];
-    }
-//if iPad
-else {
-    // Change Rect to position Popover
-    
-    
-    if ( [activityVC respondsToSelector:@selector(popoverPresentationController)] ) { // iOS8
-    activityVC.popoverPresentationController.barButtonItem = self.exportbutton;
-    
-    NSLog(@"1");
-    }else {
-    NSLog(@"2");
-    
-    }
-    [self presentViewController:activityVC animated:YES completion:nil];
-    
-    /**
-    UIPopoverController *popup = [[UIPopoverController alloc] initWithContentViewController:activityVC];
-    [popup presentPopoverFromRect:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/4, 0, 0)inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-    **/
-    }
- 
- 
-  //
-  
+
+if (![self.meetObject.onlineMeet boolValue]) {
+    self.meetObject.onlineMeet = [NSNumber numberWithBool:YES];
+    self.sendPermissionButton.enabled = YES;
+    self.shareOnlineButton.title = @"Unshare Meet";
+    self.meetObject.isOwner = [NSNumber numberWithBool:YES];
+}
+else
+{
+    self.meetObject.onlineMeet = [NSNumber numberWithBool:NO];
+    self.sendPermissionButton.enabled = NO;
+    self.shareOnlineButton.title = @"Share Online";
+    self.meetObject.isOwner = [NSNumber numberWithBool:NO];
 }
 
+        NSError *error = nil;
+
+        // Save the context.
+        
+            if (![self.managedObjectContext save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+   
+
+
+}
+
+- (IBAction)sendPermissionButtonPressed:(id)sender {
+
+NSLog(@"send permittion button pressed");
+
+}
 
 @end

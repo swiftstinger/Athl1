@@ -21,7 +21,10 @@
 
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender;
 
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
+- (IBAction)segmentedControlValueChanged:(UISegmentedControl *)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 
 @end
 

@@ -2,7 +2,7 @@
 //  CEventScore.m
 //  Athletics Meet Manager
 //
-//  Created by Rudi Huysamen on 25/06/2015.
+//  Created by Ailsa Huysamen on 29/07/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -16,12 +16,14 @@
 @implementation CEventScore
 
 @dynamic cEventScoreID;
+@dynamic highJumpPlacingManual;
 @dynamic personalBest;
 @dynamic placing;
 @dynamic result;
 @dynamic resultEntered;
 @dynamic score;
-@dynamic highJumpPlacingManual;
+@dynamic updateByUser;
+@dynamic updateDateAndTime;
 @dynamic competitor;
 @dynamic event;
 @dynamic meet;
