@@ -1,4 +1,7 @@
 
+
+
+
 onlinemeet handle error with popup?
 
 competitors add timestamp
@@ -31,9 +34,24 @@ austhetic spacing to do
 
 /////////////////////
 
+if (meetobject.onlineID) {
+    NSLog(@"onlineid is there %@",meetobject.onlineID);
+    }
+    else
+    {
+    NSLog(@"onlineid not found %@",meetobject.onlineID);
+        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+    
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@",meetobject.meetID,timestamp];
+      [meetobject setValue: onlineID forKey: @"onlineID"];
+       NSLog(@"onlineid not found %@",meetobject.onlineID);
+    }
 
 
-
+ NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+    
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@",newnumber,timestamp];
+      [meet setValue: onlineID forKey: @"onlineID"];
 
 
 

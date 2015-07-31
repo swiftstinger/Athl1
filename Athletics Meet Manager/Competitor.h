@@ -2,7 +2,7 @@
 //  Competitor.h
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 29/07/2015.
+//  Created by Ailsa Huysamen on 30/07/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString * teamName;
 @property (nonatomic, retain) NSString * updateByUser;
 @property (nonatomic, retain) NSDate * updateDateAndTime;
+@property (nonatomic, retain) NSString * onlineID;
 @property (nonatomic, retain) NSSet *cEventScores;
 @property (nonatomic, retain) Meet *meet;
 @property (nonatomic, retain) Team *team;

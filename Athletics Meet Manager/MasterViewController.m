@@ -31,6 +31,23 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
     **/
+    
+    NSLog(@"view did load");
+    
+    /**
+    NSError *error = nil;
+
+        // Save the context.
+        
+            if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+        
+    }
+    **/
 }
 
 - (void)didReceiveMemoryWarning {
@@ -103,8 +120,8 @@
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
   Meet *meetobject = (Meet*) object;
-  
-  
+    
+    
     cell.meetTitleLabel.text = [[object valueForKey:@"meetName"] description];
 
     NSDate *fulldate = [object valueForKey:@"meetDate"];
@@ -138,6 +155,8 @@
     cell.meetDateLabel.text = [format stringFromDate:fulldate];
     cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[object valueForKey:@"teams"] count] )];  
     //[[@"hello"] description];
+    
+    
 }
 
 #pragma mark - Fetched results controller
@@ -416,10 +435,12 @@
        NSNumber *newnumber = [NSNumber numberWithInt:newint];
        
        [meet setValue: newnumber forKey: @"meetID"];
-       
-        
+    NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+    
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@",newnumber,timestamp];
+      [meet setValue: onlineID forKey: @"onlineID"];
 
-        // nslog(@"meetname %@  meetID %@", meet.meetName, meet.meetID);
+        NSLog(@"timestamp %@  onlineID: %@",timestamp, onlineID);
 
     [defaults setObject: newnumber forKey:@"lastMeetID"];
      

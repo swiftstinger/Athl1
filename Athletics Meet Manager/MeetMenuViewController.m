@@ -15,10 +15,10 @@
 #import "CEventScore.h"
 #import "Event.h"
 #import "Competitor.h"
-#import <CloudKit/CloudKit.h> 
+
 
 @interface MeetMenuViewController ()
-
+@property  BOOL meetSaveOnlineSuccess;
 @end
 
 @implementation MeetMenuViewController
@@ -1186,21 +1186,244 @@ NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
             }
             else
             {
-                self.meetObject.onlineMeet = [NSNumber numberWithBool:YES];
-                self.sendPermissionButton.enabled = YES;
-                self.shareOnlineButton.title = @"Unshare Meet";
-                self.meetObject.isOwner = [NSNumber numberWithBool:YES];
+                
+                [self addMeetOnline:self.meetObject];
+                
             }
 }
 else
 {
-    self.meetObject.onlineMeet = [NSNumber numberWithBool:NO];
-    self.sendPermissionButton.enabled = NO;
-    self.shareOnlineButton.title = @"Share Online";
-    self.meetObject.isOwner = [NSNumber numberWithBool:NO];
+    
+    [self removeMeetOnline:self.meetObject];
 }
 
-        NSError *error = nil;
+    
+   
+
+
+}
+
+- (void)addMeetOnline:(Meet*)meetObject {
+    //create a new RecordType
+
+    CKRecordID *meetrecordID = [[CKRecordID alloc] initWithRecordName:meetObject.onlineID];
+    CKRecord *meet = [[CKRecord alloc] initWithRecordType:@"Meet" recordID:meetrecordID];
+    
+    //create and set record instance properties
+    
+meet[@"cEventLimit"] = meetObject.cEventLimit;
+meet[@"competitorPerTeam"] = meetObject.competitorPerTeam;
+meet[@"decrementPerPlace"] = meetObject.decrementPerPlace;
+meet[@"divsDone"] = meetObject.divsDone;
+meet[@"eventsDone"] = meetObject.eventsDone;
+meet[@"maxScoringCompetitors"] = meetObject.maxScoringCompetitors;
+meet[@"meetDate"] = meetObject.meetDate;
+meet[@"meetEndTime"] = meetObject.meetEndTime;
+meet[@"meetID"] = meetObject.meetID;
+meet[@"meetName"] = meetObject.meetName;
+meet[@"meetStartTime"] = meetObject.meetStartTime;
+meet[@"scoreForFirstPlace"] = meetObject.scoreForFirstPlace;
+meet[@"scoreMultiplier"] = meetObject.scoreMultiplier;
+meet[@"teamsDone"] = meetObject.teamsDone;
+meet[@"onlineMeet"] = meetObject.onlineMeet;
+meet[@"updateDateAndTime"] = meetObject.updateDateAndTime;
+meet[@"updateByUser"] = meetObject.updateByUser;
+meet[@"isOwner"] = meetObject.isOwner;
+meet[@"onlineID"] = meetObject.onlineID;
+
+//NSNumber *num = [NSNumber numberWithFloat:10.0f];
+//[array addObject:num];
+
+
+NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
+NSArray *array = [mutableArray copy];
+
+//////////////
+//////////////
+
+mutableArray = [[NSMutableArray alloc] init];
+
+for(CEventScore* object in meetObject.cEventsScores) {
+    if (object.onlineID) {
+    NSLog(@"onlineid is there %@",object.onlineID);
+    }
+    else
+    {
+        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+    
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.cEventScoreID,timestamp];
+      [object setValue: onlineID forKey: @"onlineID"];
+       NSLog(@"onlineid not found %@",object.onlineID);
+    }
+    [mutableArray addObject:object.onlineID];
+}
+array = [mutableArray copy];
+
+///////////
+
+meet[@"cEventsScores"] = array;
+
+//////////////
+//////////////
+
+mutableArray = [[NSMutableArray alloc] init];
+
+for(Competitor* object in meetObject.competitors) {
+    if (object.onlineID) {
+    NSLog(@"onlineid is there %@",object.onlineID);
+    }
+    else
+    {
+        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+    
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.compID,timestamp];
+      [object setValue: onlineID forKey: @"onlineID"];
+       NSLog(@"onlineid not found %@",object.onlineID);
+    }
+    [mutableArray addObject:object.onlineID];
+}
+array = [mutableArray copy];
+
+///////////
+
+meet[@"competitors"] = array;
+
+//////////////
+//////////////
+
+mutableArray = [[NSMutableArray alloc] init];
+
+for(Division* object in meetObject.divisions) {
+    if (object.onlineID) {
+    NSLog(@"onlineid is there %@",object.onlineID);
+    }
+    else
+    {
+        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+    
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.divID,timestamp];
+      [object setValue: onlineID forKey: @"onlineID"];
+       NSLog(@"onlineid not found %@",object.onlineID);
+    }
+    [mutableArray addObject:object.onlineID];
+}
+array = [mutableArray copy];
+
+///////////
+
+meet[@"divisions"] = array;
+
+//////////////
+//////////////
+
+mutableArray = [[NSMutableArray alloc] init];
+
+for(Event* object in meetObject.events) {
+    if (object.onlineID) {
+    NSLog(@"onlineid is there %@",object.onlineID);
+    }
+    else
+    {
+        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+    
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.eventID,timestamp];
+      [object setValue: onlineID forKey: @"onlineID"];
+       NSLog(@"onlineid not found %@",object.onlineID);
+    }
+    [mutableArray addObject:object.onlineID];
+}
+array = [mutableArray copy];
+
+///////////
+
+
+meet[@"events"] = array;
+
+//////////////
+//////////////
+
+mutableArray = [[NSMutableArray alloc] init];
+
+for(GEvent* object in meetObject.gEvents) {
+    if (object.onlineID) {
+    NSLog(@"onlineid is there %@",object.onlineID);
+    }
+    else
+    {
+        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+    
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.gEventID,timestamp];
+      [object setValue: onlineID forKey: @"onlineID"];
+       NSLog(@"onlineid not found %@",object.onlineID);
+    }
+    [mutableArray addObject:object.onlineID];
+}
+array = [mutableArray copy];
+
+///////////
+
+
+meet[@"gEvents"] = array;
+
+//////////////
+//////////////
+
+mutableArray = [[NSMutableArray alloc] init];
+
+for(Team* object in meetObject.teams) {
+    if (object.onlineID) {
+    NSLog(@"onlineid is there %@",object.onlineID);
+    }
+    else
+    {
+        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+    
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.teamID,timestamp];
+      [object setValue: onlineID forKey: @"onlineID"];
+       NSLog(@"onlineid not found %@",object.onlineID);
+    }
+    [mutableArray addObject:object.onlineID];
+}
+array = [mutableArray copy];
+
+///////////
+
+
+meet[@"teams"] = array;
+
+
+    
+    /**
+    
+    poi[@"description"] = @"My favorite point of interest";
+    poi[@"address"] = @"123 Main Street, Endor";
+    poi[@"location"] = [[CLLocation alloc] initWithLatitude:47.605024 longitude:-122.335274];
+    
+    
+    **/
+    //get the PublicDatabase from the Container for this app
+    CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
+    
+    //save the record to the target database
+    [publicDatabase saveRecord:meet completionHandler:^(CKRecord *record, NSError *error) {
+        
+        //handle save error
+        if(error) {
+            
+            NSLog(@"Uh oh, there was an error saving ... %@", error);
+            self.meetSaveOnlineSuccess = NO;
+        //handle successful save
+        } else {
+            
+            NSLog(@"Saved successfully");
+            NSLog(@"Title: %@", record[@"meetName"]);
+            self.meetSaveOnlineSuccess = YES;
+        }
+    }];
+    
+    /**
+    
+            NSError *error = nil;
 
         // Save the context.
         
@@ -1210,11 +1433,74 @@ else
             // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
-   
+**/
 
 
 }
 
+- (void) sendOnlineDone {
+    if (self.meetSaveOnlineSuccess) {
+        self.meetObject.onlineMeet = [NSNumber numberWithBool:YES];
+        self.sendPermissionButton.enabled = YES;
+        self.shareOnlineButton.title = @"Unshare Meet";
+        self.meetObject.isOwner = [NSNumber numberWithBool:YES];
+    }
+    else
+    {
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Online Share Failed"
+                                    message:@"Failed to save to online database, please check your internet connection, ensure you are signed in to iCloud and you have updated to iCloud Drive"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+            [self presentViewController:alert animated:YES completion:nil];
+    
+    }
+
+[self saveContext];
+
+}
+- (void) sendLocalDone {
+    self.meetObject.onlineMeet = [NSNumber numberWithBool:NO];
+    self.sendPermissionButton.enabled = NO;
+    self.shareOnlineButton.title = @"Share Online";
+    self.meetObject.isOwner = [NSNumber numberWithBool:NO];
+    [self saveContext];
+
+}
+
+- (void)removeMeetOnline:(Meet*)meetObject {
+
+
+
+[self sendLocalDone];
+
+}
+- (void) saveContext {
+
+
+NSError *error = nil;
+
+        // Save the context.
+        
+            if (![self.managedObjectContext save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+}
 - (IBAction)sendPermissionButtonPressed:(id)sender {
 
 NSLog(@"send permittion button pressed");
