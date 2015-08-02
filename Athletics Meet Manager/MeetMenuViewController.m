@@ -1221,7 +1221,98 @@ else
 
 }
 
-- (void)addMeetOnline:(Meet*)meetObject {
+- (void)shareAllOnline {
+
+// Initialize the data
+   NSMutableArray *localChanges = [[NSMutableArray alloc] init];;
+   NSArray *localDeletions;
+   
+   // NSArray *array = [mutableArray copy];
+   
+     CKRecord* meetrecord = [self addMeetOnline:self.meetObject];
+  
+    
+   // Initialize the database and modify records operation
+ 
+   CKDatabase *database = [[CKContainer defaultContainer] publicCloudDatabase];
+ 
+ 
+   CKModifyRecordsOperation *modifyRecordsOperation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:localChanges recordIDsToDelete:localDeletions];
+   modifyRecordsOperation.savePolicy = CKRecordSaveAllKeys;
+
+   NSLog(@"CLOUDKIT Changes Uploading: %d", localChanges.count);
+
+   // Add the completion block
+   modifyRecordsOperation.modifyRecordsCompletionBlock = ^(NSArray *savedRecords, NSArray *deletedRecordIDs, NSError *error) {
+       if (error) {
+           NSLog(@"[%@] Error pushing local data: %@", self.class, error);
+           
+            NSLog(@"Uh oh, there was an error saving ... %@", error);
+            self.meetSaveOnlineSuccess = NO;
+       }
+       else
+       {
+       
+       
+            NSLog(@"Saved successfully");
+           
+           for(CKRecord* record in savedRecords) {
+            
+                NSLog(@"Title: %@", record[@"onlineID"]);
+            
+            }
+           
+            for(CKRecord* recordID in deletedRecordIDs) {
+            
+                NSLog(@"Deleted record id: %@", recordID);
+            }
+
+
+           
+           
+            self.meetSaveOnlineSuccess = YES;
+       
+       }
+
+      // [localChanges removeObjectsInArray:savedRecords];
+      // [self.localDeletions removeObjectsInArray:deletedRecordIDs];
+
+       [self sendOnlineDone];
+   };
+   
+   
+
+   // Start the operation
+   [database addOperation:modifyRecordsOperation];
+   
+   
+   
+     //save the record to the target database
+  
+    /**
+        [publicDatabase saveRecord:meet completionHandler:^(CKRecord *record, NSError *error) {
+        
+        //handle save error
+        if(error) {
+            
+            NSLog(@"Uh oh, there was an error saving ... %@", error);
+            self.meetSaveOnlineSuccess = NO;
+        //handle successful save
+        } else {
+            
+            NSLog(@"Saved successfully");
+            NSLog(@"Title: %@", record[@"meetName"]);
+            self.meetSaveOnlineSuccess = YES;
+            
+        }
+        [self sendOnlineDone];
+    }];
+    **/
+
+}
+
+
+- (CKRecord*)addMeetOnline:(Meet*)meetObject {
     //create a new RecordType
 
     CKRecordID *meetrecordID = [[CKRecordID alloc] initWithRecordName:meetObject.onlineID];
@@ -1441,20 +1532,7 @@ meet[@"teams"] = array;
         [self sendOnlineDone];
     }];
     
-    /**
-    
-            NSError *error = nil;
-
-        // Save the context.
-        
-            if (![self.managedObjectContext save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
-            //abort();
-            }
-**/
-
+return meet;
 
 }
 

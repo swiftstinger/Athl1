@@ -1,7 +1,11 @@
 
+set save success as yes an just do a no on error... check at end (count?)
+
 check save settings
 
-send on save to new controller?
+check internet connection before load try and handle error
+
+later  delay on load is done on my end?
 
 
 
