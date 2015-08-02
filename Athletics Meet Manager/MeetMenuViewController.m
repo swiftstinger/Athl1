@@ -19,6 +19,7 @@
 
 @interface MeetMenuViewController ()
 @property  BOOL meetSaveOnlineSuccess;
+@property  BOOL meetDeleteSuccess;
 @end
 
 @implementation MeetMenuViewController
@@ -81,9 +82,9 @@
             }
 
         }
+  
     
-
-      
+     
                /*
           self.titleField.text = [_detailItem valueForKey:@"title"];
         self.episodeIDField.text = [NSString stringWithFormat:@"%d", [[_detailItem valueForKey:@"episodeID"] integerValue]];
@@ -97,6 +98,10 @@
 
         
     }
+    
+    
+    
+    
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -146,7 +151,7 @@ if ([self.meetObject.onlineMeet boolValue]) {
     [self configureView];
     
    //  // nslog(@"Teams in configure view: %lu",  (unsigned long)[self.meetObject.teams count]);
-        
+        /**
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         NSEntityDescription *description = [NSEntityDescription entityForName:@"Team" inManagedObjectContext: self.managedObjectContext];
 
@@ -171,6 +176,13 @@ if ([self.meetObject.onlineMeet boolValue]) {
             int intvalue = (int)teamcount;
 
       //   // nslog(@"Teams in configure view from fetch : %d",  intvalue);
+    
+    **/
+    
+    
+
+
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -202,7 +214,7 @@ else
        [finalResultsController setManagedObjectContext:self.managedObjectContext];
      /*
         NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
-        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+        [setValue:value forKey:@"orientation"];
     */
 }
 
@@ -1127,6 +1139,9 @@ UIAlertController * alert;
 
 NSLog(@"share meet button pressed");
 
+[self pauseMethod];
+
+
 
 
 if (![self.meetObject.onlineMeet boolValue]) {
@@ -1161,7 +1176,7 @@ NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
         
             
             if (!(2>currentEventNumber)) {
-    
+                
               // self.competitorObject = nil;
                 
                 UIAlertController * alert=   [UIAlertController
@@ -1175,8 +1190,11 @@ NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
                         style:UIAlertActionStyleDefault
                         handler:^(UIAlertAction * action)
                         {
+                        
+                            
                             [alert dismissViewControllerAnimated:YES completion:nil];
-                             
+                            [self resumeMethod];
+                            
                         }];
                         
                 [alert addAction:ok];
@@ -1418,7 +1436,9 @@ meet[@"teams"] = array;
             NSLog(@"Saved successfully");
             NSLog(@"Title: %@", record[@"meetName"]);
             self.meetSaveOnlineSuccess = YES;
+            
         }
+        [self sendOnlineDone];
     }];
     
     /**
@@ -1440,13 +1460,45 @@ meet[@"teams"] = array;
 
 - (void) sendOnlineDone {
     if (self.meetSaveOnlineSuccess) {
+        
         self.meetObject.onlineMeet = [NSNumber numberWithBool:YES];
-        self.sendPermissionButton.enabled = YES;
-        self.shareOnlineButton.title = @"Unshare Meet";
-        self.meetObject.isOwner = [NSNumber numberWithBool:YES];
+                            self.sendPermissionButton.enabled = YES;
+        
+                            self.meetObject.isOwner = [NSNumber numberWithBool:YES];
+        
+                            [self saveContext];
+        
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Online Share Succesful"
+                                    message:@"Meet shared for online result entry by other users, sent permission files to users to get started"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                            
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            [self resumeMethod];
+                            self.shareOnlineButton.title = @"Unshare Meet";
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+            [self presentViewController:alert animated:YES completion:nil];
+
     }
     else
     {
+        
+    
+    
         UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"Online Share Failed"
                                     message:@"Failed to save to online database, please check your internet connection, ensure you are signed in to iCloud and you have updated to iCloud Drive"
@@ -1458,7 +1510,12 @@ meet[@"teams"] = array;
                         style:UIAlertActionStyleDefault
                         handler:^(UIAlertAction * action)
                         {
+                            
+                            
+                            
+                            
                             [alert dismissViewControllerAnimated:YES completion:nil];
+                            [self resumeMethod];
                              
                         }];
                         
@@ -1467,26 +1524,135 @@ meet[@"teams"] = array;
             [self presentViewController:alert animated:YES completion:nil];
     
     }
+    
 
-[self saveContext];
 
-}
-- (void) sendLocalDone {
-    self.meetObject.onlineMeet = [NSNumber numberWithBool:NO];
-    self.sendPermissionButton.enabled = NO;
-    self.shareOnlineButton.title = @"Share Online";
-    self.meetObject.isOwner = [NSNumber numberWithBool:NO];
-    [self saveContext];
+
 
 }
 
 - (void)removeMeetOnline:(Meet*)meetObject {
 
+ //get the Container for the App
+    CKContainer *defaultContainer = [CKContainer defaultContainer];
+    
+    //get the PublicDatabase inside the Container
+    CKDatabase *publicDatabase = [defaultContainer publicCloudDatabase];
+    
+    
+   
+    
+    
+    
+    
+    //create the target record id you will use to fetch by
+    
+    CKRecordID *meetrecordID = [[CKRecordID alloc] initWithRecordName:meetObject.onlineID];
+    
+    
+      [publicDatabase deleteRecordWithID:meetrecordID completionHandler:^(CKRecordID *recordID, NSError *error) {
+        
+          if(error) {
+            
+            NSLog(@"Uh oh, there was an error deleting ... %@", error);
+           self.meetDeleteSuccess = NO;
+        //handle successful save
+        } else {
+            
+            NSLog(@"deleted successfully");
+            
+           self.meetDeleteSuccess = YES;
+          NSLog(@"success? succesfull %hhd", self.meetDeleteSuccess);
+         
+            
+        }
+       
+        [self sendLocalDone];
+    }];
 
 
-[self sendLocalDone];
+
+ 
 
 }
+
+- (void) sendLocalDone {
+   
+    if (self.meetDeleteSuccess) {
+         self.meetObject.onlineMeet = [NSNumber numberWithBool:NO];
+                            self.sendPermissionButton.enabled = NO;
+        
+                            self.meetObject.isOwner = [NSNumber numberWithBool:NO];
+                            
+                            [self saveContext];
+        
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Meet Unshared Succesfully"
+                                    message:@" Meet will no longer be available for users to update online"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                           
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            [self resumeMethod];
+                            self.shareOnlineButton.title = @"Share Online";
+                            
+                            
+                             
+                        }];
+                        
+                [alert addAction:ok];
+        
+            [self presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
+    {
+     
+    NSLog(@"not succesfull %hhd", self.meetDeleteSuccess);
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Unshare meet unsuccesfull"
+                                    message:@"There was a problem removing this Meet from online database, please check your internet connection and try again"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                          
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                            [self resumeMethod];
+                            
+                             
+                        }];
+                        
+                [alert addAction:ok];
+        
+            [self presentViewController:alert animated:YES completion:nil];
+    
+    }
+    
+
+
+
+
+}
+
+
 - (void) saveContext {
 
 
@@ -1500,7 +1666,58 @@ NSError *error = nil;
             // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
+    
+
 }
+
+- (void) pauseMethod {
+
+self.navigationController.view.userInteractionEnabled = NO;
+
+self.activityindicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+
+CGRect screenRect = [[UIScreen mainScreen] bounds];
+CGFloat screenWidth = screenRect.size.width;
+CGFloat screenHeight = screenRect.size.height;
+
+UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+[view addSubview:self.activityindicator]; // <-- Your UIActivityIndicatorView
+self.tableView.tableHeaderView = view;
+
+
+
+
+[self.activityindicator setCenter:CGPointMake(screenWidth/2.0, screenHeight/3.0)]; // I do this because I'm in landscape mode
+[self.view addSubview:self.activityindicator];
+
+self.activityindicator.hidden = NO;
+[self.activityindicator startAnimating];
+
+self.exportResultsButton.enabled = NO;
+self.sendPermissionButton.enabled = NO;
+self.shareOnlineButton.enabled = NO;
+
+
+[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+
+}
+
+
+- (void) resumeMethod {
+
+
+self.navigationController.view.userInteractionEnabled = YES;
+  
+    [self.activityindicator stopAnimating];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    self.tableView.tableHeaderView = nil;
+    
+    self.exportResultsButton.enabled = YES;
+//self.sendPermissionButton.enabled = YES;
+self.shareOnlineButton.enabled = YES;
+
+}
+
 - (IBAction)sendPermissionButtonPressed:(id)sender {
 
 NSLog(@"send permittion button pressed");

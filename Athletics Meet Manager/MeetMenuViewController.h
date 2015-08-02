@@ -11,7 +11,8 @@
 #import <CoreData/CoreData.h>
 #import "Meet.h"
 #import <MessageUI/MessageUI.h>
-#import <CloudKit/CloudKit.h> 
+#import <CloudKit/CloudKit.h>
+
 
 @interface MeetMenuViewController : UITableViewController <MFMailComposeViewControllerDelegate>
 
@@ -36,5 +37,9 @@
 @property (weak, nonatomic) IBOutlet MeetMenuViewCell *finalResultCell;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *exportResultsButton;
 
+@property (strong, nonatomic) UIActivityIndicatorView *activityindicator;
 
+@property (strong, nonatomic) UIView *activityview;
+
+@property (strong, nonatomic) IBOutlet UITableView *tableview;
 @end

@@ -341,6 +341,7 @@
                         <outlet property="navBar" destination="iaR-ri-1Td" id="2SY-vJ-PMt"/>
                         <outlet property="sendPermissionButton" destination="7qu-C5-M2C" id="rNP-6u-cO9"/>
                         <outlet property="shareOnlineButton" destination="FFx-sy-dit" id="FHI-lG-gup"/>
+                        <outlet property="tableview" destination="cnq-Fz-hdt" id="goD-Dq-6hX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="st3-kP-aYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
