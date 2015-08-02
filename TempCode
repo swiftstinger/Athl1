@@ -75,6 +75,20 @@ high jump keep track of last hight entered and give attempt markers clear, auto 
 
 new hight, generate tabs (section), click pass fail. cell reads best attempt and number of jumps and number of cosecutive fails (reset for pass)
 
+ceventscores add :
+    consecutive fails (counter for hightjump)  check for order of consecutive in case jumps lower later so in order
+
+    new object attempt:
+        attempt number
+        result
+        cleared bool
+
+        mabe add height object? check how sections work in uitableview core data
+
+
+
+
+
 
 austhetic spacing to do
 
