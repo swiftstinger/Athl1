@@ -18,8 +18,9 @@
 
 
 @interface MeetMenuViewController ()
-@property  BOOL meetSaveOnlineSuccess;
-@property  BOOL meetDeleteSuccess;
+@property  BOOL updateOnlineSuccess;
+@property  BOOL sharing;
+//@property  BOOL meetDeleteSuccess;
 @end
 
 @implementation MeetMenuViewController
@@ -1146,6 +1147,7 @@ NSLog(@"share meet button pressed");
 
 if (![self.meetObject.onlineMeet boolValue]) {
 
+
 NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
             NSEntityDescription *description = [NSEntityDescription entityForName:@"Meet" inManagedObjectContext: self.managedObjectContext];
 
@@ -1205,14 +1207,15 @@ NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
             else
             {
                 
-                [self addMeetOnline:self.meetObject];
+                //[self addMeetOnline:self.meetObject];
+                [self shareAllOnline];
                 
             }
 }
 else
 {
     
-    [self removeMeetOnline:self.meetObject];
+    [self removeAllOnline];
 }
 
     
@@ -1222,95 +1225,40 @@ else
 }
 
 - (void)shareAllOnline {
-
+self.sharing = YES;
 // Initialize the data
-   NSMutableArray *localChanges = [[NSMutableArray alloc] init];;
-   NSArray *localDeletions;
+   NSMutableArray *localChangesMute = [[NSMutableArray alloc] init];;
+   NSMutableArray *localDeletionsMute = [[NSMutableArray alloc] init];
    
-   // NSArray *array = [mutableArray copy];
+    
    
      CKRecord* meetrecord = [self addMeetOnline:self.meetObject];
+    [localChangesMute addObject:meetrecord];
+    
+    
+  
+  [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
   
     
-   // Initialize the database and modify records operation
- 
-   CKDatabase *database = [[CKContainer defaultContainer] publicCloudDatabase];
- 
- 
-   CKModifyRecordsOperation *modifyRecordsOperation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:localChanges recordIDsToDelete:localDeletions];
-   modifyRecordsOperation.savePolicy = CKRecordSaveAllKeys;
+}
+- (void)removeAllOnline {
 
-   NSLog(@"CLOUDKIT Changes Uploading: %d", localChanges.count);
-
-   // Add the completion block
-   modifyRecordsOperation.modifyRecordsCompletionBlock = ^(NSArray *savedRecords, NSArray *deletedRecordIDs, NSError *error) {
-       if (error) {
-           NSLog(@"[%@] Error pushing local data: %@", self.class, error);
-           
-            NSLog(@"Uh oh, there was an error saving ... %@", error);
-            self.meetSaveOnlineSuccess = NO;
-       }
-       else
-       {
-       
-       
-            NSLog(@"Saved successfully");
-           
-           for(CKRecord* record in savedRecords) {
-            
-                NSLog(@"Title: %@", record[@"onlineID"]);
-            
-            }
-           
-            for(CKRecord* recordID in deletedRecordIDs) {
-            
-                NSLog(@"Deleted record id: %@", recordID);
-            }
-
-
-           
-           
-            self.meetSaveOnlineSuccess = YES;
-       
-       }
-
-      // [localChanges removeObjectsInArray:savedRecords];
-      // [self.localDeletions removeObjectsInArray:deletedRecordIDs];
-
-       [self sendOnlineDone];
-   };
+self.sharing = NO;
+// Initialize the data
+   NSMutableArray *localChangesMute = [[NSMutableArray alloc] init];;
+  NSMutableArray *localDeletionsMute = [[NSMutableArray alloc] init];
    
+    
    
-
-   // Start the operation
-   [database addOperation:modifyRecordsOperation];
-   
-   
-   
-     //save the record to the target database
+     CKRecordID* meetrecordID = [self removeMeetOnline:self.meetObject];
+   [localDeletionsMute addObject:meetrecordID];
+    
+    
   
-    /**
-        [publicDatabase saveRecord:meet completionHandler:^(CKRecord *record, NSError *error) {
-        
-        //handle save error
-        if(error) {
-            
-            NSLog(@"Uh oh, there was an error saving ... %@", error);
-            self.meetSaveOnlineSuccess = NO;
-        //handle successful save
-        } else {
-            
-            NSLog(@"Saved successfully");
-            NSLog(@"Title: %@", record[@"meetName"]);
-            self.meetSaveOnlineSuccess = YES;
-            
-        }
-        [self sendOnlineDone];
-    }];
-    **/
+  [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
+
 
 }
-
 
 - (CKRecord*)addMeetOnline:(Meet*)meetObject {
     //create a new RecordType
@@ -1502,14 +1450,11 @@ meet[@"teams"] = array;
 
 
     
+    
+ 
     /**
     
-    poi[@"description"] = @"My favorite point of interest";
-    poi[@"address"] = @"123 Main Street, Endor";
-    poi[@"location"] = [[CLLocation alloc] initWithLatitude:47.605024 longitude:-122.335274];
     
-    
-    **/
     //get the PublicDatabase from the Container for this app
     CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
     
@@ -1531,22 +1476,171 @@ meet[@"teams"] = array;
         }
         [self sendOnlineDone];
     }];
-    
+    **/
 return meet;
 
 }
 
-- (void) sendOnlineDone {
-    if (self.meetSaveOnlineSuccess) {
+- (CKRecordID*)removeMeetOnline:(Meet*)meetObject {
+
+ //get the Container for the App
+    CKContainer *defaultContainer = [CKContainer defaultContainer];
+    
+    //get the PublicDatabase inside the Container
+    CKDatabase *publicDatabase = [defaultContainer publicCloudDatabase];
+    
+    
+   
+    
+    
+    
+    
+    //create the target record id you will use to fetch by
+    
+    CKRecordID *meetrecordID = [[CKRecordID alloc] initWithRecordName:meetObject.onlineID];
+    
+    /**
+      [publicDatabase deleteRecordWithID:meetrecordID completionHandler:^(CKRecordID *recordID, NSError *error) {
         
-        self.meetObject.onlineMeet = [NSNumber numberWithBool:YES];
-                            self.sendPermissionButton.enabled = YES;
+          if(error) {
+            
+            NSLog(@"Uh oh, there was an error deleting ... %@", error);
+           self.updateOnlineSuccess = NO;
+        //handle successful save
+        } else {
+            
+            NSLog(@"deleted successfully");
+            
+           self.updateOnlineSuccess = YES;
+          NSLog(@"success? succesfull %hhd", self.meetDeleteSuccess);
+         
+            
+        }
+       
+        [self sendLocalDone];
+    }];
+
+   **/
+
+ return meetrecordID;
+
+}
+
+
+- (void) modifyOnlineWithChanges: (NSMutableArray*) changesMute AndDeletions: (NSMutableArray*) deletionsMute {
+
+
+  
+  
+  
+    NSArray *localChanges = [changesMute copy];
+    NSArray *localDeletions = [deletionsMute copy];
+  
+    
+   // Initialize the database and modify records operation
+ 
+   CKDatabase *database = [[CKContainer defaultContainer] publicCloudDatabase];
+ 
+ 
+   CKModifyRecordsOperation *modifyRecordsOperation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:localChanges recordIDsToDelete:localDeletions];
+   modifyRecordsOperation.savePolicy = CKRecordSaveAllKeys;
+
+   NSLog(@"CLOUDKIT Changes Uploading: %d", localChanges.count);
+
+   // Add the completion block
+   modifyRecordsOperation.modifyRecordsCompletionBlock = ^(NSArray *savedRecords, NSArray *deletedRecordIDs, NSError *error) {
+       
+       
+       if (error) {
+           NSLog(@"[%@] Error pushing local data: %@", self.class, error);
+           
+            NSLog(@"Uh oh, there was an error saving ... %@", error);
+            self.updateOnlineSuccess = NO;
+       }
+       else
+       {
+       
+       
+            NSLog(@"Modified successfully");
+           
+           for(CKRecord* record in savedRecords) {
+            
+                NSLog(@"OnlineID: %@", record[@"onlineID"]);
+            
+            }
+           
+            for(CKRecord* recordID in deletedRecordIDs) {
+            
+                NSLog(@"Deleted record id: %@", recordID);
+            }
+
+
+           
+           
+            self.updateOnlineSuccess = YES;
+       
+       }
         
-                            self.meetObject.isOwner = [NSNumber numberWithBool:YES];
+      // [localChanges removeObjectsInArray:savedRecords];
+      // [self.localDeletions removeObjectsInArray:deletedRecordIDs];
+
+       [self modifyOnlineDone];
+       
+
+   };
+   
+   
+
+   // Start the operation
+   [database addOperation:modifyRecordsOperation];
+   
+   
+   
+     //save the record to the target database
+  
+    /**
+        [publicDatabase saveRecord:meet completionHandler:^(CKRecord *record, NSError *error) {
         
-                            [self saveContext];
+        //handle save error
+        if(error) {
+            
+            NSLog(@"Uh oh, there was an error saving ... %@", error);
+            self.meetSaveOnlineSuccess = NO;
+        //handle successful save
+        } else {
+            
+            NSLog(@"Saved successfully");
+            NSLog(@"Title: %@", record[@"meetName"]);
+            self.meetSaveOnlineSuccess = YES;
+            
+        }
+        [self sendOnlineDone];
+    }];
+    **/
+
+}
+
+
+
+
+
+- (void) modifyOnlineDone {
+    
+    UIAlertController * alert;
+    
+    if (self.updateOnlineSuccess) {
         
-        UIAlertController * alert=   [UIAlertController
+        
+        
+        if (self.sharing) {
+   
+            self.meetObject.onlineMeet = [NSNumber numberWithBool:YES];
+            self.sendPermissionButton.enabled = YES;
+            self.meetObject.isOwner = [NSNumber numberWithBool:YES];
+            
+            
+            
+            alert=   [UIAlertController
                                     alertControllerWithTitle:@"Online Share Succesful"
                                     message:@"Meet shared for online result entry by other users, sent permission files to users to get started"
                                     preferredStyle:UIAlertControllerStyleAlert];
@@ -1566,18 +1660,58 @@ return meet;
                             self.shareOnlineButton.title = @"Unshare Meet";
                              
                         }];
+            
+                        [alert addAction:ok];
+        }
+        else
+        {
+            self.meetObject.onlineMeet = [NSNumber numberWithBool:NO];
+            self.sendPermissionButton.enabled = NO;
+            self.meetObject.isOwner = [NSNumber numberWithBool:NO];
+            
+            alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Meet Unshared Succesfully"
+                                    message:@" Meet will no longer be available for users to update online"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                           
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            [self resumeMethod];
+                            self.shareOnlineButton.title = @"Share Online";
+                            
+                            
+                             
+                        }];
                         
                 [alert addAction:ok];
+
+        }
+            
+        [self saveContext];
+        
+        
+        
      
-            [self presentViewController:alert animated:YES completion:nil];
+        
 
     }
     else
     {
+    
         
+        
+        if (self.sharing) {
     
-    
-        UIAlertController * alert=   [UIAlertController
+                alert=   [UIAlertController
                                     alertControllerWithTitle:@"Online Share Failed"
                                     message:@"Failed to save to online database, please check your internet connection, ensure you are signed in to iCloud and you have updated to iCloud Drive"
                                     preferredStyle:UIAlertControllerStyleAlert];
@@ -1598,62 +1732,48 @@ return meet;
                         }];
                         
                 [alert addAction:ok];
+        }
+        else
+        {
+                alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Unshare meet unsuccesfull"
+                                    message:@"There was a problem removing this Meet from online database, please check your internet connection and try again"
+                                    preferredStyle:UIAlertControllerStyleAlert];
      
-            [self presentViewController:alert animated:YES completion:nil];
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                          
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                            [self resumeMethod];
+                            
+                             
+                        }];
+                        
+                [alert addAction:ok];
+
+        
+        }
+        
+        
+        
     
     }
     
-
+        [self presentViewController:alert animated:YES completion:nil];
 
 
 
 }
 
-- (void)removeMeetOnline:(Meet*)meetObject {
-
- //get the Container for the App
-    CKContainer *defaultContainer = [CKContainer defaultContainer];
-    
-    //get the PublicDatabase inside the Container
-    CKDatabase *publicDatabase = [defaultContainer publicCloudDatabase];
-    
-    
-   
-    
-    
-    
-    
-    //create the target record id you will use to fetch by
-    
-    CKRecordID *meetrecordID = [[CKRecordID alloc] initWithRecordName:meetObject.onlineID];
-    
-    
-      [publicDatabase deleteRecordWithID:meetrecordID completionHandler:^(CKRecordID *recordID, NSError *error) {
-        
-          if(error) {
-            
-            NSLog(@"Uh oh, there was an error deleting ... %@", error);
-           self.meetDeleteSuccess = NO;
-        //handle successful save
-        } else {
-            
-            NSLog(@"deleted successfully");
-            
-           self.meetDeleteSuccess = YES;
-          NSLog(@"success? succesfull %hhd", self.meetDeleteSuccess);
-         
-            
-        }
-       
-        [self sendLocalDone];
-    }];
-
-
-
- 
-
-}
-
+/**
 - (void) sendLocalDone {
    
     if (self.meetDeleteSuccess) {
@@ -1730,6 +1850,9 @@ return meet;
 
 }
 
+**/
+
+
 
 - (void) saveContext {
 
@@ -1747,6 +1870,9 @@ NSError *error = nil;
     
 
 }
+
+
+
 
 - (void) pauseMethod {
 
