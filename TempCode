@@ -1,5 +1,37 @@
 
-set save success as yes an just do a no on error... check at end (count?)
+add timestamp and device id to add's '
+
+//////////
+NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
+        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+    
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.cEventScoreID,timestamp];
+      [object setValue: onlineID forKey: @"onlineID"];
+       NSLog(@"onlineid not found %@",object.onlineID);
+////////
+
+
+1. add methods for objects send online
+
+2. add fetch for object delete from online
+
+
+3. then updates for results and competitors   cscores, ceventscores, competitors (add new tag to creation of competitor and ceventscore because they can be old)
+
+4. update send online for event (sent in one channel, deleted in another, sent channel has userID as sent by with timestamp so all done after each other and then delete (so feth returns multiple versions of same send with a usernumberid and timestamp so go through each user and update last one and check updates against done meets and resolve clashes send after done, check on each access of event, check all on update button, and on load, and on resutls view. ))
+
+5. add competitor merge later
+
+[work out ceventscore so that cannot create more than needed]  mabe delete ceventscores for event (all) before import]
+[protect not owner entry ceventscores by checking they were entered by him]
+
+think of repurcussions if more than neccisary eventscores [wont score -  not problem?] or delete all so not a worry?
+
+person at end needs to see all eventscores?
+
+
+
+
 
 check save settings
 
@@ -33,7 +65,15 @@ set save as default option at bottom (lets do first option first and then after 
 
 not done:
 
+layout for field events
 
+attempts after each other, just add result [ make easy to add at event]
+
+add attempt insert distance (cell reads attemps and best attempt)
+
+high jump keep track of last hight entered and give attempt markers clear, auto pass if next hight.
+
+new hight, generate tabs (section), click pass fail. cell reads best attempt and number of jumps and number of cosecutive fails (reset for pass)
 
 
 austhetic spacing to do

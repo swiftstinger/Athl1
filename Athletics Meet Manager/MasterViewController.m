@@ -435,9 +435,12 @@
        NSNumber *newnumber = [NSNumber numberWithInt:newint];
        
        [meet setValue: newnumber forKey: @"meetID"];
+    
+    NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
+    
     NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
     
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",newnumber,timestamp];
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, newnumber,timestamp];
       [meet setValue: onlineID forKey: @"onlineID"];
 
         NSLog(@"timestamp %@  onlineID: %@",timestamp, onlineID);
