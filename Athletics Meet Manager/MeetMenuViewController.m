@@ -1920,15 +1920,298 @@ return cscore;
 
 self.sharing = NO;
 // Initialize the data
-   NSMutableArray *localChangesMute = [[NSMutableArray alloc] init];;
+   NSMutableArray *localChangesMute = [[NSMutableArray alloc] init];
   NSMutableArray *localDeletionsMute = [[NSMutableArray alloc] init];
+   
    
     
    
      CKRecordID* meetrecordID = [self removeMeetOnline:self.meetObject];
    [localDeletionsMute addObject:meetrecordID];
     
+    ///////////
+    // rest
+    /////////
+    //NSMutableArray *fetchedRecords = [[NSMutableArray alloc] init];
     
+    
+    //fetchedRecords = [self removeDivsOnline:self.meetObject.onlineID];
+    
+    
+    //get the Container for the App
+    CKContainer *defaultContainer = [CKContainer defaultContainer];
+    
+    //get the PublicDatabase inside the Container
+    CKDatabase *publicDatabase = [defaultContainer publicCloudDatabase];
+    
+    //predicate for query
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", self.meetObject.onlineID];
+    
+    CKQuery *query;
+    
+    /////
+    // Division
+    ////
+    
+    
+    
+    //create query
+    query = [[CKQuery alloc] initWithRecordType:@"Division" predicate:predicate];
+    
+    //execute query
+    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
+        
+        //handle query error
+        if(error) {
+            
+            NSLog(@"Uh oh, there was an error querying ... %@", error);
+
+        } else {
+            
+            //handle query results
+            if([results count] > 0) {
+                
+                //iterate query results
+                for(CKRecord *record in results) {
+                    
+                    [localDeletionsMute addObject:[record recordID]];
+                    NSLog(@"Query was successfully");
+                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
+                    
+                }
+                
+            //handle no query results
+            } else {
+                
+                NSLog(@"Query returned zero results");
+            }
+        }
+    }];
+    
+    
+    /////
+    // Division end
+    /////
+    
+    /////
+    // GEvent
+    ////
+    
+    
+    
+    //create query
+    query = [[CKQuery alloc] initWithRecordType:@"GEvent" predicate:predicate];
+    
+    //execute query
+    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
+        
+        //handle query error
+        if(error) {
+            
+            NSLog(@"Uh oh, there was an error querying ... %@", error);
+
+        } else {
+            
+            //handle query results
+            if([results count] > 0) {
+                
+                //iterate query results
+                for(CKRecord *record in results) {
+                    
+                    [localDeletionsMute addObject:[record recordID]];
+                    NSLog(@"Query was successfully");
+                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
+                    
+                }
+                
+            //handle no query results
+            } else {
+                
+                NSLog(@"Query returned zero results");
+            }
+        }
+    }];
+    
+    
+    /////
+    // GEvent end
+    /////
+
+    /////
+    // Team
+    ////
+    
+    
+    
+    //create query
+    query = [[CKQuery alloc] initWithRecordType:@"Team" predicate:predicate];
+    
+    //execute query
+    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
+        
+        //handle query error
+        if(error) {
+            
+            NSLog(@"Uh oh, there was an error querying ... %@", error);
+
+        } else {
+            
+            //handle query results
+            if([results count] > 0) {
+                
+                //iterate query results
+                for(CKRecord *record in results) {
+                    
+                    [localDeletionsMute addObject:[record recordID]];
+                    NSLog(@"Query was successfully");
+                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
+                    
+                }
+                
+            //handle no query results
+            } else {
+                
+                NSLog(@"Query returned zero results");
+            }
+        }
+    }];
+    
+    
+    /////
+    // Team end
+    /////
+    
+    /////
+    // Event
+    ////
+    
+    
+    
+    //create query
+    query = [[CKQuery alloc] initWithRecordType:@"Event" predicate:predicate];
+    
+    //execute query
+    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
+        
+        //handle query error
+        if(error) {
+            
+            NSLog(@"Uh oh, there was an error querying ... %@", error);
+
+        } else {
+            
+            //handle query results
+            if([results count] > 0) {
+                
+                //iterate query results
+                for(CKRecord *record in results) {
+                    
+                    [localDeletionsMute addObject:[record recordID]];
+                    NSLog(@"Query was successfully");
+                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
+                    
+                }
+                
+            //handle no query results
+            } else {
+                
+                NSLog(@"Query returned zero results");
+            }
+        }
+    }];
+    
+    
+    /////
+    // Event end
+    /////
+    
+    /////
+    // Competitor
+    ////
+    
+    
+    
+    //create query
+    query = [[CKQuery alloc] initWithRecordType:@"Competitor" predicate:predicate];
+    
+    //execute query
+    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
+        
+        //handle query error
+        if(error) {
+            
+            NSLog(@"Uh oh, there was an error querying ... %@", error);
+
+        } else {
+            
+            //handle query results
+            if([results count] > 0) {
+                
+                //iterate query results
+                for(CKRecord *record in results) {
+                    
+                    [localDeletionsMute addObject:[record recordID]];
+                    NSLog(@"Query was successfully");
+                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
+                    
+                }
+                
+            //handle no query results
+            } else {
+                
+                NSLog(@"Query returned zero results");
+            }
+        }
+    }];
+    
+    
+    /////
+    // Competitor end
+    /////
+    
+    /////
+    // CEventScore
+    ////
+    
+    
+    
+    //create query
+    query = [[CKQuery alloc] initWithRecordType:@"CEventScore" predicate:predicate];
+    
+    //execute query
+    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
+        
+        //handle query error
+        if(error) {
+            
+            NSLog(@"Uh oh, there was an error querying ... %@", error);
+
+        } else {
+            
+            //handle query results
+            if([results count] > 0) {
+                
+                //iterate query results
+                for(CKRecord *record in results) {
+                    
+                    [localDeletionsMute addObject:[record recordID]];
+                    NSLog(@"Query was successfully");
+                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
+                    
+                }
+                
+            //handle no query results
+            } else {
+                
+                NSLog(@"Query returned zero results");
+            }
+        }
+    }];
+    
+    
+    /////
+    // CEventScore end
+    /////
     
     
   
@@ -1977,6 +2260,60 @@ self.sharing = NO;
 
  return meetrecordID;
 
+}
+
+- (NSMutableArray*)removeDivsOnline:(NSString*)meetOnlineID {
+
+
+
+        NSMutableArray *fetchedRecords = [[NSMutableArray alloc] init];
+
+    //get the Container for the App
+    CKContainer *defaultContainer = [CKContainer defaultContainer];
+    
+    //get the PublicDatabase inside the Container
+    CKDatabase *publicDatabase = [defaultContainer publicCloudDatabase];
+    
+    //predicate for query
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetOnlineID];
+    
+    //create query
+    CKQuery *query = [[CKQuery alloc] initWithRecordType:@"Divisions" predicate:predicate];
+    
+    //execute query
+    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
+        
+        //handle query error
+        if(error) {
+            
+            NSLog(@"Uh oh, there was an error querying ... %@", error);
+
+        } else {
+            
+            //handle query results
+            if([results count] > 0) {
+                
+                //iterate query results
+                for(CKRecord *record in results) {
+                    
+                    [fetchedRecords addObject:record];
+                    NSLog(@"Query was successfully");
+                    NSLog(@"meetOnlineID: %@", record[@"meetOnlineID"]);
+                    
+                }
+                
+            //handle no query results
+            } else {
+                
+                NSLog(@"Query returned zero results");
+            }
+        }
+    }];
+
+
+
+
+    return fetchedRecords;
 }
 
 
