@@ -1235,7 +1235,7 @@ self.sharing = YES;
      CKRecord* meetrecord = [self addMeetOnline:self.meetObject];
     [localChangesMute addObject:meetrecord];
     
-   /**
+   
     for (Division* div in self.meetObject.divisions) {
         CKRecord *divrecord = [self addDivisionOnline:div];
         [localChangesMute addObject:divrecord];
@@ -1245,6 +1245,8 @@ self.sharing = YES;
         CKRecord *geventrecord = [self addGEventOnline:gevent];
         [localChangesMute addObject:geventrecord];
     }
+    /**
+    
     
     for (Team* team in self.meetObject.teams) {
         CKRecord *teamrecord = [self addTeamOnline:team];
@@ -1501,35 +1503,23 @@ return meet;
 
 }
 
-
-/**
 - (CKRecord*)addDivisionOnline:(Division*)divObject {
     //create a new RecordType
 
-    CKRecordID *meetrecordID = [[CKRecordID alloc] initWithRecordName:divObject.onlineID];
-    CKRecord *meet = [[CKRecord alloc] initWithRecordType:@"Meet" recordID:meetrecordID];
+    CKRecordID *divrecordID = [[CKRecordID alloc] initWithRecordName:divObject.onlineID];
+    CKRecord *div = [[CKRecord alloc] initWithRecordType:@"Division" recordID:divrecordID];
     
     //create and set record instance properties
     
-meet[@"cEventLimit"] = meetObject.cEventLimit;
-meet[@"competitorPerTeam"] = meetObject.competitorPerTeam;
-meet[@"decrementPerPlace"] = meetObject.decrementPerPlace;
-meet[@"divsDone"] = meetObject.divsDone;
-meet[@"eventsDone"] = meetObject.eventsDone;
-meet[@"maxScoringCompetitors"] = meetObject.maxScoringCompetitors;
-meet[@"meetDate"] = meetObject.meetDate;
-meet[@"meetEndTime"] = meetObject.meetEndTime;
-meet[@"meetID"] = meetObject.meetID;
-meet[@"meetName"] = meetObject.meetName;
-meet[@"meetStartTime"] = meetObject.meetStartTime;
-meet[@"scoreForFirstPlace"] = meetObject.scoreForFirstPlace;
-meet[@"scoreMultiplier"] = meetObject.scoreMultiplier;
-meet[@"teamsDone"] = meetObject.teamsDone;
-meet[@"onlineMeet"] = meetObject.onlineMeet;
-meet[@"updateDateAndTime"] = meetObject.updateDateAndTime;
-meet[@"updateByUser"] = meetObject.updateByUser;
-meet[@"isOwner"] = meetObject.isOwner;
-meet[@"onlineID"] = meetObject.onlineID;
+div[@"divID"] = divObject.divID;
+div[@"competitorPerTeam"] = divObject.divName;
+div[@"decrementPerPlace"] = divObject.onlineID;
+div[@"divsDone"] = divObject.updateByUser;
+div[@"eventsDone"] = divObject.updateDateAndTime;
+
+
+
+
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
@@ -1543,15 +1533,16 @@ NSArray *array = [mutableArray copy];
 
 mutableArray = [[NSMutableArray alloc] init];
 
-for(CEventScore* object in meetObject.cEventsScores) {
+for(Event* object in divObject.events) {
     if (object.onlineID) {
     NSLog(@"onlineid is there %@",object.onlineID);
     }
     else
     {
+       NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
         NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
     
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.cEventScoreID,timestamp];
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.eventID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
        NSLog(@"onlineid not found %@",object.onlineID);
     }
@@ -1561,172 +1552,45 @@ array = [mutableArray copy];
 
 ///////////
 
-meet[@"cEventsScores"] = array;
+div[@"events"] = array;
 
 //////////////
 //////////////
 
-mutableArray = [[NSMutableArray alloc] init];
-
-for(Competitor* object in meetObject.competitors) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.compID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-meet[@"competitors"] = array;
-
-//////////////
-//////////////
-
-mutableArray = [[NSMutableArray alloc] init];
-
-for(Division* object in meetObject.divisions) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.divID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-meet[@"divisions"] = array;
-
-//////////////
-//////////////
-
-mutableArray = [[NSMutableArray alloc] init];
-
-for(Event* object in meetObject.events) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.eventID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
 
 
-meet[@"events"] = array;
-
-//////////////
-//////////////
-
-mutableArray = [[NSMutableArray alloc] init];
-
-for(GEvent* object in meetObject.gEvents) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.gEventID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-
-meet[@"gEvents"] = array;
-
-//////////////
-//////////////
-
-mutableArray = [[NSMutableArray alloc] init];
-
-for(Team* object in meetObject.teams) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.teamID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-
-meet[@"teams"] = array;
-
-
+div[@"meetOnlineID"] = divObject.meet.onlineID;
     
     
  
  
-return meet;
+return div;
 
 }
 
 - (CKRecord*)addGEventOnline:(GEvent*)gEventObject {
     //create a new RecordType
 
-    CKRecordID *geventrecordID = [[CKRecordID alloc] initWithRecordName:divObject.onlineID];
-    CKRecord *gevent = [[CKRecord alloc] initWithRecordType:@"Meet" recordID:meetrecordID];
+    CKRecordID *geventrecordID = [[CKRecordID alloc] initWithRecordName:gEventObject.onlineID];
+    CKRecord *gevent = [[CKRecord alloc] initWithRecordType:@"GEvent" recordID: geventrecordID];    //create and set record instance properties
     
-    //create and set record instance properties
-    
-meet[@"cEventLimit"] = meetObject.cEventLimit;
-meet[@"competitorPerTeam"] = meetObject.competitorPerTeam;
-meet[@"decrementPerPlace"] = meetObject.decrementPerPlace;
-meet[@"divsDone"] = meetObject.divsDone;
-meet[@"eventsDone"] = meetObject.eventsDone;
-meet[@"maxScoringCompetitors"] = meetObject.maxScoringCompetitors;
-meet[@"meetDate"] = meetObject.meetDate;
-meet[@"meetEndTime"] = meetObject.meetEndTime;
-meet[@"meetID"] = meetObject.meetID;
-meet[@"meetName"] = meetObject.meetName;
-meet[@"meetStartTime"] = meetObject.meetStartTime;
-meet[@"scoreForFirstPlace"] = meetObject.scoreForFirstPlace;
-meet[@"scoreMultiplier"] = meetObject.scoreMultiplier;
-meet[@"teamsDone"] = meetObject.teamsDone;
-meet[@"onlineMeet"] = meetObject.onlineMeet;
-meet[@"updateDateAndTime"] = meetObject.updateDateAndTime;
-meet[@"updateByUser"] = meetObject.updateByUser;
-meet[@"isOwner"] = meetObject.isOwner;
-meet[@"onlineID"] = meetObject.onlineID;
+gevent[@"competitorsPerTeam"] = gEventObject.competitorsPerTeam;
+gevent[@"gEventID"] = gEventObject.decrementPerPlace;
+gevent[@"gEventID"] = gEventObject.gEventID;
+gevent[@"gEventID"] = gEventObject.gEventName;
+gevent[@"gEventID"] = gEventObject.gEventTiming;
+gevent[@"gEventID"] = gEventObject.gEventType;
+gevent[@"gEventID"] = gEventObject.maxScoringCompetitors;
+gevent[@"gEventID"] = gEventObject.onlineID;
+gevent[@"gEventID"] = gEventObject.scoreForFirstPlace;
+gevent[@"gEventID"] = gEventObject.scoreMultiplier;
+gevent[@"gEventID"] = gEventObject.updateByUser;
+gevent[@"gEventID"] = gEventObject.updateDateAndTime;
+
+
+
+
+
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
@@ -1740,15 +1604,16 @@ NSArray *array = [mutableArray copy];
 
 mutableArray = [[NSMutableArray alloc] init];
 
-for(CEventScore* object in meetObject.cEventsScores) {
+for(Event* object in gEventObject.events) {
     if (object.onlineID) {
     NSLog(@"onlineid is there %@",object.onlineID);
     }
     else
     {
+       NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
         NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
     
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.cEventScoreID,timestamp];
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.eventID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
        NSLog(@"onlineid not found %@",object.onlineID);
     }
@@ -1758,137 +1623,14 @@ array = [mutableArray copy];
 
 ///////////
 
-meet[@"cEventsScores"] = array;
+gevent[@"events"] = array;
 
 //////////////
 //////////////
 
-mutableArray = [[NSMutableArray alloc] init];
-
-for(Competitor* object in meetObject.competitors) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.compID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-meet[@"competitors"] = array;
-
-//////////////
-//////////////
-
-mutableArray = [[NSMutableArray alloc] init];
-
-for(Division* object in meetObject.divisions) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.divID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-meet[@"divisions"] = array;
-
-//////////////
-//////////////
-
-mutableArray = [[NSMutableArray alloc] init];
-
-for(Event* object in meetObject.events) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.eventID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
 
 
-meet[@"events"] = array;
-
-//////////////
-//////////////
-
-mutableArray = [[NSMutableArray alloc] init];
-
-for(GEvent* object in meetObject.gEvents) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.gEventID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-
-meet[@"gEvents"] = array;
-
-//////////////
-//////////////
-
-mutableArray = [[NSMutableArray alloc] init];
-
-for(Team* object in meetObject.teams) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@",object.teamID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-
-meet[@"teams"] = array;
-
-
+gevent[@"meetOnlineID"] = gEventObject.meet.onlineID;
     
     
  
@@ -1896,6 +1638,11 @@ meet[@"teams"] = array;
 return gevent;
 
 }
+
+
+/**
+
+
 
 - (CKRecord*)addDivisionOnline:(Division*)divObject {
     //create a new RecordType
