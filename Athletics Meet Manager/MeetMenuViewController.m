@@ -1251,12 +1251,6 @@ self.sharing = YES;
         [localChangesMute addObject:teamrecord];
     }
     
-    /**
-    
-    
-    
-    
-    
     for (Event* event in self.meetObject.events) {
         CKRecord *eventrecord = [self addEventOnline:event];
         [localChangesMute addObject:eventrecord];
@@ -1271,6 +1265,18 @@ self.sharing = YES;
         CKRecord *cscorerecord = [self addCScoreOnline:cscore];
         [localChangesMute addObject:cscorerecord];
     }
+    
+    /**
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
   **/
   [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
@@ -1515,10 +1521,10 @@ return meet;
     //create and set record instance properties
     
 div[@"divID"] = divObject.divID;
-div[@"competitorPerTeam"] = divObject.divName;
-div[@"decrementPerPlace"] = divObject.onlineID;
-div[@"divsDone"] = divObject.updateByUser;
-div[@"eventsDone"] = divObject.updateDateAndTime;
+div[@"divName"] = divObject.divName;
+div[@"onlineID"] = divObject.onlineID;
+div[@"updateByUser"] = divObject.updateByUser;
+div[@"updateDateAndTime"] = divObject.updateDateAndTime;
 
 
 
@@ -1578,17 +1584,17 @@ return div;
     CKRecord *gevent = [[CKRecord alloc] initWithRecordType:@"GEvent" recordID: geventrecordID];    //create and set record instance properties
     
 gevent[@"competitorsPerTeam"] = gEventObject.competitorsPerTeam;
-gevent[@"gEventID"] = gEventObject.decrementPerPlace;
+gevent[@"decrementPerPlace"] = gEventObject.decrementPerPlace;
 gevent[@"gEventID"] = gEventObject.gEventID;
-gevent[@"gEventID"] = gEventObject.gEventName;
-gevent[@"gEventID"] = gEventObject.gEventTiming;
-gevent[@"gEventID"] = gEventObject.gEventType;
-gevent[@"gEventID"] = gEventObject.maxScoringCompetitors;
-gevent[@"gEventID"] = gEventObject.onlineID;
-gevent[@"gEventID"] = gEventObject.scoreForFirstPlace;
-gevent[@"gEventID"] = gEventObject.scoreMultiplier;
-gevent[@"gEventID"] = gEventObject.updateByUser;
-gevent[@"gEventID"] = gEventObject.updateDateAndTime;
+gevent[@"gEventName"] = gEventObject.gEventName;
+gevent[@"gEventTiming"] = gEventObject.gEventTiming;
+gevent[@"gEventType"] = gEventObject.gEventType;
+gevent[@"maxScoringCompetitors"] = gEventObject.maxScoringCompetitors;
+gevent[@"onlineID"] = gEventObject.onlineID;
+gevent[@"scoreForFirstPlace"] = gEventObject.scoreForFirstPlace;
+gevent[@"scoreMultiplier"] = gEventObject.scoreMultiplier;
+gevent[@"updateByUser"] = gEventObject.updateByUser;
+gevent[@"updateDateAndTime"] = gEventObject.updateDateAndTime;
 
 
 
@@ -1650,14 +1656,14 @@ return gevent;
     
     //create and set record instance properties
     
-team[@"cEventLimit"] = teamObject.onlineID;
-team[@"competitorPerTeam"] = teamObject.teamAbr;
-team[@"decrementPerPlace"] = teamObject.teamID;
-team[@"divsDone"] = teamObject.teamName;
-team[@"eventsDone"] = teamObject.teamPlace;
-team[@"maxScoringCompetitors"] = teamObject.teamScore;
-team[@"teamDate"] = teamObject.updateByUser;
-team[@"teamEndTime"] = teamObject.updateDateAndTime;
+team[@"onlineID"] = teamObject.onlineID;
+team[@"teamAbr"] = teamObject.teamAbr;
+team[@"teamID"] = teamObject.teamID;
+team[@"teamName"] = teamObject.teamName;
+team[@"teamPlace"] = teamObject.teamPlace;
+team[@"teamScore"] = teamObject.teamScore;
+team[@"updateByUser"] = teamObject.updateByUser;
+team[@"updateDateAndTime"] = teamObject.updateDateAndTime;
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
@@ -1690,7 +1696,7 @@ array = [mutableArray copy];
 
 ///////////
 
-team[@"cEventsScores"] = array;
+team[@"cEventScores"] = array;
 
 //////////////
 //////////////
@@ -1730,39 +1736,21 @@ return team;
 
 }
 
-
-/**
-
-
-
-
-- (CKRecord*)addTeamOnline:(Team*)teamObject {
+- (CKRecord*)addEventOnline:(Event*)eventObject {
     //create a new RecordType
 
-    CKRecordID *teamrecordID = [[CKRecordID alloc] initWithRecordName:teamObject.onlineID];
-    CKRecord *team = [[CKRecord alloc] initWithRecordType:@"Team" recordID:teamrecordID];
+    CKRecordID *eventrecordID = [[CKRecordID alloc] initWithRecordName:eventObject.onlineID];
+    CKRecord *event = [[CKRecord alloc] initWithRecordType:@"Event" recordID:eventrecordID];
     
     //create and set record instance properties
     
-team[@"cEventLimit"] = teamObject.onlineID;
-team[@"competitorPerTeam"] = teamObject.teamAbr;
-team[@"decrementPerPlace"] = teamObject.teamID;
-team[@"divsDone"] = teamObject.teamName;
-team[@"eventsDone"] = teamObject.teamPlace;
-team[@"maxScoringCompetitors"] = teamObject.teamScore;
-team[@"teamDate"] = teamObject.updateByUser;
-team[@"teamEndTime"] = teamObject.updateDateAndTime;
-team[@"teamID"] = teamObject.teamID;
-team[@"teamName"] = teamObject.teamName;
-team[@"teamStartTime"] = teamObject.teamStartTime;
-team[@"scoreForFirstPlace"] = teamObject.scoreForFirstPlace;
-team[@"scoreMultiplier"] = teamObject.scoreMultiplier;
-team[@"teamsDone"] = teamObject.teamsDone;
-team[@"onlineteam"] = teamObject.onlineteam;
-team[@"updateDateAndTime"] = teamObject.updateDateAndTime;
-team[@"updateByUser"] = teamObject.updateByUser;
-team[@"isOwner"] = teamObject.isOwner;
-team[@"onlineID"] = teamObject.onlineID;
+event[@"eventDone"] = eventObject.eventDone;
+event[@"eventEdited"] = eventObject.eventEdited;
+event[@"eventID"] = eventObject.eventID;
+event[@"onlineID"] = eventObject.onlineID;
+event[@"startTime"] = eventObject.startTime;
+event[@"updateByUser"] = eventObject.updateByUser;
+event[@"updateDateAndTime"] = eventObject.updateDateAndTime;
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
@@ -1776,7 +1764,7 @@ NSArray *array = [mutableArray copy];
 
 mutableArray = [[NSMutableArray alloc] init];
 
-for(CEventScore* object in teamObject.cEventsScores) {
+for(CEventScore* object in eventObject.cEventScores) {
     if (object.onlineID) {
     NSLog(@"onlineid is there %@",object.onlineID);
     }
@@ -1785,7 +1773,7 @@ for(CEventScore* object in teamObject.cEventsScores) {
         NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
         NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
     
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.eventID,timestamp];
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.cEventScoreID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
        NSLog(@"onlineid not found %@",object.onlineID);
     }
@@ -1795,73 +1783,40 @@ array = [mutableArray copy];
 
 ///////////
 
-team[@"cEventsScores"] = array;
+event[@"cEventScores"] = array;
 
 //////////////
 //////////////
 
-mutableArray = [[NSMutableArray alloc] init];
-
-for(Competitor* object in teamObject.competitors) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-       NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+//////////////
+//////////////
     
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.eventID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-team[@"competitors"] = array;
-
-//////////////
-//////////////
-
-
-  team[@"meetOnlineID"] = teamObject.meet.onlineID;
+    
+    event[@"division"] = eventObject.division.onlineID;
+    event[@"gEvent"] = eventObject.gEvent.onlineID;
+    event[@"meetOnlineID"] = eventObject.meet.onlineID;
     
  
  
-return team;
+return event;
 
 }
 
-- (CKRecord*)addTeamOnline:(Team*)teamObject {
+- (CKRecord*)addCompOnline:(Competitor*)compObject {
     //create a new RecordType
 
-    CKRecordID *teamrecordID = [[CKRecordID alloc] initWithRecordName:teamObject.onlineID];
-    CKRecord *team = [[CKRecord alloc] initWithRecordType:@"Team" recordID:teamrecordID];
+    CKRecordID *comprecordID = [[CKRecordID alloc] initWithRecordName:compObject.onlineID];
+    CKRecord *comp = [[CKRecord alloc] initWithRecordType:@"Competitor" recordID:comprecordID];
     
     //create and set record instance properties
     
-team[@"cEventLimit"] = teamObject.onlineID;
-team[@"competitorPerTeam"] = teamObject.teamAbr;
-team[@"decrementPerPlace"] = teamObject.teamID;
-team[@"divsDone"] = teamObject.teamName;
-team[@"eventsDone"] = teamObject.teamPlace;
-team[@"maxScoringCompetitors"] = teamObject.teamScore;
-team[@"teamDate"] = teamObject.updateByUser;
-team[@"teamEndTime"] = teamObject.updateDateAndTime;
-team[@"teamID"] = teamObject.teamID;
-team[@"teamName"] = teamObject.teamName;
-team[@"teamStartTime"] = teamObject.teamStartTime;
-team[@"scoreForFirstPlace"] = teamObject.scoreForFirstPlace;
-team[@"scoreMultiplier"] = teamObject.scoreMultiplier;
-team[@"teamsDone"] = teamObject.teamsDone;
-team[@"onlineteam"] = teamObject.onlineteam;
-team[@"updateDateAndTime"] = teamObject.updateDateAndTime;
-team[@"updateByUser"] = teamObject.updateByUser;
-team[@"isOwner"] = teamObject.isOwner;
-team[@"onlineID"] = teamObject.onlineID;
+comp[@"compID"] = compObject.compID;
+comp[@"compName"] = compObject.compName;
+comp[@"onlineID"] = compObject.onlineID;
+comp[@"teamName"] = compObject.teamName;
+comp[@"updateByUser"] = compObject.updateByUser;
+comp[@"updateDateAndTime"] = compObject.updateDateAndTime;
+
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
@@ -1875,7 +1830,7 @@ NSArray *array = [mutableArray copy];
 
 mutableArray = [[NSMutableArray alloc] init];
 
-for(CEventScore* object in teamObject.cEventsScores) {
+for(CEventScore* object in compObject.cEventScores) {
     if (object.onlineID) {
     NSLog(@"onlineid is there %@",object.onlineID);
     }
@@ -1884,7 +1839,7 @@ for(CEventScore* object in teamObject.cEventsScores) {
         NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
         NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
     
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.eventID,timestamp];
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.cEventScoreID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
        NSLog(@"onlineid not found %@",object.onlineID);
     }
@@ -1894,73 +1849,43 @@ array = [mutableArray copy];
 
 ///////////
 
-team[@"cEventsScores"] = array;
-
-//////////////
-//////////////
-
-mutableArray = [[NSMutableArray alloc] init];
-
-for(Competitor* object in teamObject.competitors) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-       NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.eventID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-team[@"competitors"] = array;
+comp[@"cEventScores"] = array;
 
 //////////////
 //////////////
 
 
-  team[@"meetOnlineID"] = teamObject.meet.onlineID;
+//////////////
+//////////////
+
+    comp[@"team"] = compObject.team.onlineID;
+    comp[@"meetOnlineID"] = compObject.meet.onlineID;
     
  
  
-return team;
+return comp;
 
 }
 
-- (CKRecord*)addTeamOnline:(Team*)teamObject {
+- (CKRecord*)addCScoreOnline:(CEventScore*)cscoreObject {
     //create a new RecordType
 
-    CKRecordID *teamrecordID = [[CKRecordID alloc] initWithRecordName:teamObject.onlineID];
-    CKRecord *team = [[CKRecord alloc] initWithRecordType:@"Team" recordID:teamrecordID];
+    CKRecordID *cscorerecordID = [[CKRecordID alloc] initWithRecordName:cscoreObject.onlineID];
+    CKRecord *cscore = [[CKRecord alloc] initWithRecordType:@"CEventScore" recordID:cscorerecordID];
     
     //create and set record instance properties
     
-team[@"cEventLimit"] = teamObject.onlineID;
-team[@"competitorPerTeam"] = teamObject.teamAbr;
-team[@"decrementPerPlace"] = teamObject.teamID;
-team[@"divsDone"] = teamObject.teamName;
-team[@"eventsDone"] = teamObject.teamPlace;
-team[@"maxScoringCompetitors"] = teamObject.teamScore;
-team[@"teamDate"] = teamObject.updateByUser;
-team[@"teamEndTime"] = teamObject.updateDateAndTime;
-team[@"teamID"] = teamObject.teamID;
-team[@"teamName"] = teamObject.teamName;
-team[@"teamStartTime"] = teamObject.teamStartTime;
-team[@"scoreForFirstPlace"] = teamObject.scoreForFirstPlace;
-team[@"scoreMultiplier"] = teamObject.scoreMultiplier;
-team[@"teamsDone"] = teamObject.teamsDone;
-team[@"onlineteam"] = teamObject.onlineteam;
-team[@"updateDateAndTime"] = teamObject.updateDateAndTime;
-team[@"updateByUser"] = teamObject.updateByUser;
-team[@"isOwner"] = teamObject.isOwner;
-team[@"onlineID"] = teamObject.onlineID;
+cscore[@"cEventLimit"] = cscoreObject.cEventScoreID;
+cscore[@"competitorPercscore"] = cscoreObject.highJumpPlacingManual;
+cscore[@"decrementPerPlace"] = cscoreObject.onlineID;
+cscore[@"divsDone"] = cscoreObject.personalBest;
+cscore[@"eventsDone"] = cscoreObject.placing;
+cscore[@"maxScoringCompetitors"] = cscoreObject.result;
+cscore[@"cscoreDate"] = cscoreObject.resultEntered;
+cscore[@"cscoreEndTime"] = cscoreObject.score;
+cscore[@"cscoreID"] = cscoreObject.updateByUser;
+cscore[@"cscoreName"] = cscoreObject.updateDateAndTime;
+
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
@@ -1972,67 +1897,24 @@ NSArray *array = [mutableArray copy];
 //////////////
 //////////////
 
-mutableArray = [[NSMutableArray alloc] init];
+//[later attempts]
 
-for(CEventScore* object in teamObject.cEventsScores) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-        NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.eventID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-team[@"cEventsScores"] = array;
 
 //////////////
 //////////////
 
-mutableArray = [[NSMutableArray alloc] init];
-
-for(Competitor* object in teamObject.competitors) {
-    if (object.onlineID) {
-    NSLog(@"onlineid is there %@",object.onlineID);
-    }
-    else
-    {
-       NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.eventID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-    }
-    [mutableArray addObject:object.onlineID];
-}
-array = [mutableArray copy];
-
-///////////
-
-team[@"competitors"] = array;
-
-//////////////
-//////////////
-
-
-  team[@"meetOnlineID"] = teamObject.meet.onlineID;
+    cscore[@"competitor"] = cscoreObject.competitor.onlineID;
+    cscore[@"event"] = cscoreObject.event.onlineID;
+    cscore[@"team"] = cscoreObject.team.onlineID;
+    cscore[@"meetOnlineID"] = cscoreObject.meet.onlineID;
     
  
  
-return team;
+return cscore;
 
 }
-**/
+
+
 
 - (void)removeAllOnline {
 
@@ -2045,6 +1927,8 @@ self.sharing = NO;
    
      CKRecordID* meetrecordID = [self removeMeetOnline:self.meetObject];
    [localDeletionsMute addObject:meetrecordID];
+    
+    
     
     
   
