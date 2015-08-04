@@ -1235,50 +1235,58 @@ self.sharing = YES;
      CKRecord* meetrecord = [self addMeetOnline:self.meetObject];
     [localChangesMute addObject:meetrecord];
     
+    CKReference* ref = [[CKReference alloc] initWithRecord:meetrecord action:CKReferenceActionDeleteSelf];
    
     for (Division* div in self.meetObject.divisions) {
         CKRecord *divrecord = [self addDivisionOnline:div];
+        
+        
+        [divrecord setObject:ref forKey:@"owningMeet"];
+        
         [localChangesMute addObject:divrecord];
     }
     
     for (GEvent* gevent in self.meetObject.gEvents) {
         CKRecord *geventrecord = [self addGEventOnline:gevent];
+        
+        [geventrecord setObject:ref forKey:@"owningMeet"];
+        
         [localChangesMute addObject:geventrecord];
     }
     
     for (Team* team in self.meetObject.teams) {
         CKRecord *teamrecord = [self addTeamOnline:team];
+        
+        [teamrecord setObject:ref forKey:@"owningMeet"];
+        
         [localChangesMute addObject:teamrecord];
     }
     
     for (Event* event in self.meetObject.events) {
         CKRecord *eventrecord = [self addEventOnline:event];
+        
+        [eventrecord setObject:ref forKey:@"owningMeet"];
+        
         [localChangesMute addObject:eventrecord];
     }
     
     for (Competitor* comp in self.meetObject.competitors) {
         CKRecord *comprecord = [self addCompOnline:comp];
+        
+        [comprecord setObject:ref forKey:@"owningMeet"];
+        
         [localChangesMute addObject:comprecord];
     }
     
     for (CEventScore* cscore in self.meetObject.cEventsScores) {
         CKRecord *cscorerecord = [self addCScoreOnline:cscore];
+        
+        [cscorerecord setObject:ref forKey:@"owningMeet"];
+        
         [localChangesMute addObject:cscorerecord];
     }
     
-    /**
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-  **/
+
   [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
   
     
@@ -1836,6 +1844,7 @@ for(CEventScore* object in compObject.cEventScores) {
     }
     else
     {
+    
         NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
         NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
     
@@ -1875,16 +1884,16 @@ return comp;
     
     //create and set record instance properties
     
-cscore[@"cEventLimit"] = cscoreObject.cEventScoreID;
-cscore[@"competitorPercscore"] = cscoreObject.highJumpPlacingManual;
-cscore[@"decrementPerPlace"] = cscoreObject.onlineID;
-cscore[@"divsDone"] = cscoreObject.personalBest;
-cscore[@"eventsDone"] = cscoreObject.placing;
-cscore[@"maxScoringCompetitors"] = cscoreObject.result;
-cscore[@"cscoreDate"] = cscoreObject.resultEntered;
-cscore[@"cscoreEndTime"] = cscoreObject.score;
-cscore[@"cscoreID"] = cscoreObject.updateByUser;
-cscore[@"cscoreName"] = cscoreObject.updateDateAndTime;
+cscore[@"cEventScoreID"] = cscoreObject.cEventScoreID;
+cscore[@"highJumpPlacingManual"] = cscoreObject.highJumpPlacingManual;
+cscore[@"onlineID"] = cscoreObject.onlineID;
+cscore[@"personalBest"] = cscoreObject.personalBest;
+cscore[@"placing"] = cscoreObject.placing;
+cscore[@"result"] = cscoreObject.result;
+cscore[@"resultEntered"] = cscoreObject.resultEntered;
+cscore[@"score"] = cscoreObject.score;
+cscore[@"updateByUser"] = cscoreObject.updateByUser;
+cscore[@"updateDateAndTime"] = cscoreObject.updateDateAndTime;
 
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
@@ -1928,6 +1937,8 @@ self.sharing = NO;
    
      CKRecordID* meetrecordID = [self removeMeetOnline:self.meetObject];
    [localDeletionsMute addObject:meetrecordID];
+    
+    /**
     
     ///////////
     // rest
@@ -2213,7 +2224,7 @@ self.sharing = NO;
     // CEventScore end
     /////
     
-    
+    **/
   
   [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
 
@@ -2635,7 +2646,17 @@ self.shareOnlineButton.enabled = YES;
 
 - (IBAction)sendPermissionButtonPressed:(id)sender {
 
-NSLog(@"send permittion button pressed");
+NSString *meetOnlineID = self.meetObject.onlineID;
+
+NSLog(@"online id before: %@", meetOnlineID);
+
+NSData* data = [meetOnlineID dataUsingEncoding:NSUTF8StringEncoding];
+
+NSString* newStr = [NSString stringWithUTF8String:[data bytes]];
+
+NSLog(@"online id after: %@", newStr);
+
+
 
 }
 

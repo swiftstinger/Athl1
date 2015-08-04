@@ -141,4 +141,50 @@ NSInferMappingModelAutomaticallyOption : @YES
     }
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if (url){
+      //NSString *str = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+      NSData *data = [NSData dataWithContentsOfURL:url];
+      
+      
+      NSString* newStr = [NSString stringWithUTF8String:[data bytes]];
+      
+      NSLog(@"The file contained onlineID: %@",newStr);
+      
+      
+            /////
+            // remove directory contents
+            ////
+     
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSError *error = nil;
+        NSString *newpath = [NSString stringWithFormat:@"%@/Inbox",  documentsPath];
+        NSArray *directoryContents = [fileManager contentsOfDirectoryAtPath:newpath error:&error];
+        if (error == nil) {
+            for (NSString *path in directoryContents)
+            {
+                NSString *fullPath = [newpath stringByAppendingPathComponent:path];
+                BOOL removeSuccess = [fileManager removeItemAtPath:fullPath error:&error];
+                if (!removeSuccess) {
+                    // Error handling
+                    NSLog(@"Could not delete file -:%@ ",[error localizedDescription]);
+                }
+            }
+        }
+        else
+        {
+            // Error handling not url
+    
+        }
+      
+ 
+    }
+   return YES;
+}
+
+
+
+
 @end
