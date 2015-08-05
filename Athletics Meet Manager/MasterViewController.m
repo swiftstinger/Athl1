@@ -34,7 +34,13 @@
     
     NSLog(@"view did load");
     
+    
+    [self updateOnlineMeets];
     /**
+    
+    
+    
+    
     NSError *error = nil;
 
         // Save the context.
@@ -98,7 +104,14 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+     bool isOnlineMeet = [self.segmentedControl selectedSegmentIndex] == 0 ? FALSE : TRUE;
+    
+    if (isOnlineMeet) {        
+        return NO;
+        }
+        else {
+        return YES;
+        }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -140,6 +153,12 @@
         else
         {
            cell.hostLabel.hidden = YES;
+           
+           // Fetch the record from the database
+            
+           
+
+           
         }
     }
     else
@@ -438,6 +457,21 @@
     
     NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
     
+    NSString* newdevID;
+
+    NSRange numberrange = [devID rangeOfString:@">" ];
+if (numberrange.location != NSNotFound) {
+     newdevID = [devID substringFromIndex:numberrange.location + 2];
+} else {
+     newdevID = devID;
+}
+
+    devID = newdevID;
+    
+    newdevID = [devID stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    
+    devID = newdevID;
+    
     NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, newnumber,timestamp];
@@ -541,4 +575,162 @@ self.fetchedResultsController = nil;
     
 
 }
+
+- (void)setOnlineMeet:(NSString *)meetOnlineID {
+
+    NSLog(@"in masteviewcontrooler with string %@", meetOnlineID);
+   
+     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+        Meet *meet;
+    
+        meet = [NSEntityDescription insertNewObjectForEntityForName:@"Meet" inManagedObjectContext:context];
+    
+        [meet setValue: @"Online Meet Updating..." forKey:@"meetName"];
+    
+        [meet setValue: [NSNumber numberWithBool:YES] forKey:@"onlineMeet"];
+    
+        [meet setValue: [NSNumber numberWithBool:NO] forKey:@"isOwner"];
+
+    
+        [meet setValue: meetOnlineID forKey: @"onlineID"];
+
+        NSLog(@"new meet set with onlineID onlineID: %@", meetOnlineID);
+    
+    
+    NSError *error = nil;
+
+        // Save the context.
+        
+            if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+
+    
+}
+
+- (void)updateOnlineMeets {
+    
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+            NSEntityDescription *description = [NSEntityDescription entityForName:@"Meet" inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+           NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(onlineMeet == TRUE)"];
+            NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(isOwner == FALSE)"];
+            NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+            NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+            [fetchRequest setPredicate:andPred];
+    
+    
+
+                NSError *error;
+                NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    
+    
+            CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
+           // CKRecordID *meetRecordID;
+    
+    for (Meet* meetobject in results) {
+            
+                NSLog(@"updating meet %@ %@", meetobject.meetName, meetobject.onlineID);
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"onlineID = %@", meetobject.onlineID];
+    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"onlineID = %@", @"1"];
+                //create query
+                CKQuery *query = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicate];
+    
+            //execute query
+                [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
+        
+                //handle query error
+                if(error) {
+            
+                NSLog(@"Uh oh, there was an error querying ... %@", error);
+
+                } else {
+            
+                    //handle query results
+                    if([results count] > 0) {
+                
+                    //iterate query results
+                        for(CKRecord *meetRecord in results) {
+                    
+                            meetobject.meetDate = meetRecord[@"meetDate"];
+                            meetobject.meetName = meetRecord[@"meetName"];
+                
+                            NSError *error = nil;
+
+                            // Save the context.
+        
+                            if (![self.managedObjectContext save:&error]) {
+                           
+                            }
+                            NSLog(@"meet update succesfull %@", meetobject.meetName);
+
+                            }
+                
+                    //handle no query results
+                    } else {
+                
+                        NSLog(@"Query returned zero results");
+                    }
+                }
+                }];
+            
+            /**
+            
+                NSLog(@"updating meet %@ %@", meetobject.meetName, meetobject.onlineID);
+                
+               if ([meetobject.onlineID isEqualToString:@"B03E5305-F81F-4C43-A0B6-382C0F93281D1460468203"])
+               {
+                    NSLog(@"string equal");
+                   
+                    B03E5305-F81F-4C43-A0B6-382C0F93281D1460468203
+                    B03E5305-F81F-4C43-A0B6-382C0F93281D1460468203
+                    B03E5305-F81F-4C43-A0B6-382C0F93281D1460468203
+                    B03E5305-F81F-4C43-A0B6-382C0F93281D1460468203
+                }
+                else
+                {
+                    NSLog(@"string wrong +%@+",meetobject.onlineID);
+                }
+            
+            
+            
+            
+                meetRecordID = [[CKRecordID alloc] initWithRecordName:meetobject.onlineID];
+                [publicDatabase fetchRecordWithID:meetRecordID completionHandler:^(CKRecord *meetRecord, NSError *error) {
+                    if (error) {
+                        // Error handling for failed fetch from public database
+                
+                        NSLog(@"Uh oh, there was an error getting meetname %@  %@ online ... %@",meetobject.meetName, meetobject.onlineID, error);
+                    }
+                    else {
+                        // Modify the record and save it to the database
+                        
+                        meetobject.meetDate = meetRecord[@"meetDate"];
+                        meetobject.meetName = meetRecord[@"meetName"];
+                
+                        NSError *error = nil;
+
+                        // Save the context.
+        
+                        if (![self.managedObjectContext save:&error]) {
+                           
+                        }
+                        NSLog(@"meet update succesfull %@", meetobject.meetName);
+                
+                
+                    }
+                }];
+                
+                **/
+        }
+}
+
 @end

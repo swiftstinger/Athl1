@@ -26,5 +26,7 @@
 - (IBAction)segmentedControlValueChanged:(UISegmentedControl *)sender;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 
+- (void)setOnlineMeet:(NSString *)meetOnlineID;
+
 @end
 

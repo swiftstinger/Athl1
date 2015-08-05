@@ -152,6 +152,13 @@ NSInferMappingModelAutomaticallyOption : @YES
       
       NSLog(@"The file contained onlineID: %@",newStr);
       
+      UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    UINavigationController *rootNavController = (UINavigationController*)window.rootViewController;
+    
+    
+    MasterViewController* masterViewController = (MasterViewController*)[rootNavController topViewController];
+
+    [masterViewController setOnlineMeet:newStr];
       
             /////
             // remove directory contents
@@ -178,6 +185,8 @@ NSInferMappingModelAutomaticallyOption : @YES
             // Error handling not url
     
         }
+        
+        
       
  
     }
