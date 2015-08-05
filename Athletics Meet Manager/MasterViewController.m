@@ -34,8 +34,8 @@
     
     NSLog(@"view did load");
     
+   // [self updateOnlineMeets];
     
-    [self updateOnlineMeets];
     /**
     
     
@@ -55,6 +55,13 @@
     }
     **/
 }
+- (void) viewDidAppear:(BOOL)animated {
+[super viewDidAppear:animated];
+
+[self updateOnlineMeets];
+
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -598,6 +605,7 @@ self.fetchedResultsController = nil;
         NSLog(@"new meet set with onlineID onlineID: %@", meetOnlineID);
     
     
+    
     NSError *error = nil;
 
         // Save the context.
@@ -608,6 +616,8 @@ self.fetchedResultsController = nil;
             // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
+    
+            [self updateOnlineMeets];
 
     
 }
@@ -634,11 +644,14 @@ self.fetchedResultsController = nil;
     
     
             CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
-           // CKRecordID *meetRecordID;
+            CKRecordID *meetRecordID;
     
     for (Meet* meetobject in results) {
-            
+        
+        
                 NSLog(@"updating meet %@ %@", meetobject.meetName, meetobject.onlineID);
+        
+                 /**
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"onlineID = %@", meetobject.onlineID];
     //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"onlineID = %@", @"1"];
                 //create query
@@ -681,28 +694,15 @@ self.fetchedResultsController = nil;
                     }
                 }
                 }];
+        
+        
+                **/
             
-            /**
+        
             
                 NSLog(@"updating meet %@ %@", meetobject.meetName, meetobject.onlineID);
-                
-               if ([meetobject.onlineID isEqualToString:@"B03E5305-F81F-4C43-A0B6-382C0F93281D1460468203"])
-               {
-                    NSLog(@"string equal");
-                   
-                    B03E5305-F81F-4C43-A0B6-382C0F93281D1460468203
-                    B03E5305-F81F-4C43-A0B6-382C0F93281D1460468203
-                    B03E5305-F81F-4C43-A0B6-382C0F93281D1460468203
-                    B03E5305-F81F-4C43-A0B6-382C0F93281D1460468203
-                }
-                else
-                {
-                    NSLog(@"string wrong +%@+",meetobject.onlineID);
-                }
-            
-            
-            
-            
+        
+
                 meetRecordID = [[CKRecordID alloc] initWithRecordName:meetobject.onlineID];
                 [publicDatabase fetchRecordWithID:meetRecordID completionHandler:^(CKRecord *meetRecord, NSError *error) {
                     if (error) {
@@ -729,7 +729,7 @@ self.fetchedResultsController = nil;
                     }
                 }];
                 
-                **/
+                
         }
 }
 

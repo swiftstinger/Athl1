@@ -154,7 +154,7 @@ NSInferMappingModelAutomaticallyOption : @YES
       
       UIWindow *window = [UIApplication sharedApplication].keyWindow;
     UINavigationController *rootNavController = (UINavigationController*)window.rootViewController;
-    
+    [rootNavController popToRootViewControllerAnimated:YES];
     
     MasterViewController* masterViewController = (MasterViewController*)[rootNavController topViewController];
 
