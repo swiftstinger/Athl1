@@ -55,12 +55,7 @@
     }
     **/
 }
-- (void) viewDidAppear:(BOOL)animated {
-[super viewDidAppear:animated];
 
-[self updateOnlineMeets];
-
-}
 
 
 - (void)didReceiveMemoryWarning {
@@ -114,7 +109,7 @@
      bool isOnlineMeet = [self.segmentedControl selectedSegmentIndex] == 0 ? FALSE : TRUE;
     
     if (isOnlineMeet) {        
-        return NO;
+        return YES;
         }
         else {
         return YES;
@@ -124,7 +119,20 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        bool isOnlineMeet = [self.segmentedControl selectedSegmentIndex] == 0 ? FALSE : TRUE;
+        Meet* meetObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        
+        if (isOnlineMeet&&([meetObject.isOwner boolValue]))
+         {
+          
+          context = [self deleteOnlineMeet: meetObject InContext: context];
+        }
+        
+        NSLog(@"here");
+            [context deleteObject:meetObject];
+        
+        
+        
             
         NSError *error = nil;
         if (![context save:&error]) {
@@ -135,7 +143,37 @@
         }
     }
 }
+- (NSManagedObjectContext*)deleteOnlineMeet:(Meet*)meetObject InContext: (NSManagedObjectContext*) context {
 
+NSLog(@"deleteonlinemeet");
+
+    CKRecordID *meetrecordID = [[CKRecordID alloc] initWithRecordName:meetObject.onlineID];
+    
+    
+            //get the Container for the App
+            CKContainer *defaultContainer = [CKContainer defaultContainer];
+    
+            //get the PublicDatabase inside the Container
+            CKDatabase *publicDatabase = [defaultContainer publicCloudDatabase];
+    
+    
+      [publicDatabase deleteRecordWithID:meetrecordID completionHandler:^(CKRecordID *recordID, NSError *error) {
+        
+          if(error) {
+            
+                NSLog(@"Uh oh, there was an error deleting ... %@", error);
+          
+            //handle successful save
+            } else {
+            
+                NSLog(@"deleted successfully");
+   
+            }
+  
+        }];
+    
+        return context;
+}
 - (void)configureCell:(MeetTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
   
@@ -576,10 +614,27 @@ self.fetchedResultsController = nil;
     else
     {
     
-      self.addButton.enabled = NO;
+      self.addButton.enabled = YES;
         
     }
     
+
+}
+
+/**
+- (void)registerForNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(yourCustomMethod:)
+                                                 name:SELECT_INDEX_NOTIFICATION object:nil];
+}
+
+
+-(void)yourCustomMethod:(NSNotification*)_notification
+{
+    [[self navigationController] popToRootViewControllerAnimated:YES];
+    NSString *selectedIndex=[[_notification userInfo] objectForKey:SELECTED_INDEX];
+    NSLog(@"selectedIndex  : %@",selectedIndex);
 
 }
 
@@ -621,6 +676,8 @@ self.fetchedResultsController = nil;
 
     
 }
+**/
+
 
 - (void)updateOnlineMeets {
     

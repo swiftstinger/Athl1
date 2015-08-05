@@ -2978,4 +2978,171 @@ UIAlertController * alert;
  }
 }
 
+- (void)updateOnlineMeets {
+    
+            Meet* meetObject = self.meetObject;
+    
+            CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
+         //   CKRecordID *meetRecordID;
+    
+   
+    
+        
+               // NSLog(@"updating meet %@ ", meetObject.meetName);
+    
+    
+                 //////// start query 1 meet
+    
+                NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"onlineID = %@", meetObject.onlineID];
+    
+                CKQuery *query1 = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicate];
+    
+            //execute query
+                [publicDatabase performQuery:query1 inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
+        
+                //handle query error
+                if(error) {
+            
+                NSLog(@"Uh oh, there was an error querying ... %@", error);
+
+                } else {
+            
+                    //handle query results
+                    if([results count] > 0) {
+                
+                    //iterate query results
+                        for(CKRecord *meet in results) {
+                    
+                            meetObject.meetDate = meet[@"meetDate"];
+                            meetObject.meetName = meet[@"meetName"];
+                            meetObject.cEventLimit = meet[@"cEventLimit"];
+                            meetObject.competitorPerTeam = meet[@"competitorPerTeam"];
+                            meetObject.decrementPerPlace = meet[@"decrementPerPlace"];
+                            meetObject.divsDone = meet[@"divsDone"];
+                            meetObject.eventsDone = meet[@"eventsDone"];
+                            meetObject.maxScoringCompetitors = meet[@"maxScoringCompetitors"];
+                            meetObject.meetDate = meet[@"meetDate"];
+                            meetObject.meetEndTime = meet[@"meetEndTime"];
+                            meetObject.meetID = meet[@"meetID"];
+                            meetObject.meetName = meet[@"meetName"];
+                            meetObject.meetStartTime = meet[@"meetStartTime"];
+                            meetObject.scoreForFirstPlace = meet[@"scoreForFirstPlace"];
+                            meetObject.scoreMultiplier = meet[@"scoreMultiplier"];
+                            meetObject.teamsDone = meet[@"teamsDone"];
+                            meetObject.onlineMeet = meet[@"onlineMeet"];
+                            meetObject.updateDateAndTime = meet[@"updateDateAndTime"];
+                            meetObject.updateByUser = meet[@"updateByUser"];
+                            meetObject.isOwner = meet[@"isOwner"];
+                            meetObject.onlineID = meet[@"onlineID"];
+
+                            NSLog(@"updating meet %@ %@", meetObject.meetName);
+                            
+                            
+                            
+                            
+                            
+                            
+                            NSError *error = nil;
+
+                            // Save the context.
+        
+                            if (![self.managedObjectContext save:&error]) {
+                           
+                            }
+                            NSLog(@"meet update succesfull %@", meetobject.meetName);
+
+                            }
+                
+                    //handle no query results
+                    } else {
+                
+                        NSLog(@"Query returned zero results");
+                    }
+                }
+                }];
+        
+                //////// end query 1 meet
+    
+            //////// start query 2 divs
+    
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"onlineID = %@", meetObject.onlineID];
+    
+                CKQuery *query1 = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicate];
+    
+            //execute query
+                [publicDatabase performQuery:query1 inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
+        
+                //handle query error
+                if(error) {
+            
+                NSLog(@"Uh oh, there was an error querying ... %@", error);
+
+                } else {
+            
+                    //handle query results
+                    if([results count] > 0) {
+                
+                    //iterate query results
+                        for(CKRecord *meet in results) {
+                    
+                            meetObject.meetDate = meet[@"meetDate"];
+                            meetObject.meetName = meet[@"meetName"];
+                            meetObject.cEventLimit = meet[@"cEventLimit"];
+                            meetObject.competitorPerTeam = meet[@"competitorPerTeam"];
+                            meetObject.decrementPerPlace = meet[@"decrementPerPlace"];
+                            meetObject.divsDone = meet[@"divsDone"];
+                            meetObject.eventsDone = meet[@"eventsDone"];
+                            meetObject.maxScoringCompetitors = meet[@"maxScoringCompetitors"];
+                            meetObject.meetDate = meet[@"meetDate"];
+                            meetObject.meetEndTime = meet[@"meetEndTime"];
+                            meetObject.meetID = meet[@"meetID"];
+                            meetObject.meetName = meet[@"meetName"];
+                            meetObject.meetStartTime = meet[@"meetStartTime"];
+                            meetObject.scoreForFirstPlace = meet[@"scoreForFirstPlace"];
+                            meetObject.scoreMultiplier = meet[@"scoreMultiplier"];
+                            meetObject.teamsDone = meet[@"teamsDone"];
+                            meetObject.onlineMeet = meet[@"onlineMeet"];
+                            meetObject.updateDateAndTime = meet[@"updateDateAndTime"];
+                            meetObject.updateByUser = meet[@"updateByUser"];
+                            meetObject.isOwner = meet[@"isOwner"];
+                            meetObject.onlineID = meet[@"onlineID"];
+
+                            NSLog(@"updating meet %@ %@", meetObject.meetName);
+                            
+                            
+                            
+                            
+                            
+                            
+                            NSError *error = nil;
+
+                            // Save the context.
+        
+                            if (![self.managedObjectContext save:&error]) {
+                           
+                            }
+                            NSLog(@"meet update succesfull %@", meetobject.meetName);
+
+                            }
+                
+                    //handle no query results
+                    } else {
+                
+                        NSLog(@"Query returned zero results");
+                    }
+                }
+                }];
+        
+                //////// end query 1 meet
+
+        
+            
+    
+        
+
+    
+        }
+}
+
+
 @end

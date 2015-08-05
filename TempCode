@@ -1,4 +1,13 @@
 
+
+update only in meetmenu
+
+
+
+add add for all and manage (should only add offline meets)
+
+still do load in app delegate
+
 error record name cannot be nil for record deleted
 
 update appdelegate to allow in other views
@@ -6,6 +15,7 @@ update appdelegate to allow in other views
 add button for onlinemeet if owner
 
 manual updat ebutton to make app more responsive
+
 
 
 IPHONE 6 score move left

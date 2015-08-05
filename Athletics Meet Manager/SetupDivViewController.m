@@ -58,9 +58,14 @@
 // nslog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
-        if ([self.meetObject.onlineMeet boolValue]) {
+        if (([self.meetObject.onlineMeet boolValue])&&(![self.meetObject.isOwner boolValue])) {
         
             self.addButton.enabled = NO;
+        }
+        else
+        {
+            self.addButton.enabled = YES;
+        
         }
     }
     

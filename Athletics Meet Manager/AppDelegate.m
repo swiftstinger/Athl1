@@ -10,6 +10,7 @@
 //#import "SetupDivViewController.h"
 //#import "MeetMenuViewController.h"
 #import "MasterViewController.h"
+#import "Meet.h"
 
 @interface AppDelegate ()
 
@@ -152,6 +153,34 @@ NSInferMappingModelAutomaticallyOption : @YES
       
       NSLog(@"The file contained onlineID: %@",newStr);
       
+      
+       
+    
+        Meet *meet;
+    
+        meet = [NSEntityDescription insertNewObjectForEntityForName:@"Meet" inManagedObjectContext:self.managedObjectContext];
+    
+        [meet setValue: @"ONLINE Tap To Update" forKey:@"meetName"];
+    
+        [meet setValue: [NSNumber numberWithBool:YES] forKey:@"onlineMeet"];
+    
+        [meet setValue: [NSNumber numberWithBool:NO] forKey:@"isOwner"];
+
+    
+        [meet setValue: newStr forKey: @"onlineID"];
+
+        NSLog(@"new meet set with onlineID onlineID: %@", meet.onlineID);
+    
+    
+    
+        [self saveContext];
+      
+      /**
+      NSDictionary *_dictionary=[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",newIndex],nil] forKeys:[NSArray arrayWithObjects:SELECTED_INDEX,nil]];
+
+[[NSNotificationCenter defaultCenter] postNotificationName:SELECT_INDEX_NOTIFICATION object:nil userInfo:_dictionary];
+     
+      
       UIWindow *window = [UIApplication sharedApplication].keyWindow;
     UINavigationController *rootNavController = (UINavigationController*)window.rootViewController;
     [rootNavController popToRootViewControllerAnimated:YES];
@@ -159,6 +188,9 @@ NSInferMappingModelAutomaticallyOption : @YES
     MasterViewController* masterViewController = (MasterViewController*)[rootNavController topViewController];
 
     [masterViewController setOnlineMeet:newStr];
+    
+    
+    **/
       
             /////
             // remove directory contents
