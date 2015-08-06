@@ -136,6 +136,19 @@ if ([[self.meetObject valueForKey: @"divsDone"] boolValue]) {
 
 if ([self.meetObject.onlineMeet boolValue]) {
     if (![self.meetObject.isOwner boolValue]) {
+        self.groupDivLabel.text = @"Group Divisions (locked)";
+        self.gEventLabel.text = @"Events (locked)";
+        self.enterTeamLabel.text = @"Teams (Competitor entry only)";
+      //  self.finalResultCell.hidden = YES;
+    }
+
+
+}
+
+
+/**
+if ([self.meetObject.onlineMeet boolValue]) {
+    if (![self.meetObject.isOwner boolValue]) {
         self.groupDivCell.hidden = YES;
         self.gEventCell.hidden = YES;
         self.enterTeamCell.hidden = YES;
@@ -143,9 +156,8 @@ if ([self.meetObject.onlineMeet boolValue]) {
     }
 
 
-
 }
-
+**/
 }
 - (void)viewDidLoad
 {
@@ -156,6 +168,17 @@ if ([self.meetObject.onlineMeet boolValue]) {
     
     self.exportresults = NO;
     self.sendpermission = NO;
+    
+    if ([self.meetObject.onlineMeet boolValue]&&(![self.meetObject.isOwner boolValue])) {
+    [self updateOnlineMeet];
+    }
+    else
+    {
+        NSLog(@"not doing it onlile %@  owner %@", self.meetObject.onlineMeet, self.meetObject.isOwner);
+        
+    }
+    
+    
     
    //  // nslog(@"Teams in configure view: %lu",  (unsigned long)[self.meetObject.teams count]);
         /**
@@ -737,10 +760,10 @@ meet[@"meetStartTime"] = meetObject.meetStartTime;
 meet[@"scoreForFirstPlace"] = meetObject.scoreForFirstPlace;
 meet[@"scoreMultiplier"] = meetObject.scoreMultiplier;
 meet[@"teamsDone"] = meetObject.teamsDone;
-meet[@"onlineMeet"] = meetObject.onlineMeet;
+meet[@"onlineMeet"] = [NSNumber numberWithBool:YES];
 meet[@"updateDateAndTime"] = meetObject.updateDateAndTime;
 meet[@"updateByUser"] = meetObject.updateByUser;
-meet[@"isOwner"] = meetObject.isOwner;
+meet[@"isOwner"] = [NSNumber numberWithBool:NO];
 meet[@"onlineID"] = meetObject.onlineID;
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
@@ -774,7 +797,9 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
         
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.cEventScoreID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
@@ -812,7 +837,9 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
         
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.compID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
@@ -850,8 +877,12 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
     
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        
+     NSLog(@"timestamp : %@ ",timestamp);
+     NSLog(@"divID: %@", object.divID);
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.divID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
        NSLog(@"onlineid not found %@",object.onlineID);
@@ -888,8 +919,10 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
         
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
+       
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.eventID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
        NSLog(@"onlineid not found %@",object.onlineID);
@@ -927,7 +960,9 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
         
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.gEventID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
@@ -966,7 +1001,9 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
         
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.teamID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
@@ -1062,7 +1099,9 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
        
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.eventID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
@@ -1145,7 +1184,9 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
        
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.eventID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
@@ -1221,7 +1262,9 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
         
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.cEventScoreID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
@@ -1259,7 +1302,9 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
        
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.compID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
@@ -1331,7 +1376,9 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
         
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.cEventScoreID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
@@ -1410,7 +1457,9 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
         
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.cEventScoreID,timestamp];
       [object setValue: onlineID forKey: @"onlineID"];
@@ -2978,41 +3027,35 @@ UIAlertController * alert;
  }
 }
 
-- (void)updateOnlineMeets {
+- (void)updateOnlineMeet {
     
+    
+        NSLog(@"updating meet");
             Meet* meetObject = self.meetObject;
     
+            NSMutableDictionary* objectsDictionary = [[NSMutableDictionary alloc] init];
+
+
+    
+    
+    
+            NSManagedObjectContext* context = self.managedObjectContext;
+    
             CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
-         //   CKRecordID *meetRecordID;
-    
-   
-    
-        
-               // NSLog(@"updating meet %@ ", meetObject.meetName);
-    
     
                  //////// start query 1 meet
     
                 NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"onlineID = %@", meetObject.onlineID];
     
-                CKQuery *query1 = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicate];
+                CKQuery *queryMeet = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicate1];
+                CKQueryOperation *queryOpMeet = [[CKQueryOperation alloc] initWithQuery:queryMeet];
     
+               queryOpMeet.database = publicDatabase;
             //execute query
-                [publicDatabase performQuery:query1 inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
-        
-                //handle query error
-                if(error) {
-            
-                NSLog(@"Uh oh, there was an error querying ... %@", error);
-
-                } else {
-            
-                    //handle query results
-                    if([results count] > 0) {
-                
-                    //iterate query results
-                        for(CKRecord *meet in results) {
-                    
+    
+                queryOpMeet.recordFetchedBlock = ^(CKRecord *meet)
+                {
+                    //do something
                             meetObject.meetDate = meet[@"meetDate"];
                             meetObject.meetName = meet[@"meetName"];
                             meetObject.cEventLimit = meet[@"cEventLimit"];
@@ -3034,114 +3077,85 @@ UIAlertController * alert;
                             meetObject.updateByUser = meet[@"updateByUser"];
                             meetObject.isOwner = meet[@"isOwner"];
                             meetObject.onlineID = meet[@"onlineID"];
-
-                            NSLog(@"updating meet %@ %@", meetObject.meetName);
-                            
-                            
-                            
-                            
-                            
-                            
-                            NSError *error = nil;
-
-                            // Save the context.
-        
-                            if (![self.managedObjectContext save:&error]) {
-                           
-                            }
-                            NSLog(@"meet update succesfull %@", meetobject.meetName);
-
-                            }
-                
-                    //handle no query results
-                    } else {
-                
-                        NSLog(@"Query returned zero results");
-                    }
-                }
-                }];
-        
-                //////// end query 1 meet
-    
-            //////// start query 2 divs
-    
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"onlineID = %@", meetObject.onlineID];
-    
-                CKQuery *query1 = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicate];
-    
-            //execute query
-                [publicDatabase performQuery:query1 inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
-        
-                //handle query error
-                if(error) {
-            
-                NSLog(@"Uh oh, there was an error querying ... %@", error);
-
-                } else {
-            
-                    //handle query results
-                    if([results count] > 0) {
-                
-                    //iterate query results
-                        for(CKRecord *meet in results) {
                     
-                            meetObject.meetDate = meet[@"meetDate"];
-                            meetObject.meetName = meet[@"meetName"];
-                            meetObject.cEventLimit = meet[@"cEventLimit"];
-                            meetObject.competitorPerTeam = meet[@"competitorPerTeam"];
-                            meetObject.decrementPerPlace = meet[@"decrementPerPlace"];
-                            meetObject.divsDone = meet[@"divsDone"];
-                            meetObject.eventsDone = meet[@"eventsDone"];
-                            meetObject.maxScoringCompetitors = meet[@"maxScoringCompetitors"];
-                            meetObject.meetDate = meet[@"meetDate"];
-                            meetObject.meetEndTime = meet[@"meetEndTime"];
-                            meetObject.meetID = meet[@"meetID"];
-                            meetObject.meetName = meet[@"meetName"];
-                            meetObject.meetStartTime = meet[@"meetStartTime"];
-                            meetObject.scoreForFirstPlace = meet[@"scoreForFirstPlace"];
-                            meetObject.scoreMultiplier = meet[@"scoreMultiplier"];
-                            meetObject.teamsDone = meet[@"teamsDone"];
-                            meetObject.onlineMeet = meet[@"onlineMeet"];
-                            meetObject.updateDateAndTime = meet[@"updateDateAndTime"];
-                            meetObject.updateByUser = meet[@"updateByUser"];
-                            meetObject.isOwner = meet[@"isOwner"];
-                            meetObject.onlineID = meet[@"onlineID"];
+                            [objectsDictionary setValue:meetObject forKey:meetObject.onlineID];
 
-                            NSLog(@"updating meet %@ %@", meetObject.meetName);
-                            
-                            
-                            
-                            
-                            
-                            
-                            NSError *error = nil;
 
-                            // Save the context.
-        
-                            if (![self.managedObjectContext save:&error]) {
-                           
-                            }
-                            NSLog(@"meet update succesfull %@", meetobject.meetName);
+                            NSLog(@"updating meet %@ ", meetObject.meetName);
+                            NSLog(@"updating meet %@ ", meetObject.meetName);
+                            NSLog(@"updating meet %@ ", meetObject.meetName);
+                };
 
-                            }
+                queryOpMeet.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
                 
-                    //handle no query results
-                    } else {
-                
-                        NSLog(@"Query returned zero results");
+                    if (error) {
+                    NSLog(@"CKQueryCursor  meet query error %@", error);
                     }
-                }
-                }];
-        
-                //////// end query 1 meet
-
-        
-            
-    
-        
+                    else
+                    {
+                     NSLog(@"query meet succesful");
+                     _navBar.title = [self.meetObject valueForKey:@"meetName"];
+                     }
+                };
 
     
-        }
+    //////// end query 1 meet
+
+//////// start query 2 div
+    
+                NSPredicate *predicateDiv = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
+    
+                CKQuery *queryDiv = [[CKQuery alloc] initWithRecordType:@"Division" predicate:predicateDiv];
+                CKQueryOperation *queryOpDiv = [[CKQueryOperation alloc] initWithQuery:queryDiv];
+    
+               queryOpDiv.database = publicDatabase;
+            //execute query
+    
+                queryOpDiv.recordFetchedBlock = ^(CKRecord *div)
+                {
+                    //do something
+                    
+                    Division* divObject = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
+                    
+                            div[@"divID"] = divObject.divID;
+                            divObject.divName = div[@"divName"];
+                            divObject.onlineID = div[@"onlineID"];
+                            divObject.updateByUser = div[@"updateByUser"];
+                            divObject.updateDateAndTime = div[@"updateDateAndTime"];
+                    
+                            divObject.meet = meetObject;
+                    
+                            [objectsDictionary setValue:divObject forKey:divObject.onlineID];
+
+                            NSLog(@"updating div %@ ", divObject.divName);
+                            NSLog(@"updating div %@ ", divObject.divName);
+                            NSLog(@"updating div %@ ", divObject.divName);
+                };
+
+                queryOpDiv.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  div query error %@", error);
+                    }
+                    else
+                    {
+                     NSLog(@"query div succesful");
+                     
+                     }
+                };
+
+                [queryOpDiv addDependency:queryOpMeet];
+    
+    //////// end query 2 div
+
+
+
+
+                NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+                [queue addOperation: queryOpMeet];
+                [queue addOperation: queryOpDiv];
 }
 
 

@@ -26,8 +26,13 @@
 @property (strong, nonatomic) Meet* meetObject;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
 @property (weak, nonatomic) IBOutlet MeetMenuViewCell *groupDivCell;
+@property (weak, nonatomic) IBOutlet UILabel *groupDivLabel;
 @property (weak, nonatomic) IBOutlet MeetMenuViewCell *gEventCell;
+@property (weak, nonatomic) IBOutlet UILabel *gEventLabel;
 @property (weak, nonatomic) IBOutlet MeetMenuViewCell *enterTeamCell;
+@property (weak, nonatomic) IBOutlet UILabel *enterTeamLabel;
+
+
 
 - (IBAction)ExportResultsButton:(UIBarButtonItem *)sender;
 

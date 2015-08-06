@@ -211,7 +211,7 @@ NSLog(@"deleteonlinemeet");
      cell.hostLabel.hidden = YES;
      
     }
-
+        NSLog(@"in configurecell");
     NSLog(@"MEET NAME %@  owner value %hhd online %hhd", [[object valueForKey:@"meetName"] description],[[object valueForKey:@"isOwner"] boolValue],[[object valueForKey:@"onlineMeet"] boolValue]);
 
     
@@ -513,11 +513,12 @@ if (numberrange.location != NSNotFound) {
 
     devID = newdevID;
     
-    newdevID = [devID stringByReplacingOccurrencesOfString:@"-" withString:@""];
+       
+    NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
-    devID = newdevID;
     
-    NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
     
       NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, newnumber,timestamp];
       [meet setValue: onlineID forKey: @"onlineID"];

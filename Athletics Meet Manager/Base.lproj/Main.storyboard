@@ -334,10 +334,13 @@
                     <connections>
                         <outlet property="MeetMenuLabel" destination="I85-X5-9LE" id="ofi-xo-fiM"/>
                         <outlet property="enterTeamCell" destination="Cgu-hz-ypT" id="VjN-4r-kAl"/>
+                        <outlet property="enterTeamLabel" destination="I85-X5-9LE" id="kYe-sY-V5S"/>
                         <outlet property="exportResultsButton" destination="uwt-KP-V9X" id="0hR-J3-o6f"/>
                         <outlet property="finalResultCell" destination="b0Z-sr-z7l" id="taX-7B-l2K"/>
                         <outlet property="gEventCell" destination="OJa-F2-EQR" id="fEZ-yf-zmo"/>
+                        <outlet property="gEventLabel" destination="pR2-I0-sp5" id="vG4-PE-p4P"/>
                         <outlet property="groupDivCell" destination="4Q4-QV-CcC" id="d6d-An-4mJ"/>
+                        <outlet property="groupDivLabel" destination="jI2-Zv-NBY" id="tDF-bH-G2V"/>
                         <outlet property="navBar" destination="iaR-ri-1Td" id="2SY-vJ-PMt"/>
                         <outlet property="sendPermissionButton" destination="7qu-C5-M2C" id="rNP-6u-cO9"/>
                         <outlet property="shareOnlineButton" destination="FFx-sy-dit" id="FHI-lG-gup"/>
