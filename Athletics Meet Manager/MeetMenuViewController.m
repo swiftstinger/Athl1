@@ -3082,8 +3082,7 @@ UIAlertController * alert;
 
 
                             NSLog(@"updating meet %@ ", meetObject.meetName);
-                            NSLog(@"updating meet %@ ", meetObject.meetName);
-                            NSLog(@"updating meet %@ ", meetObject.meetName);
+                    
                 };
 
                 queryOpMeet.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
@@ -3102,7 +3101,7 @@ UIAlertController * alert;
     
     //////// end query 1 meet
 
-//////// start query 2 div
+    //////// start query 2 div
     
                 NSPredicate *predicateDiv = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
     
@@ -3118,7 +3117,7 @@ UIAlertController * alert;
                     
                     Division* divObject = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
                     
-                            div[@"divID"] = divObject.divID;
+                            divObject.divID = div[@"divID"];
                             divObject.divName = div[@"divName"];
                             divObject.onlineID = div[@"onlineID"];
                             divObject.updateByUser = div[@"updateByUser"];
@@ -3129,8 +3128,7 @@ UIAlertController * alert;
                             [objectsDictionary setValue:divObject forKey:divObject.onlineID];
 
                             NSLog(@"updating div %@ ", divObject.divName);
-                            NSLog(@"updating div %@ ", divObject.divName);
-                            NSLog(@"updating div %@ ", divObject.divName);
+                    
                 };
 
                 queryOpDiv.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
@@ -3150,12 +3148,173 @@ UIAlertController * alert;
     
     //////// end query 2 div
 
+    //////// start query 3 gevent
+    
+                NSPredicate *predicateGEvent = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
+    
+                CKQuery *queryGEvent = [[CKQuery alloc] initWithRecordType:@"GEvent" predicate:predicateGEvent];
+                CKQueryOperation *queryOpGEvent = [[CKQueryOperation alloc] initWithQuery:queryGEvent];
+    
+               queryOpGEvent.database = publicDatabase;
+            //execute query
+    
+                queryOpGEvent.recordFetchedBlock = ^(CKRecord *gevent)
+                {
+                    //do something
+                    
+                    GEvent* gEventObject = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
+                    
+                            gEventObject.competitorsPerTeam = gevent[@"competitorsPerTeam"];
+                            gEventObject.decrementPerPlace = gevent[@"decrementPerPlace"];
+                            gEventObject.gEventID = gevent[@"gEventID"];
+                            gEventObject.gEventName = gevent[@"gEventName"];
+                            gEventObject.gEventTiming = gevent[@"gEventTiming"];
+                            gEventObject.gEventType = gevent[@"gEventType"];
+                            gEventObject.maxScoringCompetitors = gevent[@"maxScoringCompetitors"];
+                            gEventObject.onlineID = gevent[@"onlineID"];
+                            gEventObject.scoreForFirstPlace = gevent[@"scoreForFirstPlace"];
+                            gEventObject.scoreMultiplier = gevent[@"scoreMultiplier"];
+                            gEventObject.updateByUser = gevent[@"updateByUser"];
+                            gEventObject.updateDateAndTime = gevent[@"updateDateAndTime"];
+                    
+                            gEventObject.meet = meetObject;
+                    
+                            [objectsDictionary setValue:gEventObject forKey:gEventObject.onlineID];
 
+                            NSLog(@"updating gevent %@ ", gEventObject.gEventName);
+                    
+                };
 
+                queryOpGEvent.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  gevent query error %@", error);
+                    }
+                    else
+                    {
+                     NSLog(@"query gevent succesful");
+                     
+                     }
+                };
+
+                [queryOpGEvent addDependency:queryOpDiv];
+    
+    //////// end query 3 gevent
+
+    //////// start query 4 team
+    
+                NSPredicate *predicateTeam = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
+    
+                CKQuery *queryTeam = [[CKQuery alloc] initWithRecordType:@"Team" predicate:predicateTeam];
+                CKQueryOperation *queryOpTeam = [[CKQueryOperation alloc] initWithQuery:queryTeam];
+    
+               queryOpTeam.database = publicDatabase;
+            //execute query
+    
+                queryOpTeam.recordFetchedBlock = ^(CKRecord *team)
+                {
+                    //do something
+                    
+                    Team* teamObject = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
+                    
+                        teamObject.onlineID = team[@"onlineID"];
+                        teamObject.teamAbr = team[@"teamAbr"];
+                        teamObject.teamID = team[@"teamID"];
+                        teamObject.teamName = team[@"teamName"];
+                        teamObject.teamPlace = team[@"teamPlace"];
+                        teamObject.teamScore = team[@"teamScore"];
+                        teamObject.updateByUser = team[@"updateByUser"];
+                        teamObject.updateDateAndTime = team[@"updateDateAndTime"];
+                    
+                            teamObject.meet = meetObject;
+                    
+                            [objectsDictionary setValue:teamObject forKey:teamObject.onlineID];
+
+                            NSLog(@"updating team %@ ", teamObject.teamName);
+                    
+                };
+
+                queryOpTeam.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  Team query error %@", error);
+                    }
+                    else
+                    {
+                     NSLog(@"query Team succesful");
+                     
+                     }
+                };
+
+                [queryOpTeam addDependency:queryOpGEvent];
+    
+    //////// end query 4 team
+    
+    
+        //////// start query 5 Event
+    
+                NSPredicate *predicateEvent = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
+    
+                CKQuery *queryEvent = [[CKQuery alloc] initWithRecordType:@"Event" predicate:predicateEvent];
+                CKQueryOperation *queryOpEvent = [[CKQueryOperation alloc] initWithQuery:queryEvent];
+    
+               queryOpEvent.database = publicDatabase;
+            //execute query
+    
+                queryOpEvent.recordFetchedBlock = ^(CKRecord *event)
+                {
+                    //do something
+                    
+                    Event* eventObject = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+                    
+                        eventObject.eventDone = event[@"eventDone"];
+                        eventObject.eventEdited = event[@"eventEdited"];
+                        eventObject.eventID = event[@"eventID"];
+                        eventObject.onlineID = event[@"onlineID"];
+                        eventObject.startTime = event[@"startTime"];
+                        eventObject.updateByUser = event[@"updateByUser"];
+                        eventObject.updateDateAndTime = event[@"updateDateAndTime"];
+                    
+                        eventObject.meet = meetObject;
+                    
+                        eventObject.division = [objectsDictionary valueForKey:event[@"division"]];
+                        eventObject.gEvent = [objectsDictionary valueForKey: event[@"gEvent"]];
+                        eventObject.meet = event[@"meetOnlineID"];
+                    
+                    
+                            [objectsDictionary setValue:eventObject forKey:eventObject.onlineID];
+
+                            NSLog(@"updating event %@ %@", eventObject.gEvent.gEventName, eventObject.division.divName);
+                    
+                };
+
+                queryOpEvent.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  Event query error %@", error);
+                    }
+                    else
+                    {
+                     NSLog(@"query Event succesful");
+                     
+                     }
+                };
+
+                [queryOpEvent addDependency:queryOpGEvent];
+                [queryOpEvent addDependency:queryOpDiv];
+    
+    //////// end query 5 Event
 
                 NSOperationQueue *queue = [[NSOperationQueue alloc] init];
                 [queue addOperation: queryOpMeet];
                 [queue addOperation: queryOpDiv];
+                [queue addOperation: queryOpGEvent];
+                [queue addOperation: queryOpTeam];
+                [queue addOperation: queryOpEvent];
+
 }
 
 
