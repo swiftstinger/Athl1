@@ -3230,6 +3230,8 @@ UIAlertController * alert;
                             teamObject.meet = meetObject;
                     
                             [objectsDictionary setValue:teamObject forKey:teamObject.onlineID];
+                    
+                            
 
                             NSLog(@"updating team %@ ", teamObject.teamName);
                     
@@ -3281,7 +3283,7 @@ UIAlertController * alert;
                     
                         eventObject.division = [objectsDictionary valueForKey:event[@"division"]];
                         eventObject.gEvent = [objectsDictionary valueForKey: event[@"gEvent"]];
-                        eventObject.meet = event[@"meetOnlineID"];
+                    
                     
                     
                             [objectsDictionary setValue:eventObject forKey:eventObject.onlineID];
@@ -3307,6 +3309,127 @@ UIAlertController * alert;
                 [queryOpEvent addDependency:queryOpDiv];
     
     //////// end query 5 Event
+    
+    //////// start query 6 Comp
+    
+                NSPredicate *predicateComp = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
+    
+                CKQuery *queryComp = [[CKQuery alloc] initWithRecordType:@"Competitor" predicate:predicateComp];
+                CKQueryOperation *queryOpComp = [[CKQueryOperation alloc] initWithQuery:queryComp];
+    
+               queryOpComp.database = publicDatabase;
+            //execute query
+    
+                queryOpComp.recordFetchedBlock = ^(CKRecord *comp)
+                {
+                    //do something
+                    
+                    Competitor* compObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
+                    
+                        compObject.compID = comp[@"compID"];
+                        compObject.compName = comp[@"compName"];
+                        compObject.onlineID = comp[@"onlineID"];
+                        compObject.teamName = comp[@"teamName"];
+                        compObject.updateByUser = comp[@"updateByUser"];
+                    compObject.updateDateAndTime = comp[@"updateDateAndTime"];
+                    
+                        compObject.meet = meetObject;
+                    
+                    
+                        compObject.team = [objectsDictionary valueForKey:comp[@"team"]];
+                    
+                    
+                    
+                            [objectsDictionary setValue:compObject forKey:compObject.onlineID];
+
+                            NSLog(@"updating comp %@ in team : %@", compObject.compName, compObject.team.teamName);
+                    
+                };
+
+                queryOpComp.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  Comp query error %@", error);
+                    }
+                    else
+                    {
+                     NSLog(@"query Comp succesful");
+                     
+                     }
+                };
+
+                [queryOpComp addDependency:queryOpTeam];
+    
+    
+    //////// end query 6 Comp
+
+    //////// start query 7 cscore
+    
+                NSPredicate *predicateCScore = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
+    
+                CKQuery *queryCScore = [[CKQuery alloc] initWithRecordType:@"CEventScore" predicate:predicateCScore];
+                CKQueryOperation *queryOpCScore = [[CKQueryOperation alloc] initWithQuery:queryCScore];
+    
+               queryOpCScore.database = publicDatabase;
+            //execute query
+    
+                queryOpCScore.recordFetchedBlock = ^(CKRecord *cscore)
+                {
+                    //do something
+                    
+                    CEventScore* cscoreObject = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
+                    
+                    cscoreObject.cEventScoreID = cscore[@"cEventScoreID"];
+                    cscoreObject.highJumpPlacingManual = cscore[@"highJumpPlacingManual"];
+                    cscoreObject.onlineID = cscore[@"onlineID"];
+                    cscoreObject.personalBest = cscore[@"personalBest"];
+                    cscoreObject.placing = cscore[@"placing"];
+                    cscoreObject.result = cscore[@"result"];
+                    cscoreObject.resultEntered = cscore[@"resultEntered"];
+                    cscoreObject.score = cscore[@"score"];
+                    cscoreObject.updateByUser = cscore[@"updateByUser"];
+                    cscoreObject.updateDateAndTime = cscore[@"updateDateAndTime"];
+
+                        cscoreObject.meet = meetObject;
+
+                        cscoreObject.event = [objectsDictionary valueForKey:cscore[@"event"]];
+                        cscoreObject.team = [objectsDictionary valueForKey:cscore[@"team"]];
+                        cscoreObject.competitor = [objectsDictionary valueForKey:cscore[@"competitor"]];
+                    
+                    
+                    
+                            [objectsDictionary setValue:cscoreObject forKey:cscoreObject.onlineID];
+
+                            NSLog(@"updating cscore for comp %@", cscoreObject.competitor.compName);
+                    
+                };
+
+                queryOpCScore.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  cscore query error %@", error);
+                    }
+                    else
+                    {
+                     NSLog(@"query cscore succesful");
+                        
+                        NSError *errorscore = nil;
+
+                    // Save the context.
+        
+                        if (![context save:&errorscore]) {
+                        }
+
+                     }
+                };
+
+                [queryOpCScore addDependency:queryOpComp];
+                [queryOpCScore addDependency:queryOpEvent];
+    
+    
+    //////// end query 7 Event
 
                 NSOperationQueue *queue = [[NSOperationQueue alloc] init];
                 [queue addOperation: queryOpMeet];
@@ -3314,6 +3437,8 @@ UIAlertController * alert;
                 [queue addOperation: queryOpGEvent];
                 [queue addOperation: queryOpTeam];
                 [queue addOperation: queryOpEvent];
+                [queue addOperation: queryOpComp];
+                [queue addOperation: queryOpCScore];
 
 }
 
