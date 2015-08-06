@@ -22,6 +22,7 @@
 @property  BOOL sharing;
 @property  BOOL exportresults;
 @property  BOOL sendpermission;
+@property BOOL doUpdate;
 //@property  BOOL meetDeleteSuccess;
 @end
 
@@ -170,7 +171,7 @@ if ([self.meetObject.onlineMeet boolValue]) {
     self.sendpermission = NO;
     
     if ([self.meetObject.onlineMeet boolValue]&&(![self.meetObject.isOwner boolValue])) {
-    [self updateOnlineMeet];
+    [self checkForOnlineMeetUpdate];
     }
     else
     {
@@ -761,7 +762,7 @@ meet[@"scoreForFirstPlace"] = meetObject.scoreForFirstPlace;
 meet[@"scoreMultiplier"] = meetObject.scoreMultiplier;
 meet[@"teamsDone"] = meetObject.teamsDone;
 meet[@"onlineMeet"] = [NSNumber numberWithBool:YES];
-meet[@"updateDateAndTime"] = meetObject.updateDateAndTime;
+meet[@"updateDateAndTime"] = [NSDate date];
 meet[@"updateByUser"] = meetObject.updateByUser;
 meet[@"isOwner"] = [NSNumber numberWithBool:NO];
 meet[@"onlineID"] = meetObject.onlineID;
@@ -3027,6 +3028,119 @@ UIAlertController * alert;
  }
 }
 
+- (void) checkForOnlineMeetUpdate {
+    
+    CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
+    
+            NSPredicate *predicatemeet = [NSPredicate predicateWithFormat:@"onlineID = %@", self.meetObject.onlineID];
+
+    
+          //  NSPredicate *predicateuser = [NSPredicate predicateWithFormat:@"updateByUser = %@",@"owner" ];
+    
+         //   NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet, predicateuser, nil];
+    
+         NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet, nil];
+            NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:preds1];
+    
+    
+    
+                CKQuery *query = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicate];
+                CKQueryOperation *queryOp = [[CKQueryOperation alloc] initWithQuery:query];
+
+                queryOp.database = publicDatabase;
+    
+    self.doUpdate = NO;
+    
+    
+    
+                queryOp.recordFetchedBlock = ^(CKRecord *meet)
+                {
+                
+                    
+                    //do something
+                    if (self.meetObject.updateDateAndTime != nil)
+                    {
+                        
+                            self.meetObject.meetName = meet[@"meetName"];
+                    
+                    
+                        if( [meet[@"updateDateAndTime"] timeIntervalSinceDate:self.meetObject.updateDateAndTime] > 0 ) {
+
+                            
+                            NSLog(@"needs an update %@ ", self.meetObject.meetName);
+                           // [self updateOnlineMeet];
+                           
+                           self.doUpdate = YES;
+                        }
+                        else
+                        {
+                            NSLog(@"no update needed %@ ", self.meetObject.meetName);
+                        
+                        }
+                    }
+                    else
+                    {
+                        
+                        
+                        NSLog(@"needs an update %@ ", self.meetObject.meetName);
+                        //[self updateOnlineMeet];
+                        self.doUpdate = YES;                    }
+                    
+                };
+
+                queryOp.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  meet query error %@", error);
+                        
+                        
+                        [self endUpdateOnlineMeetWithSuccess: NO];
+                    }
+                    else
+                    {
+                    NSLog(@"query meet succesful");
+                     _navBar.title = [self.meetObject valueForKey:@"meetName"];
+                     
+                     if (self.doUpdate) {
+                            [self updateOnlineMeet];
+                        }
+                        else
+                        {
+                            [self endUpdateOnlineMeetWithSuccess: NO];
+                        }
+
+                    
+                    }
+                    
+                    
+                };
+    
+                NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+                [queue addOperation: queryOp];
+
+
+}
+
+- (void)endUpdateOnlineMeetWithSuccess: (BOOL) success {
+
+        NSLog(@"update ended %hhd", success);
+    
+         NSError *errorscore = nil;
+                        
+                    // Save the context.
+        if (success) {
+                        if (![self.managedObjectContext save:&errorscore]) {
+                        }
+        }
+        else
+        {
+                NSLog(@"unsuccesful update");
+        
+        }
+}
+
+
 - (void)updateOnlineMeet {
     
     
@@ -3035,22 +3149,36 @@ UIAlertController * alert;
     
             NSMutableDictionary* objectsDictionary = [[NSMutableDictionary alloc] init];
 
-
-    
-    
     
             NSManagedObjectContext* context = self.managedObjectContext;
     
             CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
+
+            NSPredicate *predicatemeet = [NSPredicate predicateWithFormat:@"onlineID = %@", meetObject.onlineID];
+    
+            NSPredicate *predicaterest = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
+    
+            //  NSPredicate *predicateuser = [NSPredicate predicateWithFormat:@"updateByUser = %@",@"owner" ];
+    
+         //   NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet, predicateuser, nil];
+    
+         NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet, nil];
+            NSPredicate *predicateM = [NSCompoundPredicate andPredicateWithSubpredicates:preds1];
+            //NSArray *preds2 = [NSArray arrayWithObjects: predicaterest, predicateuser, nil];
+    
+            NSArray *preds2 = [NSArray arrayWithObjects: predicaterest, nil];
+            NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:preds2];
+    
     
                  //////// start query 1 meet
     
-                NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"onlineID = %@", meetObject.onlineID];
     
-                CKQuery *queryMeet = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicate1];
+    
+                CKQuery *queryMeet = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicateM];
                 CKQueryOperation *queryOpMeet = [[CKQueryOperation alloc] initWithQuery:queryMeet];
     
                queryOpMeet.database = publicDatabase;
+    
             //execute query
     
                 queryOpMeet.recordFetchedBlock = ^(CKRecord *meet)
@@ -3073,7 +3201,7 @@ UIAlertController * alert;
                             meetObject.scoreMultiplier = meet[@"scoreMultiplier"];
                             meetObject.teamsDone = meet[@"teamsDone"];
                             meetObject.onlineMeet = meet[@"onlineMeet"];
-                            meetObject.updateDateAndTime = meet[@"updateDateAndTime"];
+                            meetObject.updateDateAndTime = [NSDate date];
                             meetObject.updateByUser = meet[@"updateByUser"];
                             meetObject.isOwner = meet[@"isOwner"];
                             meetObject.onlineID = meet[@"onlineID"];
@@ -3090,6 +3218,7 @@ UIAlertController * alert;
                 
                     if (error) {
                     NSLog(@"CKQueryCursor  meet query error %@", error);
+                    [self endUpdateOnlineMeetWithSuccess:NO];
                     }
                     else
                     {
@@ -3103,9 +3232,9 @@ UIAlertController * alert;
 
     //////// start query 2 div
     
-                NSPredicate *predicateDiv = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
     
-                CKQuery *queryDiv = [[CKQuery alloc] initWithRecordType:@"Division" predicate:predicateDiv];
+    
+                CKQuery *queryDiv = [[CKQuery alloc] initWithRecordType:@"Division" predicate:predicate];
                 CKQueryOperation *queryOpDiv = [[CKQueryOperation alloc] initWithQuery:queryDiv];
     
                queryOpDiv.database = publicDatabase;
@@ -3136,6 +3265,7 @@ UIAlertController * alert;
                 
                     if (error) {
                     NSLog(@"CKQueryCursor  div query error %@", error);
+                    [self endUpdateOnlineMeetWithSuccess:NO];
                     }
                     else
                     {
@@ -3150,9 +3280,9 @@ UIAlertController * alert;
 
     //////// start query 3 gevent
     
-                NSPredicate *predicateGEvent = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
     
-                CKQuery *queryGEvent = [[CKQuery alloc] initWithRecordType:@"GEvent" predicate:predicateGEvent];
+    
+                CKQuery *queryGEvent = [[CKQuery alloc] initWithRecordType:@"GEvent" predicate:predicate];
                 CKQueryOperation *queryOpGEvent = [[CKQueryOperation alloc] initWithQuery:queryGEvent];
     
                queryOpGEvent.database = publicDatabase;
@@ -3190,6 +3320,7 @@ UIAlertController * alert;
                 
                     if (error) {
                     NSLog(@"CKQueryCursor  gevent query error %@", error);
+                    [self endUpdateOnlineMeetWithSuccess:NO];
                     }
                     else
                     {
@@ -3204,9 +3335,8 @@ UIAlertController * alert;
 
     //////// start query 4 team
     
-                NSPredicate *predicateTeam = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
     
-                CKQuery *queryTeam = [[CKQuery alloc] initWithRecordType:@"Team" predicate:predicateTeam];
+                CKQuery *queryTeam = [[CKQuery alloc] initWithRecordType:@"Team" predicate:predicate];
                 CKQueryOperation *queryOpTeam = [[CKQueryOperation alloc] initWithQuery:queryTeam];
     
                queryOpTeam.database = publicDatabase;
@@ -3242,6 +3372,7 @@ UIAlertController * alert;
                 
                     if (error) {
                     NSLog(@"CKQueryCursor  Team query error %@", error);
+                    [self endUpdateOnlineMeetWithSuccess:NO];
                     }
                     else
                     {
@@ -3257,9 +3388,9 @@ UIAlertController * alert;
     
         //////// start query 5 Event
     
-                NSPredicate *predicateEvent = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
     
-                CKQuery *queryEvent = [[CKQuery alloc] initWithRecordType:@"Event" predicate:predicateEvent];
+    
+                CKQuery *queryEvent = [[CKQuery alloc] initWithRecordType:@"Event" predicate:predicate];
                 CKQueryOperation *queryOpEvent = [[CKQueryOperation alloc] initWithQuery:queryEvent];
     
                queryOpEvent.database = publicDatabase;
@@ -3297,6 +3428,7 @@ UIAlertController * alert;
                 
                     if (error) {
                     NSLog(@"CKQueryCursor  Event query error %@", error);
+                        [self endUpdateOnlineMeetWithSuccess:NO];
                     }
                     else
                     {
@@ -3312,9 +3444,9 @@ UIAlertController * alert;
     
     //////// start query 6 Comp
     
-                NSPredicate *predicateComp = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
     
-                CKQuery *queryComp = [[CKQuery alloc] initWithRecordType:@"Competitor" predicate:predicateComp];
+    
+                CKQuery *queryComp = [[CKQuery alloc] initWithRecordType:@"Competitor" predicate:predicate];
                 CKQueryOperation *queryOpComp = [[CKQueryOperation alloc] initWithQuery:queryComp];
     
                queryOpComp.database = publicDatabase;
@@ -3351,6 +3483,7 @@ UIAlertController * alert;
                 
                     if (error) {
                     NSLog(@"CKQueryCursor  Comp query error %@", error);
+                        [self endUpdateOnlineMeetWithSuccess:NO];
                     }
                     else
                     {
@@ -3366,9 +3499,9 @@ UIAlertController * alert;
 
     //////// start query 7 cscore
     
-                NSPredicate *predicateCScore = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
     
-                CKQuery *queryCScore = [[CKQuery alloc] initWithRecordType:@"CEventScore" predicate:predicateCScore];
+    
+                CKQuery *queryCScore = [[CKQuery alloc] initWithRecordType:@"CEventScore" predicate:predicate];
                 CKQueryOperation *queryOpCScore = [[CKQueryOperation alloc] initWithQuery:queryCScore];
     
                queryOpCScore.database = publicDatabase;
@@ -3410,19 +3543,16 @@ UIAlertController * alert;
                 
                     if (error) {
                     NSLog(@"CKQueryCursor  cscore query error %@", error);
+                        [self endUpdateOnlineMeetWithSuccess:NO];
                     }
                     else
                     {
                      NSLog(@"query cscore succesful");
                         
-                        NSError *errorscore = nil;
-
-                    // Save the context.
-        
-                        if (![context save:&errorscore]) {
-                        }
+                       [self endUpdateOnlineMeetWithSuccess:YES];
 
                      }
+                    
                 };
 
                 [queryOpCScore addDependency:queryOpComp];
@@ -3430,6 +3560,10 @@ UIAlertController * alert;
     
     
     //////// end query 7 Event
+    
+    
+    
+    
 
                 NSOperationQueue *queue = [[NSOperationQueue alloc] init];
                 [queue addOperation: queryOpMeet];
