@@ -1,21 +1,76 @@
 
+
+/// retrieving changes from server
+
+owner update all (button?) (and enter meet?)
+    retrieve any comps and ceventscores of meetonlineID == meetObject.meetID not updatebyuser != owner
+
+    delete temp record (temprecord + timestamp + vendorID + onlineID)
+
+
+    set updatebyuser to owner and update date
+
+    then send comps and ceventscores online plus meet with new date
+
+
+
+servant update  on enter meet done
+
+
+
+ on press update button
+        check dates of meet and then update (use method already in place)
+
+/// sending changes to server
+
+owner: add date to makeing all objects and add check if onlinemeet and isowner and then push to server (add to queue)
+
+        new div  update date
+        new gevent  update date
+        new events (made in div and gevent done)  update date
+        new team   update date
+        new comp  in team view also in results enter      update date
+        new ceventscore in results enter   update date
+        edit ceventscore done button so results enter from edit update date
+
+        for object
+            update meetobject, not affect rest, add newupdate date, updateby user = owner
+
+
+
+
+servant: if online meet and not owner to:
+
+        new comp  in team view also in results enter      update date
+        new ceventscore in results enter   update date
+        edit ceventscore done button so results enter from edit update date
+
+
+        set updatebyuser as vendorid
+        set update date
+
+        push to server as tempmeetonlineid as recordID  (temprecord + timestamp + vendorID + onlineID)
+
+
+
+
+///  subscriptions
+
+owner update push  (on create with updatebyuser not owner  );  later
+    retrieve object and then push object and meet with new date.
+
+servant update server push later
+
+
+
+
+
+
 add owner and updatebyuser to make meet
 
-add date to makeing all objects and add check if onlinemeet and isowner and then push to server (add to queue)
-        for object
-            update meetobject 
 
 
 
-add date to retrieving all objects for date check done
-
-
-
-
-
-
-
-dont download objects again... on meetmenu select query onlineID ?
 
 lock events and teams
 

@@ -769,7 +769,7 @@ meet[@"onlineID"] = meetObject.onlineID;
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
-
+/**
 
 NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
 NSArray *array = [mutableArray copy];
@@ -1020,7 +1020,7 @@ array = [mutableArray copy];
 meet[@"teams"] = array;
 
 
-    
+ **/
     
  
     /**
@@ -1073,7 +1073,7 @@ div[@"updateDateAndTime"] = divObject.updateDateAndTime;
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
 
-
+/**
 NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
 NSArray *array = [mutableArray copy];
 
@@ -1119,7 +1119,7 @@ div[@"events"] = array;
 //////////////
 //////////////
 
-
+**/
 
 div[@"meetOnlineID"] = divObject.meet.onlineID;
     
@@ -1157,7 +1157,7 @@ gevent[@"updateDateAndTime"] = gEventObject.updateDateAndTime;
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
 
-
+/**
 NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
 NSArray *array = [mutableArray copy];
 
@@ -1204,7 +1204,7 @@ gevent[@"events"] = array;
 //////////////
 //////////////
 
-
+**/
 
 gevent[@"meetOnlineID"] = gEventObject.meet.onlineID;
     
@@ -1234,7 +1234,7 @@ team[@"updateDateAndTime"] = teamObject.updateDateAndTime;
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
-
+/**
 
 NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
 NSArray *array = [mutableArray copy];
@@ -1322,7 +1322,7 @@ team[@"competitors"] = array;
 //////////////
 //////////////
 
-
+**/
   team[@"meetOnlineID"] = teamObject.meet.onlineID;
     
  
@@ -1349,7 +1349,7 @@ event[@"updateDateAndTime"] = eventObject.updateDateAndTime;
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
-
+/**
 
 NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
 NSArray *array = [mutableArray copy];
@@ -1398,7 +1398,7 @@ event[@"cEventScores"] = array;
 
 //////////////
 //////////////
-    
+  **/
     
     event[@"division"] = eventObject.division.onlineID;
     event[@"gEvent"] = eventObject.gEvent.onlineID;
@@ -1428,7 +1428,7 @@ comp[@"updateDateAndTime"] = compObject.updateDateAndTime;
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
-
+/**
 
 NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
 NSArray *array = [mutableArray copy];
@@ -1480,7 +1480,7 @@ comp[@"cEventScores"] = array;
 
 //////////////
 //////////////
-
+**/
     comp[@"team"] = compObject.team.onlineID;
     comp[@"meetOnlineID"] = compObject.meet.onlineID;
     
@@ -1512,11 +1512,11 @@ cscore[@"updateDateAndTime"] = cscoreObject.updateDateAndTime;
 
 //NSNumber *num = [NSNumber numberWithFloat:10.0f];
 //[array addObject:num];
-
+/**
 
 NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
 NSArray *array = [mutableArray copy];
-
+**/
 //////////////
 //////////////
 
