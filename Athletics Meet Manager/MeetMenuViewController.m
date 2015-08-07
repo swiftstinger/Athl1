@@ -3032,7 +3032,7 @@ UIAlertController * alert;
     
     CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
     
-            NSPredicate *predicatemeet = [NSPredicate predicateWithFormat:@"onlineID = %@", self.meetObject.onlineID];
+            NSPredicate *predicatemeet = [NSPredicate predicateWithFormat:@"onlineID == %@", self.meetObject.onlineID];
 
     
           //  NSPredicate *predicateuser = [NSPredicate predicateWithFormat:@"updateByUser = %@",@"owner" ];
@@ -3141,6 +3141,61 @@ UIAlertController * alert;
 }
 
 
+- (id) fetchObjectType:(NSString*) entityName WithOnlineID: (NSString*) onlineID IsOwnerNumber: (NSNumber*) isOwner {
+   
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.managedObjectContext];
+    
+    [fetchRequest setEntity:entity];
+    
+    
+NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"onlineID == %@", onlineID];
+
+NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isOwner];
+
+     NSArray *preds = [NSArray arrayWithObjects: pred1, pred2, nil];
+            NSPredicate *predall = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+
+            [fetchRequest setPredicate:predall];
+
+
+    NSError *error;
+    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if ([results count] > 0) {
+    return results[0];
+    }
+    else
+    {
+    
+        return nil;
+    }
+    
+
+/**
+    NSError *error = nil;
+    NSUInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+
+    if (count == NSNotFound) {
+        NSLog(@"Error: %@", error);
+        return NO;
+    }
+    else
+    {
+        if (count > 0) {
+            return YES;
+        }
+        else
+        {
+        return NO;
+        }
+    }
+**/
+
+}
+
 - (void)updateOnlineMeet {
     
     
@@ -3183,7 +3238,8 @@ UIAlertController * alert;
     
                 queryOpMeet.recordFetchedBlock = ^(CKRecord *meet)
                 {
-                    //do something
+                    
+                    
                             meetObject.meetDate = meet[@"meetDate"];
                             meetObject.meetName = meet[@"meetName"];
                             meetObject.cEventLimit = meet[@"cEventLimit"];
@@ -3244,7 +3300,21 @@ UIAlertController * alert;
                 {
                     //do something
                     
-                    Division* divObject = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
+                    NSString* objectType = @"Division";
+                    
+                    Division *divObject = [self fetchObjectType:objectType WithOnlineID:div[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
+                    if (divObject != nil) {
+                        NSLog(@" %@ exists",objectType);
+                    }
+                    else
+                    {
+                        divObject = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
+                        
+                         NSLog(@" new %@ created",objectType);
+                    }
+                    
+                    
+                 //   Division* divObject = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
                     
                             divObject.divID = div[@"divID"];
                             divObject.divName = div[@"divName"];
@@ -3292,7 +3362,19 @@ UIAlertController * alert;
                 {
                     //do something
                     
-                    GEvent* gEventObject = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
+                    NSString* objectType = @"GEvent";
+                    
+                    GEvent* gEventObject = [self fetchObjectType:objectType WithOnlineID:gevent[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
+                    if (gEventObject != nil) {
+                        NSLog(@" %@ exists",objectType);
+                    }
+                    else
+                    {
+                        gEventObject = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
+                        
+                         NSLog(@" new %@ created",objectType);
+                    }
+
                     
                             gEventObject.competitorsPerTeam = gevent[@"competitorsPerTeam"];
                             gEventObject.decrementPerPlace = gevent[@"decrementPerPlace"];
@@ -3346,7 +3428,20 @@ UIAlertController * alert;
                 {
                     //do something
                     
-                    Team* teamObject = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
+                    NSString* objectType = @"Team";
+                    
+                    Team* teamObject = [self fetchObjectType:objectType WithOnlineID:team[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
+                    if (teamObject != nil) {
+                        NSLog(@" %@ exists",objectType);
+                    }
+                    else
+                    {
+                        teamObject = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
+                        
+                         NSLog(@" new %@ created",objectType);
+                    }
+                    
+                    
                     
                         teamObject.onlineID = team[@"onlineID"];
                         teamObject.teamAbr = team[@"teamAbr"];
@@ -3400,7 +3495,20 @@ UIAlertController * alert;
                 {
                     //do something
                     
-                    Event* eventObject = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+                    NSString* objectType = @"Event";
+                    
+                    Event* eventObject = [self fetchObjectType:objectType WithOnlineID:event[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
+                    if (eventObject != nil) {
+                        NSLog(@" %@ exists",objectType);
+                    }
+                    else
+                    {
+                        eventObject = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+                        
+                         NSLog(@" new %@ created",objectType);
+                    }
+                    
+                    
                     
                         eventObject.eventDone = event[@"eventDone"];
                         eventObject.eventEdited = event[@"eventEdited"];
@@ -3456,7 +3564,22 @@ UIAlertController * alert;
                 {
                     //do something
                     
-                    Competitor* compObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
+                    NSString* objectType = @"Competitor";
+                    
+                    Competitor* compObject  = [self fetchObjectType:objectType WithOnlineID:comp[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
+                    if (compObject != nil) {
+                        NSLog(@" %@ exists",objectType);
+                    }
+                    else
+                    {
+                        compObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
+                        
+                         NSLog(@" new %@ created",objectType);
+                    }
+                    
+                    
+                    
+                    
                     
                         compObject.compID = comp[@"compID"];
                         compObject.compName = comp[@"compName"];
@@ -3511,7 +3634,20 @@ UIAlertController * alert;
                 {
                     //do something
                     
-                    CEventScore* cscoreObject = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
+                    NSString* objectType = @"CEventScore" ;
+                    
+                     CEventScore* cscoreObject  = [self fetchObjectType:objectType WithOnlineID:cscore[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
+                    if (cscoreObject != nil) {
+                        NSLog(@" %@ exists",objectType);
+                    }
+                    else
+                    {
+                        cscoreObject = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
+                        
+                         NSLog(@" new %@ created",objectType);
+                    }
+                    
+                    
                     
                     cscoreObject.cEventScoreID = cscore[@"cEventScoreID"];
                     cscoreObject.highJumpPlacingManual = cscore[@"highJumpPlacingManual"];
