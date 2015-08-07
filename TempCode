@@ -1,7 +1,16 @@
 
 add owner and updatebyuser to make meet
-add date to makeing all objects
-add date to retrieving all objects for date check
+
+add date to makeing all objects and add check if onlinemeet and isowner and then push to server (add to queue)
+        for object
+            update meetobject 
+
+
+
+add date to retrieving all objects for date check done
+
+
+
 
 
 

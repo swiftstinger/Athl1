@@ -3320,7 +3320,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                             divObject.divName = div[@"divName"];
                             divObject.onlineID = div[@"onlineID"];
                             divObject.updateByUser = div[@"updateByUser"];
-                            divObject.updateDateAndTime = div[@"updateDateAndTime"];
+                            divObject.updateDateAndTime = [NSDate date];
                     
                             divObject.meet = meetObject;
                     
@@ -3387,7 +3387,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                             gEventObject.scoreForFirstPlace = gevent[@"scoreForFirstPlace"];
                             gEventObject.scoreMultiplier = gevent[@"scoreMultiplier"];
                             gEventObject.updateByUser = gevent[@"updateByUser"];
-                            gEventObject.updateDateAndTime = gevent[@"updateDateAndTime"];
+                            gEventObject.updateDateAndTime = [NSDate date];
                     
                             gEventObject.meet = meetObject;
                     
@@ -3450,7 +3450,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                         teamObject.teamPlace = team[@"teamPlace"];
                         teamObject.teamScore = team[@"teamScore"];
                         teamObject.updateByUser = team[@"updateByUser"];
-                        teamObject.updateDateAndTime = team[@"updateDateAndTime"];
+                        teamObject.updateDateAndTime = [NSDate date];
                     
                             teamObject.meet = meetObject;
                     
@@ -3516,7 +3516,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                         eventObject.onlineID = event[@"onlineID"];
                         eventObject.startTime = event[@"startTime"];
                         eventObject.updateByUser = event[@"updateByUser"];
-                        eventObject.updateDateAndTime = event[@"updateDateAndTime"];
+                        eventObject.updateDateAndTime = [NSDate date];
                     
                         eventObject.meet = meetObject;
                     
@@ -3586,7 +3586,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                         compObject.onlineID = comp[@"onlineID"];
                         compObject.teamName = comp[@"teamName"];
                         compObject.updateByUser = comp[@"updateByUser"];
-                    compObject.updateDateAndTime = comp[@"updateDateAndTime"];
+                    compObject.updateDateAndTime = [NSDate date];
                     
                         compObject.meet = meetObject;
                     
@@ -3658,7 +3658,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                     cscoreObject.resultEntered = cscore[@"resultEntered"];
                     cscoreObject.score = cscore[@"score"];
                     cscoreObject.updateByUser = cscore[@"updateByUser"];
-                    cscoreObject.updateDateAndTime = cscore[@"updateDateAndTime"];
+                    cscoreObject.updateDateAndTime = [NSDate date];
 
                         cscoreObject.meet = meetObject;
 
