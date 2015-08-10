@@ -1,6 +1,45 @@
+///////////
+refactor scores method needed for team add/remove | gevent options change | meet options change?
+////////////
+want in tutorial
+///////////
+
+deal with:
+
+    lock all for score changes unless take offline
+
+    update if edited record
+        lastupdate attribute if date later than last update dont update?
+
+        only ceventscores and competitors add until done then create copy and set if sent or not (sending failed resend button)
+            attributes edited on current device for event
+            check ceventscores and competitors
+
+        after initial edit send all to new objects, if new ceventscore for event, create new one
+        editing but not sent?
+
+            //////////////
+             if no event edited but not sent,  delete eventscores/competitors that not on list?
+
+             untill then not allow resutls view.. may be inaccurate
+            /////////////
 
 
-/// retrieving changes from server
+
+    failed update
+        copy of event will show not sent so can resend
+        copy of competitors and ceventscores and event
+
+
+
+    excess ceventscores and competitors if meet owner overrules  =? keep track if seen update by user and time and if after that then overwrite?
+    initial submit user in each object and not update for him?
+
+////////////////
+///////////////
+////////////
+
+/// retrieving changes from server check send on each create so should be ok... check each date seperately for updates sent and then old retrieve
 
 owner update all (button?) (and enter meet?)
     retrieve any comps and ceventscores of meetonlineID == meetObject.meetID not updatebyuser != owner
@@ -21,7 +60,12 @@ servant update  on enter meet done
  on press update button
         check dates of meet and then update (use method already in place)
 
-/// sending changes to server
+/// sending changes to server  not pause only warn if failed
+
+
+both (create sent object objects  (new in datamodel) on send copy object to new sent object)
+
+
 
 owner: add date to makeing all objects and add check if onlinemeet and isowner and then push to server (add to queue)
 
@@ -38,8 +82,9 @@ owner: add date to makeing all objects and add check if onlinemeet and isowner a
 
 
 
-
+if servant (create sent object objects  (new in datamodel) on send copy object to new sent object)
 servant: if online meet and not owner to:
+
 
         new comp  in team view also in results enter      update date
         new ceventscore in results enter   update date
@@ -82,15 +127,13 @@ update only in meetmenu
 
 add add for all and manage (should only add offline meets)
 
-still do load in app delegate
+
 
 error record name cannot be nil for record deleted
 
-update appdelegate to allow in other views
 
-add button for onlinemeet if owner
 
-manual updat ebutton to make app more responsive
+
 
 
 

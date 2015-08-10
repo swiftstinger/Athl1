@@ -3084,7 +3084,8 @@ UIAlertController * alert;
                         
                         NSLog(@"needs an update %@ ", self.meetObject.meetName);
                         //[self updateOnlineMeet];
-                        self.doUpdate = YES;                    }
+                        self.doUpdate = YES;
+                    }
                     
                 };
 
@@ -3124,7 +3125,7 @@ UIAlertController * alert;
 
 - (void)endUpdateOnlineMeetWithSuccess: (BOOL) success {
 
-        NSLog(@"update ended %hhd", success);
+        NSLog(@"update ended %d", success);
     
          NSError *errorscore = nil;
                         
@@ -3172,34 +3173,23 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
         return nil;
     }
-    
 
-/**
-    NSError *error = nil;
-    NSUInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
-
-    if (count == NSNotFound) {
-        NSLog(@"Error: %@", error);
-        return NO;
-    }
-    else
-    {
-        if (count > 0) {
-            return YES;
-        }
-        else
-        {
-        return NO;
-        }
-    }
-**/
 
 }
+
 
 - (void)updateOnlineMeet {
     
     
         NSLog(@"updating meet");
+    
+    
+            NSDateComponents *comps = [[NSDateComponents alloc] init];
+    
+                [comps setYear:1970];
+                NSDate *oldDate = [[NSCalendar currentCalendar] dateFromComponents:comps];
+    
+    
             Meet* meetObject = self.meetObject;
     
             NSMutableDictionary* objectsDictionary = [[NSMutableDictionary alloc] init];
@@ -3238,7 +3228,62 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
                 queryOpMeet.recordFetchedBlock = ^(CKRecord *meet)
                 {
+                
+                    bool updating = NO;
+                NSString* objectType = @"Meet";
                     
+                    Meet *meetObject = [self fetchObjectType:objectType WithOnlineID:meet[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
+                    if (meetObject != nil) {
+                        NSLog(@" %@ exists",objectType);
+                    }
+                    else
+                    {
+                        meetObject = [NSEntityDescription insertNewObjectForEntityForName:objectType inManagedObjectContext:context];
+                        
+                         NSLog(@" new %@ created",objectType);
+                        
+                        
+                         meetObject.updateDateAndTime = oldDate;
+                    }
+
+                
+                
+                if (self.meetObject.updateDateAndTime != nil)
+                    {
+                    }
+                    else
+                    {
+                        meetObject.updateDateAndTime = oldDate;
+                    }
+                        
+                    
+                    
+                    
+                        if( [meet[@"updateDateAndTime"] timeIntervalSinceDate: meetObject.updateDateAndTime] > 0 ) {
+
+                            
+                            NSLog(@"needs an update %@ ", meet[@"meetName"]);
+                            
+                            if ( meetObject.edited) {
+                                updating = NO;
+                            
+                            }
+                            if ( meetObject.editDone) {
+                                updating = YES;
+                            }
+                           
+                        }
+                        else
+                        {
+                            NSLog(@"no update needed %@ ", meet[@"meetName"]);
+                            updating = NO;
+                        }
+                    
+                    
+                    
+                        if (updating)
+                            {
+
                     
                             meetObject.meetDate = meet[@"meetDate"];
                             meetObject.meetName = meet[@"meetName"];
@@ -3266,6 +3311,8 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
 
 
                             NSLog(@"updating meet %@ ", meetObject.meetName);
+                            _navBar.title = meetObject.meetName;
+                            }
                     
                 };
 
@@ -3279,7 +3326,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                     else
                     {
                      NSLog(@"query meet succesful");
-                     _navBar.title = [self.meetObject valueForKey:@"meetName"];
+                     
                      }
                 };
 
@@ -3311,7 +3358,45 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                         divObject = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
                         
                          NSLog(@" new %@ created",objectType);
+                        
+                         divObject.updateDateAndTime = oldDate;
                     }
+                    
+                    if (divObject.updateDateAndTime != nil)
+                    {
+                    }
+                    else
+                    {
+                        divObject.updateDateAndTime = oldDate;
+                    }
+                        
+                    
+                    bool updating = NO;
+                    
+                        if( [div[@"updateDateAndTime"] timeIntervalSinceDate:divObject.updateDateAndTime] > 0 ) {
+
+                            if (divObject.edited) {
+                                updating = NO;
+                                NSLog(@"locked for editing %@ ", div[@"divName"]);
+                            
+                            }
+                            if (divObject.editDone) {
+                                updating = YES;
+                                NSLog(@"editing done %@ ", div[@"divName"]);
+                            }
+                        }
+                        else
+                        {
+                            NSLog(@"no update needed %@ ", div[@"divName"]);
+                            updating = NO;
+                        }
+                    
+                    
+                    
+                        if (updating)
+                            {
+
+   
                     
                     
                  //   Division* divObject = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
@@ -3327,6 +3412,8 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                             [objectsDictionary setValue:divObject forKey:divObject.onlineID];
 
                             NSLog(@"updating div %@ ", divObject.divName);
+                            
+                            }
                     
                 };
 
@@ -3373,8 +3460,41 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                         gEventObject = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
                         
                          NSLog(@" new %@ created",objectType);
+                             gEventObject.updateDateAndTime = oldDate;
                     }
+                    
+                    if (gEventObject.updateDateAndTime != nil)
+                    {
+                    }
+                    else
+                    {
+                        gEventObject.updateDateAndTime = oldDate;
+                    }
+                        
+                    
+                    bool updating = NO;
+                    
+                        if( [gevent[@"updateDateAndTime"] timeIntervalSinceDate:gEventObject.updateDateAndTime] > 0 ) {
 
+                            if (gEventObject.edited) {
+                                updating = NO;
+                                NSLog(@"locked for editing %@ ", gevent[@"gEventName"]);
+                            }
+                            if (gEventObject.editDone) {
+                                updating = YES;
+                                NSLog(@"editing done %@ ", gevent[@"gEventName"]);
+                            }
+                        }
+                        else
+                        {
+                            NSLog(@"no update needed %@ ", gevent[@"gEventName"]);
+                            updating = NO;
+                        }
+                    
+                    
+                    
+                        if (updating)
+                            {
                     
                             gEventObject.competitorsPerTeam = gevent[@"competitorsPerTeam"];
                             gEventObject.decrementPerPlace = gevent[@"decrementPerPlace"];
@@ -3394,6 +3514,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                             [objectsDictionary setValue:gEventObject forKey:gEventObject.onlineID];
 
                             NSLog(@"updating gevent %@ ", gEventObject.gEventName);
+                            }
                     
                 };
 
@@ -3439,7 +3560,43 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                         teamObject = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
                         
                          NSLog(@" new %@ created",objectType);
+                        teamObject.updateDateAndTime = oldDate;
                     }
+                    
+                    if (teamObject.updateDateAndTime != nil)
+                    {
+                    }
+                    else
+                    {
+                        teamObject.updateDateAndTime = oldDate;
+                    }
+                        
+                    
+                    bool updating = NO;
+                    
+                        if( [team[@"updateDateAndTime"] timeIntervalSinceDate:teamObject.updateDateAndTime] > 0 ) {
+
+                            if (teamObject.edited) {
+                                updating = NO;
+                                NSLog(@"locked for editing %@ ", team[@"teamName"]);
+                            }
+                            if (teamObject.editDone) {
+                                updating = YES;
+                                NSLog(@"editing done %@ ", team[@"teamName"]);
+                            }
+                        }
+                        else
+                        {
+                            NSLog(@"no update needed %@ ", team[@"teamName"]);
+                            updating = NO;
+                        }
+                    
+                    
+                    
+                    if (updating)
+                        {
+
+                   
                     
                     
                     
@@ -3459,7 +3616,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                             
 
                             NSLog(@"updating team %@ ", teamObject.teamName);
-                    
+                        }
                 };
 
                 queryOpTeam.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
@@ -3506,10 +3663,42 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                         eventObject = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
                         
                          NSLog(@" new %@ created",objectType);
+                         eventObject.updateDateAndTime = oldDate;
                     }
                     
+                    if (eventObject.updateDateAndTime != nil)
+                    {
+                    }
+                    else
+                    {
+                        eventObject.updateDateAndTime = oldDate;
+                    }
+                        
+                    
+                    bool updating = NO;
+                    
+                        if( [event[@"updateDateAndTime"] timeIntervalSinceDate:eventObject.updateDateAndTime] > 0 ) {
+
+                            if (eventObject.edited) {
+                                updating = NO;
+                                NSLog(@"locked for editing %@ ", event[@"eventID"]);
+                            }
+                            if (eventObject.editDone) {
+                                updating = YES;
+                                NSLog(@"editing done %@ ", event[@"eventID"]);
+                            }
+                        }
+                        else
+                        {
+                            NSLog(@"no update needed %@ ", event[@"eventID"]);
+                            updating = NO;
+                        }
                     
                     
+                    
+                    if (updating)
+                        {
+
                         eventObject.eventDone = event[@"eventDone"];
                         eventObject.eventEdited = event[@"eventEdited"];
                         eventObject.eventID = event[@"eventID"];
@@ -3528,6 +3717,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                             [objectsDictionary setValue:eventObject forKey:eventObject.onlineID];
 
                             NSLog(@"updating event %@ %@", eventObject.gEvent.gEventName, eventObject.division.divName);
+                        }
                     
                 };
 
@@ -3575,12 +3765,42 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                         compObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
                         
                          NSLog(@" new %@ created",objectType);
+                         compObject.updateDateAndTime = oldDate;
                     }
                     
+                    if (compObject.updateDateAndTime != nil)
+                    {
+                    }
+                    else
+                    {
+                        compObject.updateDateAndTime = oldDate;
+                    }
+                        
+                    
+                    bool updating = NO;
+                    
+                        if( [comp[@"updateDateAndTime"] timeIntervalSinceDate:compObject.updateDateAndTime] > 0 ) {
+
+                            if (compObject.edited) {
+                                updating = NO;
+                                NSLog(@"locked for editing %@ ", comp[@"compName"]);
+                            }
+                            if (compObject.editDone) {
+                                updating = YES;
+                                NSLog(@"editing done %@ ", comp[@"compName"]);
+                            }
+                        }
+                        else
+                        {
+                            NSLog(@"no update needed %@ ", comp[@"compName"]);
+                            updating = NO;
+                        }
                     
                     
                     
-                    
+                    if (updating)
+                        {
+                            
                         compObject.compID = comp[@"compID"];
                         compObject.compName = comp[@"compName"];
                         compObject.onlineID = comp[@"onlineID"];
@@ -3598,6 +3818,8 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                             [objectsDictionary setValue:compObject forKey:compObject.onlineID];
 
                             NSLog(@"updating comp %@ in team : %@", compObject.compName, compObject.team.teamName);
+                            
+                        }
                     
                 };
 
@@ -3645,9 +3867,41 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                         cscoreObject = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
                         
                          NSLog(@" new %@ created",objectType);
+                         cscoreObject.updateDateAndTime = oldDate;
                     }
                     
+                    if (cscoreObject.updateDateAndTime != nil)
+                    {
+                    }
+                    else
+                    {
+                        cscoreObject.updateDateAndTime = oldDate;
+                    }
+                        
                     
+                    bool updating = NO;
+                    
+                        if( [cscore[@"updateDateAndTime"] timeIntervalSinceDate:cscoreObject.updateDateAndTime] > 0 ) {
+
+                            if (cscoreObject.edited) {
+                                updating = NO;
+                                NSLog(@"locked for editing cscore %@ ", cscore[@"cEventScoreID"]);
+                            }
+                            if (cscoreObject.editDone) {
+                                updating = YES;
+                                NSLog(@"editing done cscore %@ ", cscore[@"cEventScoreID"]);
+                            }
+                        }
+                        else
+                        {
+                            NSLog(@"no update needed cscore %@ ", cscore[@"cEventScoreID"]);
+                            updating = NO;
+                        }
+                    
+                    
+                    
+                    if (updating)
+                        {
                     
                     cscoreObject.cEventScoreID = cscore[@"cEventScoreID"];
                     cscoreObject.highJumpPlacingManual = cscore[@"highJumpPlacingManual"];
@@ -3671,6 +3925,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                             [objectsDictionary setValue:cscoreObject forKey:cscoreObject.onlineID];
 
                             NSLog(@"updating cscore for comp %@", cscoreObject.competitor.compName);
+                        }
                     
                 };
 

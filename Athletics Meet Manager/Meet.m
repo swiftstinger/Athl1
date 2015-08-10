@@ -2,7 +2,7 @@
 //  Meet.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 07/08/2015.
+//  Created by Ailsa Huysamen on 10/08/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -36,6 +36,8 @@
 @dynamic updateByUser;
 @dynamic isOwner;
 @dynamic onlineID;
+@dynamic editDone;
+@dynamic edited;
 @dynamic cEventsScores;
 @dynamic competitors;
 @dynamic divisions;

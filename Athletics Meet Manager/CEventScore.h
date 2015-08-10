@@ -2,7 +2,7 @@
 //  CEventScore.h
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 07/08/2015.
+//  Created by Ailsa Huysamen on 10/08/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -23,6 +23,8 @@
 @property (nonatomic, retain) NSString * updateByUser;
 @property (nonatomic, retain) NSDate * updateDateAndTime;
 @property (nonatomic, retain) NSString * onlineID;
+@property (nonatomic, retain) NSNumber * edited;
+@property (nonatomic, retain) NSNumber * editDone;
 @property (nonatomic, retain) Competitor *competitor;
 @property (nonatomic, retain) Event *event;
 @property (nonatomic, retain) Meet *meet;
