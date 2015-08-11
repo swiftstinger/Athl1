@@ -139,21 +139,27 @@ NSInferMappingModelAutomaticallyOption : @YES
             // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
            // abort();
         }
+        else
+        {
+            
+      
+     
+
+        }
     }
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     if (url){
-      //NSString *str = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-      NSData *data = [NSData dataWithContentsOfURL:url];
+      NSString *newStr = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+     // NSData *data = [NSData dataWithContentsOfURL:url];
+     // NSLog(@" this data %@", data);
       
+     // NSString* newStr = [NSString stringWithUTF8String:[data bytes]];
       
-      NSString* newStr = [NSString stringWithUTF8String:[data bytes]];
-      
-      NSLog(@"The file contained onlineID: %@",newStr);
-      
-      
+     NSLog(@"The file contained onlineID: %@",newStr);
+        
        
     
         Meet *meet;
@@ -191,8 +197,8 @@ NSInferMappingModelAutomaticallyOption : @YES
     
     
     **/
-      
-            /////
+    
+    /////
             // remove directory contents
             ////
      
@@ -210,6 +216,10 @@ NSInferMappingModelAutomaticallyOption : @YES
                     // Error handling
                     NSLog(@"Could not delete file -:%@ ",[error localizedDescription]);
                 }
+                else
+                {
+                 NSLog(@"deleted file in url");
+                }
             }
         }
         else
@@ -218,9 +228,8 @@ NSInferMappingModelAutomaticallyOption : @YES
     
         }
         
-        
       
- 
+        
     }
    return YES;
 }
