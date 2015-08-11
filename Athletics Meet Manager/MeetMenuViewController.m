@@ -171,7 +171,7 @@ if ([self.meetObject.onlineMeet boolValue]) {
     self.sendpermission = NO;
     
     if ([self.meetObject.onlineMeet boolValue]&&(![self.meetObject.isOwner boolValue])) {
-    [self checkForOnlineMeetUpdate];
+    [self updateOnlineMeet];
     }
     else
     {
@@ -2311,6 +2311,8 @@ NSLog(@"online id after: %@", newStr);
 
 }
 
+
+
 - (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {
 
 //check objects vs string values in itterations
@@ -3027,7 +3029,7 @@ UIAlertController * alert;
     
  }
 }
-
+/**
 - (void) checkForOnlineMeetUpdate {
     
     CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
@@ -3122,7 +3124,7 @@ UIAlertController * alert;
 
 
 }
-
+**/
 - (void)endUpdateOnlineMeetWithSuccess: (BOOL) success {
 
         NSLog(@"update ended %d", success);
@@ -3967,5 +3969,14 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
 
 }
 
-
+- (IBAction)updateOnlineButtonPressed:(UIBarButtonItem *)sender {
+    
+    if (self.meetObject.isOwner) {
+        NSLog(@"owner item updatemeet");
+    }
+    else
+    {
+    [self updateOnlineMeet];
+    }
+}
 @end

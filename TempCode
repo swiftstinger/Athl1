@@ -1,3 +1,13 @@
+
+update new model variables
+
+update all ceventscores in event on update any ceventscores (also delete normally)
+
+master update
+
+work by user and date? date to prevent horrible hybrids
+
+
 ///////////
 refactor scores method needed for team add/remove | gevent options change | meet options change?
 ////////////

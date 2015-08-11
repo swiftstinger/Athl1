@@ -20,6 +20,8 @@
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 - (IBAction)segmentedControlValueChanged:(id)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *updateOnlineButton;
+- (IBAction)updateOnlineButtonPressed:(UIBarButtonItem *)sender;
 
 @property (weak, nonatomic) NSIndexPath *lastpathselected;
 @end

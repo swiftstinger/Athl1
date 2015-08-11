@@ -33,6 +33,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *enterTeamLabel;
 
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *updateOnlineButton;
+- (IBAction)updateOnlineButtonPressed:(UIBarButtonItem *)sender;
+
 
 - (IBAction)ExportResultsButton:(UIBarButtonItem *)sender;
 

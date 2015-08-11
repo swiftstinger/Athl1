@@ -330,7 +330,13 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Meet" id="iaR-ri-1Td"/>
+                    <navigationItem key="navigationItem" title="Meet" id="iaR-ri-1Td">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="A9R-AB-uUa">
+                            <connections>
+                                <action selector="updateOnlineButtonPressed:" destination="K1t-Ae-hdm" id="p03-BQ-Rda"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="MeetMenuLabel" destination="I85-X5-9LE" id="ofi-xo-fiM"/>
                         <outlet property="enterTeamCell" destination="Cgu-hz-ypT" id="VjN-4r-kAl"/>
@@ -345,6 +351,7 @@
                         <outlet property="sendPermissionButton" destination="7qu-C5-M2C" id="rNP-6u-cO9"/>
                         <outlet property="shareOnlineButton" destination="FFx-sy-dit" id="FHI-lG-gup"/>
                         <outlet property="tableview" destination="cnq-Fz-hdt" id="goD-Dq-6hX"/>
+                        <outlet property="updateOnlineButton" destination="A9R-AB-uUa" id="hZy-2W-o3W"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="st3-kP-aYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1171,9 +1178,16 @@
                             <outlet property="delegate" destination="vaA-zB-3N5" id="Qeu-AG-2K8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Events" id="fOd-ln-aNt"/>
+                    <navigationItem key="navigationItem" title="Events" id="fOd-ln-aNt">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="n7H-TV-CMZ">
+                            <connections>
+                                <action selector="updateOnlineButtonPressed:" destination="vaA-zB-3N5" id="zIm-Qo-vLm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="segmentedControl" destination="Xfx-c5-6qt" id="dCo-Aq-yYw"/>
+                        <outlet property="updateOnlineButton" destination="n7H-TV-CMZ" id="Zed-cw-MOK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zfd-JV-ndN" userLabel="First Responder" sceneMemberID="firstResponder"/>
