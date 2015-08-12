@@ -35,6 +35,7 @@
 @property NSMutableArray *eventLocalMutableArray;
 @property NSMutableArray *compLocalMutableArray;
 @property NSMutableArray *cscoreLocalMutableArray;
+@property NSMutableArray *serverdeletes;
 //@property  BOOL meetDeleteSuccess;
 @end
 
@@ -2956,102 +2957,6 @@ UIAlertController * alert;
     
  }
 }
-/**
-- (void) checkForOnlineMeetUpdate {
-    
-    CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
-    
-            NSPredicate *predicatemeet = [NSPredicate predicateWithFormat:@"onlineID == %@", self.meetObject.onlineID];
-
-    
-          //  NSPredicate *predicateuser = [NSPredicate predicateWithFormat:@"updateByUser = %@",@"owner" ];
-    
-         //   NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet, predicateuser, nil];
-    
-         NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet, nil];
-            NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:preds1];
-    
-    
-    
-                CKQuery *query = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicate];
-                CKQueryOperation *queryOp = [[CKQueryOperation alloc] initWithQuery:query];
-
-                queryOp.database = publicDatabase;
-    
-    self.doUpdate = NO;
-    
-    
-    
-                queryOp.recordFetchedBlock = ^(CKRecord *meet)
-                {
-                
-                    
-                    //do something
-                    if (self.meetObject.updateDateAndTime != nil)
-                    {
-                        
-                            self.meetObject.meetName = meet[@"meetName"];
-                    
-                    
-                        if( [meet[@"updateDateAndTime"] timeIntervalSinceDate:self.meetObject.updateDateAndTime] > 0 ) {
-
-                            
-                            NSLog(@"needs an update %@ ", self.meetObject.meetName);
-                           // [self updateOnlineMeet];
-                           
-                           self.doUpdate = YES;
-                        }
-                        else
-                        {
-                            NSLog(@"no update needed %@ ", self.meetObject.meetName);
-                        
-                        }
-                    }
-                    else
-                    {
-                        
-                        
-                        NSLog(@"needs an update %@ ", self.meetObject.meetName);
-                        //[self updateOnlineMeet];
-                        self.doUpdate = YES;
-                    }
-                    
-                };
-
-                queryOp.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
-                {
-                
-                    if (error) {
-                    NSLog(@"CKQueryCursor  meet query error %@", error);
-                        
-                        
-                        [self endUpdateOnlineMeetWithSuccess: NO];
-                    }
-                    else
-                    {
-                    NSLog(@"query meet succesful");
-                     _navBar.title = [self.meetObject valueForKey:@"meetName"];
-                     
-                     if (self.doUpdate) {
-                            [self updateOnlineMeet];
-                        }
-                        else
-                        {
-                            [self endUpdateOnlineMeetWithSuccess: NO];
-                        }
-
-                    
-                    }
-                    
-                    
-                };
-    
-                NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-                [queue addOperation: queryOp];
-
-
-}
-**/
 - (void)endUpdateOnlineMeetWithSuccess: (BOOL) success {
 
         NSLog(@"update ended %d", success);
@@ -3940,6 +3845,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                 queryOpCScore.recordFetchedBlock = ^(CKRecord *cscore)
                 {
                     //do something
+                    
                     [self.cscoreServerMutableArray addObject:cscore[@"onlineID"]];
                     NSString* objectType = @"CEventScore" ;
                     
@@ -4061,7 +3967,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
     if (self.meetObject.isOwner) {
         NSLog(@"owner item updatemeet");
-        
+        [self updateOwnerToOnline];
         
     }
     else
@@ -4074,6 +3980,576 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
 /// owner refresh
 ///////////
 
+
+
+- (void)updateOwnerToOnline {
+
+
+
+
+// Initialize the data
+   NSMutableArray *localChangesMute = [[NSMutableArray alloc] init];;
+   self.serverdeletes = [[NSMutableArray alloc] init];
+   
+   
+     CKRecord* meetrecord = [self addMeetOnline:self.meetObject];
+    [localChangesMute addObject:meetrecord];
+    
+    CKReference* ref = [[CKReference alloc] initWithRecord:meetrecord action:CKReferenceActionDeleteSelf];
+   
+    self.divLocalMutableArray = [[NSMutableArray alloc] init];
+    self.geventLocalMutableArray = [[NSMutableArray alloc] init];
+    self.teamLocalMutableArray = [[NSMutableArray alloc] init];
+    self.eventLocalMutableArray = [[NSMutableArray alloc] init];
+    self.compLocalMutableArray = [[NSMutableArray alloc] init];
+    self.cscoreLocalMutableArray = [[NSMutableArray alloc] init];
+    
+    
+    
+   
+    for (Division* div in self.meetObject.divisions) {
+        
+        [self.divLocalMutableArray addObject:div.onlineID];
+        
+        CKRecord *divrecord = [self addDivisionOnline:div];
+        
+        
+        [divrecord setObject:ref forKey:@"owningMeet"];
+        
+        [localChangesMute addObject:divrecord];
+    }
+    
+    for (GEvent* gevent in self.meetObject.gEvents) {
+        [self.geventLocalMutableArray addObject:gevent.onlineID];
+        CKRecord *geventrecord = [self addGEventOnline:gevent];
+        
+        [geventrecord setObject:ref forKey:@"owningMeet"];
+        
+        [localChangesMute addObject:geventrecord];
+    }
+    
+    for (Team* team in self.meetObject.teams) {
+        
+        [self.teamLocalMutableArray addObject:team.onlineID];
+        CKRecord *teamrecord = [self addTeamOnline:team];
+        
+        [teamrecord setObject:ref forKey:@"owningMeet"];
+        
+        [localChangesMute addObject:teamrecord];
+    }
+    
+    for (Event* event in self.meetObject.events) {
+        
+        [self.eventLocalMutableArray addObject:event.onlineID];
+        CKRecord *eventrecord = [self addEventOnline:event];
+        
+        [eventrecord setObject:ref forKey:@"owningMeet"];
+        
+        [localChangesMute addObject:eventrecord];
+    }
+    
+    for (Competitor* comp in self.meetObject.competitors) {
+        
+        [self.compLocalMutableArray addObject:comp.onlineID];
+        CKRecord *comprecord = [self addCompOnline:comp];
+        
+        [comprecord setObject:ref forKey:@"owningMeet"];
+        
+        [localChangesMute addObject:comprecord];
+    }
+    
+    
+    
+    for (CEventScore* cscore in self.meetObject.cEventsScores) {
+        
+        [self.cscoreLocalMutableArray addObject:cscore.onlineID];
+        CKRecord *cscorerecord = [self addCScoreOnline:cscore];
+        
+        [cscorerecord setObject:ref forKey:@"owningMeet"];
+        
+        [localChangesMute addObject:cscorerecord];
+    }
+    
+    
+    //////////
+    ////
+    //////////
+ 
+    
+    Meet* meetObject = self.meetObject;
+
+    
+            CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
+
+    
+            NSPredicate *predicaterest = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
+    
+            //NSPredicate *predicateuser = [NSPredicate predicateWithFormat:@"updateByUser = %@",@"owner" ];
+    
+    
+            //NSArray *preds2 = [NSArray arrayWithObjects: predicaterest, predicateuser, nil];
+    
+            NSArray *preds2 = [NSArray arrayWithObjects: predicaterest, nil];
+            NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:preds2];
+    
+    
+    
+    //////// start query 2 div
+    
+    
+    
+                CKQuery *queryDiv = [[CKQuery alloc] initWithRecordType:@"Division" predicate:predicate];
+                CKQueryOperation *queryOpDiv = [[CKQueryOperation alloc] initWithQuery:queryDiv];
+    
+               queryOpDiv.database = publicDatabase;
+            //execute query
+    
+    
+    
+                queryOpDiv.recordFetchedBlock = ^(CKRecord *div)
+                {
+                    //do something
+                    
+                    if ([self.divLocalMutableArray containsObject: div[@"onlineID"]]) {
+                        NSLog(@"div exists dont delete ");
+                    }
+                    else
+                    {
+                            NSLog(@"div not on server delete ");
+                        
+                        [self.serverdeletes addObject:[div recordID]];
+                    
+                    }
+                };
+
+                queryOpDiv.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  div query error %@", error);
+                        
+                    }
+                    else
+                    {
+                     NSLog(@"query div succesful");
+                        
+                        
+                        
+                     }
+                };
+
+
+    
+    //////// end query 2 div
+
+    //////// start query 3 gevent
+    
+    
+    
+                CKQuery *queryGEvent = [[CKQuery alloc] initWithRecordType:@"GEvent" predicate:predicate];
+                CKQueryOperation *queryOpGEvent = [[CKQueryOperation alloc] initWithQuery:queryGEvent];
+    
+               queryOpGEvent.database = publicDatabase;
+            //execute query
+    
+    
+                queryOpGEvent.recordFetchedBlock = ^(CKRecord *gevent)
+                {
+                    //do something
+                    if ([self.geventLocalMutableArray containsObject: gevent[@"onlineID"]]) {
+                        NSLog(@"gevent exists dont delete ");
+                    }
+                    else
+                    {
+                            NSLog(@"gevent not on server delete ");
+                    
+                        [self.serverdeletes addObject:[gevent recordID]];
+                    
+                    }
+
+                    
+                };
+
+                queryOpGEvent.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  gevent query error %@", error);
+                    }
+                    else
+                    {
+                     NSLog(@"query gevent succesful");
+                     
+                     }
+                };
+
+                [queryOpGEvent addDependency:queryOpDiv];
+    
+    //////// end query 3 gevent
+
+    //////// start query 4 team
+    
+    
+                CKQuery *queryTeam = [[CKQuery alloc] initWithRecordType:@"Team" predicate:predicate];
+                CKQueryOperation *queryOpTeam = [[CKQueryOperation alloc] initWithQuery:queryTeam];
+    
+               queryOpTeam.database = publicDatabase;
+            //execute query
+    
+    
+                queryOpTeam.recordFetchedBlock = ^(CKRecord *team)
+                {
+                    //do something
+                    if ([self.teamLocalMutableArray containsObject: team[@"onlineID"]]) {
+                        NSLog(@"team exists dont delete ");
+                    }
+                    else
+                    {
+                            NSLog(@"team not on server delete ");
+                    
+                        
+                        [self.serverdeletes addObject:[team recordID]];
+                    
+                    }
+                };
+
+                queryOpTeam.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  Team query error %@", error);
+                    
+                    }
+                    else
+                    {
+                     NSLog(@"query Team succesful");
+                     
+                    }
+                };
+
+                [queryOpTeam addDependency:queryOpGEvent];
+    
+    //////// end query 4 team
+    
+    
+        //////// start query 5 Event
+    
+    
+    
+                CKQuery *queryEvent = [[CKQuery alloc] initWithRecordType:@"Event" predicate:predicate];
+                CKQueryOperation *queryOpEvent = [[CKQueryOperation alloc] initWithQuery:queryEvent];
+    
+               queryOpEvent.database = publicDatabase;
+            //execute query
+    
+    
+                queryOpEvent.recordFetchedBlock = ^(CKRecord *event)
+                {
+                    //do something
+                   if ([self.eventLocalMutableArray containsObject: event[@"onlineID"]]) {
+                        NSLog(@"event exists dont delete ");
+                    }
+                    else
+                    {
+                            NSLog(@"event not on server delete ");
+                    
+                        [self.serverdeletes addObject:[event recordID]];
+                    }
+                    
+                };
+
+                queryOpEvent.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  Event query error %@", error);
+                        
+                    }
+                    else
+                    {
+                     NSLog(@"query Event succesful");
+                    
+                     }
+                };
+
+                [queryOpEvent addDependency:queryOpGEvent];
+                [queryOpEvent addDependency:queryOpDiv];
+    
+    //////// end query 5 Event
+    
+    //////// start query 6 Comp
+    
+    
+    
+                CKQuery *queryComp = [[CKQuery alloc] initWithRecordType:@"Competitor" predicate:predicate];
+                CKQueryOperation *queryOpComp = [[CKQueryOperation alloc] initWithQuery:queryComp];
+    
+               queryOpComp.database = publicDatabase;
+            //execute query
+    
+    
+                queryOpComp.recordFetchedBlock = ^(CKRecord *comp)
+                {
+                    //do something
+                     if ([self.compLocalMutableArray containsObject: comp[@"onlineID"]]) {
+                        NSLog(@"comp exists dont delete ");
+                    }
+                    else
+                    {
+                            NSLog(@"comp not on server delete ");
+                    
+                        [self.serverdeletes addObject:[comp recordID]];
+                    
+                    }
+                };
+
+                queryOpComp.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  Comp query error %@", error);
+                        
+                    }
+                    else
+                    {
+                     NSLog(@"query Comp succesful");
+                     
+                     }
+                };
+
+                [queryOpComp addDependency:queryOpTeam];
+    
+    
+    //////// end query 6 Comp
+
+    //////// start query 7 cscore
+    
+    
+    
+                CKQuery *queryCScore = [[CKQuery alloc] initWithRecordType:@"CEventScore" predicate:predicate];
+                CKQueryOperation *queryOpCScore = [[CKQueryOperation alloc] initWithQuery:queryCScore];
+    
+               queryOpCScore.database = publicDatabase;
+            //execute query
+    
+                queryOpCScore.recordFetchedBlock = ^(CKRecord *cscore)
+                {
+                    //do something
+                    
+                     if ([self.cscoreLocalMutableArray containsObject: cscore[@"onlineID"]]) {
+                        NSLog(@"cscore exists dont delete ");
+                    }
+                    else
+                    {
+                            NSLog(@"cscore not on server delete ");
+                    
+                        [self.serverdeletes addObject:[cscore recordID]];
+                    
+                    }
+                    
+                };
+
+                queryOpCScore.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  cscore query error %@", error);
+                        
+                    }
+                    else
+                    {
+                     NSLog(@"query cscore succesful");
+                       
+                       
+                       NSLog(@"all deletes and all adds done sending");
+                       
+                        [self ownerUpdateOnlineWithChanges:localChangesMute AndDeletions:self.serverdeletes];
+                     }
+                    
+                };
+
+                [queryOpCScore addDependency:queryOpComp];
+                [queryOpCScore addDependency:queryOpEvent];
+    
+    
+    //////// end query 7 Event
+    
+   
+    
+    
+    
+    
+
+                NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    
+                [queue addOperation: queryOpDiv];
+                [queue addOperation: queryOpGEvent];
+                [queue addOperation: queryOpTeam];
+                [queue addOperation: queryOpEvent];
+                [queue addOperation: queryOpComp];
+                [queue addOperation: queryOpCScore];
+
+    
+    
+    
+ 
+  
+    
+      
+}
+
+
+
+- (void) ownerUpdateOnlineWithChanges: (NSMutableArray*) changesMute AndDeletions: (NSMutableArray*) deletionsMute {
+
+
+  
+  
+  
+    NSArray *localChanges = [changesMute copy];
+    NSArray *localDeletions = [deletionsMute copy];
+   
+   
+
+    
+   // Initialize the database and modify records operation
+ 
+   CKDatabase *database = [[CKContainer defaultContainer] publicCloudDatabase];
+ 
+ 
+   CKModifyRecordsOperation *modifyRecordsOperation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:localChanges recordIDsToDelete:localDeletions];
+   modifyRecordsOperation.savePolicy = CKRecordSaveAllKeys;
+
+   NSLog(@"CLOUDKIT Changes Uploading: %d", localChanges.count);
+
+   // Add the completion block
+   modifyRecordsOperation.modifyRecordsCompletionBlock = ^(NSArray *savedRecords, NSArray *deletedRecordIDs, NSError *error) {
+       
+       
+       if (error) {
+           NSLog(@"[%@] Error pushing local data: %@", self.class, error);
+           
+            NSLog(@"Uh oh, there was an error saving ... %@", error);
+            self.updateOnlineSuccess = NO;
+       }
+       else
+       {
+       
+       
+            NSLog(@"Modified successfully");
+           
+           for(CKRecord* record in savedRecords) {
+            
+                NSLog(@"OnlineID of saved: %@", record[@"onlineID"]);
+            
+            }
+           
+            for(CKRecord* recordID in deletedRecordIDs) {
+            
+                NSLog(@"Deleted record id: %@", recordID);
+            }
+
+
+           
+           
+            self.updateOnlineSuccess = YES;
+       
+       }
+        
+      // [localChanges removeObjectsInArray:savedRecords];
+      // [self.localDeletions removeObjectsInArray:deletedRecordIDs];
+
+       [self ownerUpdateOnlineDone];
+       
+
+   };
+   
+   
+
+   // Start the operation
+   [database addOperation:modifyRecordsOperation];
+   
+   
+   
+    
+
+}
+
+
+
+- (void) ownerUpdateOnlineDone {
+    
+    UIAlertController * alert;
+    
+    if (self.updateOnlineSuccess) {
+            
+            
+            
+            alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Database Update Succesful"
+                                    message:@"Current changes updated to online database"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                            
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                           // [self resumeMethod];
+                            
+                             
+                        }];
+            
+                        [alert addAction:ok];
+        
+        [self saveContext];
+ 
+
+    }
+    else
+    {
+    
+        
+        
+       
+    
+                alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Update To Database Failed"
+                                    message:@"Failed to save to online database, please check your internet connection, ensure you are signed in to iCloud and you have updated to iCloud Drive and before trying again"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                            
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                           // [self resumeMethod];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+        
+        
+    
+    }
+    
+        [self presentViewController:alert animated:YES completion:nil];
+
+
+
+}
 
 
 @end

@@ -1,3 +1,7 @@
+invalid argument why on deletes
+
+get only owner meets on update onlinemeet
+
 [array removeObject:@"Name2"];
 
 on update owner
