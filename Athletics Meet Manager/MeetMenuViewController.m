@@ -23,6 +23,18 @@
 @property  BOOL exportresults;
 @property  BOOL sendpermission;
 @property BOOL doUpdate;
+@property NSMutableArray *divServerMutableArray;
+@property NSMutableArray *geventServerMutableArray;
+@property NSMutableArray *teamServerMutableArray;
+@property NSMutableArray *eventServerMutableArray;
+@property NSMutableArray *compServerMutableArray;
+@property NSMutableArray *cscoreServerMutableArray;
+@property NSMutableArray *divLocalMutableArray;
+@property NSMutableArray *geventLocalMutableArray;
+@property NSMutableArray *teamLocalMutableArray;
+@property NSMutableArray *eventLocalMutableArray;
+@property NSMutableArray *compLocalMutableArray;
+@property NSMutableArray *cscoreLocalMutableArray;
 //@property  BOOL meetDeleteSuccess;
 @end
 
@@ -1451,6 +1463,249 @@ return cscore;
 }
 
 
+- (void) modifyOnlineWithChanges: (NSMutableArray*) changesMute AndDeletions: (NSMutableArray*) deletionsMute {
+
+
+  
+  
+  
+    NSArray *localChanges = [changesMute copy];
+    NSArray *localDeletions = [deletionsMute copy];
+  
+    
+   // Initialize the database and modify records operation
+ 
+   CKDatabase *database = [[CKContainer defaultContainer] publicCloudDatabase];
+ 
+ 
+   CKModifyRecordsOperation *modifyRecordsOperation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:localChanges recordIDsToDelete:localDeletions];
+   modifyRecordsOperation.savePolicy = CKRecordSaveAllKeys;
+
+   NSLog(@"CLOUDKIT Changes Uploading: %d", localChanges.count);
+
+   // Add the completion block
+   modifyRecordsOperation.modifyRecordsCompletionBlock = ^(NSArray *savedRecords, NSArray *deletedRecordIDs, NSError *error) {
+       
+       
+       if (error) {
+           NSLog(@"[%@] Error pushing local data: %@", self.class, error);
+           
+            NSLog(@"Uh oh, there was an error saving ... %@", error);
+            self.updateOnlineSuccess = NO;
+       }
+       else
+       {
+       
+       
+            NSLog(@"Modified successfully");
+           
+           for(CKRecord* record in savedRecords) {
+            
+                NSLog(@"OnlineID: %@", record[@"onlineID"]);
+            
+            }
+           
+            for(CKRecord* recordID in deletedRecordIDs) {
+            
+                NSLog(@"Deleted record id: %@", recordID);
+            }
+
+
+           
+           
+            self.updateOnlineSuccess = YES;
+       
+       }
+        
+      // [localChanges removeObjectsInArray:savedRecords];
+      // [self.localDeletions removeObjectsInArray:deletedRecordIDs];
+
+       [self modifyOnlineDone];
+       
+
+   };
+   
+   
+
+   // Start the operation
+   [database addOperation:modifyRecordsOperation];
+   
+   
+   
+     //save the record to the target database
+  
+    /**
+        [publicDatabase saveRecord:meet completionHandler:^(CKRecord *record, NSError *error) {
+        
+        //handle save error
+        if(error) {
+            
+            NSLog(@"Uh oh, there was an error saving ... %@", error);
+            self.meetSaveOnlineSuccess = NO;
+        //handle successful save
+        } else {
+            
+            NSLog(@"Saved successfully");
+            NSLog(@"Title: %@", record[@"meetName"]);
+            self.meetSaveOnlineSuccess = YES;
+            
+        }
+        [self sendOnlineDone];
+    }];
+    **/
+
+}
+
+
+
+- (void) modifyOnlineDone {
+    
+    UIAlertController * alert;
+    
+    if (self.updateOnlineSuccess) {
+        
+        
+        
+        if (self.sharing) {
+   
+            self.meetObject.onlineMeet = [NSNumber numberWithBool:YES];
+            self.sendPermissionButton.enabled = YES;
+            self.meetObject.isOwner = [NSNumber numberWithBool:YES];
+            
+            
+            
+            alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Online Share Succesful"
+                                    message:@"Meet shared for online result entry by other users, send permission files to users to get started"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                            
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            [self resumeMethod];
+                            self.shareOnlineButton.title = @"Unshare Meet";
+                             
+                        }];
+            
+                        [alert addAction:ok];
+        }
+        else
+        {
+            self.meetObject.onlineMeet = [NSNumber numberWithBool:NO];
+            self.sendPermissionButton.enabled = NO;
+            self.meetObject.isOwner = [NSNumber numberWithBool:NO];
+            
+            alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Meet Unshared Succesfully"
+                                    message:@" Meet will no longer be available for users to update online"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                           
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            [self resumeMethod];
+                            self.shareOnlineButton.title = @"Share Online";
+                            
+                            
+                             
+                        }];
+                        
+                [alert addAction:ok];
+
+        }
+            
+        [self saveContext];
+        
+        
+        
+     
+        
+
+    }
+    else
+    {
+    
+        
+        
+        if (self.sharing) {
+    
+                alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Online Share Failed"
+                                    message:@"Failed to save to online database, please check your internet connection, ensure you are signed in to iCloud and you have updated to iCloud Drive"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                            
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            [self resumeMethod];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+        }
+        else
+        {
+                alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Unshare meet unsuccesfull"
+                                    message:@"There was a problem removing this Meet from online database, please check your internet connection and try again"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                          
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                            [self resumeMethod];
+                            
+                             
+                        }];
+                        
+                [alert addAction:ok];
+
+        
+        }
+        
+        
+        
+    
+    }
+    
+        [self presentViewController:alert animated:YES completion:nil];
+
+
+
+}
 
 - (void)removeAllOnline {
 
@@ -1855,251 +2110,8 @@ self.sharing = NO;
 }
 
 
-- (void) modifyOnlineWithChanges: (NSMutableArray*) changesMute AndDeletions: (NSMutableArray*) deletionsMute {
 
 
-  
-  
-  
-    NSArray *localChanges = [changesMute copy];
-    NSArray *localDeletions = [deletionsMute copy];
-  
-    
-   // Initialize the database and modify records operation
- 
-   CKDatabase *database = [[CKContainer defaultContainer] publicCloudDatabase];
- 
- 
-   CKModifyRecordsOperation *modifyRecordsOperation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:localChanges recordIDsToDelete:localDeletions];
-   modifyRecordsOperation.savePolicy = CKRecordSaveAllKeys;
-
-   NSLog(@"CLOUDKIT Changes Uploading: %d", localChanges.count);
-
-   // Add the completion block
-   modifyRecordsOperation.modifyRecordsCompletionBlock = ^(NSArray *savedRecords, NSArray *deletedRecordIDs, NSError *error) {
-       
-       
-       if (error) {
-           NSLog(@"[%@] Error pushing local data: %@", self.class, error);
-           
-            NSLog(@"Uh oh, there was an error saving ... %@", error);
-            self.updateOnlineSuccess = NO;
-       }
-       else
-       {
-       
-       
-            NSLog(@"Modified successfully");
-           
-           for(CKRecord* record in savedRecords) {
-            
-                NSLog(@"OnlineID: %@", record[@"onlineID"]);
-            
-            }
-           
-            for(CKRecord* recordID in deletedRecordIDs) {
-            
-                NSLog(@"Deleted record id: %@", recordID);
-            }
-
-
-           
-           
-            self.updateOnlineSuccess = YES;
-       
-       }
-        
-      // [localChanges removeObjectsInArray:savedRecords];
-      // [self.localDeletions removeObjectsInArray:deletedRecordIDs];
-
-       [self modifyOnlineDone];
-       
-
-   };
-   
-   
-
-   // Start the operation
-   [database addOperation:modifyRecordsOperation];
-   
-   
-   
-     //save the record to the target database
-  
-    /**
-        [publicDatabase saveRecord:meet completionHandler:^(CKRecord *record, NSError *error) {
-        
-        //handle save error
-        if(error) {
-            
-            NSLog(@"Uh oh, there was an error saving ... %@", error);
-            self.meetSaveOnlineSuccess = NO;
-        //handle successful save
-        } else {
-            
-            NSLog(@"Saved successfully");
-            NSLog(@"Title: %@", record[@"meetName"]);
-            self.meetSaveOnlineSuccess = YES;
-            
-        }
-        [self sendOnlineDone];
-    }];
-    **/
-
-}
-
-
-
-
-
-- (void) modifyOnlineDone {
-    
-    UIAlertController * alert;
-    
-    if (self.updateOnlineSuccess) {
-        
-        
-        
-        if (self.sharing) {
-   
-            self.meetObject.onlineMeet = [NSNumber numberWithBool:YES];
-            self.sendPermissionButton.enabled = YES;
-            self.meetObject.isOwner = [NSNumber numberWithBool:YES];
-            
-            
-            
-            alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Online Share Succesful"
-                                    message:@"Meet shared for online result entry by other users, send permission files to users to get started"
-                                    preferredStyle:UIAlertControllerStyleAlert];
-     
-     
-                UIAlertAction* ok = [UIAlertAction
-                        actionWithTitle:@"OK"
-                        style:UIAlertActionStyleDefault
-                        handler:^(UIAlertAction * action)
-                        {
-                            
-                            
-                            
-                            
-                            [alert dismissViewControllerAnimated:YES completion:nil];
-                            [self resumeMethod];
-                            self.shareOnlineButton.title = @"Unshare Meet";
-                             
-                        }];
-            
-                        [alert addAction:ok];
-        }
-        else
-        {
-            self.meetObject.onlineMeet = [NSNumber numberWithBool:NO];
-            self.sendPermissionButton.enabled = NO;
-            self.meetObject.isOwner = [NSNumber numberWithBool:NO];
-            
-            alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Meet Unshared Succesfully"
-                                    message:@" Meet will no longer be available for users to update online"
-                                    preferredStyle:UIAlertControllerStyleAlert];
-     
-     
-                UIAlertAction* ok = [UIAlertAction
-                        actionWithTitle:@"OK"
-                        style:UIAlertActionStyleDefault
-                        handler:^(UIAlertAction * action)
-                        {
-                            
-                            
-                           
-                            
-                            [alert dismissViewControllerAnimated:YES completion:nil];
-                            [self resumeMethod];
-                            self.shareOnlineButton.title = @"Share Online";
-                            
-                            
-                             
-                        }];
-                        
-                [alert addAction:ok];
-
-        }
-            
-        [self saveContext];
-        
-        
-        
-     
-        
-
-    }
-    else
-    {
-    
-        
-        
-        if (self.sharing) {
-    
-                alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Online Share Failed"
-                                    message:@"Failed to save to online database, please check your internet connection, ensure you are signed in to iCloud and you have updated to iCloud Drive"
-                                    preferredStyle:UIAlertControllerStyleAlert];
-     
-     
-                UIAlertAction* ok = [UIAlertAction
-                        actionWithTitle:@"OK"
-                        style:UIAlertActionStyleDefault
-                        handler:^(UIAlertAction * action)
-                        {
-                            
-                            
-                            
-                            
-                            [alert dismissViewControllerAnimated:YES completion:nil];
-                            [self resumeMethod];
-                             
-                        }];
-                        
-                [alert addAction:ok];
-        }
-        else
-        {
-                alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Unshare meet unsuccesfull"
-                                    message:@"There was a problem removing this Meet from online database, please check your internet connection and try again"
-                                    preferredStyle:UIAlertControllerStyleAlert];
-     
-     
-                UIAlertAction* ok = [UIAlertAction
-                        actionWithTitle:@"OK"
-                        style:UIAlertActionStyleDefault
-                        handler:^(UIAlertAction * action)
-                        {
-                            
-                            
-                          
-                            
-                            [alert dismissViewControllerAnimated:YES completion:nil];
-                            
-                            [self resumeMethod];
-                            
-                             
-                        }];
-                        
-                [alert addAction:ok];
-
-        
-        }
-        
-        
-        
-    
-    }
-    
-        [self presentViewController:alert animated:YES completion:nil];
-
-
-
-}
 
 
 
@@ -3048,7 +3060,136 @@ UIAlertController * alert;
                         
                     // Save the context.
         if (success) {
-        NSLog(@"update savecontext");
+        NSLog(@"update succesfull now do deletes");
+                for (Division* object in self.meetObject.divisions) {
+                    if ([self.divServerMutableArray containsObject:object.onlineID]) {
+                        NSLog(@"div exists dont delete divname %@", object.divName);
+                    }
+                    else
+                    {
+                            NSLog(@"div not on server delete divname %@", object.divName);
+                        
+                            if ([object.editDone boolValue]||(![object.edited boolValue])) {
+                                 NSLog(@" editDone or not edited so deleted");
+                                [self.managedObjectContext deleteObject:object];
+    
+                            }
+                            else
+                            {
+                                NSLog(@"edited and not edit done so not deleted");
+                            }
+                        
+                        
+                    }
+                
+                
+                }
+                for (GEvent* object in self.meetObject.gEvents) {
+                    if ([self.geventServerMutableArray containsObject:object.onlineID]) {
+                        NSLog(@"gevent exists dont delete geventname %@", object.gEventName);
+                    }
+                    else
+                    {
+                            NSLog(@"gevent not on server delete geventname %@", object.gEventName);
+                        
+                            if ([object.editDone boolValue]||(![object.edited boolValue])) {
+                                 NSLog(@" editDone or not edited so deleted");
+                                [self.managedObjectContext deleteObject:object];
+    
+                            }
+                            else
+                            {
+                                NSLog(@"edited and not edit done so not deleted");
+                            }
+                        
+                        
+                    }
+                
+                
+                }
+                for (Team* object in self.meetObject.teams) {
+                    if ([self.teamServerMutableArray containsObject:object.onlineID]) {
+                        NSLog(@"team exists dont delete teamname %@", object.teamName);
+                    }
+                    else
+                    {
+                            NSLog(@"team not on server delete teamname %@", object.teamName);
+                            if ([object.editDone boolValue]||(![object.edited boolValue])) {
+                                 NSLog(@" editDone or not edited so deleted");
+                                [self.managedObjectContext deleteObject:object];
+    
+                            }
+                            else
+                            {
+                                NSLog(@"edited and not edit done so not deleted");
+                            }
+                        
+                    }
+                
+                
+                }
+                for (Event* object in self.meetObject.events) {
+                    if ([self.eventServerMutableArray containsObject:object.onlineID]) {
+                        NSLog(@"event exists dont delete eventid %@", object.eventID);
+                    }
+                    else
+                    {
+                            NSLog(@"event not on server delete eventid %@", object.eventID);
+                            if ([object.editDone boolValue]||(![object.edited boolValue])) {
+                                 NSLog(@" editDone or not edited so deleted");
+                                [self.managedObjectContext deleteObject:object];
+    
+                            }
+                            else
+                            {
+                                NSLog(@"edited and not edit done so not deleted");
+                            }
+                    }
+                
+                
+                }
+                for (Competitor* object in self.meetObject.competitors) {
+                    if ([self.compServerMutableArray containsObject:object.onlineID]) {
+                        NSLog(@"comp exists dont delete compname %@", object.compName);
+                    }
+                    else
+                    {
+                            NSLog(@"comp not on server delete compname %@", object.compName);
+                            if ([object.editDone boolValue]||(![object.edited boolValue])) {
+                                 NSLog(@" editDone or not edited so deleted");
+                                [self.managedObjectContext deleteObject:object];
+    
+                            }
+                            else
+                            {
+                                NSLog(@"edited and not edit done so not deleted");
+                            }
+                        
+                    }
+                
+                
+                }
+                for (CEventScore* object in self.meetObject.cEventsScores) {
+                    if ([self.cscoreServerMutableArray containsObject:object.onlineID]) {
+                        NSLog(@"cscore exists dont delete cscoreid %@", object.cEventScoreID);
+                    }
+                    else
+                    {
+                            NSLog(@"cscore not on server delete cscoreid %@", object.cEventScoreID);
+                            if ([object.editDone boolValue]||(![object.edited boolValue])) {
+                                 NSLog(@" editDone or not edited so deleted");
+                                [self.managedObjectContext deleteObject:object];
+    
+                            }
+                            else
+                            {
+                                NSLog(@"edited and not edit done so not deleted");
+                            }
+                    }
+                
+                
+                }
+            
                         if (![self.managedObjectContext save:&errorscore]) {
                         }
         }
@@ -3146,8 +3287,15 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
             //execute query
     
+    
+    
+    
+    
                 queryOpMeet.recordFetchedBlock = ^(CKRecord *meet)
                 {
+                
+                
+                
                 NSLog(@"in queryopmeet recordfetchedblock");
                     Meet* meetObject = self.meetObject;
                     bool updating = NO;
@@ -3266,9 +3414,13 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                queryOpDiv.database = publicDatabase;
             //execute query
     
+                self.divServerMutableArray = [[NSMutableArray alloc] init];
+    
                 queryOpDiv.recordFetchedBlock = ^(CKRecord *div)
                 {
                     //do something
+                    
+                    [self.divServerMutableArray addObject:div[@"onlineID"]];
                     
                     NSString* objectType = @"Division";
                     
@@ -3293,6 +3445,8 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                         divObject.updateDateAndTime = oldDate;
                     }
                         
+                    
+                    
                     
                     bool updating = NO;
                     
@@ -3369,11 +3523,12 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
                queryOpGEvent.database = publicDatabase;
             //execute query
+    self.geventServerMutableArray = [[NSMutableArray alloc] init];
     
                 queryOpGEvent.recordFetchedBlock = ^(CKRecord *gevent)
                 {
                     //do something
-                    
+                    [self.geventServerMutableArray addObject:gevent[@"onlineID"]];
                     NSString* objectType = @"GEvent";
                     
                     GEvent* gEventObject = [self fetchObjectType:objectType WithOnlineID:gevent[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
@@ -3470,11 +3625,12 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
                queryOpTeam.database = publicDatabase;
             //execute query
+                self.teamServerMutableArray = [[NSMutableArray alloc] init];
     
                 queryOpTeam.recordFetchedBlock = ^(CKRecord *team)
                 {
                     //do something
-                    
+                    [self.teamServerMutableArray addObject:team[@"onlineID"]];
                     NSString* objectType = @"Team";
                     
                     Team* teamObject = [self fetchObjectType:objectType WithOnlineID:team[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
@@ -3571,11 +3727,12 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
                queryOpEvent.database = publicDatabase;
             //execute query
+    self.eventServerMutableArray = [[NSMutableArray alloc] init];
     
                 queryOpEvent.recordFetchedBlock = ^(CKRecord *event)
                 {
                     //do something
-                    
+                    [self.eventServerMutableArray addObject:event[@"onlineID"]];
                     NSString* objectType = @"Event";
                     
                     Event* eventObject = [self fetchObjectType:objectType WithOnlineID:event[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
@@ -3674,11 +3831,12 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
                queryOpComp.database = publicDatabase;
             //execute query
+    self.compServerMutableArray = [[NSMutableArray alloc] init];
     
                 queryOpComp.recordFetchedBlock = ^(CKRecord *comp)
                 {
                     //do something
-                    
+                    [self.compServerMutableArray addObject:comp[@"onlineID"]];
                     NSString* objectType = @"Competitor";
                     
                     Competitor* compObject  = [self fetchObjectType:objectType WithOnlineID:comp[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
@@ -3777,11 +3935,12 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
                queryOpCScore.database = publicDatabase;
             //execute query
+    self.cscoreServerMutableArray = [[NSMutableArray alloc] init];
     
                 queryOpCScore.recordFetchedBlock = ^(CKRecord *cscore)
                 {
                     //do something
-                    
+                    [self.cscoreServerMutableArray addObject:cscore[@"onlineID"]];
                     NSString* objectType = @"CEventScore" ;
                     
                      CEventScore* cscoreObject  = [self fetchObjectType:objectType WithOnlineID:cscore[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
@@ -3878,6 +4037,8 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
     
     //////// end query 7 Event
+    
+   
     
     
     
@@ -3913,1475 +4074,6 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
 /// owner refresh
 ///////////
 
-/**
-- (void)updateOwnerMeet {
-    
-    
-        NSLog(@"updating meet");
-    
-    
-            NSDateComponents *comps = [[NSDateComponents alloc] init];
-    
-                [comps setYear:1970];
-                NSDate *oldDate = [[NSCalendar currentCalendar] dateFromComponents:comps];
-    
-    
-            Meet* meetObject = self.meetObject;
-    
-            NSMutableDictionary* objectsDictionary = [[NSMutableDictionary alloc] init];
-
-    
-            NSManagedObjectContext* context = self.managedObjectContext;
-    
-            CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
-
-            NSPredicate *predicatemeet = [NSPredicate predicateWithFormat:@"onlineID = %@", meetObject.onlineID];
-    
-            NSPredicate *predicaterest = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
-    
-            //  NSPredicate *predicateuser = [NSPredicate predicateWithFormat:@"updateByUser = %@",@"owner" ];
-    
-         //   NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet, predicateuser, nil];
-    
-         NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet, nil];
-            NSPredicate *predicateM = [NSCompoundPredicate andPredicateWithSubpredicates:preds1];
-            //NSArray *preds2 = [NSArray arrayWithObjects: predicaterest, predicateuser, nil];
-    
-            NSArray *preds2 = [NSArray arrayWithObjects: predicaterest, nil];
-            NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:preds2];
-    
-    
-                 //////// start query 1 meet
-    
-    
-    
-                CKQuery *queryMeet = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicateM];
-                CKQueryOperation *queryOpMeet = [[CKQueryOperation alloc] initWithQuery:queryMeet];
-    
-               queryOpMeet.database = publicDatabase;
-    
-            //execute query
-    
-                queryOpMeet.recordFetchedBlock = ^(CKRecord *meet)
-                {
-                NSLog(@"in queryopmeet recordfetchedblock");
-                    Meet* meetObject = self.meetObject;
-                    bool updating = NO;
-                NSString* objectType = @"Meet";
-                    
-                    
-                    if (meetObject != nil) {
-                        NSLog(@" %@ exists",objectType);
-                    }
-                    else
-                    {
-                        meetObject = [NSEntityDescription insertNewObjectForEntityForName:objectType inManagedObjectContext:context];
-                        
-                         NSLog(@" new %@ created",objectType);
-                        
-                        
-                         meetObject.updateDateAndTime = oldDate;
-                        
-                    }
-
-                
-                
-                if (self.meetObject.updateDateAndTime != nil)
-                    {
-                    }
-                    else
-                    {
-                        meetObject.updateDateAndTime = oldDate;
-                    }
-                        
-                    
-                    
-                    
-                        if( [meet[@"updateDateAndTime"] timeIntervalSinceDate: meetObject.updateDateAndTime] > 0 ) {
-
-                            
-                            NSLog(@"needs an update %@ ", meet[@"meetName"]);
-                            
-                            if ( meetObject.edited) {
-                                updating = NO;
-                            
-                            }
-                            if ( meetObject.editDone) {
-                                updating = YES;
-                            }
-                           
-                        }
-                        else
-                        {
-                            NSLog(@"no update needed %@ ", meet[@"meetName"]);
-                            updating = NO;
-                        }
-                    
-                    
-                    
-                        if (updating)
-                            {
-
-                            meetObject.editDone = [NSNumber numberWithBool:YES];
-                            meetObject.edited = [NSNumber numberWithBool:NO];
-                            meetObject.meetDate = meet[@"meetDate"];
-                            meetObject.meetName = meet[@"meetName"];
-                            meetObject.cEventLimit = meet[@"cEventLimit"];
-                            meetObject.competitorPerTeam = meet[@"competitorPerTeam"];
-                            meetObject.decrementPerPlace = meet[@"decrementPerPlace"];
-                            meetObject.divsDone = meet[@"divsDone"];
-                            meetObject.eventsDone = meet[@"eventsDone"];
-                            meetObject.maxScoringCompetitors = meet[@"maxScoringCompetitors"];
-                            meetObject.meetDate = meet[@"meetDate"];
-                            meetObject.meetEndTime = meet[@"meetEndTime"];
-                            meetObject.meetID = meet[@"meetID"];
-                            meetObject.meetName = meet[@"meetName"];
-                            meetObject.meetStartTime = meet[@"meetStartTime"];
-                            meetObject.scoreForFirstPlace = meet[@"scoreForFirstPlace"];
-                            meetObject.scoreMultiplier = meet[@"scoreMultiplier"];
-                            meetObject.teamsDone = meet[@"teamsDone"];
-                            meetObject.onlineMeet = meet[@"onlineMeet"];
-                            meetObject.updateDateAndTime = [NSDate date];
-                            meetObject.updateByUser = meet[@"updateByUser"];
-                            meetObject.isOwner = meet[@"isOwner"];
-                            meetObject.onlineID = meet[@"onlineID"];
-                    
-                            [objectsDictionary setValue:meetObject forKey:meetObject.onlineID];
-
-
-                            NSLog(@"updating meet %@ ", meetObject.meetName);
-                            _navBar.title = meetObject.meetName;
-                            }
-                    
-                };
-
-                queryOpMeet.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
-                {
-                
-                    if (error) {
-                    NSLog(@"CKQueryCursor  meet query error %@", error);
-                    [self endUpdateOnlineMeetWithSuccess:NO];
-                    }
-                    else
-                    {
-                     NSLog(@"query meet succesful");
-                     
-                     }
-                };
-
-    
-    //////// end query 1 meet
-
-    //////// start query 2 div
-    
-    
-    
-                CKQuery *queryDiv = [[CKQuery alloc] initWithRecordType:@"Division" predicate:predicate];
-                CKQueryOperation *queryOpDiv = [[CKQueryOperation alloc] initWithQuery:queryDiv];
-    
-               queryOpDiv.database = publicDatabase;
-            //execute query
-    
-                queryOpDiv.recordFetchedBlock = ^(CKRecord *div)
-                {
-                    //do something
-                    
-                    NSString* objectType = @"Division";
-                    
-                    Division *divObject = [self fetchObjectType:objectType WithOnlineID:div[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
-                    if (divObject != nil) {
-                        NSLog(@" %@ exists",objectType);
-                    }
-                    else
-                    {
-                        divObject = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
-                        
-                         NSLog(@" new %@ created",objectType);
-                        
-                         divObject.updateDateAndTime = oldDate;
-                    }
-                    
-                    if (divObject.updateDateAndTime != nil)
-                    {
-                    }
-                    else
-                    {
-                        divObject.updateDateAndTime = oldDate;
-                    }
-                        
-                    
-                    bool updating = NO;
-                    
-                        if( [div[@"updateDateAndTime"] timeIntervalSinceDate:divObject.updateDateAndTime] > 0 ) {
-
-                            if (divObject.edited) {
-                                updating = NO;
-                                NSLog(@"locked for editing %@ ", div[@"divName"]);
-                            
-                            }
-                            if (divObject.editDone) {
-                                updating = YES;
-                                NSLog(@"editing done %@ ", div[@"divName"]);
-                            }
-                        }
-                        else
-                        {
-                            NSLog(@"local object date %@ and server date %@",divObject.updateDateAndTime,div[@"updateDateAndTime"] );
-                            NSLog(@"no update needed %@ ", div[@"divName"]);
-                            updating = NO;
-                        }
-                    
-                    
-                    
-                        if (updating)
-                            {
-
-   
-                    
-                    
-                 //   Division* divObject = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
-                            divObject.editDone = [NSNumber numberWithBool:YES];
-                            divObject.edited = [NSNumber numberWithBool:NO];
-                            divObject.divID = div[@"divID"];
-                            divObject.divName = div[@"divName"];
-                            divObject.onlineID = div[@"onlineID"];
-                            divObject.updateByUser = div[@"updateByUser"];
-                            divObject.updateDateAndTime = [NSDate date];
-                    
-                            divObject.meet = meetObject;
-                    
-                            [objectsDictionary setValue:divObject forKey:divObject.onlineID];
-
-                            NSLog(@"updating div %@ ", divObject.divName);
-                            
-                            }
-                    
-                };
-
-                queryOpDiv.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
-                {
-                
-                    if (error) {
-                    NSLog(@"CKQueryCursor  div query error %@", error);
-                    [self endUpdateOnlineMeetWithSuccess:NO];
-                    }
-                    else
-                    {
-                     NSLog(@"query div succesful");
-                     
-                     }
-                };
-
-                [queryOpDiv addDependency:queryOpMeet];
-    
-    //////// end query 2 div
-
-    //////// start query 3 gevent
-    
-    
-    
-                CKQuery *queryGEvent = [[CKQuery alloc] initWithRecordType:@"GEvent" predicate:predicate];
-                CKQueryOperation *queryOpGEvent = [[CKQueryOperation alloc] initWithQuery:queryGEvent];
-    
-               queryOpGEvent.database = publicDatabase;
-            //execute query
-    
-                queryOpGEvent.recordFetchedBlock = ^(CKRecord *gevent)
-                {
-                    //do something
-                    
-                    NSString* objectType = @"GEvent";
-                    
-                    GEvent* gEventObject = [self fetchObjectType:objectType WithOnlineID:gevent[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
-                    if (gEventObject != nil) {
-                        NSLog(@" %@ exists",objectType);
-                    }
-                    else
-                    {
-                        gEventObject = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
-                        
-                         NSLog(@" new %@ created",objectType);
-                             gEventObject.updateDateAndTime = oldDate;
-                    }
-                    
-                    if (gEventObject.updateDateAndTime != nil)
-                    {
-                    }
-                    else
-                    {
-                        gEventObject.updateDateAndTime = oldDate;
-                    }
-                        
-                    
-                    bool updating = NO;
-                    
-                        if( [gevent[@"updateDateAndTime"] timeIntervalSinceDate:gEventObject.updateDateAndTime] > 0 ) {
-
-                            if (gEventObject.edited) {
-                                updating = NO;
-                                NSLog(@"locked for editing %@ ", gevent[@"gEventName"]);
-                            }
-                            if (gEventObject.editDone) {
-                                updating = YES;
-                                NSLog(@"editing done %@ ", gevent[@"gEventName"]);
-                            }
-                        }
-                        else
-                        {
-                            NSLog(@"no update needed %@ ", gevent[@"gEventName"]);
-                            updating = NO;
-                        }
-                    
-                    
-                    
-                        if (updating)
-                            {
-                            gEventObject.editDone = [NSNumber numberWithBool:YES];
-                            gEventObject.edited = [NSNumber numberWithBool:NO];
-                            gEventObject.competitorsPerTeam = gevent[@"competitorsPerTeam"];
-                            gEventObject.decrementPerPlace = gevent[@"decrementPerPlace"];
-                            gEventObject.gEventID = gevent[@"gEventID"];
-                            gEventObject.gEventName = gevent[@"gEventName"];
-                            gEventObject.gEventTiming = gevent[@"gEventTiming"];
-                            gEventObject.gEventType = gevent[@"gEventType"];
-                            gEventObject.maxScoringCompetitors = gevent[@"maxScoringCompetitors"];
-                            gEventObject.onlineID = gevent[@"onlineID"];
-                            gEventObject.scoreForFirstPlace = gevent[@"scoreForFirstPlace"];
-                            gEventObject.scoreMultiplier = gevent[@"scoreMultiplier"];
-                            gEventObject.updateByUser = gevent[@"updateByUser"];
-                            gEventObject.updateDateAndTime = [NSDate date];
-                    
-                            gEventObject.meet = meetObject;
-                    
-                            [objectsDictionary setValue:gEventObject forKey:gEventObject.onlineID];
-
-                            NSLog(@"updating gevent %@ ", gEventObject.gEventName);
-                            }
-                    
-                };
-
-                queryOpGEvent.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
-                {
-                
-                    if (error) {
-                    NSLog(@"CKQueryCursor  gevent query error %@", error);
-                    [self endUpdateOnlineMeetWithSuccess:NO];
-                    }
-                    else
-                    {
-                     NSLog(@"query gevent succesful");
-                     
-                     }
-                };
-
-                [queryOpGEvent addDependency:queryOpDiv];
-    
-    //////// end query 3 gevent
-
-    //////// start query 4 team
-    
-    
-                CKQuery *queryTeam = [[CKQuery alloc] initWithRecordType:@"Team" predicate:predicate];
-                CKQueryOperation *queryOpTeam = [[CKQueryOperation alloc] initWithQuery:queryTeam];
-    
-               queryOpTeam.database = publicDatabase;
-            //execute query
-    
-                queryOpTeam.recordFetchedBlock = ^(CKRecord *team)
-                {
-                    //do something
-                    
-                    NSString* objectType = @"Team";
-                    
-                    Team* teamObject = [self fetchObjectType:objectType WithOnlineID:team[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
-                    if (teamObject != nil) {
-                        NSLog(@" %@ exists",objectType);
-                    }
-                    else
-                    {
-                        teamObject = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
-                        
-                         NSLog(@" new %@ created",objectType);
-                        teamObject.updateDateAndTime = oldDate;
-                    }
-                    
-                    if (teamObject.updateDateAndTime != nil)
-                    {
-                    }
-                    else
-                    {
-                        teamObject.updateDateAndTime = oldDate;
-                    }
-                        
-                    
-                    bool updating = NO;
-                    
-                        if( [team[@"updateDateAndTime"] timeIntervalSinceDate:teamObject.updateDateAndTime] > 0 ) {
-
-                            if (teamObject.edited) {
-                                updating = NO;
-                                NSLog(@"locked for editing %@ ", team[@"teamName"]);
-                            }
-                            if (teamObject.editDone) {
-                                updating = YES;
-                                NSLog(@"editing done %@ ", team[@"teamName"]);
-                            }
-                        }
-                        else
-                        {
-                            NSLog(@"no update needed %@ ", team[@"teamName"]);
-                            updating = NO;
-                        }
-                    
-                    
-                    
-                    if (updating)
-                        {
-
-                        teamObject.editDone = [NSNumber numberWithBool:YES];
-                            teamObject.edited = [NSNumber numberWithBool:NO];
-                        teamObject.onlineID = team[@"onlineID"];
-                        teamObject.teamAbr = team[@"teamAbr"];
-                        teamObject.teamID = team[@"teamID"];
-                        teamObject.teamName = team[@"teamName"];
-                        teamObject.teamPlace = team[@"teamPlace"];
-                        teamObject.teamScore = team[@"teamScore"];
-                        teamObject.updateByUser = team[@"updateByUser"];
-                        teamObject.updateDateAndTime = [NSDate date];
-                    
-                            teamObject.meet = meetObject;
-                    
-                            [objectsDictionary setValue:teamObject forKey:teamObject.onlineID];
-                    
-                            
-
-                            NSLog(@"updating team %@ ", teamObject.teamName);
-                        }
-                };
-
-                queryOpTeam.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
-                {
-                
-                    if (error) {
-                    NSLog(@"CKQueryCursor  Team query error %@", error);
-                    [self endUpdateOnlineMeetWithSuccess:NO];
-                    }
-                    else
-                    {
-                     NSLog(@"query Team succesful");
-                     
-                     }
-                };
-
-                [queryOpTeam addDependency:queryOpGEvent];
-    
-    //////// end query 4 team
-    
-    
-        //////// start query 5 Event
-    
-    
-    
-                CKQuery *queryEvent = [[CKQuery alloc] initWithRecordType:@"Event" predicate:predicate];
-                CKQueryOperation *queryOpEvent = [[CKQueryOperation alloc] initWithQuery:queryEvent];
-    
-               queryOpEvent.database = publicDatabase;
-            //execute query
-    
-                queryOpEvent.recordFetchedBlock = ^(CKRecord *event)
-                {
-                    //do something
-                    
-                    NSString* objectType = @"Event";
-                    
-                    Event* eventObject = [self fetchObjectType:objectType WithOnlineID:event[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
-                    if (eventObject != nil) {
-                        NSLog(@" %@ exists",objectType);
-                    }
-                    else
-                    {
-                        eventObject = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
-                        
-                         NSLog(@" new %@ created",objectType);
-                         eventObject.updateDateAndTime = oldDate;
-                    }
-                    
-                    if (eventObject.updateDateAndTime != nil)
-                    {
-                    }
-                    else
-                    {
-                        eventObject.updateDateAndTime = oldDate;
-                    }
-                        
-                    
-                    bool updating = NO;
-                    
-                        if( [event[@"updateDateAndTime"] timeIntervalSinceDate:eventObject.updateDateAndTime] > 0 ) {
-
-                            if (eventObject.edited) {
-                                updating = NO;
-                                NSLog(@"locked for editing %@ ", event[@"eventID"]);
-                            }
-                            if (eventObject.editDone) {
-                                updating = YES;
-                                NSLog(@"editing done %@ ", event[@"eventID"]);
-                            }
-                        }
-                        else
-                        {
-                            NSLog(@"no update needed %@ ", event[@"eventID"]);
-                            updating = NO;
-                        }
-                    
-                    
-                    
-                    if (updating)
-                        {
-                        eventObject.editDone = [NSNumber numberWithBool:YES];
-                            eventObject.edited = [NSNumber numberWithBool:NO];
-                        eventObject.eventDone = event[@"eventDone"];
-                        eventObject.eventEdited = event[@"eventEdited"];
-                        eventObject.eventID = event[@"eventID"];
-                        eventObject.onlineID = event[@"onlineID"];
-                        eventObject.startTime = event[@"startTime"];
-                        eventObject.updateByUser = event[@"updateByUser"];
-                        eventObject.updateDateAndTime = [NSDate date];
-                    
-                        eventObject.meet = meetObject;
-                    
-                        eventObject.division = [objectsDictionary valueForKey:event[@"division"]];
-                        eventObject.gEvent = [objectsDictionary valueForKey: event[@"gEvent"]];
-                    
-                    
-                    
-                            [objectsDictionary setValue:eventObject forKey:eventObject.onlineID];
-
-                            NSLog(@"updating event %@ %@", eventObject.gEvent.gEventName, eventObject.division.divName);
-                        }
-                    
-                };
-
-                queryOpEvent.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
-                {
-                
-                    if (error) {
-                    NSLog(@"CKQueryCursor  Event query error %@", error);
-                        [self endUpdateOnlineMeetWithSuccess:NO];
-                    }
-                    else
-                    {
-                     NSLog(@"query Event succesful");
-                     
-                     }
-                };
-
-                [queryOpEvent addDependency:queryOpGEvent];
-                [queryOpEvent addDependency:queryOpDiv];
-    
-    //////// end query 5 Event
-    
-    //////// start query 6 Comp
-    
-    
-    
-                CKQuery *queryComp = [[CKQuery alloc] initWithRecordType:@"Competitor" predicate:predicate];
-                CKQueryOperation *queryOpComp = [[CKQueryOperation alloc] initWithQuery:queryComp];
-    
-               queryOpComp.database = publicDatabase;
-            //execute query
-    
-                queryOpComp.recordFetchedBlock = ^(CKRecord *comp)
-                {
-                    //do something
-                    
-                    NSString* objectType = @"Competitor";
-                    
-                    Competitor* compObject  = [self fetchObjectType:objectType WithOnlineID:comp[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
-                    if (compObject != nil) {
-                        NSLog(@" %@ exists",objectType);
-                    }
-                    else
-                    {
-                        compObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
-                        
-                         NSLog(@" new %@ created",objectType);
-                         compObject.updateDateAndTime = oldDate;
-                    }
-                    
-                    if (compObject.updateDateAndTime != nil)
-                    {
-                    }
-                    else
-                    {
-                        compObject.updateDateAndTime = oldDate;
-                    }
-                        
-                    
-                    bool updating = NO;
-                    
-                        if( [comp[@"updateDateAndTime"] timeIntervalSinceDate:compObject.updateDateAndTime] > 0 ) {
-
-                            if (compObject.edited) {
-                                updating = NO;
-                                NSLog(@"locked for editing %@ ", comp[@"compName"]);
-                            }
-                            if (compObject.editDone) {
-                                updating = YES;
-                                NSLog(@"editing done %@ ", comp[@"compName"]);
-                            }
-                        }
-                        else
-                        {
-                            NSLog(@"no update needed %@ ", comp[@"compName"]);
-                            updating = NO;
-                        }
-                    
-                    
-                    
-                    if (updating)
-                        {
-                        compObject.editDone = [NSNumber numberWithBool:YES];
-                            compObject.edited = [NSNumber numberWithBool:NO];
-                        compObject.compID = comp[@"compID"];
-                        compObject.compName = comp[@"compName"];
-                        compObject.onlineID = comp[@"onlineID"];
-                        compObject.teamName = comp[@"teamName"];
-                        compObject.updateByUser = comp[@"updateByUser"];
-                    compObject.updateDateAndTime = [NSDate date];
-                    
-                        compObject.meet = meetObject;
-                    
-                    
-                        compObject.team = [objectsDictionary valueForKey:comp[@"team"]];
-                    
-                    
-                    
-                            [objectsDictionary setValue:compObject forKey:compObject.onlineID];
-
-                            NSLog(@"updating comp %@ in team : %@", compObject.compName, compObject.team.teamName);
-                            
-                        }
-                    
-                };
-
-                queryOpComp.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
-                {
-                
-                    if (error) {
-                    NSLog(@"CKQueryCursor  Comp query error %@", error);
-                        [self endUpdateOnlineMeetWithSuccess:NO];
-                    }
-                    else
-                    {
-                     NSLog(@"query Comp succesful");
-                     
-                     }
-                };
-
-                [queryOpComp addDependency:queryOpTeam];
-    
-    
-    //////// end query 6 Comp
-
-    //////// start query 7 cscore
-    
-    
-    
-                CKQuery *queryCScore = [[CKQuery alloc] initWithRecordType:@"CEventScore" predicate:predicate];
-                CKQueryOperation *queryOpCScore = [[CKQueryOperation alloc] initWithQuery:queryCScore];
-    
-               queryOpCScore.database = publicDatabase;
-            //execute query
-    
-                queryOpCScore.recordFetchedBlock = ^(CKRecord *cscore)
-                {
-                    //do something
-                    
-                    NSString* objectType = @"CEventScore" ;
-                    
-                     CEventScore* cscoreObject  = [self fetchObjectType:objectType WithOnlineID:cscore[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:NO]];
-                    if (cscoreObject != nil) {
-                        NSLog(@" %@ exists",objectType);
-                    }
-                    else
-                    {
-                        cscoreObject = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
-                        
-                         NSLog(@" new %@ created",objectType);
-                         cscoreObject.updateDateAndTime = oldDate;
-                    }
-                    
-                    if (cscoreObject.updateDateAndTime != nil)
-                    {
-                    }
-                    else
-                    {
-                        cscoreObject.updateDateAndTime = oldDate;
-                    }
-                        
-                    
-                    bool updating = NO;
-                    
-                        if( [cscore[@"updateDateAndTime"] timeIntervalSinceDate:cscoreObject.updateDateAndTime] > 0 ) {
-
-                            if (cscoreObject.edited) {
-                                updating = NO;
-                                NSLog(@"locked for editing cscore %@ ", cscore[@"cEventScoreID"]);
-                            }
-                            if (cscoreObject.editDone) {
-                                updating = YES;
-                                NSLog(@"editing done cscore %@ ", cscore[@"cEventScoreID"]);
-                            }
-                        }
-                        else
-                        {
-                            NSLog(@"no update needed cscore %@ ", cscore[@"cEventScoreID"]);
-                            updating = NO;
-                        }
-                    
-                    
-                    
-                    if (updating)
-                        {
-                    cscoreObject.editDone = [NSNumber numberWithBool:YES];
-                    cscoreObject.edited = [NSNumber numberWithBool:NO];
-                    cscoreObject.cEventScoreID = cscore[@"cEventScoreID"];
-                    cscoreObject.highJumpPlacingManual = cscore[@"highJumpPlacingManual"];
-                    cscoreObject.onlineID = cscore[@"onlineID"];
-                    cscoreObject.personalBest = cscore[@"personalBest"];
-                    cscoreObject.placing = cscore[@"placing"];
-                    cscoreObject.result = cscore[@"result"];
-                    cscoreObject.resultEntered = cscore[@"resultEntered"];
-                    cscoreObject.score = cscore[@"score"];
-                    cscoreObject.updateByUser = cscore[@"updateByUser"];
-                    cscoreObject.updateDateAndTime = [NSDate date];
-
-                        cscoreObject.meet = meetObject;
-
-                        cscoreObject.event = [objectsDictionary valueForKey:cscore[@"event"]];
-                        cscoreObject.team = [objectsDictionary valueForKey:cscore[@"team"]];
-                        cscoreObject.competitor = [objectsDictionary valueForKey:cscore[@"competitor"]];
-                    
-                    
-                    
-                            [objectsDictionary setValue:cscoreObject forKey:cscoreObject.onlineID];
-
-                            NSLog(@"updating cscore for comp %@", cscoreObject.competitor.compName);
-                        }
-                    
-                };
-
-                queryOpCScore.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
-                {
-                
-                    if (error) {
-                    NSLog(@"CKQueryCursor  cscore query error %@", error);
-                        [self endUpdateOnlineMeetWithSuccess:NO];
-                    }
-                    else
-                    {
-                     NSLog(@"query cscore succesful");
-                        
-                       [self endUpdateOnlineMeetWithSuccess:YES];
-
-                     }
-                    
-                };
-
-                [queryOpCScore addDependency:queryOpComp];
-                [queryOpCScore addDependency:queryOpEvent];
-    
-    
-    //////// end query 7 Event
-    
-    
-    
-    
-
-                NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-                [queue addOperation: queryOpMeet];
-                [queue addOperation: queryOpDiv];
-                [queue addOperation: queryOpGEvent];
-                [queue addOperation: queryOpTeam];
-                [queue addOperation: queryOpEvent];
-                [queue addOperation: queryOpComp];
-                [queue addOperation: queryOpCScore];
-
-}
-
-
-- (void)shareAllOnline {
-self.sharing = YES;
-// Initialize the data
-   NSMutableArray *localChangesMute = [[NSMutableArray alloc] init];;
-   NSMutableArray *localDeletionsMute = [[NSMutableArray alloc] init];
-   
-    
-   
-     CKRecord* meetrecord = [self addMeetOnline:self.meetObject];
-    [localChangesMute addObject:meetrecord];
-    
-    CKReference* ref = [[CKReference alloc] initWithRecord:meetrecord action:CKReferenceActionDeleteSelf];
-   
-    for (Division* div in self.meetObject.divisions) {
-        CKRecord *divrecord = [self addDivisionOnline:div];
-        
-        
-        [divrecord setObject:ref forKey:@"owningMeet"];
-        
-        [localChangesMute addObject:divrecord];
-    }
-    
-    for (GEvent* gevent in self.meetObject.gEvents) {
-        CKRecord *geventrecord = [self addGEventOnline:gevent];
-        
-        [geventrecord setObject:ref forKey:@"owningMeet"];
-        
-        [localChangesMute addObject:geventrecord];
-    }
-    
-    for (Team* team in self.meetObject.teams) {
-        CKRecord *teamrecord = [self addTeamOnline:team];
-        
-        [teamrecord setObject:ref forKey:@"owningMeet"];
-        
-        [localChangesMute addObject:teamrecord];
-    }
-    
-    for (Event* event in self.meetObject.events) {
-        CKRecord *eventrecord = [self addEventOnline:event];
-        
-        [eventrecord setObject:ref forKey:@"owningMeet"];
-        
-        [localChangesMute addObject:eventrecord];
-    }
-    
-    for (Competitor* comp in self.meetObject.competitors) {
-        CKRecord *comprecord = [self addCompOnline:comp];
-        
-        [comprecord setObject:ref forKey:@"owningMeet"];
-        
-        [localChangesMute addObject:comprecord];
-    }
-    
-    for (CEventScore* cscore in self.meetObject.cEventsScores) {
-        CKRecord *cscorerecord = [self addCScoreOnline:cscore];
-        
-        [cscorerecord setObject:ref forKey:@"owningMeet"];
-        
-        [localChangesMute addObject:cscorerecord];
-    }
-  
-
-  [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
-  
-    
-}
-
-
-- (void)removeAllOnline {
-
-self.sharing = NO;
-// Initialize the data
-   NSMutableArray *localChangesMute = [[NSMutableArray alloc] init];
-  NSMutableArray *localDeletionsMute = [[NSMutableArray alloc] init];
-   
-   
-    
-   
-     CKRecordID* meetrecordID = [self removeMeetOnline:self.meetObject];
-   [localDeletionsMute addObject:meetrecordID];
-    
-  //  /**
-    
-    ///////////
-    // rest
-    /////////
-    //NSMutableArray *fetchedRecords = [[NSMutableArray alloc] init];
-    
-    
-    //fetchedRecords = [self removeDivsOnline:self.meetObject.onlineID];
-    
-    
-    //get the Container for the App
-    CKContainer *defaultContainer = [CKContainer defaultContainer];
-    
-    //get the PublicDatabase inside the Container
-    CKDatabase *publicDatabase = [defaultContainer publicCloudDatabase];
-    
-    //predicate for query
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", self.meetObject.onlineID];
-    
-    CKQuery *query;
-    
-    /////
-    // Division
-    ////
-    
-    
-    
-    //create query
-    query = [[CKQuery alloc] initWithRecordType:@"Division" predicate:predicate];
-    
-    //execute query
-    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
-        
-        //handle query error
-        if(error) {
-            
-            NSLog(@"Uh oh, there was an error querying ... %@", error);
-
-        } else {
-            
-            //handle query results
-            if([results count] > 0) {
-                
-                //iterate query results
-                for(CKRecord *record in results) {
-                    
-                    [localDeletionsMute addObject:[record recordID]];
-                    NSLog(@"Query was successfully");
-                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
-                    
-                }
-                
-            //handle no query results
-            } else {
-                
-                NSLog(@"Query returned zero results");
-            }
-        }
-    }];
-    
-    
-    /////
-    // Division end
-    /////
-    
-    /////
-    // GEvent
-    ////
-    
-    
-    
-    //create query
-    query = [[CKQuery alloc] initWithRecordType:@"GEvent" predicate:predicate];
-    
-    //execute query
-    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
-        
-        //handle query error
-        if(error) {
-            
-            NSLog(@"Uh oh, there was an error querying ... %@", error);
-
-        } else {
-            
-            //handle query results
-            if([results count] > 0) {
-                
-                //iterate query results
-                for(CKRecord *record in results) {
-                    
-                    [localDeletionsMute addObject:[record recordID]];
-                    NSLog(@"Query was successfully");
-                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
-                    
-                }
-                
-            //handle no query results
-            } else {
-                
-                NSLog(@"Query returned zero results");
-            }
-        }
-    }];
-    
-    
-    /////
-    // GEvent end
-    /////
-
-    /////
-    // Team
-    ////
-    
-    
-    
-    //create query
-    query = [[CKQuery alloc] initWithRecordType:@"Team" predicate:predicate];
-    
-    //execute query
-    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
-        
-        //handle query error
-        if(error) {
-            
-            NSLog(@"Uh oh, there was an error querying ... %@", error);
-
-        } else {
-            
-            //handle query results
-            if([results count] > 0) {
-                
-                //iterate query results
-                for(CKRecord *record in results) {
-                    
-                    [localDeletionsMute addObject:[record recordID]];
-                    NSLog(@"Query was successfully");
-                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
-                    
-                }
-                
-            //handle no query results
-            } else {
-                
-                NSLog(@"Query returned zero results");
-            }
-        }
-    }];
-    
-    
-    /////
-    // Team end
-    /////
-    
-    /////
-    // Event
-    ////
-    
-    
-    
-    //create query
-    query = [[CKQuery alloc] initWithRecordType:@"Event" predicate:predicate];
-    
-    //execute query
-    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
-        
-        //handle query error
-        if(error) {
-            
-            NSLog(@"Uh oh, there was an error querying ... %@", error);
-
-        } else {
-            
-            //handle query results
-            if([results count] > 0) {
-                
-                //iterate query results
-                for(CKRecord *record in results) {
-                    
-                    [localDeletionsMute addObject:[record recordID]];
-                    NSLog(@"Query was successfully");
-                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
-                    
-                }
-                
-            //handle no query results
-            } else {
-                
-                NSLog(@"Query returned zero results");
-            }
-        }
-    }];
-    
-    
-    /////
-    // Event end
-    /////
-    
-    /////
-    // Competitor
-    ////
-    
-    
-    
-    //create query
-    query = [[CKQuery alloc] initWithRecordType:@"Competitor" predicate:predicate];
-    
-    //execute query
-    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
-        
-        //handle query error
-        if(error) {
-            
-            NSLog(@"Uh oh, there was an error querying ... %@", error);
-
-        } else {
-            
-            //handle query results
-            if([results count] > 0) {
-                
-                //iterate query results
-                for(CKRecord *record in results) {
-                    
-                    [localDeletionsMute addObject:[record recordID]];
-                    NSLog(@"Query was successfully");
-                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
-                    
-                }
-                
-            //handle no query results
-            } else {
-                
-                NSLog(@"Query returned zero results");
-            }
-        }
-    }];
-    
-    
-    /////
-    // Competitor end
-    /////
-    
-    /////
-    // CEventScore
-    ////
-    
-    
-    
-    //create query
-    query = [[CKQuery alloc] initWithRecordType:@"CEventScore" predicate:predicate];
-    
-    //execute query
-    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
-        
-        //handle query error
-        if(error) {
-            
-            NSLog(@"Uh oh, there was an error querying ... %@", error);
-
-        } else {
-            
-            //handle query results
-            if([results count] > 0) {
-                
-                //iterate query results
-                for(CKRecord *record in results) {
-                    
-                    [localDeletionsMute addObject:[record recordID]];
-                    NSLog(@"Query was successfully");
-                    NSLog(@"meetOnlineID: %@ recordType: %@", record[@"meetOnlineID"], [record recordType]);
-                    
-                }
-                
-            //handle no query results
-            } else {
-                
-                NSLog(@"Query returned zero results");
-            }
-        }
-    }];
-    
-    
-    /////
-    // CEventScore end
-    /////
-    
-   // **/
-/**
-  [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
-
-
-}
-
-
-- (CKRecordID*)removeMeetOnline:(Meet*)meetObject {
-
-    
-    //create the target record id you will use to fetch by
-    
-    CKRecordID *meetrecordID = [[CKRecordID alloc] initWithRecordName:meetObject.onlineID];
- 
-
- return meetrecordID;
-
-}
-
-- (NSMutableArray*)removeDivsOnline:(NSString*)meetOnlineID {
-
-
-
-        NSMutableArray *fetchedRecords = [[NSMutableArray alloc] init];
-
-    //get the Container for the App
-    CKContainer *defaultContainer = [CKContainer defaultContainer];
-    
-    //get the PublicDatabase inside the Container
-    CKDatabase *publicDatabase = [defaultContainer publicCloudDatabase];
-    
-    //predicate for query
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetOnlineID];
-    
-    //create query
-    CKQuery *query = [[CKQuery alloc] initWithRecordType:@"Divisions" predicate:predicate];
-    
-    //execute query
-    [publicDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
-        
-        //handle query error
-        if(error) {
-            
-            NSLog(@"Uh oh, there was an error querying ... %@", error);
-
-        } else {
-            
-            //handle query results
-            if([results count] > 0) {
-                
-                //iterate query results
-                for(CKRecord *record in results) {
-                    
-                    [fetchedRecords addObject:record];
-                    NSLog(@"Query was successfully");
-                    NSLog(@"meetOnlineID: %@", record[@"meetOnlineID"]);
-                    
-                }
-                
-            //handle no query results
-            } else {
-                
-                NSLog(@"Query returned zero results");
-            }
-        }
-    }];
-
-
-
-
-    return fetchedRecords;
-}
-
-
-- (void) modifyOnlineWithChanges: (NSMutableArray*) changesMute AndDeletions: (NSMutableArray*) deletionsMute {
-
-
-  
-  
-  
-    NSArray *localChanges = [changesMute copy];
-    NSArray *localDeletions = [deletionsMute copy];
-  
-    
-   // Initialize the database and modify records operation
- 
-   CKDatabase *database = [[CKContainer defaultContainer] publicCloudDatabase];
- 
- 
-   CKModifyRecordsOperation *modifyRecordsOperation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:localChanges recordIDsToDelete:localDeletions];
-   modifyRecordsOperation.savePolicy = CKRecordSaveAllKeys;
-
-   NSLog(@"CLOUDKIT Changes Uploading: %d", localChanges.count);
-
-   // Add the completion block
-   modifyRecordsOperation.modifyRecordsCompletionBlock = ^(NSArray *savedRecords, NSArray *deletedRecordIDs, NSError *error) {
-       
-       
-       if (error) {
-           NSLog(@"[%@] Error pushing local data: %@", self.class, error);
-           
-            NSLog(@"Uh oh, there was an error saving ... %@", error);
-            self.updateOnlineSuccess = NO;
-       }
-       else
-       {
-       
-       
-            NSLog(@"Modified successfully");
-           
-           for(CKRecord* record in savedRecords) {
-            
-                NSLog(@"OnlineID: %@", record[@"onlineID"]);
-            
-            }
-           
-            for(CKRecord* recordID in deletedRecordIDs) {
-            
-                NSLog(@"Deleted record id: %@", recordID);
-            }
-
-
-           
-           
-            self.updateOnlineSuccess = YES;
-       
-       }
-        
-      // [localChanges removeObjectsInArray:savedRecords];
-      // [self.localDeletions removeObjectsInArray:deletedRecordIDs];
-
-       [self modifyOnlineDone];
-       
-
-   };
-   
-   
-
-   // Start the operation
-   [database addOperation:modifyRecordsOperation];
-   
-   
-   
-   
-  
-
-}
-
-
-
-
-
-- (void) modifyOnlineDone {
-    
-    UIAlertController * alert;
-    
-    if (self.updateOnlineSuccess) {
-        
-        
-        
-        if (self.sharing) {
-   
-            self.meetObject.onlineMeet = [NSNumber numberWithBool:YES];
-            self.sendPermissionButton.enabled = YES;
-            self.meetObject.isOwner = [NSNumber numberWithBool:YES];
-            
-            
-            
-            alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Online Share Succesful"
-                                    message:@"Meet shared for online result entry by other users, send permission files to users to get started"
-                                    preferredStyle:UIAlertControllerStyleAlert];
-     
-     
-                UIAlertAction* ok = [UIAlertAction
-                        actionWithTitle:@"OK"
-                        style:UIAlertActionStyleDefault
-                        handler:^(UIAlertAction * action)
-                        {
-                            
-                            
-                            
-                            
-                            [alert dismissViewControllerAnimated:YES completion:nil];
-                            [self resumeMethod];
-                            self.shareOnlineButton.title = @"Unshare Meet";
-                             
-                        }];
-            
-                        [alert addAction:ok];
-        }
-        else
-        {
-            self.meetObject.onlineMeet = [NSNumber numberWithBool:NO];
-            self.sendPermissionButton.enabled = NO;
-            self.meetObject.isOwner = [NSNumber numberWithBool:NO];
-            
-            alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Meet Unshared Succesfully"
-                                    message:@" Meet will no longer be available for users to update online"
-                                    preferredStyle:UIAlertControllerStyleAlert];
-     
-     
-                UIAlertAction* ok = [UIAlertAction
-                        actionWithTitle:@"OK"
-                        style:UIAlertActionStyleDefault
-                        handler:^(UIAlertAction * action)
-                        {
-                            
-                            
-                           
-                            
-                            [alert dismissViewControllerAnimated:YES completion:nil];
-                            [self resumeMethod];
-                            self.shareOnlineButton.title = @"Share Online";
-                            
-                            
-                             
-                        }];
-                        
-                [alert addAction:ok];
-
-        }
-            
-        [self saveContext];
-        
-        
-        
-     
-        
-
-    }
-    else
-    {
-    
-        
-        
-        if (self.sharing) {
-    
-                alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Online Share Failed"
-                                    message:@"Failed to save to online database, please check your internet connection, ensure you are signed in to iCloud and you have updated to iCloud Drive"
-                                    preferredStyle:UIAlertControllerStyleAlert];
-     
-     
-                UIAlertAction* ok = [UIAlertAction
-                        actionWithTitle:@"OK"
-                        style:UIAlertActionStyleDefault
-                        handler:^(UIAlertAction * action)
-                        {
-                            
-                            
-                            
-                            
-                            [alert dismissViewControllerAnimated:YES completion:nil];
-                            [self resumeMethod];
-                             
-                        }];
-                        
-                [alert addAction:ok];
-        }
-        else
-        {
-                alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Unshare meet unsuccesfull"
-                                    message:@"There was a problem removing this Meet from online database, please check your internet connection and try again"
-                                    preferredStyle:UIAlertControllerStyleAlert];
-     
-     
-                UIAlertAction* ok = [UIAlertAction
-                        actionWithTitle:@"OK"
-                        style:UIAlertActionStyleDefault
-                        handler:^(UIAlertAction * action)
-                        {
-                            
-                            
-                          
-                            
-                            [alert dismissViewControllerAnimated:YES completion:nil];
-                            
-                            [self resumeMethod];
-                            
-                             
-                        }];
-                        
-                [alert addAction:ok];
-
-        
-        }
-        
-        
-        
-    
-    }
-    
-        [self presentViewController:alert animated:YES completion:nil];
-
-
-
-}
-
-**/
 
 
 @end

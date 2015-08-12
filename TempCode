@@ -1,5 +1,21 @@
+[array removeObject:@"Name2"];
 
-update new model variables
+on update owner
+
+    read from server
+    delete objects
+    readd all objects
+
+    not in a batch, per event thing... mabe do the long adapt then delete thing  as in query every record
+
+    using array
+
+
+add edited and editeddone to results enter done buttons
+add send button if onlinemeet and editDone if send succesfull
+
+
+
 
 update all ceventscores in event on update any ceventscores (also delete normally)
 
