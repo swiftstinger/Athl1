@@ -1,4 +1,5 @@
-invalid argument why on deletes
+
+
 
 get only owner meets on update onlinemeet
 
@@ -10,9 +11,12 @@ on update owner
     delete objects
     readd all objects
 
-    not in a batch, per event thing... mabe do the long adapt then delete thing  as in query every record
+    deleted all extras and updated to server so last step done.
 
-    using array
+
+    add pause on update slave an flag success failure
+
+    add pause on update serverbutton pressed
 
 
 add edited and editeddone to results enter done buttons
