@@ -1,4 +1,10 @@
+delete after saved
 
+results done only send if slave and online !!
+
+update from slave cehck deletes? mabe move first then move back if fail?
+
+update to master done, add completion and check that completion does not trigger for each ceventscore and delete temp objects from server
 
 
 get only owner meets on update onlinemeet

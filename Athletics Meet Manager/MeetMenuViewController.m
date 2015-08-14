@@ -36,6 +36,9 @@
 @property NSMutableArray *compLocalMutableArray;
 @property NSMutableArray *cscoreLocalMutableArray;
 @property NSMutableArray *serverdeletes;
+@property NSMutableArray *updatedNonOwnerEventIDsMutableArray;
+@property NSOperationQueue *queue;
+
 //@property  BOOL meetDeleteSuccess;
 @end
 
@@ -3967,8 +3970,8 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
     if (self.meetObject.isOwner) {
         NSLog(@"owner item updatemeet");
-        [self updateOwnerToOnline];
-        
+       // [self updateOwnerToOnline];
+        [self updateOwnerFromServer];
     }
     else
     {
@@ -3980,6 +3983,421 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
 /// owner refresh
 ///////////
 
+- (void)updateOwnerFromServer {
+NSLog(@"updating owner meet");
+    
+    
+    
+    
+    
+            Meet* meetObject = self.meetObject;
+    
+            self.queue = [[NSOperationQueue alloc] init];
+
+    
+            NSManagedObjectContext* context = self.managedObjectContext;
+    
+            CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
+    
+    
+            /////////////
+            ///// Get updatebyuser values
+            /////////////
+    
+            NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
+    
+             NSPredicate *predicateuser = [NSPredicate predicateWithFormat:@"updateByUser != %@",@"owner" ];
+    
+    
+    
+            NSArray *preds = [NSArray arrayWithObjects: predicateID, predicateuser, nil];
+    
+    
+                NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+    
+    
+                 //////// start query 1 meet
+    
+    
+                CKQuery *queryEvent = [[CKQuery alloc] initWithRecordType:@"Event" predicate:predicate];
+                CKQueryOperation *queryOpEventID = [[CKQueryOperation alloc] initWithQuery:queryEvent];
+    
+               queryOpEventID.database = publicDatabase;
+            //execute query
+
+                self.updatedNonOwnerEventIDsMutableArray = [[NSMutableArray alloc] init];
+    
+                queryOpEventID.recordFetchedBlock = ^(CKRecord *event)
+                {
+                    
+                      [self.updatedNonOwnerEventIDsMutableArray addObject:event[@"onlineID"] ];
+                       // [self updateOwnerFromServerTwo:event[@"updateByUser"]];
+                    
+                    
+                    
+                };
+
+                queryOpEventID.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor event for local owner query error %@", error);
+                    }
+                    else
+                    {
+                     NSLog(@"query event for local owner update succesful");
+                        [self updateOwnerFromServerTwo:0];
+                    }
+                };
+                [self.queue addOperation: queryOpEventID];
+                ///////////
+                ////    end get updatebyuser get ids
+                ///////////
+    
+    
+    
+    
+
+}
+
+- (void)updateOwnerFromServerTwo: (int) indexOfArray {
+    
+    
+            Meet* meetObject = self.meetObject;
+            NSManagedObjectContext* context = self.managedObjectContext;
+
+            NSString* objectType = @"Event";
+            Event* thisEventObject = [self fetchObjectType:objectType WithOnlineID:self.updatedNonOwnerEventIDsMutableArray[indexOfArray] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                    if (thisEventObject != nil) {
+                        NSLog(@" %@ exists",objectType);
+                    }
+                    else
+                    {
+                        thisEventObject = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+                        
+                         NSLog(@" new %@ created",objectType);
+                        
+                    }
+    
+            CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
+    
+
+    
+            NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
+    
+             NSPredicate *predicateUser = [NSPredicate predicateWithFormat:@"updateByUser != %@",@"owner" ];
+    
+            NSPredicate *predicateE = [NSPredicate predicateWithFormat:@"onlineID = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
+    
+    
+            NSArray *predsEvent = [NSArray arrayWithObjects: predicateID, predicateUser, predicateE ,nil];
+    
+    
+                NSPredicate *predicateForEvent = [NSCompoundPredicate andPredicateWithSubpredicates:predsEvent];
+    
+    
+    //ad pred evenstcore then comp
+    
+        //////// start query 5 Event
+    
+    
+    
+                CKQuery *queryEvent = [[CKQuery alloc] initWithRecordType:@"Event" predicate:predicateForEvent];
+                CKQueryOperation *queryOpEvent = [[CKQueryOperation alloc] initWithQuery:queryEvent];
+    
+               queryOpEvent.database = publicDatabase;
+            //execute query
+   
+    
+                queryOpEvent.recordFetchedBlock = ^(CKRecord *event)
+                {
+                    //do something
+                 
+                    NSString* objectType = @"Event";
+                    
+                    Event* eventObject = [self fetchObjectType:objectType WithOnlineID:event[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                    if (eventObject != nil) {
+                        NSLog(@" %@ exists",objectType);
+                    }
+                    else
+                    {
+                        eventObject = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+                        
+                         NSLog(@" new %@ created",objectType);
+                        
+                    }
+                    
+                    
+                    
+                        eventObject.editDone = [NSNumber numberWithBool:YES];
+                        eventObject.edited = [NSNumber numberWithBool:NO];
+                        eventObject.eventDone = [NSNumber numberWithBool:YES];
+                        eventObject.eventEdited = event[@"eventEdited"];
+                        eventObject.eventID = event[@"eventID"];
+                        eventObject.onlineID = event[@"onlineID"];
+                        eventObject.startTime = event[@"startTime"];
+                        eventObject.updateByUser = @"owner";
+                        eventObject.updateDateAndTime = [NSDate date];
+                    
+                        eventObject.meet = meetObject;
+                    
+                        Division* divObject = [self fetchObjectType:@"Division" WithOnlineID:event[@"division"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                    
+                        GEvent* geventObject = [self fetchObjectType:@"GEvent" WithOnlineID:event[@"gEvent"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                    
+                        eventObject.division = divObject;
+                        eventObject.gEvent = geventObject;
+                    
+                    
+
+                            NSLog(@"updating owner event  %@ %@", eventObject.gEvent.gEventName, eventObject.division.divName);
+                    
+                    
+                };
+
+                queryOpEvent.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  Event query error %@", error);
+                        
+                    }
+                    else
+                    {
+                     NSLog(@"query Event succesful");
+                     
+                     }
+                };
+
+    
+    
+    //////// end query 5 Event
+    
+    /////
+    //// end operation
+    
+    NSOperation *saveContextOp = [NSBlockOperation blockOperationWithBlock:^(void)
+    { /* code here */
+    
+            [self saveContext];
+            NSLog(@"savecontextopp");
+        
+    } ];
+    
+    ////
+    ////
+    
+    //////// start query 7 cscore
+    
+    NSPredicate *predicateScore = [NSPredicate predicateWithFormat:@"event = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
+    
+    
+            NSArray *predsScore = [NSArray arrayWithObjects: predicateID, predicateUser, predicateScore ,nil];
+    
+    
+                NSPredicate *predicateForScore = [NSCompoundPredicate andPredicateWithSubpredicates:predsScore];
+    
+    
+    
+    
+    
+                CKQuery *queryCScore = [[CKQuery alloc] initWithRecordType:@"CEventScore" predicate:predicateForScore];
+                CKQueryOperation *queryOpCScore = [[CKQueryOperation alloc] initWithQuery:queryCScore];
+    
+               queryOpCScore.database = publicDatabase;
+            //execute query
+   
+    
+                queryOpCScore.recordFetchedBlock = ^(CKRecord *cscore)
+                {
+                    //do something
+                    
+                    
+                    
+                     CEventScore* cscoreObject  = [self fetchObjectType:objectType WithOnlineID:cscore[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                    if (cscoreObject != nil) {
+                        NSLog(@" %@ exists",objectType);
+                    }
+                    else
+                    {
+                        cscoreObject = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
+                        
+                         NSLog(@" new %@ created",objectType);
+                        
+                    }
+                    
+                    NSLog(@"score id %@", cscore[@"competitor"]);
+                    cscoreObject.editDone = [NSNumber numberWithBool:YES];
+                    cscoreObject.edited = [NSNumber numberWithBool:NO];
+                    cscoreObject.cEventScoreID = cscore[@"cEventScoreID"];
+                    cscoreObject.highJumpPlacingManual = cscore[@"highJumpPlacingManual"];
+                    cscoreObject.onlineID = cscore[@"onlineID"];
+                    cscoreObject.personalBest = cscore[@"personalBest"];
+                    cscoreObject.placing = cscore[@"placing"];
+                    cscoreObject.result = cscore[@"result"];
+                    cscoreObject.resultEntered = cscore[@"resultEntered"];
+                    cscoreObject.score = cscore[@"score"];
+                    cscoreObject.updateByUser = @"owner";
+                    cscoreObject.updateDateAndTime = [NSDate date];
+
+                        cscoreObject.meet = meetObject;
+
+                        cscoreObject.event = thisEventObject;
+                    
+                    
+                        Team* teamObject = [self fetchObjectType:@"Team" WithOnlineID:cscore[@"team"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                    
+                    
+                    
+                        cscoreObject.team = teamObject;
+                   
+                    Competitor* compObject  = [self fetchObjectType:@"Competitor" WithOnlineID:cscore[@"competitor"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                    if (compObject != nil) {
+                        NSLog(@" comp exists");
+                        
+                        
+                    }
+                    else
+                    {
+                        compObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
+                        
+                         NSLog(@" new comp created");
+                        
+                    }
+
+                    
+                        cscoreObject.competitor = compObject;
+                    
+                    
+                    
+                    //////// start query 6 Comp
+                    
+                    NSLog(@"score id %@", cscore[@"competitor"]);
+    
+                    NSPredicate *predicateComp = [NSPredicate predicateWithFormat:@"onlineID = %@", cscore[@"competitor"] ];
+    
+    
+                    NSArray *predsComp = [NSArray arrayWithObjects: predicateID, predicateUser, predicateComp ,nil];
+    
+    
+                        NSPredicate *predicateForComp = [NSCompoundPredicate andPredicateWithSubpredicates:predsComp];
+    
+                        CKQuery *queryComp = [[CKQuery alloc] initWithRecordType:@"Competitor" predicate:predicateForComp];
+                        CKQueryOperation *queryOpComp = [[CKQueryOperation alloc] initWithQuery:queryComp];
+    
+                        queryOpComp.database = publicDatabase;
+                        //execute query
+        
+                        queryOpComp.recordFetchedBlock = ^(CKRecord *comp)
+                        {
+                            //do something
+                   
+                    
+                    
+                        Competitor* compObject  = [self fetchObjectType:@"Competitor" WithOnlineID:comp[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                            if (compObject != nil) {
+                            NSLog(@" %@ exists",objectType);
+                            }
+                            else
+                            {
+                                compObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
+                        
+                                    NSLog(@" new %@ created",objectType);
+                        
+                            }
+                    
+                            compObject.editDone = [NSNumber numberWithBool:YES];
+                            compObject.edited = [NSNumber numberWithBool:NO];
+                            compObject.compID = comp[@"compID"];
+                            compObject.compName = comp[@"compName"];
+                            compObject.onlineID = comp[@"onlineID"];
+                            compObject.teamName = comp[@"teamName"];
+                            compObject.updateByUser = @"owner";
+                            compObject.updateDateAndTime = [NSDate date];
+                    
+                            compObject.meet = meetObject;
+                    
+                    
+                            compObject.team = teamObject;
+                    
+
+                            NSLog(@"updating comp %@ in team : %@", compObject.compName, compObject.team.teamName);
+                            
+                    
+                    
+                            };
+
+                            queryOpComp.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                            {
+                
+                                if (error) {
+                                NSLog(@"CKQueryCursor  Comp query error %@", error);
+                                
+                                }
+                                else
+                                {
+                                NSLog(@"query Comp succesful");
+                     
+                                }
+                                };
+
+                                [queryOpComp addDependency:queryOpEvent];
+    
+    
+                            //////// end query 6 Comp
+    
+
+                            [saveContextOp addDependency:queryOpComp];
+
+    
+                            [self.queue addOperation: queryOpComp];
+                    
+                
+                    
+                    
+                };
+
+                queryOpCScore.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  cscore query error %@", error);
+                       
+                    }
+                    else
+                    {
+                     NSLog(@"query cscore succesful");
+
+                     }
+                    
+                };
+
+              //  [queryOpCScore addDependency:queryOpComp];
+                [queryOpCScore addDependency:queryOpEvent];
+    
+    
+    
+    //////// end query 7 cscore
+
+    
+    ////////// end operation start
+    [saveContextOp addDependency:queryOpEvent];
+    [saveContextOp addDependency:queryOpCScore];
+    
+  
+  
+  
+  [self.queue addOperation: queryOpEvent];
+     [self.queue addOperation: queryOpCScore];
+    
+    [self.queue addOperation: saveContextOp];
+    
+    
+    
+
+
+    
+}
 
 
 - (void)updateOwnerToOnline {

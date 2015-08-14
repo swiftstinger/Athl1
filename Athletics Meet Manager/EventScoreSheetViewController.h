@@ -11,6 +11,7 @@
 #import "EventScoreAddViewController.h"
 #import "Event.h"
 
+
 @interface EventScoreSheetViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

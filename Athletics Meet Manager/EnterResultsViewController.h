@@ -11,12 +11,15 @@
 #import "EventScoreSheetViewController.h"
 #import "Meet.h"
 #import "EventResultTableViewCell.h"
+#import <CloudKit/CloudKit.h>
 
 @interface EnterResultsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) Meet* meetObject;
+@property (strong, nonatomic) Event* savedEventObject;
+
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 - (IBAction)segmentedControlValueChanged:(id)sender;

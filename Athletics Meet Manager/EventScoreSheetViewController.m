@@ -348,9 +348,18 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
          // nslog(@"not added context");
         [eventScoreAddController setManagedObjectContext:self.managedObjectContext];
     }
-    
+  ////////////
+  ////////////
+  ////////////
+  /////
     
     if ([[segue identifier] isEqualToString:@"unwindToEnterResultsSegue"]) {
+        
+        
+
+
+        
+        
         
         self.eventObject.eventDone = [NSNumber numberWithBool:YES];
         NSError *error = nil;
@@ -360,10 +369,10 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
             // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
           //  abort();
         }
+        
     }
     
 }
-
 
 
 
