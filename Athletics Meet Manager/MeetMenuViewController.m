@@ -187,7 +187,7 @@ if ([self.meetObject.onlineMeet boolValue]) {
     self.sendpermission = NO;
     
     if ([self.meetObject.onlineMeet boolValue]&&(![self.meetObject.isOwner boolValue])) {
-    [self updateOnlineMeet];
+    //[self updateOnlineMeet];
     }
     else
     {
@@ -4046,7 +4046,15 @@ NSLog(@"updating owner meet");
                     else
                     {
                      NSLog(@"query event for local owner update succesful");
-                        [self updateOwnerFromServerTwo:0];
+                        if ([self.updatedNonOwnerEventIDsMutableArray count ]>0) {
+                             [self updateOwnerFromServerTwo:0];
+                            
+                        }
+                        else
+                        {
+                            NSLog(@"nothing to update");
+                        }
+                        
                     }
                 };
                 [self.queue addOperation: queryOpEventID];

@@ -284,6 +284,13 @@ self.fetchedResultsController = nil;
     if ([unwindSegue.sourceViewController isKindOfClass:[EventScoreSheetViewController class]])
         {
         
+            if ([self.meetObject.onlineMeet boolValue]) {
+                NSLog(@"online meet in results done");
+                if (![self.meetObject.isOwner boolValue ]) {
+                   
+                    NSLog(@"not owner so update event online");
+                    
+        
             EventScoreSheetViewController* eventscoresheetviewcontroller = unwindSegue.sourceViewController;
             
             self.savedEventObject = eventscoresheetviewcontroller.eventObject;
@@ -387,7 +394,11 @@ self.fetchedResultsController = nil;
 
   [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
   
-    
+                     
+                }
+                
+            }
+   
 ////////////
 /////////
 ///////////

@@ -1,8 +1,18 @@
+
+dispatch_async(dispatch_get_main_queue(), ^{
+
+});
+
+
+
+
+readd updateonlinemeet to load
+
 delete after saved
 
-results done only send if slave and online !!
+results done only send if slave and online !!  done now check
 
-update from slave cehck deletes? mabe move first then move back if fail?
+update from slave cehck deletes? mabe move first then move back if fail? deletes not done move and delete all?
 
 update to master done, add completion and check that completion does not trigger for each ceventscore and delete temp objects from server
 
@@ -178,12 +188,6 @@ error record name cannot be nil for record deleted
 
 
 
-
-
-
-IPHONE 6 score move left
-
-add timestamp and device id to add's '
 
 //////////
 NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
