@@ -1,296 +1,94 @@
-updatefromservertwo do next one and check if done
 
-lock slave changes
+////////////
+want in tutorial
+///////////
 
-add cscore[@"eventRecordID"] = eventrecordID;  // = event.onlineID to addowneremeetonline not needed
+!!! check owner id before ship in recodnames
 
-delete slave block ui? not found
-
-check no online meet if update (prompt online meet has been removed, if temporary please resubmit all sent events (after fix)
-
-save backup of events that were done in master or sent in slave
+1. pause when done event enter in slave needed?
 
 
+8. delete a team?  so mabe check for and readd team or div on results enter or check if team or div exists before update owner? team for competitor or eventsscore and div and gevent for event itself.
+8. check if event or team or div exists before add otherwise skip but still delete event  orrr.  read events in case it was a mistake? just delete again..  orrr prompt and decide but for now just readd
 
-save context on deletes chekc all
+8. add divs team and gevent to serveradd by slave and check before add to owner. if not there add else skip (all have eventid added so can be deleted by event delete.. mabe add event as reference as well.)
+//   add divs and gevents and teams here if needed
+
+
+1. lock slave changes
+
+2. hook up refresh scores or remove (i vote for remove)
+
+3. save backup of events that were done in master or sent in slave
+
+4. send button instead of done for slave?
+
+
+5. update all ceventscores on results view (plus pause)
+
+
+
+
+///
+
+error checking
+1. check if any other objects need to be checked for before fetch completion
+
+2. delete slave block ui? not found
+
+
+3. save context on deletes chekc all
+
+
+
+//
 
 
 dispatch_async(dispatch_get_main_queue(), ^{
 
 });
-//
-
-on succesfull send online, turn eventscore edited to no and editdone to yes
-
-check all competitor eventscores for edited and edit done before changing
-
-///
-if edited not
-if editdone yes
 
 
-done on succes
-fail not done
-
-all edited  not meet?
-
-on success set edited yes
-and editdone yes
-
-set eventdone yes
-
-and! on import by owner set event done and edited no and editdone yes in rest
-check event exists on inport by owner otherwise just delete
-
-////
-master update
-add pause and unpause now
-comps not added properly
-
-deleted cscores not competitors check later
-
-////
-
-////
-after
-////
-
-
-/////
-1. get only owner meets on update online meet? done retest for mabe fault?
-
-1. update master add completion and check completion not trigger for each event  done
-
-6. delete sent from slave on meet delete (add meet dependancy so get meet and ad ref) done
-
-2. set as edeting and edit done in all meets enter result done method (for all objects) done
-
-3. delete server events after saved by master done
-
-
-4. pause when done event enter in slave needed?
-
-5. delete extras when updating master event  (move then delete all?) delete all done, still add backup
-
-
-
-
-7. calculateresults for event in evnetscoresheetviewcontroller check if needed
-
-8. delete a team?  so mabe check for and readd team or div on results enter or check if team or div exists before update owner? team for competitor or eventsscore and div and gevent for event itself.
-8. check if event or team or div exists before add otherwise skip but still delete event  orrr.  read events in case it was a mistake? just delete again..  orrr prompt and decide but for now just readd
-
-     //   add divs and gevents and teams here if needed
-
-9. create 2 slaves and check update sync priority  make event id unique check how its downloaded
-10 order results by date and check what happens if update twice from same slave in a row (overwrite server copy?) also check if delete on comp if it deleted unused copy
-
-all similar events update and compete with each other so try to personalise?
-
-
-
-[array removeObject:@"Name2"];
-
-on update owner
-
-
-add send button if onlinemeet and editDone if send succesfull
-
-
-update all ceventscores on results view (plus pause)
-
-
-
-must add online ids att create
-
-///////////
-refactor scores method needed for team add/remove | gevent options change | meet options change?
-////////////
-want in tutorial
-///////////
-
-deal with:
-
-    lock all for score changes unless take offline
-
-    update if edited record
-        lastupdate attribute if date later than last update dont update?
-
-        only ceventscores and competitors add until done then create copy and set if sent or not (sending failed resend button)
-            attributes edited on current device for event
-            check ceventscores and competitors
-
-        after initial edit send all to new objects, if new ceventscore for event, create new one
-        editing but not sent?
-
-            //////////////
-             if no event edited but not sent,  delete eventscores/competitors that not on list?
-
-             untill then not allow resutls view.. may be inaccurate
-            /////////////
-
-
-
-    failed update
-        copy of event will show not sent so can resend
-        copy of competitors and ceventscores and event
-
-
-
-    excess ceventscores and competitors if meet owner overrules  =? keep track if seen update by user and time and if after that then overwrite?
-    initial submit user in each object and not update for him?
 
 ////////////////
 ///////////////
 ////////////
 
-/// retrieving changes from server check send on each create so should be ok... check each date seperately for updates sent and then old retrieve
-
-owner update all (button?) (and enter meet?)
-    retrieve any comps and ceventscores of meetonlineID == meetObject.meetID not updatebyuser != owner
-
-    delete temp record (temprecord + timestamp + vendorID + onlineID)
-
-
-    set updatebyuser to owner and update date
-
-    then send comps and ceventscores online plus meet with new date
-
-
-
-servant update  on enter meet done
-
-
-
- on press update button
-        check dates of meet and then update (use method already in place)
-
-/// sending changes to server  not pause only warn if failed
-
-
-both (create sent object objects  (new in datamodel) on send copy object to new sent object)
-
-
-
-owner: add date to makeing all objects and add check if onlinemeet and isowner and then push to server (add to queue)
-
-        new div  update date
-        new gevent  update date
-        new events (made in div and gevent done)  update date
-        new team   update date
-        new comp  in team view also in results enter      update date
-        new ceventscore in results enter   update date
-        edit ceventscore done button so results enter from edit update date
-
-        for object
-            update meetobject, not affect rest, add newupdate date, updateby user = owner
-
-
-
-if servant (create sent object objects  (new in datamodel) on send copy object to new sent object)
-servant: if online meet and not owner to:
-
-
-        new comp  in team view also in results enter      update date
-        new ceventscore in results enter   update date
-        edit ceventscore done button so results enter from edit update date
-
-
-        set updatebyuser as vendorid
-        set update date
-
-        push to server as tempmeetonlineid as recordID  (temprecord + timestamp + vendorID + onlineID)
-
-
-
-
-///  subscriptions
-
+///
 owner update push  (on create with updatebyuser not owner  );  later
     retrieve object and then push object and meet with new date.
 
 servant update server push later
 
 
-
-
-
-
-add owner and updatebyuser to make meet
-
-
-
-
-
-lock events and teams
-
-add online ids to all creates? or timestamp to id's?' no
-
-update only in meetmenu
-
-
-
-add add for all and manage (should only add offline meets)
-
-
-
-error record name cannot be nil for record deleted
-
-
-
-
-
-//////////
-NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
-        NSString*   timestamp = [NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSinceReferenceDate]];
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, object.cEventScoreID,timestamp];
-      [object setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",object.onlineID);
-////////
-
-
-1. add methods for objects send online
-
-2. add fetch for object delete from online
-
-
-3. then updates for results and competitors   cscores, ceventscores, competitors (add new tag to creation of competitor and ceventscore because they can be old)
-
-4. update send online for event (sent in one channel, deleted in another, sent channel has userID as sent by with timestamp so all done after each other and then delete (so feth returns multiple versions of same send with a usernumberid and timestamp so go through each user and update last one and check updates against done meets and resolve clashes send after done, check on each access of event, check all on update button, and on load, and on resutls view. ))
-
 5. add competitor merge later
 
-[work out ceventscore so that cannot create more than needed]  mabe delete ceventscores for event (all) before import]
-[protect not owner entry ceventscores by checking they were entered by him]
 
-think of repurcussions if more than neccisary eventscores [wont score -  not problem?] or delete all so not a worry?
-
-person at end needs to see all eventscores?
-
-
-
-
-
-check save settings
 
 check internet connection before load try and handle error
 
-later  delay on load is done on my end?
-
-
-
-
-onlinemeet handle error with popup?
-
-competitors add timestamp
-
-add seperate section for handling input records
 
 add merge competitors section (hou kop met all die verskillende areas wat moet merge en verander..)
 
 
 
+
+
+
+
+
+
+
+
+//////
+//////  online entry done
+//////
+//////
+//////
+//////
+//////
+//////
+//////
 //////
 
 

@@ -19,6 +19,7 @@
 @interface EnterResultsViewController ()
 @property BOOL updateOnlineSuccess;
 @property CKRecord* fetchedMeetRecord;
+@property BOOL objectNotOnServer;
 @end
 
 @implementation EnterResultsViewController
@@ -70,7 +71,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
+	self.objectNotOnServer = NO;
     
     [self configureView];
 }
@@ -315,13 +316,13 @@ self.fetchedResultsController = nil;
                 
                         //execute query
     
-    
+                    
     
     
     
                             queryOpMeet.recordFetchedBlock = ^(CKRecord *meetRecord)
                             {
-                            
+                                NSLog(@"in meet record check");
                                 self.fetchedMeetRecord = meetRecord;
                             
                                 
@@ -341,14 +342,16 @@ self.fetchedResultsController = nil;
                                  
                                  
                                ///////////////
-                                   
-                                   
-                                        CKReference* meetref = [[CKReference alloc] initWithRecord:self.fetchedMeetRecord action:CKReferenceActionDeleteSelf];
+                                  if (self.fetchedMeetRecord != Nil) {
+                                    CKReference* meetref = [[CKReference alloc] initWithRecord:self.fetchedMeetRecord action:CKReferenceActionDeleteSelf];
+                                    NSString*   user = self.fetchedMeetRecord.creatorUserRecordID.recordName;
+                                    NSLog(@"createuserrecordID %@",  user);
+                                                user = [user stringByReplacingOccurrencesOfString:@"_" withString:@""];
                                     
                                      NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
                                                 timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
                                     
-                                    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@",self.savedEventObject.onlineID, timestamp];
+                                    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@%@",self.savedEventObject.onlineID, user,timestamp];
                                     
                                     CKRecordID *eventrecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
                                         
@@ -444,11 +447,22 @@ self.fetchedResultsController = nil;
 
                                     [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
                           
-                                 
+
+                                    }
+                                    else
+                                    {
+                                        NSLog(@"meet not found");
+                                        
+                                                        self.updateOnlineSuccess = NO;
+                                                        self.objectNotOnServer = YES;
+                                                        [self modifyOnlineDone];
+                                    }
+                                   
+                                    
                                  }
                             };
                            
-                           
+                           self.fetchedMeetRecord = nil;
                            NSOperationQueue *queue = [[NSOperationQueue alloc] init];
                             [queue addOperation: queryOpMeet];
                
@@ -505,11 +519,13 @@ return event;
 
 - (CKRecord*)addCompOnline:(Competitor*)compObject AndEventRecordID: (CKRecordID*) eventrecordID {
     //create a new RecordType
+    NSString*   user = self.fetchedMeetRecord.creatorUserRecordID.recordName;
     
+    user = [user stringByReplacingOccurrencesOfString:@"_" withString:@""];
      NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
                                                 timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
 
-    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@",compObject.onlineID, timestamp];
+    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@%@",compObject.onlineID, user,timestamp];
     CKRecordID *comprecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
     CKRecord *comp = [[CKRecord alloc] initWithRecordType:@"Competitor" recordID:comprecordID];
     
@@ -549,10 +565,14 @@ return comp;
 
 - (CKRecord*)addCScoreOnline:(CEventScore*)cscoreObject AndEventRecordID: (CKRecordID*) eventrecordID {
     //create a new RecordType
+    
+    NSString*   user = self.fetchedMeetRecord.creatorUserRecordID.recordName;
+    
+    user = [user stringByReplacingOccurrencesOfString:@"_" withString:@""];
      NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
                                                 timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
 
-    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@",cscoreObject.onlineID, timestamp];
+    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@%@",cscoreObject.onlineID, user, timestamp];
     CKRecordID *cscorerecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
     CKRecord *cscore = [[CKRecord alloc] initWithRecordType:@"CEventScore" recordID:cscorerecordID];
     
@@ -682,35 +702,63 @@ return cscore;
     }
     else
     {
-        NSLog(@"update online failed event %@ %@", self.savedEventObject.gEvent.gEventName, self.savedEventObject.division.divName);
     
-        [self setAllEditedAndNotDoneForEvent:self.savedEventObject];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-        
-        UIAlertController * alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Update To Server Failed"
-                                    message:@"Failed to update to online database, please check your internet connection, ensure you are signed in to iCloud and you have upgraded to iCloud Drive before trying again\n \n You may continue to enter results and send them when you re-establish a working connection. \n \n "
-                                    preferredStyle:UIAlertControllerStyleAlert];
-     
-     
-                UIAlertAction* ok = [UIAlertAction
-                        actionWithTitle:@"OK"
-                        style:UIAlertActionStyleDefault
-                        handler:^(UIAlertAction * action)
-                        {
-                            
-                            
-                            
-                            
-                            [alert dismissViewControllerAnimated:YES completion:nil];
-                            
-                             
-                        }];
-                        
-                [alert addAction:ok];
-                [self presentViewController:alert animated:YES completion:nil];
-                });
+        if (self.objectNotOnServer) {
+             dispatch_async(dispatch_get_main_queue(), ^{
+                                        UIAlertController * alert=   [UIAlertController
+                                                                alertControllerWithTitle:@"Meet Not Found"
+                                                                message:@"No record of this Athletics Meet was found on the server, the Meet may have been removed by the owner. \n \n If this is temporary, please wait until the Meet has been re-added and then submit results again"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+                                 
+                                 
+                                            UIAlertAction* ok = [UIAlertAction
+                                                    actionWithTitle:@"OK"
+                                                    style:UIAlertActionStyleDefault
+                                                    handler:^(UIAlertAction * action)
+                                                    {
+                                                       
+                                                        [alert dismissViewControllerAnimated:YES completion:nil];
+                                                         
+                                                    }];
+                                                    
+                                            [alert addAction:ok];
+                                 
+                                            [self presentViewController:alert animated:YES completion:nil];
+                                            });
+        }
+        else
+        {
+                NSLog(@"update online failed event %@ %@", self.savedEventObject.gEvent.gEventName, self.savedEventObject.division.divName);
+            
+                [self setAllEditedAndNotDoneForEvent:self.savedEventObject];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                
+                UIAlertController * alert=   [UIAlertController
+                                            alertControllerWithTitle:@"Update To Server Failed"
+                                            message:@"Failed to update to online database, please check your internet connection, ensure you are signed in to iCloud and you have upgraded to iCloud Drive before trying again\n \n You may continue to enter results and send them when you re-establish a working connection. \n \n "
+                                            preferredStyle:UIAlertControllerStyleAlert];
+             
+             
+                        UIAlertAction* ok = [UIAlertAction
+                                actionWithTitle:@"OK"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    
+                                    
+                                    
+                                    
+                                    [alert dismissViewControllerAnimated:YES completion:nil];
+                                    
+                                     
+                                }];
+                                
+                        [alert addAction:ok];
+                        [self presentViewController:alert animated:YES completion:nil];
+                        });
+            
+        }
     
     }
 
