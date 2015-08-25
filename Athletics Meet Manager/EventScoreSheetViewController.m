@@ -737,7 +737,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
 }
 - (void) setAllEditedAndNotDoneForEvent: (Event*) event {
 
-NSLog(@"set all edited and not done for event %@ %@", event.division, event.gEvent);
+//NSLog(@"set all edited and not done for event %@ %@", event.division, event.gEvent);
 
     event.eventEdited = [NSNumber numberWithBool:YES];
     event.eventDone = [NSNumber numberWithBool:NO];

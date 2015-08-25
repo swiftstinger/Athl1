@@ -1,3 +1,9 @@
+updatefromservertwo do next one and check if done
+
+lock slave changes
+
+add cscore[@"eventRecordID"] = eventrecordID;  // = event.onlineID to addowneremeetonline not needed
+
 delete slave block ui? not found
 
 check no online meet if update (prompt online meet has been removed, if temporary please resubmit all sent events (after fix)
@@ -73,6 +79,8 @@ after
 
 8. delete a team?  so mabe check for and readd team or div on results enter or check if team or div exists before update owner? team for competitor or eventsscore and div and gevent for event itself.
 8. check if event or team or div exists before add otherwise skip but still delete event  orrr.  read events in case it was a mistake? just delete again..  orrr prompt and decide but for now just readd
+
+     //   add divs and gevents and teams here if needed
 
 9. create 2 slaves and check update sync priority  make event id unique check how its downloaded
 10 order results by date and check what happens if update twice from same slave in a row (overwrite server copy?) also check if delete on comp if it deleted unused copy

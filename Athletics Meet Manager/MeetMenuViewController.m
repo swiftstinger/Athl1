@@ -40,6 +40,8 @@
 @property NSMutableArray *updatedNonOwnerEventRecordIDsMutableArray;
 @property NSOperationQueue *queue;
 @property NSMutableArray *eventsIDSUpdatedSuccesfullyToDelete;
+@property int updateFromServerIndexCounter;
+@property int updateFromServerIndexTotal;
 //@property  BOOL meetDeleteSuccess;
 @end
 
@@ -1065,7 +1067,7 @@ div[@"events"] = array;
 
 div[@"meetOnlineID"] = divObject.meet.onlineID;
     
-    
+div[@"eventRecordID"] = divObject.meet.onlineID;
  
  
 return div;
@@ -1150,6 +1152,8 @@ gevent[@"events"] = array;
 **/
 
 gevent[@"meetOnlineID"] = gEventObject.meet.onlineID;
+
+gevent[@"eventRecordID"] = gEventObject.meet.onlineID;
     
     
  
@@ -1269,7 +1273,7 @@ team[@"competitors"] = array;
 **/
   team[@"meetOnlineID"] = teamObject.meet.onlineID;
     
- 
+ team[@"eventRecordID"] = teamObject.meet.onlineID;
  
 return team;
 
@@ -1430,6 +1434,7 @@ comp[@"cEventScores"] = array;
     comp[@"team"] = compObject.team.onlineID;
     comp[@"meetOnlineID"] = compObject.meet.onlineID;
     
+    comp[@"eventRecordID"] = compObject.meet.onlineID;
  
  
 return comp;
@@ -1478,7 +1483,7 @@ NSArray *array = [mutableArray copy];
     cscore[@"team"] = cscoreObject.team.onlineID;
     cscore[@"meetOnlineID"] = cscoreObject.meet.onlineID;
     
- 
+    cscore[@"eventRecordID"] = cscoreObject.meet.onlineID;
  
 return cscore;
 
@@ -4113,7 +4118,11 @@ NSLog(@"updating owner meet");
                     {
                      NSLog(@"query event for local owner update succesful");
                         if ([self.updatedNonOwnerEventIDsMutableArray count ]>0) {
-                             [self updateOwnerFromServerTwo:0];
+                            
+                            NSLog(@"number of events updating %lu and recordIDs %lu",(unsigned long)[self.updatedNonOwnerEventIDsMutableArray count ],(unsigned long)[self.updatedNonOwnerEventRecordIDsMutableArray count ]);
+                            self.updateFromServerIndexTotal = [self.updatedNonOwnerEventRecordIDsMutableArray count ];
+                            self.updateFromServerIndexCounter = 0;
+                               [self updateOwnerFromServerTwo:self.updateFromServerIndexCounter];
                             
                         }
                         else
@@ -4172,7 +4181,7 @@ NSLog(@"updating owner meet");
           //  NSPredicate *predicateE = [NSPredicate predicateWithFormat:@"onlineID = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
     
     // changes to take back if failed
-             NSPredicate *predicateE = [NSPredicate predicateWithFormat:@"onlineID = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
+             NSPredicate *predicateE = [NSPredicate predicateWithFormat:@"recordID = %@",self.updatedNonOwnerEventRecordIDsMutableArray[indexOfArray] ];
 
     
             NSArray *predsEvent = [NSArray arrayWithObjects: predicateID, predicateUser, predicateE ,nil];
@@ -4233,7 +4242,12 @@ NSLog(@"updating owner meet");
                     
                         Division* divObject = [self fetchObjectType:@"Division" WithOnlineID:event[@"division"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
                     
+                    
+                    
+                    
                         GEvent* geventObject = [self fetchObjectType:@"GEvent" WithOnlineID:event[@"gEvent"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                    
+                        /// add divs and gevents and teams here if needed
                     
                         eventObject.division = divObject;
                         eventObject.gEvent = geventObject;
@@ -4286,8 +4300,11 @@ NSLog(@"updating owner meet");
     
     NSPredicate *predicateScore = [NSPredicate predicateWithFormat:@"event = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
     
+    CKRecordID* tempRecordID = self.updatedNonOwnerEventRecordIDsMutableArray[indexOfArray];
     
-            NSArray *predsScore = [NSArray arrayWithObjects: predicateID, predicateUser, predicateScore ,nil];
+        NSPredicate *predicateEventRecordName = [NSPredicate predicateWithFormat:@"eventRecordID = %@", tempRecordID.recordName];
+    
+            NSArray *predsScore = [NSArray arrayWithObjects: predicateID, predicateUser, predicateScore, predicateEventRecordName ,nil];
     
     
                 NSPredicate *predicateForScore = [NSCompoundPredicate andPredicateWithSubpredicates:predsScore];
@@ -4307,7 +4324,7 @@ NSLog(@"updating owner meet");
                 {
                     //do something
                     
-                    
+                    NSLog(@"cscore fetched in import with EventRecordName %@", cscore[@"eventRecordID"]);
                     
                      CEventScore* cscoreObject  = [self fetchObjectType:@"CEventScore" WithOnlineID:cscore[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
                     if (cscoreObject != nil) {
@@ -4356,7 +4373,7 @@ NSLog(@"updating owner meet");
                     NSPredicate *predicateComp = [NSPredicate predicateWithFormat:@"onlineID = %@", cscore[@"competitor"] ];
     
     
-                    NSArray *predsComp = [NSArray arrayWithObjects: predicateID, predicateUser, predicateComp ,nil];
+                    NSArray *predsComp = [NSArray arrayWithObjects: predicateID, predicateUser, predicateComp,predicateEventRecordName ,nil];
     
     
                         NSPredicate *predicateForComp = [NSCompoundPredicate andPredicateWithSubpredicates:predsComp];
@@ -4371,7 +4388,7 @@ NSLog(@"updating owner meet");
                         {
                             //do something
                    
-                    
+                        NSLog(@"comp fetched in import with EventRecordName %@", comp[@"eventRecordID"]);
                     
                         Competitor* compObject  = [self fetchObjectType:@"Competitor" WithOnlineID:comp[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
                             if (compObject != nil) {
@@ -4516,6 +4533,9 @@ NSLog(@"updating owner meet");
 }
 - (void)updateOwnerDone {
     
+    
+    
+    
     if (self.updateOnlineSuccess) {
         NSLog(@"update success");
         
@@ -4566,10 +4586,46 @@ NSLog(@"updating owner meet");
                        
                    
                    }
+                   
+                   self.updateFromServerIndexCounter++;
+                    NSLog(@"updatefromservercounter %d",self.updateFromServerIndexCounter);
+                  if (self.updateFromServerIndexCounter<self.updateFromServerIndexTotal) {
+                      [self updateOwnerFromServerTwo:self.updateFromServerIndexCounter];
+                      
+                      //for testing loop below
+                      /** for testing loop
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                            UIAlertController * alert=   [UIAlertController
+                                                    alertControllerWithTitle:@"next event"
+                                                    message:@"next event doing now"
+                                                    preferredStyle:UIAlertControllerStyleAlert];
+                     
+                     
+                                UIAlertAction* ok = [UIAlertAction
+                                        actionWithTitle:@"OK"
+                                        style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction * action)
+                                        {
+                                            [self updateOwnerFromServerTwo:self.updateFromServerIndexCounter];
+                                            [alert dismissViewControllerAnimated:YES completion:nil];
+                                             
+                                        }];
+                                        
+                                [alert addAction:ok];
+                     
+                                [self presentViewController:alert animated:YES completion:nil];
+                                });
+                      
+                      **/
+                      
+                    }
+                    else
+                    {
+                        [self updateOwnerToOnline];
                     
-                  
+                    }
 
-                 [self updateOwnerToOnline];
+                 
                    
 
                };
@@ -4802,7 +4858,7 @@ NSLog(@"updating owner meet");
                     }
                     else
                     {
-                            NSLog(@"gevent not on server delete ");
+                            NSLog(@"gevent not in local delete ");
                     
                         [self.serverdeletes addObject:[gevent recordID]];
                     
@@ -4982,7 +5038,7 @@ NSLog(@"updating owner meet");
                     }
                     else
                     {
-                            NSLog(@"cscore not on server delete ");
+                            NSLog(@"cscore not local delete ");
                     
                         [self.serverdeletes addObject:[cscore recordID]];
                     

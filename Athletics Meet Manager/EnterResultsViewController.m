@@ -344,10 +344,16 @@ self.fetchedResultsController = nil;
                                    
                                    
                                         CKReference* meetref = [[CKReference alloc] initWithRecord:self.fetchedMeetRecord action:CKReferenceActionDeleteSelf];
-                                   
+                                    
+                                     NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+                                                timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+                                    
+                                    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@",self.savedEventObject.onlineID, timestamp];
+                                    
+                                    CKRecordID *eventrecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
                                         
-                                        CKRecord *eventrecord = [self addEventOnline:self.savedEventObject];
-                                        
+                                        CKRecord *eventrecord = [self addEventOnline:self.savedEventObject AndEventRecordID:eventrecordID];
+                                    
                                         CKReference* ref = [[CKReference alloc] initWithRecord:eventrecord action:CKReferenceActionDeleteSelf];
                                         [eventrecord setObject:meetref forKey:@"owningMeet"];
                                         
@@ -364,16 +370,16 @@ self.fetchedResultsController = nil;
                                         
                                                 NSString* newdevID;
 
-                                            NSRange numberrange = [devID rangeOfString:@">" ];
+                                                    NSRange numberrange = [devID rangeOfString:@">" ];
                                                     if (numberrange.location != NSNotFound) {
                                                         newdevID = [devID substringFromIndex:numberrange.location + 2];
                                                     } else {
                                                     newdevID = devID;
                                                     }
 
-                                            devID = newdevID;
+                                                devID = newdevID;
                                         
-                                                NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+                                                    NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
                                                 timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
                                                 devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
                                     
@@ -415,7 +421,7 @@ self.fetchedResultsController = nil;
                                             
                                             
                                             
-                                            CKRecord *cscorerecord = [self addCScoreOnline:cscore];
+                                            CKRecord *cscorerecord = [self addCScoreOnline:cscore AndEventRecordID:eventrecordID];
                                             NSLog(@"1 %@", cscore.onlineID);
                                             [cscorerecord setObject:ref forKey:@"owningEvent"];
                                             //NSLog(@"2 %@ ", cscorerecord);
@@ -427,7 +433,7 @@ self.fetchedResultsController = nil;
                                             
                                             
                                             NSLog(@"4 %@", comp.onlineID);
-                                            CKRecord *comprecord = [self addCompOnline:comp];
+                                            CKRecord *comprecord = [self addCompOnline:comp AndEventRecordID:eventrecordID];
                                             NSLog(@"5");
                                             [comprecord setObject:ref forKey:@"owningEvent"];
                                            // NSLog(@"6 %@", comprecord);
@@ -455,11 +461,10 @@ self.fetchedResultsController = nil;
 
 }
 
-- (CKRecord*)addEventOnline:(Event*)eventObject {
+- (CKRecord*)addEventOnline:(Event*)eventObject AndEventRecordID: (CKRecordID*) eventrecordID{
     //create a new RecordType
     
-    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@",eventObject.onlineID];
-    CKRecordID *eventrecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
+   
     CKRecord *event = [[CKRecord alloc] initWithRecordType:@"Event" recordID:eventrecordID];
     
     NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
@@ -498,9 +503,13 @@ return event;
 
 }
 
-- (CKRecord*)addCompOnline:(Competitor*)compObject {
+- (CKRecord*)addCompOnline:(Competitor*)compObject AndEventRecordID: (CKRecordID*) eventrecordID {
     //create a new RecordType
-    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@",compObject.onlineID];
+    
+     NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+                                                timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+
+    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@",compObject.onlineID, timestamp];
     CKRecordID *comprecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
     CKRecord *comp = [[CKRecord alloc] initWithRecordType:@"Competitor" recordID:comprecordID];
     
@@ -531,15 +540,19 @@ comp[@"updateDateAndTime"] = [NSDate date];
     comp[@"team"] = compObject.team.onlineID;
     comp[@"meetOnlineID"] = compObject.meet.onlineID;
     
+    comp[@"eventRecordID"] = eventrecordID.recordName;
  
  
 return comp;
 
 }
 
-- (CKRecord*)addCScoreOnline:(CEventScore*)cscoreObject {
+- (CKRecord*)addCScoreOnline:(CEventScore*)cscoreObject AndEventRecordID: (CKRecordID*) eventrecordID {
     //create a new RecordType
-    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@",cscoreObject.onlineID];
+     NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+                                                timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+
+    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@",cscoreObject.onlineID, timestamp];
     CKRecordID *cscorerecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
     CKRecord *cscore = [[CKRecord alloc] initWithRecordType:@"CEventScore" recordID:cscorerecordID];
     
@@ -578,6 +591,8 @@ cscore[@"updateDateAndTime"] = [NSDate date];
     cscore[@"event"] = cscoreObject.event.onlineID;
     cscore[@"team"] = cscoreObject.team.onlineID;
     cscore[@"meetOnlineID"] = cscoreObject.meet.onlineID;
+    
+    cscore[@"eventRecordID"] = eventrecordID.recordName;
     
  
  
@@ -702,7 +717,7 @@ return cscore;
 }
 - (void) setAllEditedAndNotDoneForEvent: (Event*) event {
 
-NSLog(@"set all edited and not done for event %@ %@", event.division.divName, event.gEvent.gEventName);
+//NSLog(@"set all edited and not done for event %@ %@", event.division.divName, event.gEvent.gEventName);
 
     event.eventEdited = [NSNumber numberWithBool:YES];
     event.eventDone = [NSNumber numberWithBool:NO];
