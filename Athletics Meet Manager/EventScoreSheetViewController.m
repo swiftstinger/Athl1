@@ -385,7 +385,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorAddInResultSheetViewController class]])
         {
         // nslog(@"Coming from CompertitorAddInResults Done!");
-        self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
+        
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     CompetitorAddInResultSheetViewController *sourceViewController = unwindSegue.sourceViewController;
     
@@ -420,8 +420,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
         newcompetitorObject.team = sourceViewController.team;
         newcompetitorObject.meet = self.eventObject.meet;
         newcompetitorObject.teamName = sourceViewController.team.teamName;
-       
-        
+        newcompetitorObject.edited = [NSNumber numberWithBool:YES];
+        newcompetitorObject.editDone = [NSNumber numberWithBool:NO];
         
         
         
@@ -484,6 +484,8 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
        [ceventscore setValue:NULL forKey:@"placing"];
        [ceventscore setValue:NULL forKey:@"score"];
        [ceventscore setValue:NULL forKey:@"resultEntered"];
+        ceventscore.edited = [NSNumber numberWithBool:YES];
+        ceventscore.editDone = [NSNumber numberWithBool:NO];
         
         
          //////
@@ -496,6 +498,8 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
         ceventscore.event = self.eventObject;
         ceventscore.meet = self.eventObject.meet;
         ceventscore.team = sourceViewController.team;
+        
+        
         //////
         
                  // Store cEventsScoreID data
@@ -535,7 +539,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
                 NSError *error = nil;
 
         
-        
+        [self setAllEditedAndNotDoneForEvent:self.eventObject];
 
         // Save the context.
         
@@ -551,7 +555,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
     if ([unwindSegue.sourceViewController isKindOfClass:[EventScoreAddViewController class]])
         {
         // nslog(@"Coming from EventScoreAdd Done!");
-        self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
+        
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
         CEventScore *ceventscore = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
@@ -566,7 +570,8 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
        [ceventscore setValue:NULL forKey:@"placing"];
        [ceventscore setValue:NULL forKey:@"score"];
        [ceventscore setValue:NULL forKey:@"resultEntered"];
-    
+        ceventscore.edited = [NSNumber numberWithBool:YES];
+        ceventscore.editDone = [NSNumber numberWithBool:NO];
      
        /*
      
@@ -632,7 +637,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
                 NSError *error = nil;
 
         
-        
+        [self setAllEditedAndNotDoneForEvent:self.eventObject];
 
         // Save the context.
         
@@ -649,7 +654,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
    if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorScoreEnterViewController class]])
     {
         // nslog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
-        self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
+        
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
         
@@ -676,7 +681,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
         
 
         // Save the context.
-        
+        [self setAllEditedAndNotDoneForEvent:self.eventObject];
             if (![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -689,13 +694,15 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
    if ([unwindSegue.sourceViewController isKindOfClass:[HighJumpScoreEnterViewController class]])
     {
         // nslog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
-        self.eventObject.eventEdited = [NSNumber numberWithBool:YES];
+        
+        
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
         
         CompetitorScoreEnterViewController *sourceViewController = unwindSegue.sourceViewController;
         
         CEventScore *ceventscore = sourceViewController.cEventScore;
+        
         
         
         ////////
@@ -708,7 +715,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
     
         
             ////
-    
+    [self setAllEditedAndNotDoneForEvent:self.eventObject];
         
                 NSError *error = nil;
 
@@ -728,6 +735,49 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
 
 
 }
+- (void) setAllEditedAndNotDoneForEvent: (Event*) event {
+
+NSLog(@"set all edited and not done for event %@ %@", event.division, event.gEvent);
+
+    event.eventEdited = [NSNumber numberWithBool:YES];
+    event.eventDone = [NSNumber numberWithBool:NO];
+    event.edited = [NSNumber numberWithBool:YES];
+    event.editDone = [NSNumber numberWithBool:NO];
+
+
+    event.gEvent.edited = [NSNumber numberWithBool:YES];
+    event.gEvent.editDone = [NSNumber numberWithBool:NO];
+    
+    event.division.edited = [NSNumber numberWithBool:YES];
+    event.division.editDone = [NSNumber numberWithBool:NO];
+    
+    for (CEventScore* cscore in event.cEventScores) {
+    
+        cscore.edited = [NSNumber numberWithBool:YES];
+        cscore.editDone = [NSNumber numberWithBool:NO];
+        
+        cscore.competitor.edited = [NSNumber numberWithBool:YES];
+        cscore.competitor.editDone = [NSNumber numberWithBool:NO];
+    
+        cscore.competitor.team.edited = [NSNumber numberWithBool:YES];
+        cscore.competitor.team.editDone = [NSNumber numberWithBool:NO];
+    }
+    
+    
+    
+    
+    NSError *error = nil;
+
+    if (![self.managedObjectContext save:&error]) {
+        
+             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        
+    }
+    
+}
+
+
+
 - (IBAction)unwindToEventScoreSheetCancel:(UIStoryboardSegue *)unwindSegue
 {
 
@@ -779,7 +829,7 @@ if ([sourceViewController isKindOfClass:[EventScoreAddViewController class]])
 
 
    */
-    [self resultsCalculate];
+    [self resultsCalculateForEvent:self.eventObject];
     
     NSError *error = nil;
         if (![self.managedObjectContext save:&error]) {
@@ -792,8 +842,8 @@ if ([sourceViewController isKindOfClass:[EventScoreAddViewController class]])
 
 
 }
-- (void) resultsCalculate {
-Event * event = _eventObject;
+- (void) resultsCalculateForEvent: (Event* )event {
+
 
 
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];

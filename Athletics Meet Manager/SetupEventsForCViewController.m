@@ -279,7 +279,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
                     if (!(competitorEventLimit>currentEventNumber)) {
     
                 // nslog(@"in shouldperformsegue no");
-                
+                dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"Too many Events For Competitor"
                                     message:@"Please delete an event or change the number of events allowed per competitor"
@@ -298,6 +298,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                });
                 return NO;
                 }
                 

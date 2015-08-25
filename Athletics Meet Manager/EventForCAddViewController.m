@@ -339,7 +339,9 @@ if(pickerView.tag == divpicker)
        // self.competitorObject.cEventScores
         
         if ([[self.competitorObject valueForKeyPath:@"cEventScores.event"] containsObject:self.event]) {
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
+
+
             UIAlertController * alert =   [UIAlertController
                                     alertControllerWithTitle:@"This competitor is already in chosen event"
                                     message:@"Please pick a different event"
@@ -358,6 +360,9 @@ if(pickerView.tag == divpicker)
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                
+                });
+                
             return NO;
         }
         
@@ -400,7 +405,9 @@ if(pickerView.tag == divpicker)
             
                     if (!(limitperteam>currentEventNumber)) {
     
-               
+               dispatch_async(dispatch_get_main_queue(), ^{
+
+
                 
                 UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"Too many competitors from this team in Event"
@@ -420,6 +427,8 @@ if(pickerView.tag == divpicker)
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                
+                });
                 return NO;
                     }
                 

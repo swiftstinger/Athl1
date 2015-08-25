@@ -1,53 +1,96 @@
+delete slave block ui? not found
+
+check no online meet if update (prompt online meet has been removed, if temporary please resubmit all sent events (after fix)
+
+save backup of events that were done in master or sent in slave
+
+
+
+save context on deletes chekc all
+
 
 dispatch_async(dispatch_get_main_queue(), ^{
 
 });
+//
+
+on succesfull send online, turn eventscore edited to no and editdone to yes
+
+check all competitor eventscores for edited and edit done before changing
+
+///
+if edited not
+if editdone yes
+
+
+done on succes
+fail not done
+
+all edited  not meet?
+
+on success set edited yes
+and editdone yes
+
+set eventdone yes
+
+and! on import by owner set event done and edited no and editdone yes in rest
+check event exists on inport by owner otherwise just delete
+
+////
+master update
+add pause and unpause now
+comps not added properly
+
+deleted cscores not competitors check later
+
+////
+
+////
+after
+////
+
+
+/////
+1. get only owner meets on update online meet? done retest for mabe fault?
+
+1. update master add completion and check completion not trigger for each event  done
+
+6. delete sent from slave on meet delete (add meet dependancy so get meet and ad ref) done
+
+2. set as edeting and edit done in all meets enter result done method (for all objects) done
+
+3. delete server events after saved by master done
+
+
+4. pause when done event enter in slave needed?
+
+5. delete extras when updating master event  (move then delete all?) delete all done, still add backup
 
 
 
 
-readd updateonlinemeet to load
+7. calculateresults for event in evnetscoresheetviewcontroller check if needed
 
-delete after saved
+8. delete a team?  so mabe check for and readd team or div on results enter or check if team or div exists before update owner? team for competitor or eventsscore and div and gevent for event itself.
+8. check if event or team or div exists before add otherwise skip but still delete event  orrr.  read events in case it was a mistake? just delete again..  orrr prompt and decide but for now just readd
 
-results done only send if slave and online !!  done now check
+9. create 2 slaves and check update sync priority  make event id unique check how its downloaded
+10 order results by date and check what happens if update twice from same slave in a row (overwrite server copy?) also check if delete on comp if it deleted unused copy
 
-update from slave cehck deletes? mabe move first then move back if fail? deletes not done move and delete all?
-
-update to master done, add completion and check that completion does not trigger for each ceventscore and delete temp objects from server
+all similar events update and compete with each other so try to personalise?
 
 
-get only owner meets on update onlinemeet
 
 [array removeObject:@"Name2"];
 
 on update owner
 
-    read from server
-    delete objects
-    readd all objects
 
-    deleted all extras and updated to server so last step done.
-
-
-    add pause on update slave an flag success failure
-
-    add pause on update serverbutton pressed
-
-
-add edited and editeddone to results enter done buttons
 add send button if onlinemeet and editDone if send succesfull
 
 
+update all ceventscores on results view (plus pause)
 
-
-update all ceventscores in event on update any ceventscores (also delete normally)
-
-master update
-
-work by user and date? date to prevent horrible hybrids
-
-delete files in inbox import twice error
 
 
 must add online ids att create

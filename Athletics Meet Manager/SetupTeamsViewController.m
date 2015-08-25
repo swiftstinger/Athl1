@@ -132,6 +132,7 @@
     }
 
     if (count > 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
         UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"Confirm Delete"
                                     message:@"Some competitors in this Team have already been entered into events. Deleting this Team will delete these competitors and any scores entered for them. This cannot be undone."
@@ -188,7 +189,7 @@
                 [alert addAction:cancel];
      
                 [self presentViewController:alert animated:YES completion:nil];
-
+        });
     }
     else
     {

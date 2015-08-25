@@ -399,7 +399,7 @@
         
         
         if ([[self.competitorObject valueForKeyPath:@"cEventScores.event"] containsObject:self.eventObject]) {
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
             UIAlertController * alert =   [UIAlertController
                                     alertControllerWithTitle:@"Chosen competitor is already competing in this event."
                                     message:@"Please pick a different competitor"
@@ -418,6 +418,8 @@
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                
+             });
             return NO;
         }
         
@@ -471,7 +473,7 @@
             if (!(limitperteam>currentEventNumber)) {
     
                //self.competitorObject = nil;
-                
+                dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"Already too many competitors from this team in the Event"
                                     message:@"Please delete a competitor from this event or change the number of competitors allowed per team for this event"
@@ -490,6 +492,9 @@
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                
+                });
+                
                 return NO;
                 }
                 
@@ -533,7 +538,7 @@
             if (!(limitpercompetitor>currentEventNumber)) {
     
               // self.competitorObject = nil;
-                
+                dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"This competitor is already in too many events"
                                     message:@"Please remove competitor from another event or change the number of events allowed per competitor"
@@ -552,6 +557,7 @@
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                });
                 return NO;
                 }
                 

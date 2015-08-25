@@ -220,7 +220,9 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
             
                     if (!(limitperteam>currentEventNumber)) {
     
-               
+               dispatch_async(dispatch_get_main_queue(), ^{
+
+
                 
                 UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"Too many competitors from chosen team in Event"
@@ -240,6 +242,11 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                
+              
+
+                });
+                
                 return NO;
                 }
                 

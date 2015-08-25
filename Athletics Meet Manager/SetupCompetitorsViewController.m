@@ -121,6 +121,7 @@
 
 
     if ([comp.cEventScores count] > 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
         UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"Confirm Delete"
                                     message:@"This Competitor has already been entered into one or more events. Deleting this Competitor will remove it from these events as well as remove any scores entered. This cannot be undone."
@@ -135,6 +136,14 @@
                             
                         
                             [context deleteObject:comp];
+                            NSError *error = nil;
+                                if (![context save:&error]) {
+                                    // Replace this implementation with code to handle the error appropriately.
+                                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                                    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+                                   // abort();
+                                }
+
                             [alert dismissViewControllerAnimated:YES completion:nil];
                             
                              
@@ -154,7 +163,7 @@
                 [alert addAction:cancel];
      
                 [self presentViewController:alert animated:YES completion:nil];
-
+        });
     }
     else
     {

@@ -149,6 +149,7 @@
     }
 
     if (count > 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
         UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"Confirm Delete"
                                     message:@"Some events in this Division already have competitors or scores entered. Deleting this division will delete these events and any scores entered. This cannot be undone. This action will not delete any competitors"
@@ -203,7 +204,7 @@
                 [alert addAction:cancel];
      
                 [self presentViewController:alert animated:YES completion:nil];
-
+        });
     }
     else
     {

@@ -37,8 +37,9 @@
 @property NSMutableArray *cscoreLocalMutableArray;
 @property NSMutableArray *serverdeletes;
 @property NSMutableArray *updatedNonOwnerEventIDsMutableArray;
+@property NSMutableArray *updatedNonOwnerEventRecordIDsMutableArray;
 @property NSOperationQueue *queue;
-
+@property NSMutableArray *eventsIDSUpdatedSuccesfullyToDelete;
 //@property  BOOL meetDeleteSuccess;
 @end
 
@@ -187,7 +188,9 @@ if ([self.meetObject.onlineMeet boolValue]) {
     self.sendpermission = NO;
     
     if ([self.meetObject.onlineMeet boolValue]&&(![self.meetObject.isOwner boolValue])) {
-    //[self updateOnlineMeet];
+        [self updateOnlineMeet];
+    
+    // fixme
     }
     else
     {
@@ -292,7 +295,7 @@ else
         bool divsdone = [[self.meetObject valueForKey: @"divsDone"] boolValue];
         
         if (!divsdone) {
-            
+                dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"No Group Divisions Set Up"
                                     message:@"Please set up at least one Group Division for this Meet"
@@ -311,6 +314,7 @@ else
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                });
                 return NO;
                 }
                 
@@ -322,7 +326,7 @@ else
         bool eventsdone = [[self.meetObject valueForKey: @"eventsDone"] boolValue];
         
         if (!divsdone && !eventsdone) {
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
             UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"No Group Divisions or Events Set Up"
                                     message:@"Please set up at least one Group Division and at least on Event for this Meet"
@@ -341,6 +345,7 @@ else
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                });
                 return NO;
             
         }
@@ -349,7 +354,7 @@ else
         
         
             if (!eventsdone) {
-            
+                dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"No Events Set Up"
                                     message:@"Please set up at least one Event for this Meet"
@@ -368,12 +373,14 @@ else
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                });
                 return NO;
 
             
             }
             else if (!divsdone)
             {
+              dispatch_async(dispatch_get_main_queue(), ^{
               UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"No Divisions Set Up"
                                     message:@"Please set up at least one Division for this Meet"
@@ -392,6 +399,9 @@ else
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                
+                
+                });
                 return NO;
 
             }
@@ -408,7 +418,7 @@ else
         bool teamsdone = [[self.meetObject valueForKey: @"teamsDone"] boolValue];
         
         if (!divsdone && !eventsdone && !teamsdone) {
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
             UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"No Group Divisions, Events or Teams Set Up"
                                     message:@"Please set up at least one Group Division, Event and Team for this Meet"
@@ -427,13 +437,14 @@ else
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
+                });
                 return NO;
             
         }
         else
         {
             if (!divsdone && !eventsdone) {
-            
+                dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController * alert=   [UIAlertController
                                         alertControllerWithTitle:@"No Group Divisions or Events Set Up"
                                         message:@"Please set up at least one Group Division and at least on Event for this Meet"
@@ -452,11 +463,12 @@ else
                         [alert addAction:ok];
      
                         [self presentViewController:alert animated:YES completion:nil];
+                    });
                         return NO;
             
             }
             else if (!divsdone && !teamsdone) {
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController * alert=   [UIAlertController
                                         alertControllerWithTitle:@"No Group Divisions or Teams Set Up"
                                         message:@"Please set up at least one Group Division and at least on Team for this Meet"
@@ -475,6 +487,7 @@ else
                         [alert addAction:ok];
      
                         [self presentViewController:alert animated:YES completion:nil];
+                });
                         return NO;
             
             
@@ -483,7 +496,7 @@ else
             
             }
             else if (!eventsdone && !teamsdone) {
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController * alert=   [UIAlertController
                                         alertControllerWithTitle:@"No Group Events or Teams Set Up"
                                         message:@"Please set up at least one Event and at least on Team for this Meet"
@@ -502,6 +515,7 @@ else
                         [alert addAction:ok];
      
                         [self presentViewController:alert animated:YES completion:nil];
+                });
                         return NO;
             
             
@@ -515,7 +529,7 @@ else
         
         
                 if (!eventsdone) {
-            
+                    dispatch_async(dispatch_get_main_queue(), ^{
                     UIAlertController * alert=   [UIAlertController
                                         alertControllerWithTitle:@"No Events Set Up"
                                         message:@"Please set up at least one Event for this Meet"
@@ -534,12 +548,14 @@ else
                     [alert addAction:ok];
      
                     [self presentViewController:alert animated:YES completion:nil];
+                    });
                     return NO;
 
             
                 }
                 else if (!divsdone)
                 {
+                dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController * alert=   [UIAlertController
                                         alertControllerWithTitle:@"No Divisions Set Up"
                                         message:@"Please set up at least one Division for this Meet"
@@ -558,11 +574,13 @@ else
                     [alert addAction:ok];
      
                     [self presentViewController:alert animated:YES completion:nil];
+                    });
                     return NO;
 
                 }
                 else if (!teamsdone)
                 {
+                dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController * alert=   [UIAlertController
                                         alertControllerWithTitle:@"No Teams Set Up"
                                         message:@"Please set up at least one Team for this Meet"
@@ -581,6 +599,7 @@ else
                     [alert addAction:ok];
      
                     [self presentViewController:alert animated:YES completion:nil];
+                    });
                     return NO;
 
                 }
@@ -596,8 +615,6 @@ else
     
     return YES;              
 }
-
-
 
 - (IBAction)shareMeetButtonPressed:(id)sender {
 
@@ -643,7 +660,7 @@ NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
             if (!(2>currentEventNumber)) {
                 
               // self.competitorObject = nil;
-                
+                dispatch_async(dispatch_get_main_queue(), ^{
                 UIAlertController * alert=   [UIAlertController
                                     alertControllerWithTitle:@"Already Hosting Too Many Events"
                                     message:@"Please unshare another event before sharing this event online"
@@ -658,6 +675,7 @@ NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
                         
                             
                             [alert dismissViewControllerAnimated:YES completion:nil];
+                            
                             [self resumeMethod];
                             
                         }];
@@ -665,7 +683,7 @@ NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
                 [alert addAction:ok];
      
                 [self presentViewController:alert animated:YES completion:nil];
-                
+                });
             }
             else
             {
@@ -690,7 +708,7 @@ else
 - (void)shareAllOnline {
 self.sharing = YES;
 // Initialize the data
-   NSMutableArray *localChangesMute = [[NSMutableArray alloc] init];;
+   NSMutableArray *localChangesMute = [[NSMutableArray alloc] init];
    NSMutableArray *localDeletionsMute = [[NSMutableArray alloc] init];
    
     
@@ -1563,7 +1581,7 @@ return cscore;
 
 
 - (void) modifyOnlineDone {
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
     UIAlertController * alert;
     
     if (self.updateOnlineSuccess) {
@@ -1651,7 +1669,7 @@ return cscore;
     
                 alert=   [UIAlertController
                                     alertControllerWithTitle:@"Online Share Failed"
-                                    message:@"Failed to save to online database, please check your internet connection, ensure you are signed in to iCloud and you have updated to iCloud Drive"
+                                    message:@"Failed to save to online database, please check your internet connection, ensure you are signed in to iCloud and you have upgraded to iCloud Drive before trying again"
                                     preferredStyle:UIAlertControllerStyleAlert];
      
      
@@ -1707,7 +1725,7 @@ return cscore;
     
         [self presentViewController:alert animated:YES completion:nil];
 
-
+    });
 
 }
 
@@ -2719,6 +2737,8 @@ for (Event *eventobject in eventSet )
  if (self.sendpermission)
  {
     self.sendpermission = NO;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
     UIAlertController * alert;
     switch (result)
     {
@@ -2833,7 +2853,7 @@ for (Event *eventobject in eventSet )
     [self dismissViewControllerAnimated:YES completion:^{
       [self presentViewController:alert animated:YES completion:nil];
    }];
-  
+  });
 
  }
 
@@ -2841,6 +2861,7 @@ for (Event *eventobject in eventSet )
  {
   
  self.exportresults = NO;
+dispatch_async(dispatch_get_main_queue(), ^{
 UIAlertController * alert;
     switch (result)
     {
@@ -2956,7 +2977,7 @@ UIAlertController * alert;
       [self presentViewController:alert animated:YES completion:nil];
    }];
   
-    
+  });
     
  }
 }
@@ -2967,6 +2988,9 @@ UIAlertController * alert;
          NSError *errorscore = nil;
                         
                     // Save the context.
+    
+    
+    
         if (success) {
         NSLog(@"update succesfull now do deletes");
                 for (Division* object in self.meetObject.divisions) {
@@ -3100,12 +3124,45 @@ UIAlertController * alert;
             
                         if (![self.managedObjectContext save:&errorscore]) {
                         }
+            
+                         NSLog(@"succesful update");
+            dispatch_async(dispatch_get_main_queue(), ^{
+            [self resumeMethod];
+            });
         }
         else
         {
                 NSLog(@"unsuccesful update");
+             dispatch_async(dispatch_get_main_queue(), ^{
         
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Update From Server Failed"
+                                    message:@"Failed to update from online database, please check your internet connection, ensure you are signed in to iCloud and you have upgraded to iCloud Drive before trying again\n \n You may continue to enter results and send them when you re-establish a working connection. \n \n Please be aware that your event information may not be up to date"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                            
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            [self resumeMethod];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+                [self presentViewController:alert animated:YES completion:nil];
+                });
+
         }
+         
+    
+        
 }
 
 
@@ -3151,7 +3208,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
     
         NSLog(@"updating meet");
-    
+        [self pauseMethod];
     
             NSDateComponents *comps = [[NSDateComponents alloc] init];
     
@@ -3172,15 +3229,18 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
             NSPredicate *predicaterest = [NSPredicate predicateWithFormat:@"meetOnlineID = %@", meetObject.onlineID];
     
-            //  NSPredicate *predicateuser = [NSPredicate predicateWithFormat:@"updateByUser = %@",@"owner" ];
+            NSPredicate *predicateowner = [NSPredicate predicateWithFormat:@"updateByUser = %@", @"owner"];
+
+    
+    
     
          //   NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet, predicateuser, nil];
     
-         NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet, nil];
+         NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet,predicateowner, nil];
             NSPredicate *predicateM = [NSCompoundPredicate andPredicateWithSubpredicates:preds1];
             //NSArray *preds2 = [NSArray arrayWithObjects: predicaterest, predicateuser, nil];
     
-            NSArray *preds2 = [NSArray arrayWithObjects: predicaterest, nil];
+            NSArray *preds2 = [NSArray arrayWithObjects: predicaterest, predicateowner, nil];
             NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:preds2];
     
     
@@ -3970,12 +4030,13 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
     if (self.meetObject.isOwner) {
         NSLog(@"owner item updatemeet");
-       // [self updateOwnerToOnline];
-        [self updateOwnerFromServer];
+               [self updateOwnerFromServer];
+               // [self updateOwnerToOnline];
+
     }
     else
     {
-    [self updateOnlineMeet];
+        [self updateOnlineMeet];
     }
 }
 
@@ -3987,7 +4048,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
 NSLog(@"updating owner meet");
     
     
-    
+        [self pauseMethod];
     
     
             Meet* meetObject = self.meetObject;
@@ -4026,14 +4087,16 @@ NSLog(@"updating owner meet");
             //execute query
 
                 self.updatedNonOwnerEventIDsMutableArray = [[NSMutableArray alloc] init];
+                self.updatedNonOwnerEventRecordIDsMutableArray = [[NSMutableArray alloc] init];
     
                 queryOpEventID.recordFetchedBlock = ^(CKRecord *event)
                 {
                     
                       [self.updatedNonOwnerEventIDsMutableArray addObject:event[@"onlineID"] ];
+                      [self.updatedNonOwnerEventRecordIDsMutableArray addObject:event.recordID ];
                        // [self updateOwnerFromServerTwo:event[@"updateByUser"]];
                     
-                    
+                      //  [self copyEventToBackUpAndDeleteWithOnlineId:event[@"onlineID"]];
                     
                 };
 
@@ -4042,6 +4105,9 @@ NSLog(@"updating owner meet");
                 
                     if (error) {
                     NSLog(@"CKQueryCursor event for local owner query error %@", error);
+                    
+                    self.updateOnlineSuccess = NO;
+                    [self updateOwnerDone];
                     }
                     else
                     {
@@ -4053,6 +4119,9 @@ NSLog(@"updating owner meet");
                         else
                         {
                             NSLog(@"nothing to update");
+                            
+                            self.updateOnlineSuccess = YES;
+                            [self updateOwnerDone];
                         }
                         
                     }
@@ -4075,15 +4144,20 @@ NSLog(@"updating owner meet");
             NSManagedObjectContext* context = self.managedObjectContext;
 
             NSString* objectType = @"Event";
+    
+    
             Event* thisEventObject = [self fetchObjectType:objectType WithOnlineID:self.updatedNonOwnerEventIDsMutableArray[indexOfArray] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+    
+    
                     if (thisEventObject != nil) {
-                        NSLog(@" %@ exists",objectType);
+                        NSLog(@" %@ exists in first bit",objectType);
+                        [self copyEventToBackUpAndDeleteWithOnlineId:self.updatedNonOwnerEventIDsMutableArray[indexOfArray]];
                     }
                     else
                     {
                         thisEventObject = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
                         
-                         NSLog(@" new %@ created",objectType);
+                         NSLog(@" new %@ created in first bit",objectType);
                         
                     }
     
@@ -4095,8 +4169,11 @@ NSLog(@"updating owner meet");
     
              NSPredicate *predicateUser = [NSPredicate predicateWithFormat:@"updateByUser != %@",@"owner" ];
     
-            NSPredicate *predicateE = [NSPredicate predicateWithFormat:@"onlineID = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
+          //  NSPredicate *predicateE = [NSPredicate predicateWithFormat:@"onlineID = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
     
+    // changes to take back if failed
+             NSPredicate *predicateE = [NSPredicate predicateWithFormat:@"onlineID = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
+
     
             NSArray *predsEvent = [NSArray arrayWithObjects: predicateID, predicateUser, predicateE ,nil];
     
@@ -4107,6 +4184,10 @@ NSLog(@"updating owner meet");
     //ad pred evenstcore then comp
     
         //////// start query 5 Event
+    
+                self.eventsIDSUpdatedSuccesfullyToDelete = [[NSMutableArray alloc] init];
+    
+    
     
     
     
@@ -4125,7 +4206,8 @@ NSLog(@"updating owner meet");
                     
                     Event* eventObject = [self fetchObjectType:objectType WithOnlineID:event[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
                     if (eventObject != nil) {
-                        NSLog(@" %@ exists",objectType);
+                        NSLog(@" %@ exists ",objectType);
+                        
                     }
                     else
                     {
@@ -4159,6 +4241,7 @@ NSLog(@"updating owner meet");
                     
 
                             NSLog(@"updating owner event  %@ %@", eventObject.gEvent.gEventName, eventObject.division.divName);
+                           [self.eventsIDSUpdatedSuccesfullyToDelete addObject:event.recordID];
                     
                     
                 };
@@ -4168,11 +4251,13 @@ NSLog(@"updating owner meet");
                 
                     if (error) {
                     NSLog(@"CKQueryCursor  Event query error %@", error);
-                        
+                        self.updateOnlineSuccess = NO;
+                        [self updateOwnerDone];
                     }
                     else
                     {
                      NSLog(@"query Event succesful");
+                     
                      
                      }
                 };
@@ -4189,6 +4274,8 @@ NSLog(@"updating owner meet");
     
             [self saveContext];
             NSLog(@"savecontextopp");
+        
+        
         
     } ];
     
@@ -4222,15 +4309,15 @@ NSLog(@"updating owner meet");
                     
                     
                     
-                     CEventScore* cscoreObject  = [self fetchObjectType:objectType WithOnlineID:cscore[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                     CEventScore* cscoreObject  = [self fetchObjectType:@"CEventScore" WithOnlineID:cscore[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
                     if (cscoreObject != nil) {
-                        NSLog(@" %@ exists",objectType);
+                        NSLog(@" %@ exists",@"CEventScore");
                     }
                     else
                     {
                         cscoreObject = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
                         
-                         NSLog(@" new %@ created",objectType);
+                         NSLog(@" new %@ created",@"CEventScore");
                         
                     }
                     
@@ -4259,22 +4346,6 @@ NSLog(@"updating owner meet");
                     
                         cscoreObject.team = teamObject;
                    
-                    Competitor* compObject  = [self fetchObjectType:@"Competitor" WithOnlineID:cscore[@"competitor"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
-                    if (compObject != nil) {
-                        NSLog(@" comp exists");
-                        
-                        
-                    }
-                    else
-                    {
-                        compObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
-                        
-                         NSLog(@" new comp created");
-                        
-                    }
-
-                    
-                        cscoreObject.competitor = compObject;
                     
                     
                     
@@ -4304,13 +4375,13 @@ NSLog(@"updating owner meet");
                     
                         Competitor* compObject  = [self fetchObjectType:@"Competitor" WithOnlineID:comp[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
                             if (compObject != nil) {
-                            NSLog(@" %@ exists",objectType);
+                            NSLog(@" %@ 2 exists",@"competitor");
                             }
                             else
                             {
                                 compObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
                         
-                                    NSLog(@" new %@ created",objectType);
+                                    NSLog(@" new %@ 2 created",@"competitor");
                         
                             }
                     
@@ -4330,7 +4401,7 @@ NSLog(@"updating owner meet");
                     
 
                             NSLog(@"updating comp %@ in team : %@", compObject.compName, compObject.team.teamName);
-                            
+                            cscoreObject.competitor = compObject;
                     
                     
                             };
@@ -4340,14 +4411,17 @@ NSLog(@"updating owner meet");
                 
                                 if (error) {
                                 NSLog(@"CKQueryCursor  Comp query error %@", error);
-                                
+                                    self.updateOnlineSuccess = NO;
+                                    [self updateOwnerDone];
                                 }
                                 else
                                 {
                                 NSLog(@"query Comp succesful");
-                     
+                                    self.updateOnlineSuccess = YES;
+                                    
                                 }
-                                };
+                                
+                            };
 
                                 [queryOpComp addDependency:queryOpEvent];
     
@@ -4370,12 +4444,13 @@ NSLog(@"updating owner meet");
                 
                     if (error) {
                     NSLog(@"CKQueryCursor  cscore query error %@", error);
-                       
+                       self.updateOnlineSuccess = NO;
+                       [self updateOwnerDone];
                     }
                     else
                     {
                      NSLog(@"query cscore succesful");
-
+                        self.updateOnlineSuccess = YES;
                      }
                     
                 };
@@ -4400,13 +4475,153 @@ NSLog(@"updating owner meet");
     
     [self.queue addOperation: saveContextOp];
     
+     NSOperation *endUpdateOwnerOp = [NSBlockOperation blockOperationWithBlock:^(void)
+    { /* code here */
+        
+        
+        
+            NSLog(@"ended");
+            [self updateOwnerDone];
+        
+    } ];
     
+    [endUpdateOwnerOp addDependency:saveContextOp];
     
-
+    [self.queue addOperation: endUpdateOwnerOp];
 
     
 }
+- (void) copyEventToBackUpAndDeleteWithOnlineId: (NSString*) onlineid {
+    
+    
+    NSLog(@"copyEventToBackupAndDeleteWithOnlineId");
+                Meet* meetObject = self.meetObject;
+            NSManagedObjectContext* context = self.managedObjectContext;
 
+            NSString* objectType = @"Event";
+            Event* thisEventObject = [self fetchObjectType:objectType WithOnlineID:onlineid IsOwnerNumber:[NSNumber numberWithBool:YES]];
+    
+    
+            for (CEventScore* cscore in thisEventObject.cEventScores) {
+            
+                [context deleteObject:cscore];
+            
+            }
+
+
+}
+- (void) revertEventFromBackup {
+
+
+}
+- (void)updateOwnerDone {
+    
+    if (self.updateOnlineSuccess) {
+        NSLog(@"update success");
+        
+                        NSMutableArray* changesMute = [[NSMutableArray alloc] init];
+                        NSArray *localChanges = [changesMute copy];
+                        NSArray *localDeletions = [self.eventsIDSUpdatedSuccesfullyToDelete copy];
+              
+                
+               // Initialize the database and modify records operation
+             
+               CKDatabase *database = [[CKContainer defaultContainer] publicCloudDatabase];
+             
+             
+               CKModifyRecordsOperation *modifyRecordsOperation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:localChanges recordIDsToDelete:localDeletions];
+               modifyRecordsOperation.savePolicy = CKRecordSaveAllKeys;
+
+               NSLog(@"CLOUDKIT Changes Uploading: %d", localChanges.count);
+
+               // Add the completion block
+               modifyRecordsOperation.modifyRecordsCompletionBlock = ^(NSArray *savedRecords, NSArray *deletedRecordIDs, NSError *error) {
+                   
+                   
+                   if (error) {
+                       NSLog(@"[%@] Error pushing local data: %@", self.class, error);
+                       
+                        NSLog(@"Uh oh, there was an error deleting stored events ... %@", error);
+                       
+                   }
+                   else
+                   {
+                   
+                   
+                        NSLog(@"Modified successfully");
+                       
+                       for(CKRecord* record in savedRecords) {
+                        
+                            NSLog(@"OnlineID: %@", record[@"onlineID"]);
+                        
+                        }
+                       
+                        for(CKRecord* recordID in deletedRecordIDs) {
+                        
+                            NSLog(@"Deleted record id: %@", recordID);
+                        }
+
+
+                       
+                       
+                   
+                   }
+                    
+                  
+
+                 [self updateOwnerToOnline];
+                   
+
+               };
+               
+               
+
+               // Start the operation
+               [database addOperation:modifyRecordsOperation];
+
+        
+        
+    }
+    else
+    {
+        NSLog(@"update failed");
+        dispatch_async(dispatch_get_main_queue(), ^{
+        
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Update From Server Failed"
+                                    message:@"Failed to update from online database, please check your internet connection, ensure you are signed in to iCloud and you have upgraded to iCloud Drive before trying again"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                            
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                              [self updateOwnerToOnline];
+                           
+                             
+                        }];
+                        
+                [alert addAction:ok];
+                [self presentViewController:alert animated:YES completion:nil];
+                });
+
+        
+    }
+    
+    
+    
+    
+    
+
+}
 
 - (void)updateOwnerToOnline {
 
@@ -4904,7 +5119,7 @@ NSLog(@"updating owner meet");
 
 
 - (void) ownerUpdateOnlineDone {
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
     UIAlertController * alert;
     
     if (self.updateOnlineSuccess) {
@@ -4927,7 +5142,7 @@ NSLog(@"updating owner meet");
                             
                             
                             [alert dismissViewControllerAnimated:YES completion:nil];
-                           // [self resumeMethod];
+                            [self resumeMethod];
                             
                              
                         }];
@@ -4947,7 +5162,7 @@ NSLog(@"updating owner meet");
     
                 alert=   [UIAlertController
                                     alertControllerWithTitle:@"Update To Database Failed"
-                                    message:@"Failed to save to online database, please check your internet connection, ensure you are signed in to iCloud and you have updated to iCloud Drive and before trying again"
+                                    message:@"Failed to save to online database, please check your internet connection, ensure you are signed in to iCloud and you have upgraded to iCloud Drive before trying again"
                                     preferredStyle:UIAlertControllerStyleAlert];
      
      
@@ -4961,7 +5176,7 @@ NSLog(@"updating owner meet");
                             
                             
                             [alert dismissViewControllerAnimated:YES completion:nil];
-                           // [self resumeMethod];
+                            [self resumeMethod];
                              
                         }];
                         
@@ -4973,7 +5188,7 @@ NSLog(@"updating owner meet");
     
         [self presentViewController:alert animated:YES completion:nil];
 
-
+    });
 
 }
 

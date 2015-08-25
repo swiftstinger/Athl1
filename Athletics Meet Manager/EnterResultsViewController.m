@@ -18,6 +18,7 @@
 
 @interface EnterResultsViewController ()
 @property BOOL updateOnlineSuccess;
+@property CKRecord* fetchedMeetRecord;
 @end
 
 @implementation EnterResultsViewController
@@ -288,129 +289,175 @@ self.fetchedResultsController = nil;
                 NSLog(@"online meet in results done");
                 if (![self.meetObject.isOwner boolValue ]) {
                    
-                    NSLog(@"not owner so update event online");
+                        NSLog(@"not owner so update event online");
                     
-        
-            EventScoreSheetViewController* eventscoresheetviewcontroller = unwindSegue.sourceViewController;
-            
-            self.savedEventObject = eventscoresheetviewcontroller.eventObject;
-        // nslog(@"Coming from Eventscoresheetviewcontroller Done!");
-        
-              NSMutableArray *localChangesMute = [[NSMutableArray alloc] init];;
-            NSMutableArray *localDeletionsMute = [[NSMutableArray alloc] init];
-   
+                        
+                            EventScoreSheetViewController* eventscoresheetviewcontroller = unwindSegue.sourceViewController;
+                            
+                            self.savedEventObject = eventscoresheetviewcontroller.eventObject;
+                            // nslog(@"Coming from Eventscoresheetviewcontroller Done!");
+                        
+                              NSMutableArray *localChangesMute = [[NSMutableArray alloc] init];;
+                            NSMutableArray *localDeletionsMute = [[NSMutableArray alloc] init];
+                   
+                                //get meetrecord by query
+                            CKDatabase *publicDatabase = [[CKContainer defaultContainer] publicCloudDatabase];
+                            NSPredicate *predicatemeet = [NSPredicate predicateWithFormat:@"onlineID = %@", self.meetObject.onlineID];
+                    
+                                NSArray *preds1 = [NSArray arrayWithObjects: predicatemeet, nil];
+                             NSPredicate *predicateM = [NSCompoundPredicate andPredicateWithSubpredicates:preds1];
+                           ////////////
+                           
+                            CKQuery *queryMeet = [[CKQuery alloc] initWithRecordType:@"Meet" predicate:predicateM];
+                            CKQueryOperation *queryOpMeet = [[CKQueryOperation alloc] initWithQuery:queryMeet];
+                
+                           queryOpMeet.database = publicDatabase;
+                
+                        //execute query
     
-   
-        
-        CKRecord *eventrecord = [self addEventOnline:self.savedEventObject];
-        
-        CKReference* ref = [[CKReference alloc] initWithRecord:eventrecord action:CKReferenceActionDeleteSelf];
-
-        
-        [localChangesMute addObject:eventrecord];
-        
-        for (CEventScore* cscore in self.savedEventObject.cEventScores) {
-            
-            if (cscore.onlineID) {
-    NSLog(@"onlineid is there %@",cscore.onlineID);
-    }
-    else
-    {
-        NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
-        
-        NSString* newdevID;
-
-    NSRange numberrange = [devID rangeOfString:@">" ];
-    if (numberrange.location != NSNotFound) {
-        newdevID = [devID substringFromIndex:numberrange.location + 2];
-    } else {
-     newdevID = devID;
-    }
-
-    devID = newdevID;
-        
-        NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
-        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
-        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, cscore.cEventScoreID,timestamp];
-      [cscore setValue: onlineID forKey: @"onlineID"];
-       NSLog(@"onlineid not found %@",cscore.onlineID);
-    }
-
-        Competitor* comp = cscore.competitor;
-            
-        if (comp.onlineID) {
-        NSLog(@"onlineid is there %@",comp.onlineID);
-        }
-        else
-        {
-            NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
-        
-            NSString* newdevID;
-
-            NSRange numberrange = [devID rangeOfString:@">" ];
-            if (numberrange.location != NSNotFound) {
-            newdevID = [devID substringFromIndex:numberrange.location + 2];
-            } else {
-            newdevID = devID;
-            }
-
-            devID = newdevID;
-        
-                NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
-                timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
-                devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
     
-                NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, comp.compID,timestamp];
-                [comp setValue: onlineID forKey: @"onlineID"];
-                NSLog(@"onlineid not found %@",comp.onlineID);
-        }
     
-            
-            
-            
-            
-            CKRecord *cscorerecord = [self addCScoreOnline:cscore];
-            NSLog(@"1 %@", cscore.onlineID);
-            [cscorerecord setObject:ref forKey:@"owningEvent"];
-        NSLog(@"2 %@ ", cscorerecord);
-            [localChangesMute addObject:cscorerecord];
-            NSLog(@"3");
-            
-            
-            
-            
-            
-            NSLog(@"4 %@", comp.onlineID);
-            CKRecord *comprecord = [self addCompOnline:comp];
-        NSLog(@"5");
-            [comprecord setObject:ref forKey:@"owningEvent"];
-        NSLog(@"6 %@", comprecord);
-            [localChangesMute addObject:comprecord];
-        }
-            
-  
+    
+                            queryOpMeet.recordFetchedBlock = ^(CKRecord *meetRecord)
+                            {
+                            
+                                self.fetchedMeetRecord = meetRecord;
+                            
+                                
+                            };
 
-  [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
-  
+                            queryOpMeet.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                            {
+                            
+                                if (error) {
+                                NSLog(@"CKQueryCursor  meet query error %@", error);
+                               self.updateOnlineSuccess = NO;
+                               [self modifyOnlineDone];
+                                }
+                                else
+                                {
+                                 NSLog(@"query meet succesful");
+                                 
+                                 
+                               ///////////////
+                                   
+                                   
+                                        CKReference* meetref = [[CKReference alloc] initWithRecord:self.fetchedMeetRecord action:CKReferenceActionDeleteSelf];
+                                   
+                                        
+                                        CKRecord *eventrecord = [self addEventOnline:self.savedEventObject];
+                                        
+                                        CKReference* ref = [[CKReference alloc] initWithRecord:eventrecord action:CKReferenceActionDeleteSelf];
+                                        [eventrecord setObject:meetref forKey:@"owningMeet"];
+                                        
+                                        [localChangesMute addObject:eventrecord];
+                                        
+                                        for (CEventScore* cscore in self.savedEventObject.cEventScores) {
+                                            
+                                            if (cscore.onlineID) {
+                                                NSLog(@"onlineid is there %@",cscore.onlineID);
+                                            }
+                                            else
+                                            {
+                                                NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
+                                        
+                                                NSString* newdevID;
+
+                                            NSRange numberrange = [devID rangeOfString:@">" ];
+                                                    if (numberrange.location != NSNotFound) {
+                                                        newdevID = [devID substringFromIndex:numberrange.location + 2];
+                                                    } else {
+                                                    newdevID = devID;
+                                                    }
+
+                                            devID = newdevID;
+                                        
+                                                NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+                                                timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+                                                devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
+                                    
+                                            NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, cscore.cEventScoreID,timestamp];
+                                            [cscore setValue: onlineID forKey: @"onlineID"];
+                                            NSLog(@"onlineid not found %@",cscore.onlineID);
+                                            }
+
+                                            Competitor* comp = cscore.competitor;
+                                            
+                                            if (comp.onlineID) {
+                                                NSLog(@"onlineid is there %@",comp.onlineID);
+                                            }
+                                            else
+                                            {
+                                                NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
+                                        
+                                                NSString* newdevID;
+
+                                                NSRange numberrange = [devID rangeOfString:@">" ];
+                                                if (numberrange.location != NSNotFound) {
+                                                    newdevID = [devID substringFromIndex:numberrange.location + 2];
+                                                } else {
+                                                    newdevID = devID;
+                                                }
+
+                                                devID = newdevID;
+                                        
+                                                NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+                                                timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+                                                devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
+                                    
+                                                NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, comp.compID,timestamp];
+                                                [comp setValue: onlineID forKey: @"onlineID"];
+                                                NSLog(@"onlineid not found %@",comp.onlineID);
+                                            }
+                                    
+                                            
+                                            
+                                            
+                                            
+                                            CKRecord *cscorerecord = [self addCScoreOnline:cscore];
+                                            NSLog(@"1 %@", cscore.onlineID);
+                                            [cscorerecord setObject:ref forKey:@"owningEvent"];
+                                            //NSLog(@"2 %@ ", cscorerecord);
+                                            [localChangesMute addObject:cscorerecord];
+                                            NSLog(@"3");
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            NSLog(@"4 %@", comp.onlineID);
+                                            CKRecord *comprecord = [self addCompOnline:comp];
+                                            NSLog(@"5");
+                                            [comprecord setObject:ref forKey:@"owningEvent"];
+                                           // NSLog(@"6 %@", comprecord);
+                                            [localChangesMute addObject:comprecord];
+                                    }
+                            
+                  
+
+                                    [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
+                          
+                                 
+                                 }
+                            };
+                           
+                           
+                           NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+                            [queue addOperation: queryOpMeet];
+               
+
                      
                 }
                 
             }
-   
-////////////
-/////////
-///////////
-        
-        
-        
-    }
+        }
 
 }
 
 - (CKRecord*)addEventOnline:(Event*)eventObject {
     //create a new RecordType
+    
     NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@",eventObject.onlineID];
     CKRecordID *eventrecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
     CKRecord *event = [[CKRecord alloc] initWithRecordType:@"Event" recordID:eventrecordID];
@@ -614,15 +661,125 @@ return cscore;
 
     if (self.updateOnlineSuccess) {
         NSLog(@"update online success event %@ %@", self.savedEventObject.gEvent.gEventName, self.savedEventObject.division.divName);
+        
+        [self setAllNotEditedAndDoneForEvent:self.savedEventObject];
+        
     }
     else
     {
         NSLog(@"update online failed event %@ %@", self.savedEventObject.gEvent.gEventName, self.savedEventObject.division.divName);
     
+        [self setAllEditedAndNotDoneForEvent:self.savedEventObject];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+        
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Update To Server Failed"
+                                    message:@"Failed to update to online database, please check your internet connection, ensure you are signed in to iCloud and you have upgraded to iCloud Drive before trying again\n \n You may continue to enter results and send them when you re-establish a working connection. \n \n "
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            
+                            
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+                        
+                [alert addAction:ok];
+                [self presentViewController:alert animated:YES completion:nil];
+                });
+    
     }
 
 }
+- (void) setAllEditedAndNotDoneForEvent: (Event*) event {
 
+NSLog(@"set all edited and not done for event %@ %@", event.division.divName, event.gEvent.gEventName);
+
+    event.eventEdited = [NSNumber numberWithBool:YES];
+    event.eventDone = [NSNumber numberWithBool:NO];
+    event.edited = [NSNumber numberWithBool:YES];
+    event.editDone = [NSNumber numberWithBool:NO];
+
+
+    event.gEvent.edited = [NSNumber numberWithBool:YES];
+    event.gEvent.editDone = [NSNumber numberWithBool:NO];
+    
+    event.division.edited = [NSNumber numberWithBool:YES];
+    event.division.editDone = [NSNumber numberWithBool:NO];
+    
+    for (CEventScore* cscore in event.cEventScores) {
+    
+        cscore.edited = [NSNumber numberWithBool:YES];
+        cscore.editDone = [NSNumber numberWithBool:NO];
+        
+        cscore.competitor.edited = [NSNumber numberWithBool:YES];
+        cscore.competitor.editDone = [NSNumber numberWithBool:NO];
+    
+        cscore.competitor.team.edited = [NSNumber numberWithBool:YES];
+        cscore.competitor.team.editDone = [NSNumber numberWithBool:NO];
+    }
+    
+    
+    
+    
+    NSError *error = nil;
+
+    if (![self.managedObjectContext save:&error]) {
+        
+             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        
+    }
+    
+}
+- (void) setAllNotEditedAndDoneForEvent: (Event*) event {
+
+NSLog(@"set all not edited and done for event %@ %@", event.division.divName, event.gEvent.gEventName);
+
+    event.eventEdited = [NSNumber numberWithBool:NO];
+    event.eventDone = [NSNumber numberWithBool:YES];
+    event.edited = [NSNumber numberWithBool:NO];
+    event.editDone = [NSNumber numberWithBool:YES];
+
+
+    event.gEvent.edited = [NSNumber numberWithBool:NO];
+    event.gEvent.editDone = [NSNumber numberWithBool:YES];
+    
+    event.division.edited = [NSNumber numberWithBool:NO];
+    event.division.editDone = [NSNumber numberWithBool:YES];
+    
+    for (CEventScore* cscore in event.cEventScores) {
+    
+        cscore.edited = [NSNumber numberWithBool:NO];
+        cscore.editDone = [NSNumber numberWithBool:YES];
+        
+        cscore.competitor.edited = [NSNumber numberWithBool:NO];
+        cscore.competitor.editDone = [NSNumber numberWithBool:YES];
+    
+        cscore.competitor.team.edited = [NSNumber numberWithBool:NO];
+        cscore.competitor.team.editDone = [NSNumber numberWithBool:YES];
+    }
+    
+    
+    
+    
+    NSError *error = nil;
+
+    if (![self.managedObjectContext save:&error]) {
+        
+             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        
+    }
+    
+}
 
 - (IBAction)updateOnlineButtonPressed:(UIBarButtonItem *)sender {
 }
