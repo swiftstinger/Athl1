@@ -3,28 +3,32 @@
 want in tutorial
 ///////////
 
+set not edited if owner
+
 !!! check owner id before ship in recodnames
 
-1. pause when done event enter in slave needed?
+1. pause when done event enter in slave needed? done
+
+2. change indicator on edited not done    done
+
+8 done
+
+2. hook up refresh scores or remove (i vote for remove) done
 
 
-8. delete a team?  so mabe check for and readd team or div on results enter or check if team or div exists before update owner? team for competitor or eventsscore and div and gevent for event itself.
-8. check if event or team or div exists before add otherwise skip but still delete event  orrr.  read events in case it was a mistake? just delete again..  orrr prompt and decide but for now just readd
-
-8. add divs team and gevent to serveradd by slave and check before add to owner. if not there add else skip (all have eventid added so can be deleted by event delete.. mabe add event as reference as well.)
-//   add divs and gevents and teams here if needed
 
 
 1. lock slave changes
 
-2. hook up refresh scores or remove (i vote for remove)
 
-3. save backup of events that were done in master or sent in slave
+
+3. save backup of events that were done in master or sent in slave  mabeeee
+
+
 
 4. send button instead of done for slave?
 
-
-5. update all ceventscores on results view (plus pause)
+5. update all ceventscores on results view (plus pause)  not needed but test more late
 
 
 

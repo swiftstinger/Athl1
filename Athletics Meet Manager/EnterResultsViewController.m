@@ -20,6 +20,10 @@
 @property BOOL updateOnlineSuccess;
 @property CKRecord* fetchedMeetRecord;
 @property BOOL objectNotOnServer;
+@property (strong, nonatomic) UIActivityIndicatorView *activityindicator;
+
+@property (strong, nonatomic) UIView *activityview;
+
 @end
 
 @implementation EnterResultsViewController
@@ -74,6 +78,7 @@
 	self.objectNotOnServer = NO;
     
     [self configureView];
+    self.updateOnlineButton.enabled = NO;
 }
 
 
@@ -245,12 +250,20 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
    
   cell.eventNameLabel.text = geventname;
   cell.divisionNameLabel.text = divisionname;
-  if ([event.eventDone boolValue]){
+    if ([event.eventDone boolValue]){
     
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
   
   
-  }
+    }
+    if ([event.edited boolValue]) {
+      
+      cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        if ([event.editDone boolValue]) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+    }
 
 }
 #pragma mark - Segues
@@ -291,7 +304,7 @@ self.fetchedResultsController = nil;
                 if (![self.meetObject.isOwner boolValue ]) {
                    
                         NSLog(@"not owner so update event online");
-                    
+                            [self pauseMethod];
                         
                             EventScoreSheetViewController* eventscoresheetviewcontroller = unwindSegue.sourceViewController;
                             
@@ -351,6 +364,7 @@ self.fetchedResultsController = nil;
                                      NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
                                                 timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
                                     
+                                    
                                     NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@%@",self.savedEventObject.onlineID, user,timestamp];
                                     
                                     CKRecordID *eventrecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
@@ -361,8 +375,33 @@ self.fetchedResultsController = nil;
                                         [eventrecord setObject:meetref forKey:@"owningMeet"];
                                         
                                         [localChangesMute addObject:eventrecord];
-                                        
+                                      
+                                      /// add div
+                                      
+                                      CKRecord *divrecord = [self addDivisionOnline: self.savedEventObject.division AndEventRecordID:eventrecordID];
+                                      
+                                            [divrecord setObject:ref forKey:@"owningEvent"];
+                                      
+                                            [localChangesMute addObject:divrecord];
+                                      
+                                      
+                                      
+                                      //// end ad div
+                                      
+                                      /// add div
+                                      
+                                      CKRecord *geventrecord = [self addGEventOnline: self.savedEventObject.gEvent AndEventRecordID:eventrecordID];
+                                      
+                                            [geventrecord setObject:ref forKey:@"owningEvent"];
+                                      
+                                            [localChangesMute addObject:geventrecord];
+                                      
+ 
+                                      //// end ad div
+                                      
+                                      
                                         for (CEventScore* cscore in self.savedEventObject.cEventScores) {
+                                            
                                             
                                             if (cscore.onlineID) {
                                                 NSLog(@"onlineid is there %@",cscore.onlineID);
@@ -390,8 +429,11 @@ self.fetchedResultsController = nil;
                                             [cscore setValue: onlineID forKey: @"onlineID"];
                                             NSLog(@"onlineid not found %@",cscore.onlineID);
                                             }
+                                            
+                                            
 
                                             Competitor* comp = cscore.competitor;
+                                            
                                             
                                             if (comp.onlineID) {
                                                 NSLog(@"onlineid is there %@",comp.onlineID);
@@ -425,22 +467,30 @@ self.fetchedResultsController = nil;
                                             
                                             
                                             CKRecord *cscorerecord = [self addCScoreOnline:cscore AndEventRecordID:eventrecordID];
-                                            NSLog(@"1 %@", cscore.onlineID);
+                                           
                                             [cscorerecord setObject:ref forKey:@"owningEvent"];
-                                            //NSLog(@"2 %@ ", cscorerecord);
+                                            
                                             [localChangesMute addObject:cscorerecord];
-                                            NSLog(@"3");
+                                           
                                             
-                                            
-                                            
-                                            
-                                            
-                                            NSLog(@"4 %@", comp.onlineID);
+                                           
                                             CKRecord *comprecord = [self addCompOnline:comp AndEventRecordID:eventrecordID];
-                                            NSLog(@"5");
+                                            
                                             [comprecord setObject:ref forKey:@"owningEvent"];
-                                           // NSLog(@"6 %@", comprecord);
+                                           
                                             [localChangesMute addObject:comprecord];
+                                            ///// add team
+                                            
+                                            CKRecord *teamrecord = [self addTeamOnline: comp.team AndEventRecordID:eventrecordID];
+                                            
+                                            [teamrecord setObject:ref forKey:@"owningEvent"];
+                                           
+                                            [localChangesMute addObject:teamrecord];
+                                            
+                                            
+                                            //// add team end
+                                            
+                                            
                                     }
                             
                   
@@ -620,6 +670,160 @@ return cscore;
 
 }
 
+- (CKRecord*)addDivisionOnline:(Division*)divObject AndEventRecordID: (CKRecordID*) eventrecordID{
+    //create a new RecordType
+        NSString*   user = self.fetchedMeetRecord.creatorUserRecordID.recordName;
+    
+    user = [user stringByReplacingOccurrencesOfString:@"_" withString:@""];
+     NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+                                                timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+
+    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@%@",divObject.onlineID, user, timestamp];
+    CKRecordID *divrecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
+    
+    CKRecord *div = [[CKRecord alloc] initWithRecordType:@"Division" recordID:divrecordID];
+    
+      NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
+        
+        NSString* newdevID;
+
+    NSRange numberrange = [devID rangeOfString:@">" ];
+    if (numberrange.location != NSNotFound) {
+        newdevID = [devID substringFromIndex:numberrange.location + 2];
+    } else {
+     newdevID = devID;
+    }
+
+    devID = newdevID;
+    devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    
+    //create and set record instance properties
+    
+div[@"editDone"] = [NSNumber numberWithBool:YES];
+div[@"edited"] = [NSNumber numberWithBool:NO];
+div[@"divID"] = divObject.divID;
+div[@"divName"] = divObject.divName;
+div[@"onlineID"] = divObject.onlineID;
+div[@"updateByUser"] = devID;
+div[@"updateDateAndTime"] = [NSDate date];
+
+
+div[@"meetOnlineID"] = divObject.meet.onlineID;
+    
+div[@"eventRecordID"] = eventrecordID.recordName;
+ 
+ 
+return div;
+
+}
+
+- (CKRecord*)addGEventOnline:(GEvent*)gEventObject AndEventRecordID: (CKRecordID*) eventrecordID{
+    //create a new RecordType
+        NSString*   user = self.fetchedMeetRecord.creatorUserRecordID.recordName;
+    
+    user = [user stringByReplacingOccurrencesOfString:@"_" withString:@""];
+     NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+                                                timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+
+    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@%@",gEventObject.onlineID, user, timestamp];
+    CKRecordID *geventrecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
+   
+    CKRecord *gevent = [[CKRecord alloc] initWithRecordType:@"GEvent" recordID: geventrecordID];
+    
+      NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
+        
+        NSString* newdevID;
+
+    NSRange numberrange = [devID rangeOfString:@">" ];
+    if (numberrange.location != NSNotFound) {
+        newdevID = [devID substringFromIndex:numberrange.location + 2];
+    } else {
+     newdevID = devID;
+    }
+
+    devID = newdevID;
+    devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    
+            //create and set record instance properties
+gevent[@"editDone"] = [NSNumber numberWithBool:YES];
+gevent[@"edited"] = [NSNumber numberWithBool:NO];
+gevent[@"competitorsPerTeam"] = gEventObject.competitorsPerTeam;
+gevent[@"decrementPerPlace"] = gEventObject.decrementPerPlace;
+gevent[@"gEventID"] = gEventObject.gEventID;
+gevent[@"gEventName"] = gEventObject.gEventName;
+gevent[@"gEventTiming"] = gEventObject.gEventTiming;
+gevent[@"gEventType"] = gEventObject.gEventType;
+gevent[@"maxScoringCompetitors"] = gEventObject.maxScoringCompetitors;
+gevent[@"onlineID"] = gEventObject.onlineID;
+gevent[@"scoreForFirstPlace"] = gEventObject.scoreForFirstPlace;
+gevent[@"scoreMultiplier"] = gEventObject.scoreMultiplier;
+gevent[@"updateByUser"] = devID;
+gevent[@"updateDateAndTime"] = [NSDate date];
+
+
+
+
+
+gevent[@"meetOnlineID"] = gEventObject.meet.onlineID;
+
+gevent[@"eventRecordID"] = eventrecordID.recordName;
+    
+    
+ 
+ 
+return gevent;
+
+}
+
+- (CKRecord*)addTeamOnline:(Team*)teamObject AndEventRecordID: (CKRecordID*) eventrecordID{
+    //create a new RecordType
+        NSString*   user = self.fetchedMeetRecord.creatorUserRecordID.recordName;
+    
+    user = [user stringByReplacingOccurrencesOfString:@"_" withString:@""];
+     NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+                                                timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+
+    NSString* newrecordname = [NSString stringWithFormat:@"updatedEvent%@%@%@",teamObject.onlineID, user, timestamp];
+    CKRecordID *teamrecordID = [[CKRecordID alloc] initWithRecordName:newrecordname];
+    
+    CKRecord *team = [[CKRecord alloc] initWithRecordType:@"Team" recordID:teamrecordID];
+    
+    
+      NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
+        
+        NSString* newdevID;
+
+    NSRange numberrange = [devID rangeOfString:@">" ];
+    if (numberrange.location != NSNotFound) {
+        newdevID = [devID substringFromIndex:numberrange.location + 2];
+    } else {
+     newdevID = devID;
+    }
+
+    devID = newdevID;
+    devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    
+    //create and set record instance properties
+team[@"editDone"] = [NSNumber numberWithBool:YES];
+team[@"edited"] = [NSNumber numberWithBool:NO];
+team[@"onlineID"] = teamObject.onlineID;
+team[@"teamAbr"] = teamObject.teamAbr;
+team[@"teamID"] = teamObject.teamID;
+team[@"teamName"] = teamObject.teamName;
+team[@"teamPlace"] = teamObject.teamPlace;
+team[@"teamScore"] = teamObject.teamScore;
+team[@"updateByUser"] = devID;
+team[@"updateDateAndTime"] = [NSDate date];
+
+
+  team[@"meetOnlineID"] = teamObject.meet.onlineID;
+    
+ team[@"eventRecordID"] = eventrecordID.recordName;
+ 
+return team;
+
+}
+
 
 - (void) modifyOnlineWithChanges: (NSMutableArray*) changesMute AndDeletions: (NSMutableArray*) deletionsMute {
 
@@ -698,7 +902,7 @@ return cscore;
         NSLog(@"update online success event %@ %@", self.savedEventObject.gEvent.gEventName, self.savedEventObject.division.divName);
         
         [self setAllNotEditedAndDoneForEvent:self.savedEventObject];
-        
+         [self endSendMethod];
     }
     else
     {
@@ -718,7 +922,7 @@ return cscore;
                                                     {
                                                        
                                                         [alert dismissViewControllerAnimated:YES completion:nil];
-                                                         
+                                                         [self endSendMethod];
                                                     }];
                                                     
                                             [alert addAction:ok];
@@ -750,6 +954,7 @@ return cscore;
                                     
                                     
                                     [alert dismissViewControllerAnimated:YES completion:nil];
+                                    [self endSendMethod];
                                     
                                      
                                 }];
@@ -841,6 +1046,56 @@ NSLog(@"set all not edited and done for event %@ %@", event.division.divName, ev
              NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         
     }
+   
+    
+}
+- (void) endSendMethod {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+        [self resumeMethod];
+    });
+}
+
+- (void) pauseMethod {
+
+self.navigationController.view.userInteractionEnabled = NO;
+
+self.activityindicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+
+CGRect screenRect = [[UIScreen mainScreen] bounds];
+CGFloat screenWidth = screenRect.size.width;
+CGFloat screenHeight = screenRect.size.height;
+
+UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+[view addSubview:self.activityindicator]; // <-- Your UIActivityIndicatorView
+self.tableView.tableHeaderView = view;
+
+
+
+
+[self.activityindicator setCenter:CGPointMake(screenWidth/2.0, screenHeight/3.0)]; // I do this because I'm in landscape mode
+[self.view addSubview:self.activityindicator];
+
+self.activityindicator.hidden = NO;
+[self.activityindicator startAnimating];
+
+
+
+
+[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+
+}
+
+
+- (void) resumeMethod {
+
+
+self.navigationController.view.userInteractionEnabled = YES;
+  
+    [self.activityindicator stopAnimating];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    self.tableView.tableHeaderView = nil;
+    
     
 }
 

@@ -42,6 +42,10 @@
 @property NSMutableArray *eventsIDSUpdatedSuccesfullyToDelete;
 @property int updateFromServerIndexCounter;
 @property int updateFromServerIndexTotal;
+
+@property CKRecord *ownerUpdateDiv;
+@property CKRecord *ownerUpdateGEvent;
+@property NSMutableDictionary *ownerUpdateTeamMutableDict;
 //@property  BOOL meetDeleteSuccess;
 @end
 
@@ -4033,7 +4037,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
 
 - (IBAction)updateOnlineButtonPressed:(UIBarButtonItem *)sender {
     
-    if (self.meetObject.isOwner) {
+    if ([self.meetObject.isOwner boolValue]) {
         NSLog(@"owner item updatemeet");
                [self updateOwnerFromServer];
                // [self updateOwnerToOnline];
@@ -4041,6 +4045,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     }
     else
     {
+        NSLog(@"just update");
         [self updateOnlineMeet];
     }
 }
@@ -4190,8 +4195,107 @@ NSLog(@"updating owner meet");
                 NSPredicate *predicateForEvent = [NSCompoundPredicate andPredicateWithSubpredicates:predsEvent];
     
     
-    //ad pred evenstcore then comp
+        CKRecordID* tempRecordID = self.updatedNonOwnerEventRecordIDsMutableArray[indexOfArray];
+        NSPredicate *predicateEventRecordName = [NSPredicate predicateWithFormat:@"eventRecordID = %@", tempRecordID.recordName];
     
+        //// start query 3 div
+             //  NSPredicate *predicateDiv = [NSPredicate predicateWithFormat:@"event = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
+    
+                NSArray *predsDiv = [NSArray arrayWithObjects: predicateID, predicateUser,  predicateEventRecordName ,nil];
+    
+    
+                NSPredicate *predicateForDiv = [NSCompoundPredicate andPredicateWithSubpredicates:predsDiv];
+    
+    
+    
+    
+    
+                CKQuery *queryDiv = [[CKQuery alloc] initWithRecordType:@"Division" predicate:predicateForDiv];
+                CKQueryOperation *queryOpDiv = [[CKQueryOperation alloc] initWithQuery:queryDiv];
+    
+               queryOpDiv.database = publicDatabase;
+            //execute query
+   
+    
+                queryOpDiv.recordFetchedBlock = ^(CKRecord *div)
+                {
+                    //do something
+                    
+                    self.ownerUpdateDiv = div;
+                    
+                    
+                };
+
+                queryOpDiv.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  cscore query error %@", error);
+                       self.updateOnlineSuccess = NO;
+                       [self updateOwnerDone];
+                    }
+                    else
+                    {
+                     NSLog(@"query div succesful");
+                        self.updateOnlineSuccess = YES;
+                     }
+                    
+                };
+
+    
+    
+        // end query 3 div
+    
+         //// start query 4 gevent
+    
+             //   NSPredicate *predicateGEvent = [NSPredicate predicateWithFormat:@"event = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
+    
+                NSArray *predsGEvent = [NSArray arrayWithObjects: predicateID, predicateUser, predicateEventRecordName ,nil];
+    
+    
+                NSPredicate *predicateForGEvent = [NSCompoundPredicate andPredicateWithSubpredicates:predsGEvent];
+    
+    
+    
+    
+    
+                CKQuery *queryGEvent = [[CKQuery alloc] initWithRecordType:@"GEvent" predicate:predicateForGEvent];
+                CKQueryOperation *queryOpGEvent = [[CKQueryOperation alloc] initWithQuery:queryGEvent];
+    
+               queryOpGEvent.database = publicDatabase;
+            //execute query
+   
+    
+                queryOpGEvent.recordFetchedBlock = ^(CKRecord *gevent)
+                {
+                    //do something
+                    
+                    self.ownerUpdateGEvent = gevent;
+                    
+                    
+                };
+
+                queryOpGEvent.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  cscore query error %@", error);
+                       self.updateOnlineSuccess = NO;
+                       [self updateOwnerDone];
+                    }
+                    else
+                    {
+                     NSLog(@"query GEvent succesful");
+                        self.updateOnlineSuccess = YES;
+                     }
+                    
+                };
+
+
+    
+    
+    
+        // end query 4 gevent
         //////// start query 5 Event
     
                 self.eventsIDSUpdatedSuccesfullyToDelete = [[NSMutableArray alloc] init];
@@ -4214,6 +4318,8 @@ NSLog(@"updating owner meet");
                     NSString* objectType = @"Event";
                     
                     Event* eventObject = [self fetchObjectType:objectType WithOnlineID:event[@"onlineID"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                    
+                    
                     if (eventObject != nil) {
                         NSLog(@" %@ exists ",objectType);
                         
@@ -4242,15 +4348,78 @@ NSLog(@"updating owner meet");
                     
                         Division* divObject = [self fetchObjectType:@"Division" WithOnlineID:event[@"division"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
                     
+                        if (divObject != nil) {
+                        NSLog(@" %@ exists ",@"Division");
+                            
+                        }
+                        else
+                        {
+                            divObject = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
+                            
+                              CKRecord *div = self.ownerUpdateDiv;
+                            
+                            ////add div load from online div
+                            divObject.editDone = [NSNumber numberWithBool:YES];
+                            divObject.edited = [NSNumber numberWithBool:NO];
+                            divObject.divID = div[@"divID"];
+                            divObject.divName = div[@"divName"];
+                            divObject.onlineID = div[@"onlineID"];
+                            divObject.updateByUser = @"owner";
+                            divObject.updateDateAndTime = [NSDate date];
+                    
+                            divObject.meet = meetObject;
+
+                            
+                            
+                             NSLog(@" new %@ created",@"Division");
+                            
+                        }
                     
                     
                     
-                        GEvent* geventObject = [self fetchObjectType:@"GEvent" WithOnlineID:event[@"gEvent"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                        GEvent* gEventObject = [self fetchObjectType:@"GEvent" WithOnlineID:event[@"gEvent"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
+                    
+                        if (gEventObject != nil) {
+                        NSLog(@" %@ exists ",@"GEvent");
+                            
+                        }
+                        else
+                        {
+                            gEventObject = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
+                            
+                            CKRecord *gevent = self.ownerUpdateGEvent;
+                            
+                            ////add gevent load from online div
+                            gEventObject.editDone = [NSNumber numberWithBool:YES];
+                            gEventObject.edited = [NSNumber numberWithBool:NO];
+                            gEventObject.competitorsPerTeam = gevent[@"competitorsPerTeam"];
+                            gEventObject.decrementPerPlace = gevent[@"decrementPerPlace"];
+                            gEventObject.gEventID = gevent[@"gEventID"];
+                            gEventObject.gEventName = gevent[@"gEventName"];
+                            gEventObject.gEventTiming = gevent[@"gEventTiming"];
+                            gEventObject.gEventType = gevent[@"gEventType"];
+                            gEventObject.maxScoringCompetitors = gevent[@"maxScoringCompetitors"];
+                            gEventObject.onlineID = gevent[@"onlineID"];
+                            gEventObject.scoreForFirstPlace = gevent[@"scoreForFirstPlace"];
+                            gEventObject.scoreMultiplier = gevent[@"scoreMultiplier"];
+                            gEventObject.updateByUser = @"owner";
+                            gEventObject.updateDateAndTime = [NSDate date];
+                    
+                            gEventObject.meet = meetObject;
+
+                            
+                            
+                             NSLog(@" new %@ created",@"GEvent");
+                            
+                        }
+                    
+                    
+                    
                     
                         /// add divs and gevents and teams here if needed
                     
                         eventObject.division = divObject;
-                        eventObject.gEvent = geventObject;
+                        eventObject.gEvent = gEventObject;
                     
                     
 
@@ -4276,14 +4445,83 @@ NSLog(@"updating owner meet");
                      }
                 };
 
-    
+            [queryOpEvent addDependency:queryOpDiv];
+            [queryOpEvent addDependency:queryOpGEvent];
     
     //////// end query 5 Event
+    
+    
+    //// query teams
+    
+                  //  NSPredicate *predicateTeam = [NSPredicate predicateWithFormat:@"event = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
+    
+                NSArray *predsTeam = [NSArray arrayWithObjects: predicateID, predicateUser, predicateEventRecordName ,nil];
+    
+    
+                NSPredicate *predicateForTeam = [NSCompoundPredicate andPredicateWithSubpredicates:predsTeam];
+    
+    
+    
+    
+    
+                CKQuery *queryTeam = [[CKQuery alloc] initWithRecordType:@"Team" predicate:predicateForTeam];
+                CKQueryOperation *queryOpTeam = [[CKQueryOperation alloc] initWithQuery:queryTeam];
+    
+               queryOpTeam.database = publicDatabase;
+            //execute query
+    
+                self.ownerUpdateTeamMutableDict = [[NSMutableDictionary alloc] init];
+    
+                queryOpTeam.recordFetchedBlock = ^(CKRecord *team)
+                {
+                    //do something
+                    NSString* onlineID = team[@"onlineID"];
+                    
+                    [self.ownerUpdateTeamMutableDict setValue:team forKey:onlineID];
+                    
+                    
+                };
+
+                queryOpTeam.queryCompletionBlock = ^(CKQueryCursor *cursor, NSError *error)
+                {
+                
+                    if (error) {
+                    NSLog(@"CKQueryCursor  cscore query error %@", error);
+                       self.updateOnlineSuccess = NO;
+                       [self updateOwnerDone];
+                    }
+                    else
+                    {
+                     NSLog(@"query Team succesful");
+                        self.updateOnlineSuccess = YES;
+                     }
+                    
+                };
+
+
+    
+    
+    
+    
+    [queryOpTeam addDependency:queryOpEvent];
+    
+    //// query teams end
+    
+    
     
     /////
     //// end operation
     
     NSOperation *saveContextOp = [NSBlockOperation blockOperationWithBlock:^(void)
+    { /* code here */
+    
+            [self saveContext];
+            NSLog(@"savecontextopp");
+        
+        
+        
+    } ];
+    NSOperation *saveContextAfterTeamOp = [NSBlockOperation blockOperationWithBlock:^(void)
     { /* code here */
     
             [self saveContext];
@@ -4300,9 +4538,6 @@ NSLog(@"updating owner meet");
     
     NSPredicate *predicateScore = [NSPredicate predicateWithFormat:@"event = %@",self.updatedNonOwnerEventIDsMutableArray[indexOfArray] ];
     
-    CKRecordID* tempRecordID = self.updatedNonOwnerEventRecordIDsMutableArray[indexOfArray];
-    
-        NSPredicate *predicateEventRecordName = [NSPredicate predicateWithFormat:@"eventRecordID = %@", tempRecordID.recordName];
     
             NSArray *predsScore = [NSArray arrayWithObjects: predicateID, predicateUser, predicateScore, predicateEventRecordName ,nil];
     
@@ -4359,7 +4594,35 @@ NSLog(@"updating owner meet");
                     
                         Team* teamObject = [self fetchObjectType:@"Team" WithOnlineID:cscore[@"team"] IsOwnerNumber:[NSNumber numberWithBool:YES]];
                     
+                        if (teamObject != nil) {
+                        NSLog(@" %@ exists ",@"Team");
+                            
+                        }
+                        else
+                        {
+                            teamObject = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
+                            
+                            CKRecord* team = [self.ownerUpdateTeamMutableDict valueForKey:cscore[@"team"]];
+                            
+                            ////add @"Team" load from online @"Team"
+                            teamObject.editDone = [NSNumber numberWithBool:YES];
+                            teamObject.edited = [NSNumber numberWithBool:NO];
+                            teamObject.onlineID = team[@"onlineID"];
+                            teamObject.teamAbr = team[@"teamAbr"];
+                            teamObject.teamID = team[@"teamID"];
+                            teamObject.teamName = team[@"teamName"];
+                            teamObject.teamPlace = team[@"teamPlace"];
+                            teamObject.teamScore = team[@"teamScore"];
+                            teamObject.updateByUser = @"owner";
+                            teamObject.updateDateAndTime = [NSDate date];
                     
+                            teamObject.meet = meetObject;
+
+                            
+                            
+                             NSLog(@" new %@ created",@"Team");
+                            
+                        }
                     
                         cscoreObject.team = teamObject;
                    
@@ -4441,7 +4704,7 @@ NSLog(@"updating owner meet");
                             };
 
                                 [queryOpComp addDependency:queryOpEvent];
-    
+                                [queryOpComp addDependency:queryOpTeam];
     
                             //////// end query 6 Comp
     
@@ -4472,8 +4735,8 @@ NSLog(@"updating owner meet");
                     
                 };
 
-              //  [queryOpCScore addDependency:queryOpComp];
-                [queryOpCScore addDependency:queryOpEvent];
+    
+                [queryOpCScore addDependency:saveContextAfterTeamOp];
     
     
     
@@ -4484,10 +4747,13 @@ NSLog(@"updating owner meet");
     [saveContextOp addDependency:queryOpEvent];
     [saveContextOp addDependency:queryOpCScore];
     
+    [saveContextAfterTeamOp addDependency:queryOpTeam];
   
-  
-  
+  [self.queue addOperation: queryOpDiv];
+  [self.queue addOperation: queryOpGEvent];
   [self.queue addOperation: queryOpEvent];
+   [self.queue addOperation: queryOpTeam];
+   [self.queue addOperation: saveContextAfterTeamOp];
      [self.queue addOperation: queryOpCScore];
     
     [self.queue addOperation: saveContextOp];
