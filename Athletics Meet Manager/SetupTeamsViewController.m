@@ -54,9 +54,15 @@
 // nslog(@"in view");
     // Update the user interface for the detail item.
     if (_detailItem) {
-     
-    //  _navBar.title = [self.meetObject valueForKey:@"meetName"];
-
+        if (([self.meetObject.onlineMeet boolValue])&&(![self.meetObject.isOwner boolValue])) {
+        
+            self.addButton.enabled = NO;
+        }
+        else
+        {
+            self.addButton.enabled = YES;
+        
+        }
     }
 }
 
@@ -66,7 +72,10 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
   //  self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    
+  /**
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableTapped:)];
+    [self.tableView addGestureRecognizer:tap];
+    **/
     [self configureView];
 }
 
@@ -327,6 +336,14 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
           cell.teamTitleLabel.text = [[object valueForKey:@"teamName"] description];
     
           cell.numberOfCompetitorsLabel.text = [NSString stringWithFormat:@"Competitors: %@",  @([[object valueForKey:@"competitors"] count] )];
+    
+        if ([self.meetObject.onlineMeet boolValue]) {
+            if (![self.meetObject.isOwner boolValue]) {
+
+                cell.userInteractionEnabled = NO;
+            }
+          
+        }
 
   }
 
@@ -336,7 +353,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
  
 
     if ([[segue identifier] isEqualToString:@"showTeam"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+      //  NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+      NSIndexPath *indexPath = self.indexPathForLongPressCell;
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
        
@@ -500,17 +518,71 @@ if ([sourceViewController isKindOfClass:[TeamAddViewController class]])
 
 
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender {
-
-if (sender.state == UIGestureRecognizerStateBegan)
-	{
-		CGPoint location = [sender locationInView:self.tableView];
-  self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
+    if ((![self.meetObject.onlineMeet boolValue])||([self.meetObject.isOwner boolValue])) {
+        if (sender.state == UIGestureRecognizerStateBegan)
+        {
+    
+            CGPoint location = [sender locationInView:self.tableView];
+            self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
         
         
-		// nslog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
+            // nslog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
         
-        [self performSegueWithIdentifier:@"editTeam" sender:self];
+            [self performSegueWithIdentifier:@"editTeam" sender:self];
+        }
 	}
+    else
+    {
+        NSLog(@"online and not owner meet so no touches for you  : ) ");
+    }
+
+
+
 
 }
+/**
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+  
+    self.indexPathForLongPressCell = indexPath;
+    NSLog(@"Row Selected = %i",indexPath.row);
+    [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+   
+    [self performSegueWithIdentifier:@"showTeam" sender:self.view];
+
+}
+
+
+- (void)tableTapped:(UITapGestureRecognizer *)tap
+{
+   if (([self.meetObject.onlineMeet boolValue])&&(![self.meetObject.isOwner boolValue]))
+        {
+            NSLog(@"not tap");
+        }
+        else
+        {
+            NSLog(@"tap %hhd %hhd",[self.meetObject.onlineMeet boolValue],[self.meetObject.isOwner boolValue]);
+            CGPoint location = [tap locationInView:self.tableView];
+            NSIndexPath *path = [self.tableView indexPathForRowAtPoint:location];
+
+            if(path)
+            {
+                NSLog(@"tap on cell");
+                // tap was on existing row, so pass it to the delegate method
+                [self tableView:self.tableView didSelectRowAtIndexPath:path];
+            }
+            else
+            {
+                NSLog(@"tap not on cell");
+                // handle tap on empty space below existing rows however you want
+                [self performSegueWithIdentifier:@"addTeam" sender:self];
+                
+            }
+        
+        }
+ 
+    
+    
+}
+**/
 @end

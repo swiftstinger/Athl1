@@ -33,6 +33,23 @@
     **/
     
     NSLog(@"view did load");
+     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+     
+     
+     
+     if (![defaults objectForKey:@"firstTimeDone"]) {
+
+        [defaults setObject: @"1" forKey:@"firstTimeDone"];
+    
+            [self performSegueWithIdentifier:@"showTut" sender:self];
+        
+        }
+        else
+        {
+            NSLog(@"not first time");
+           // [self performSegueWithIdentifier:@"showTut" sender:self];
+        }
+            
     
    // [self updateOnlineMeets];
     
@@ -791,4 +808,6 @@ self.fetchedResultsController = nil;
         }
 }
 
+- (IBAction)InfoButton:(UIBarButtonItem *)sender {
+}
 @end

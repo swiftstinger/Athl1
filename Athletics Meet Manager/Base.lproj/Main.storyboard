@@ -24,6 +24,64 @@
             </objects>
             <point key="canvasLocation" x="-780" y="-1752"/>
         </scene>
+        <!--Tut Main View Controller-->
+        <scene sceneID="zDb-8y-DhD">
+            <objects>
+                <viewController id="ny8-vP-2jf" customClass="TutMainViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fN0-Hv-k8t"/>
+                        <viewControllerLayoutGuide type="bottom" id="GlW-t5-tmx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="B93-Jr-QVR">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pGV-ao-ASS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="228" y="-2518"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="u9D-5Y-cIE">
+            <objects>
+                <pageViewController storyboardIdentifier="TutPageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="yIi-I3-ZiT" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fuK-dG-Hdu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="242" y="-1678"/>
+        </scene>
+        <!--Tut Content View Controller-->
+        <scene sceneID="LSA-Ra-UYg">
+            <objects>
+                <viewController storyboardIdentifier="TutContentViewController" id="atb-Ww-lx0" customClass="TutContentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="q4c-HV-Q8V"/>
+                        <viewControllerLayoutGuide type="bottom" id="lwk-lU-rFr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Uvc-iQ-Crw">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vrh-el-afL">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Vrh-el-afL" firstAttribute="leading" secondItem="Uvc-iQ-Crw" secondAttribute="leading" id="acj-5T-ST0"/>
+                            <constraint firstAttribute="trailing" secondItem="Vrh-el-afL" secondAttribute="trailing" id="ezB-66-fKh"/>
+                            <constraint firstItem="Vrh-el-afL" firstAttribute="top" secondItem="Uvc-iQ-Crw" secondAttribute="top" id="gve-OX-eS0"/>
+                            <constraint firstAttribute="bottom" secondItem="Vrh-el-afL" secondAttribute="bottom" id="x9b-yW-bHq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="TutImageView" destination="Vrh-el-afL" id="RAX-xF-7Bh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qyN-RV-PcL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="992" y="-1670"/>
+        </scene>
         <!--Main Menu-->
         <scene sceneID="VgW-fR-Quf">
             <objects>
@@ -139,7 +197,16 @@
                             <outlet property="delegate" destination="pGg-6v-bdr" id="Y6K-Cp-Qkv"/>
                         </connections>
                     </tableView>
-                    <toolbarItems/>
+                    <toolbarItems>
+                        <barButtonItem systemItem="flexibleSpace" id="aXU-UM-Zdf"/>
+                        <barButtonItem title="Info" id="rJ9-5G-ghJ">
+                            <connections>
+                                <action selector="InfoButton:" destination="pGg-6v-bdr" id="IMV-rv-Frg"/>
+                                <segue destination="ny8-vP-2jf" kind="show" identifier="showTut" id="lWX-8z-XmK"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="RgW-8s-vPt"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Athletics Meet Manager" id="tQt-TN-PWz">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="WgD-FV-lNf">
                             <connections>
@@ -773,6 +840,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="bb7-CG-NFS" id="IrU-Z0-lfE"/>
                         <segue destination="NaG-ot-8A6" kind="presentation" identifier="editGEvent" modalTransitionStyle="flipHorizontal" id="zvu-dP-nHM"/>
                     </connections>
                 </tableViewController>
@@ -1099,6 +1167,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="cG2-0H-OxP" id="B39-h4-NDn"/>
                         <segue destination="oKG-ro-3Rs" kind="presentation" identifier="editTeam" modalTransitionStyle="flipHorizontal" id="KE2-9o-S9o"/>
                     </connections>
                 </tableViewController>
@@ -1455,6 +1524,12 @@
                                 <segue destination="gQK-sw-Xze" kind="unwind" identifier="unwindToEnterResultsSegue" unwindAction="unwindToEnterResultsDone:" id="qcC-hH-A0A"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="TiH-DJ-Qeo"/>
+                        <barButtonItem enabled="NO" title="Reset" id="eLe-kW-kvL">
+                            <connections>
+                                <action selector="resetButtonPressed:" destination="Sm8-SY-0ms" id="Pb8-2C-lud"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="EventNameUpdate" id="yqP-FZ-o7e">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ip4-xv-NKT">
@@ -1465,8 +1540,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="navBar" destination="yqP-FZ-o7e" id="dQT-Yx-mei"/>
+                        <outlet property="resetButton" destination="eLe-kW-kvL" id="zy7-UH-0Rv"/>
                         <segue destination="kPh-lM-lGI" kind="show" identifier="enterResult" id="sNL-Hc-2GC"/>
                         <segue destination="cfI-Qx-DQR" kind="show" identifier="enterHighJumpResult" id="e0k-I9-e32"/>
+                        <segue destination="gQK-sw-Xze" kind="unwind" identifier="unwindToEnterResultResetSegue" unwindAction="unwindToEnterResultsReset:" id="fLk-xY-Taz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qVm-ZJ-q8n" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3032,10 +3109,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="oMD-Bf-krW"/>
         <segue reference="pjO-ql-D1X"/>
-        <segue reference="Kin-H0-cmG"/>
         <segue reference="oBo-Wm-xkL"/>
         <segue reference="kWb-zD-Ztb"/>
+        <segue reference="oMD-Bf-krW"/>
+        <segue reference="HxQ-va-xu1"/>
     </inferredMetricsTieBreakers>
 </document>

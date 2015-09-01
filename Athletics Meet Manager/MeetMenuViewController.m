@@ -663,7 +663,7 @@ NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
      
         
             
-            if (!(2>currentEventNumber)) {
+            if (!(4>currentEventNumber)) {
                 
               // self.competitorObject = nil;
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -1606,7 +1606,7 @@ return cscore;
             
             
             alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Online Share Succesful"
+                                    alertControllerWithTitle:@"Online Share Successful"
                                     message:@"Meet shared for online result entry by other users, send permission files to users to get started"
                                     preferredStyle:UIAlertControllerStyleAlert];
      
@@ -1635,7 +1635,7 @@ return cscore;
             self.meetObject.isOwner = [NSNumber numberWithBool:NO];
             
             alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Meet Unshared Succesfully"
+                                    alertControllerWithTitle:@"Meet Unshared Successfully"
                                     message:@" Meet will no longer be available for users to update online"
                                     preferredStyle:UIAlertControllerStyleAlert];
      
@@ -1701,7 +1701,7 @@ return cscore;
         else
         {
                 alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Unshare meet unsuccesfull"
+                                    alertControllerWithTitle:@"Unshare meet unsuccessfull"
                                     message:@"There was a problem removing this Meet from online database, please check your internet connection and try again"
                                     preferredStyle:UIAlertControllerStyleAlert];
      
@@ -2805,8 +2805,8 @@ for (Event *eventobject in eventSet )
         case MFMailComposeResultSent:
         {
                      alert=   [UIAlertController
-                                        alertControllerWithTitle:@"Mail Sent Succesfully"
-                                        message:@"Meet Permission File Sent Via Email And Mail Sent Succesfully"
+                                        alertControllerWithTitle:@"Mail Sent Successfully"
+                                        message:@"Meet Permission File Sent Via Email And Mail Sent Successfully"
                                         preferredStyle:UIAlertControllerStyleAlert];
      
      
@@ -2928,8 +2928,8 @@ UIAlertController * alert;
         case MFMailComposeResultSent:
         {
                      alert=   [UIAlertController
-                                        alertControllerWithTitle:@"Export Succesfull"
-                                        message:@"Meet Results Exported Via Email And Mail Sent Succesfully"
+                                        alertControllerWithTitle:@"Export Successfull"
+                                        message:@"Meet Results Exported Via Email And Mail Sent Successfully"
                                         preferredStyle:UIAlertControllerStyleAlert];
      
      
@@ -3001,7 +3001,7 @@ UIAlertController * alert;
     
     
         if (success) {
-        NSLog(@"update succesfull now do deletes");
+        NSLog(@"update successfull now do deletes");
                 for (Division* object in self.meetObject.divisions) {
                     if ([self.divServerMutableArray containsObject:object.onlineID]) {
                         NSLog(@"div exists dont delete divname %@", object.divName);
@@ -3134,7 +3134,7 @@ UIAlertController * alert;
                         if (![self.managedObjectContext save:&errorscore]) {
                         }
             
-                         NSLog(@"succesful update");
+                         NSLog(@"successful update");
             dispatch_async(dispatch_get_main_queue(), ^{
             [self resumeMethod];
             });
@@ -5449,7 +5449,7 @@ NSLog(@"updating owner meet");
             
             
             alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Database Update Succesful"
+                                    alertControllerWithTitle:@"Database Update Successful"
                                     message:@"Current changes updated to online database"
                                     preferredStyle:UIAlertControllerStyleAlert];
      

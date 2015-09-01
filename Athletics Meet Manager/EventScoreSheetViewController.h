@@ -19,5 +19,7 @@
 @property (strong, nonatomic) Event* eventObject;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *resetButton;
+- (IBAction)resetButtonPressed:(UIBarButtonItem *)sender;
 
 @end

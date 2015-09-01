@@ -3,9 +3,11 @@
 want in tutorial
 ///////////
 
-set not edited if owner
+set not edited if owner done
 
-!!! check owner id before ship in recodnames
+!!! check owner id before ship in recodnames done
+
+
 
 1. pause when done event enter in slave needed? done
 
@@ -15,12 +17,12 @@ set not edited if owner
 
 2. hook up refresh scores or remove (i vote for remove) done
 
+0.1 indicator if owner, change number of online meets to 2 now at 4
 
 
+1. lock slave changes done
 
-1. lock slave changes
-
-
+2. tut set up done, now do pictures
 
 3. save backup of events that were done in master or sent in slave  mabeeee
 

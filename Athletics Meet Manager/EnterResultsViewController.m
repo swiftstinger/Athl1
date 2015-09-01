@@ -151,10 +151,10 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
         ///////
     
                 // Edit for segmented control
-    NSString *sortKey = [self.segmentedControl selectedSegmentIndex] == 0 ? @"division" : @"gEvent";
+    NSString *sortKey = [self.segmentedControl selectedSegmentIndex] == 0 ? @"division.divName" : @"gEvent.gEventID";
     NSSortDescriptor *sortDescriptor1 = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
     
-    sortKey = [self.segmentedControl selectedSegmentIndex] == 0 ? @"gEvent" : @"division";
+    sortKey = [self.segmentedControl selectedSegmentIndex] == 0 ? @"gEvent.gEventID" : @"division.divName";
     
         ////////
         ////////
@@ -254,17 +254,28 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
     
     
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-  
-  
-    }
-    if ([event.edited boolValue]) {
-      
-      cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-        if ([event.editDone boolValue]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+      if (![self.meetObject.isOwner boolValue]) {
+        
+            if ([event.edited boolValue]) {
+              
+              cell.accessoryType = UITableViewCellAccessoryDetailButton;
+                if ([event.editDone boolValue]) {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                }
+            }
         }
-    }
 
+  
+    }
+    else
+    {
+    
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+    }
+    
+        NSLog(@"event %@ %@ edited value: %hhd editDone value: %hhd eventdone value: %hhd", event.gEvent.gEventName, event.division.divName, [event.edited boolValue], [event.editDone boolValue], [event.eventDone boolValue]);
+    
 }
 #pragma mark - Segues
 
@@ -522,6 +533,9 @@ self.fetchedResultsController = nil;
                 
             }
         }
+
+}
+- (IBAction)unwindToEnterResultsReset:(UIStoryboardSegue *)unwindSegue {
 
 }
 
@@ -973,7 +987,7 @@ return team;
 //NSLog(@"set all edited and not done for event %@ %@", event.division.divName, event.gEvent.gEventName);
 
     event.eventEdited = [NSNumber numberWithBool:YES];
-    event.eventDone = [NSNumber numberWithBool:NO];
+    event.eventDone = [NSNumber numberWithBool:YES];
     event.edited = [NSNumber numberWithBool:YES];
     event.editDone = [NSNumber numberWithBool:NO];
 
@@ -1100,5 +1114,6 @@ self.navigationController.view.userInteractionEnabled = YES;
 }
 
 - (IBAction)updateOnlineButtonPressed:(UIBarButtonItem *)sender {
+    
 }
 @end

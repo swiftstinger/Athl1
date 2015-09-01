@@ -78,6 +78,12 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
   //  self.navigationItem.leftBarButtonItem = self.editButtonItem;
+  /**
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableTapped:)];
+    [self.tableView addGestureRecognizer:tap];
+    
+    **/
     
     [self configureView];
 }
@@ -348,10 +354,12 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
           cell.divTitleLabel.text = [[object valueForKey:@"divName"] description];
     
         if ([self.meetObject.onlineMeet boolValue]) {
-    
-          cell.userInteractionEnabled = NO;
+            if (![self.meetObject.isOwner boolValue]) {
+
+                cell.userInteractionEnabled = NO;
+            }
           
-          }
+        }
 
   }
 
@@ -593,7 +601,7 @@ if ([sourceViewController isKindOfClass:[DivAddViewController class]])
 
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer*)sender {
 
-    if (![self.meetObject.onlineMeet boolValue]) {
+    if ((![self.meetObject.onlineMeet boolValue])||([self.meetObject.isOwner boolValue])) {
         if (sender.state == UIGestureRecognizerStateBegan)
         {
     
@@ -608,10 +616,55 @@ if ([sourceViewController isKindOfClass:[DivAddViewController class]])
 	}
     else
     {
-        NSLog(@"online meet handle error");
+        NSLog(@"online and not owner meet so no touches for you  : ) ");
     }
 
 
 }
+/**
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
+  
+
+    NSLog(@"Row Selected = %i",indexPath.row);
+
+//    [self performSegueWithIdentifier:@"addDiv" sender:self.view];
+
+}
+
+**/
+/**
+
+- (void)tableTapped:(UITapGestureRecognizer *)tap
+{
+   if (([self.meetObject.onlineMeet boolValue])&&(![self.meetObject.isOwner boolValue]))
+        {
+            NSLog(@"not tap");
+        }
+        else
+        {
+            NSLog(@"tap %hhd %hhd",[self.meetObject.onlineMeet boolValue],[self.meetObject.isOwner boolValue]);
+            CGPoint location = [tap locationInView:self.tableView];
+            NSIndexPath *path = [self.tableView indexPathForRowAtPoint:location];
+
+            if(path)
+            {
+                NSLog(@"tap on cell");
+                // tap was on existing row, so pass it to the delegate method
+                //[self tableView:self.tableView didSelectRowAtIndexPath:path];
+            }
+            else
+            {
+                NSLog(@"tap not on cell");
+                // handle tap on empty space below existing rows however you want
+                [self performSegueWithIdentifier:@"addDiv" sender:self];
+                
+            }
+        
+        }
+ 
+    
+    
+}
+**/
 @end

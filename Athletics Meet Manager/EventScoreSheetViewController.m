@@ -79,7 +79,9 @@
 {
     [super viewDidLoad];
 	
-    
+    if (([self.eventObject.meet.onlineMeet boolValue])&&(![self.eventObject.meet.isOwner boolValue])) {
+        self.resetButton.enabled = true;
+    }
     
     
     [self configureView];
@@ -775,6 +777,47 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
     }
     
 }
+- (void) setAllNotEditedAndDoneForEvent: (Event*) event {
+
+NSLog(@"set all not edited and done for event %@ %@", event.division.divName, event.gEvent.gEventName);
+
+    event.eventEdited = [NSNumber numberWithBool:NO];
+    event.eventDone = [NSNumber numberWithBool:NO];
+    event.edited = [NSNumber numberWithBool:NO];
+    event.editDone = [NSNumber numberWithBool:YES];
+
+
+    event.gEvent.edited = [NSNumber numberWithBool:NO];
+    event.gEvent.editDone = [NSNumber numberWithBool:YES];
+    
+    event.division.edited = [NSNumber numberWithBool:NO];
+    event.division.editDone = [NSNumber numberWithBool:YES];
+    
+    for (CEventScore* cscore in event.cEventScores) {
+    
+        cscore.edited = [NSNumber numberWithBool:NO];
+        cscore.editDone = [NSNumber numberWithBool:YES];
+        
+        cscore.competitor.edited = [NSNumber numberWithBool:NO];
+        cscore.competitor.editDone = [NSNumber numberWithBool:YES];
+    
+        cscore.competitor.team.edited = [NSNumber numberWithBool:NO];
+        cscore.competitor.team.editDone = [NSNumber numberWithBool:YES];
+    }
+    
+    
+    
+    
+    NSError *error = nil;
+
+    if (![self.managedObjectContext save:&error]) {
+        
+             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        
+    }
+   
+    
+}
 
 
 
@@ -1116,4 +1159,8 @@ return intvalue;
 
 }
 
+- (IBAction)resetButtonPressed:(UIBarButtonItem *)sender {
+    [self setAllNotEditedAndDoneForEvent:self.eventObject];
+    [self performSegueWithIdentifier:@"unwindToEnterResultResetSegue" sender:self];
+}
 @end
