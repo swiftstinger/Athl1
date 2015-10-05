@@ -24,6 +24,7 @@
 @dynamic startTime;
 @dynamic updateByUser;
 @dynamic updateDateAndTime;
+@dynamic backupDate;
 @dynamic backupCEventScores;
 @dynamic division;
 @dynamic gEvent;

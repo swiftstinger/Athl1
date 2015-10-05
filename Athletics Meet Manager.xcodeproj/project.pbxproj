@@ -81,7 +81,7 @@
 		1F54BD721B48E41D0046BA87 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F421B0FB765000FE30A /* LaunchScreen.xib */; };
 		1FAF93A71BC312BA00B1C725 /* BackupCompetitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF93A61BC312BA00B1C725 /* BackupCompetitor.m */; };
 		1FAF93AA1BC312BB00B1C725 /* BackupCEventScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF93A91BC312BB00B1C725 /* BackupCEventScore.m */; };
-		1FAF93AD1BC312BB00B1C725 /* BackupEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF93AC1BC312BB00B1C725 /* BackupEvent.m */; };
+		1FAF93B01BC32DDB00B1C725 /* BackupEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF93AF1BC32DDB00B1C725 /* BackupEvent.m */; };
 		1FC88E801B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */; };
 		1FC88E861B3C9A2D00BD0A23 /* CEventResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E851B3C9A2D00BD0A23 /* CEventResultTableViewCell.m */; };
 		1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */; };
@@ -231,8 +231,8 @@
 		1FAF93A61BC312BA00B1C725 /* BackupCompetitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupCompetitor.m; sourceTree = "<group>"; };
 		1FAF93A81BC312BB00B1C725 /* BackupCEventScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupCEventScore.h; sourceTree = "<group>"; };
 		1FAF93A91BC312BB00B1C725 /* BackupCEventScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupCEventScore.m; sourceTree = "<group>"; };
-		1FAF93AB1BC312BB00B1C725 /* BackupEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupEvent.h; sourceTree = "<group>"; };
-		1FAF93AC1BC312BB00B1C725 /* BackupEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupEvent.m; sourceTree = "<group>"; };
+		1FAF93AE1BC32DDB00B1C725 /* BackupEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupEvent.h; sourceTree = "<group>"; };
+		1FAF93AF1BC32DDB00B1C725 /* BackupEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupEvent.m; sourceTree = "<group>"; };
 		1FC88E7E1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighJumpScoreEnterViewController.h; sourceTree = "<group>"; };
 		1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighJumpScoreEnterViewController.m; sourceTree = "<group>"; };
 		1FC88E841B3C9A2D00BD0A23 /* CEventResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEventResultTableViewCell.h; sourceTree = "<group>"; };
@@ -528,8 +528,8 @@
 		1FD6B6581B1736D900F05968 /* DataObjects */ = {
 			isa = PBXGroup;
 			children = (
-				1FAF93AB1BC312BB00B1C725 /* BackupEvent.h */,
-				1FAF93AC1BC312BB00B1C725 /* BackupEvent.m */,
+				1FAF93AE1BC32DDB00B1C725 /* BackupEvent.h */,
+				1FAF93AF1BC32DDB00B1C725 /* BackupEvent.m */,
 				1FAF93A81BC312BB00B1C725 /* BackupCEventScore.h */,
 				1FAF93A91BC312BB00B1C725 /* BackupCEventScore.m */,
 				1FAF93A51BC312BA00B1C725 /* BackupCompetitor.h */,
@@ -959,7 +959,7 @@
 				1F0633B11B409B9600110D26 /* TeamEventResultsViewController.m in Sources */,
 				1F1A3F0C1B79425300F8D950 /* GEvent.m in Sources */,
 				1FD6B6531B17368300F05968 /* EnterResultsViewController.m in Sources */,
-				1FAF93AD1BC312BB00B1C725 /* BackupEvent.m in Sources */,
+				1FAF93B01BC32DDB00B1C725 /* BackupEvent.m in Sources */,
 				1FD6B67B1B1E44DE00F05968 /* SetupCompetitorsViewController.m in Sources */,
 				1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */,
 			);

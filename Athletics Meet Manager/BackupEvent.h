@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSDate * startTime;
 @property (nonatomic, retain) NSString * updateByUser;
 @property (nonatomic, retain) NSDate * updateDateAndTime;
+@property (nonatomic, retain) NSDate * backupDate;
 @property (nonatomic, retain) NSSet *backupCEventScores;
 @property (nonatomic, retain) Division *division;
 @property (nonatomic, retain) GEvent *gEvent;
