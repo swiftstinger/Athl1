@@ -1247,6 +1247,15 @@
                             <outlet property="delegate" destination="vaA-zB-3N5" id="Qeu-AG-2K8"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="zWN-Lo-d8r"/>
+                        <barButtonItem title="Show Backups" id="oyg-Kc-iqo">
+                            <connections>
+                                <action selector="showBackupPressed:" destination="vaA-zB-3N5" id="XFZ-nb-m47"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="B6y-pf-byc"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Events" id="fOd-ln-aNt">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="n7H-TV-CMZ">
                             <connections>
@@ -1256,6 +1265,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="segmentedControl" destination="Xfx-c5-6qt" id="dCo-Aq-yYw"/>
+                        <outlet property="showBackupButton" destination="oyg-Kc-iqo" id="A5w-23-aHb"/>
                         <outlet property="updateOnlineButton" destination="n7H-TV-CMZ" id="Zed-cw-MOK"/>
                     </connections>
                 </tableViewController>

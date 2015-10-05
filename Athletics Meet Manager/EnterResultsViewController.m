@@ -18,6 +18,7 @@
 
 @interface EnterResultsViewController ()
 @property BOOL updateOnlineSuccess;
+@property BOOL showingBackups;
 @property CKRecord* fetchedMeetRecord;
 @property BOOL objectNotOnServer;
 @property (strong, nonatomic) UIActivityIndicatorView *activityindicator;
@@ -79,6 +80,8 @@
     
     [self configureView];
     self.updateOnlineButton.enabled = NO;
+    self.showingBackups = NO;
+    
 }
 
 
@@ -134,12 +137,21 @@
   
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
+    
+if (self.showingBackups) {
+  NSLog(@"showing backups in fetchedResultsController");
+}
+else
+{
+    NSLog(@"not showing backups in fetchedResultsController");
+
+ }
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
     
     [fetchRequest setEntity:entity];
     
      // limit to those entities that belong to the particular item
-NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.meetObject];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.meetObject];
     [fetchRequest setPredicate:predicate];
     
     // Set the batch size to a suitable number.
@@ -178,7 +190,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.
 	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
 	   // abort();
 	}
-    
+ 
     return _fetchedResultsController;
 }    
 
@@ -1115,5 +1127,20 @@ self.navigationController.view.userInteractionEnabled = YES;
 
 - (IBAction)updateOnlineButtonPressed:(UIBarButtonItem *)sender {
     
+}
+- (IBAction)showBackupPressed:(UIBarButtonItem *)sender {
+    if (self.showingBackups) {
+        self.showingBackups = NO;
+        self.showBackupButton.title = @"Show Backups";
+        
+    }
+    else
+    {
+        self.showingBackups = YES;
+        self.showBackupButton.title = @"Hide Backups";
+        
+    }
+    self.fetchedResultsController = nil;
+    [self.tableView reloadData];
 }
 @end

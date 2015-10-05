@@ -79,6 +79,9 @@
 		1F49C9BD1B8F120F007FB39C /* TutMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F49C9BC1B8F120F007FB39C /* TutMainViewController.m */; };
 		1F54BD711B48E3A70046BA87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F3D1B0FB765000FE30A /* Main.storyboard */; };
 		1F54BD721B48E41D0046BA87 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F421B0FB765000FE30A /* LaunchScreen.xib */; };
+		1FAF93A71BC312BA00B1C725 /* BackupCompetitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF93A61BC312BA00B1C725 /* BackupCompetitor.m */; };
+		1FAF93AA1BC312BB00B1C725 /* BackupCEventScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF93A91BC312BB00B1C725 /* BackupCEventScore.m */; };
+		1FAF93AD1BC312BB00B1C725 /* BackupEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF93AC1BC312BB00B1C725 /* BackupEvent.m */; };
 		1FC88E801B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */; };
 		1FC88E861B3C9A2D00BD0A23 /* CEventResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E851B3C9A2D00BD0A23 /* CEventResultTableViewCell.m */; };
 		1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */; };
@@ -223,6 +226,13 @@
 		1F49C9B91B8F1076007FB39C /* TutContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutContentViewController.m; sourceTree = "<group>"; };
 		1F49C9BB1B8F120F007FB39C /* TutMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutMainViewController.h; sourceTree = "<group>"; };
 		1F49C9BC1B8F120F007FB39C /* TutMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutMainViewController.m; sourceTree = "<group>"; };
+		1FAF939B1BB741D900B1C725 /* Athletics_Meet_Manager 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Athletics_Meet_Manager 3.xcdatamodel"; sourceTree = "<group>"; };
+		1FAF93A51BC312BA00B1C725 /* BackupCompetitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupCompetitor.h; sourceTree = "<group>"; };
+		1FAF93A61BC312BA00B1C725 /* BackupCompetitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupCompetitor.m; sourceTree = "<group>"; };
+		1FAF93A81BC312BB00B1C725 /* BackupCEventScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupCEventScore.h; sourceTree = "<group>"; };
+		1FAF93A91BC312BB00B1C725 /* BackupCEventScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupCEventScore.m; sourceTree = "<group>"; };
+		1FAF93AB1BC312BB00B1C725 /* BackupEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupEvent.h; sourceTree = "<group>"; };
+		1FAF93AC1BC312BB00B1C725 /* BackupEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupEvent.m; sourceTree = "<group>"; };
 		1FC88E7E1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighJumpScoreEnterViewController.h; sourceTree = "<group>"; };
 		1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighJumpScoreEnterViewController.m; sourceTree = "<group>"; };
 		1FC88E841B3C9A2D00BD0A23 /* CEventResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEventResultTableViewCell.h; sourceTree = "<group>"; };
@@ -369,56 +379,7 @@
 		1F095F211B0FB765000FE30A = {
 			isa = PBXGroup;
 			children = (
-				1F005AC31B9526FC003C4392 /* 0.png */,
-				1F005AC51B952AB3003C4392 /* 1.png */,
-				1F005A621B9523B0003C4392 /* 2.png */,
-				1F005A631B9523B0003C4392 /* 3.png */,
-				1F005A641B9523B0003C4392 /* 4.png */,
-				1F005A651B9523B0003C4392 /* 5.png */,
-				1F005A661B9523B0003C4392 /* 6.png */,
-				1F005A671B9523B0003C4392 /* 7.png */,
-				1F005A681B9523B0003C4392 /* 8.png */,
-				1F005A691B9523B0003C4392 /* 9.png */,
-				1F005A6A1B9523B0003C4392 /* 10.png */,
-				1F005A6B1B9523B0003C4392 /* 11.png */,
-				1F005A6C1B9523B0003C4392 /* 12.png */,
-				1F005A6D1B9523B0003C4392 /* 13.png */,
-				1F005A6E1B9523B0003C4392 /* 14.png */,
-				1F005A6F1B9523B0003C4392 /* 15.png */,
-				1F005A701B9523B0003C4392 /* 16.png */,
-				1F005A711B9523B0003C4392 /* 17.png */,
-				1F005A721B9523B0003C4392 /* 18.png */,
-				1F005A731B9523B0003C4392 /* 19.png */,
-				1F005A741B9523B0003C4392 /* 20.png */,
-				1F005A751B9523B0003C4392 /* 21.png */,
-				1F005A761B9523B0003C4392 /* 22.png */,
-				1F005A771B9523B0003C4392 /* 23.png */,
-				1F005A781B9523B0003C4392 /* 24.png */,
-				1F005A791B9523B0003C4392 /* 25.png */,
-				1F005A7A1B9523B0003C4392 /* 26.png */,
-				1F005A7B1B9523B0003C4392 /* 27.png */,
-				1F005A7C1B9523B0003C4392 /* 28.png */,
-				1F005A7D1B9523B0003C4392 /* 29.png */,
-				1F005A7E1B9523B0003C4392 /* 30.png */,
-				1F005A7F1B9523B0003C4392 /* 31.png */,
-				1F005A801B9523B0003C4392 /* 32.png */,
-				1F005A811B9523B0003C4392 /* 33.png */,
-				1F005A821B9523B0003C4392 /* 34.png */,
-				1F005A831B9523B0003C4392 /* 35.png */,
-				1F005A841B9523B0003C4392 /* 36.png */,
-				1F005A851B9523B0003C4392 /* 37.png */,
-				1F005A861B9523B0003C4392 /* 38.png */,
-				1F005A881B9523B0003C4392 /* 39.png */,
-				1F005AC71B952AC0003C4392 /* 40.png */,
-				1F005A891B9523B0003C4392 /* 41.png */,
-				1F005A8A1B9523B0003C4392 /* 42.png */,
-				1F005A8B1B9523B0003C4392 /* 43.png */,
-				1F005A8C1B9523B0003C4392 /* 44.png */,
-				1F005A8D1B9523B0003C4392 /* 45.png */,
-				1F005A8E1B9523B0003C4392 /* 46.png */,
-				1F005A8F1B9523B0003C4392 /* 47.png */,
-				1F005A901B9523B0003C4392 /* 48.png */,
-				1F005A911B9523B0003C4392 /* 49.png */,
+				1FAF939A1BB737D500B1C725 /* Tut Images */,
 				1FE6D9AD1B62686F00F921A6 /* CloudKit.framework */,
 				1FDEC0DA1B48D35400B1CB21 /* Lanes.jpg */,
 				1FD6B63A1B170DC700F05968 /* TempCode */,
@@ -498,6 +459,63 @@
 			name = EnterScore;
 			sourceTree = "<group>";
 		};
+		1FAF939A1BB737D500B1C725 /* Tut Images */ = {
+			isa = PBXGroup;
+			children = (
+				1F005AC31B9526FC003C4392 /* 0.png */,
+				1F005AC51B952AB3003C4392 /* 1.png */,
+				1F005A621B9523B0003C4392 /* 2.png */,
+				1F005A631B9523B0003C4392 /* 3.png */,
+				1F005A641B9523B0003C4392 /* 4.png */,
+				1F005A651B9523B0003C4392 /* 5.png */,
+				1F005A661B9523B0003C4392 /* 6.png */,
+				1F005A671B9523B0003C4392 /* 7.png */,
+				1F005A681B9523B0003C4392 /* 8.png */,
+				1F005A691B9523B0003C4392 /* 9.png */,
+				1F005A6A1B9523B0003C4392 /* 10.png */,
+				1F005A6B1B9523B0003C4392 /* 11.png */,
+				1F005A6C1B9523B0003C4392 /* 12.png */,
+				1F005A6D1B9523B0003C4392 /* 13.png */,
+				1F005A6E1B9523B0003C4392 /* 14.png */,
+				1F005A6F1B9523B0003C4392 /* 15.png */,
+				1F005A701B9523B0003C4392 /* 16.png */,
+				1F005A711B9523B0003C4392 /* 17.png */,
+				1F005A721B9523B0003C4392 /* 18.png */,
+				1F005A731B9523B0003C4392 /* 19.png */,
+				1F005A741B9523B0003C4392 /* 20.png */,
+				1F005A751B9523B0003C4392 /* 21.png */,
+				1F005A761B9523B0003C4392 /* 22.png */,
+				1F005A771B9523B0003C4392 /* 23.png */,
+				1F005A781B9523B0003C4392 /* 24.png */,
+				1F005A791B9523B0003C4392 /* 25.png */,
+				1F005A7A1B9523B0003C4392 /* 26.png */,
+				1F005A7B1B9523B0003C4392 /* 27.png */,
+				1F005A7C1B9523B0003C4392 /* 28.png */,
+				1F005A7D1B9523B0003C4392 /* 29.png */,
+				1F005A7E1B9523B0003C4392 /* 30.png */,
+				1F005A7F1B9523B0003C4392 /* 31.png */,
+				1F005A801B9523B0003C4392 /* 32.png */,
+				1F005A811B9523B0003C4392 /* 33.png */,
+				1F005A821B9523B0003C4392 /* 34.png */,
+				1F005A831B9523B0003C4392 /* 35.png */,
+				1F005A841B9523B0003C4392 /* 36.png */,
+				1F005A851B9523B0003C4392 /* 37.png */,
+				1F005A861B9523B0003C4392 /* 38.png */,
+				1F005A881B9523B0003C4392 /* 39.png */,
+				1F005AC71B952AC0003C4392 /* 40.png */,
+				1F005A891B9523B0003C4392 /* 41.png */,
+				1F005A8A1B9523B0003C4392 /* 42.png */,
+				1F005A8B1B9523B0003C4392 /* 43.png */,
+				1F005A8C1B9523B0003C4392 /* 44.png */,
+				1F005A8D1B9523B0003C4392 /* 45.png */,
+				1F005A8E1B9523B0003C4392 /* 46.png */,
+				1F005A8F1B9523B0003C4392 /* 47.png */,
+				1F005A901B9523B0003C4392 /* 48.png */,
+				1F005A911B9523B0003C4392 /* 49.png */,
+			);
+			name = "Tut Images";
+			sourceTree = "<group>";
+		};
 		1FD6B6571B1736B400F05968 /* MeetAdd */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,6 +528,12 @@
 		1FD6B6581B1736D900F05968 /* DataObjects */ = {
 			isa = PBXGroup;
 			children = (
+				1FAF93AB1BC312BB00B1C725 /* BackupEvent.h */,
+				1FAF93AC1BC312BB00B1C725 /* BackupEvent.m */,
+				1FAF93A81BC312BB00B1C725 /* BackupCEventScore.h */,
+				1FAF93A91BC312BB00B1C725 /* BackupCEventScore.m */,
+				1FAF93A51BC312BA00B1C725 /* BackupCompetitor.h */,
+				1FAF93A61BC312BA00B1C725 /* BackupCompetitor.m */,
 				1F1A3F101B79425300F8D950 /* Competitor.h */,
 				1F1A3F111B79425300F8D950 /* Competitor.m */,
 				1F1A3F0D1B79425300F8D950 /* Division.h */,
@@ -902,6 +926,7 @@
 				1FD6B6701B1884E200F05968 /* TeamAddViewController.m in Sources */,
 				1FD6B6471B17224300F05968 /* MeetMenuViewCell.m in Sources */,
 				1FD6B68D1B1E559C00F05968 /* EventForCAddViewController.m in Sources */,
+				1FAF93AA1BC312BB00B1C725 /* BackupCEventScore.m in Sources */,
 				1F095F331B0FB765000FE30A /* AppDelegate.m in Sources */,
 				1FD6B6761B18852E00F05968 /* TeamTableViewCell.m in Sources */,
 				1FD6B6941B1F365900F05968 /* EventResultTableViewCell.m in Sources */,
@@ -929,10 +954,12 @@
 				1FD6B6561B1736AA00F05968 /* FinalResultsViewController.m in Sources */,
 				1F1A3F031B79425000F8D950 /* Team.m in Sources */,
 				1FD6B66D1B18847E00F05968 /* GEventAddViewController.m in Sources */,
+				1FAF93A71BC312BA00B1C725 /* BackupCompetitor.m in Sources */,
 				1F0633AB1B40937100110D26 /* TeamDivResultTableViewCell.m in Sources */,
 				1F0633B11B409B9600110D26 /* TeamEventResultsViewController.m in Sources */,
 				1F1A3F0C1B79425300F8D950 /* GEvent.m in Sources */,
 				1FD6B6531B17368300F05968 /* EnterResultsViewController.m in Sources */,
+				1FAF93AD1BC312BB00B1C725 /* BackupEvent.m in Sources */,
 				1FD6B67B1B1E44DE00F05968 /* SetupCompetitorsViewController.m in Sources */,
 				1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */,
 			);
@@ -1158,10 +1185,11 @@
 		1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				1FAF939B1BB741D900B1C725 /* Athletics_Meet_Manager 3.xcdatamodel */,
 				1F1A3E9C1B6958BD00F8D950 /* Athletics_Meet_Manager 2.xcdatamodel */,
 				1FD021FF1B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodel */,
 			);
-			currentVersion = 1F1A3E9C1B6958BD00F8D950 /* Athletics_Meet_Manager 2.xcdatamodel */;
+			currentVersion = 1FAF939B1BB741D900B1C725 /* Athletics_Meet_Manager 3.xcdatamodel */;
 			name = Athletics_Meet_Manager.xcdatamodeld;
 			path = "../../../../programming/ios/Athletics Meet Manager/Athletics Meet Manager/Athletics_Meet_Manager.xcdatamodeld";
 			sourceTree = "<group>";

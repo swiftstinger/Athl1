@@ -25,6 +25,8 @@
 - (IBAction)segmentedControlValueChanged:(id)sender;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *updateOnlineButton;
 - (IBAction)updateOnlineButtonPressed:(UIBarButtonItem *)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *showBackupButton;
+- (IBAction)showBackupPressed:(UIBarButtonItem *)sender;
 
 @property (weak, nonatomic) NSIndexPath *lastpathselected;
 @end

@@ -353,8 +353,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
  
 
     if ([[segue identifier] isEqualToString:@"showTeam"]) {
-      //  NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-      NSIndexPath *indexPath = self.indexPathForLongPressCell;
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+      //NSIndexPath *indexPath = self.indexPathForLongPressCell;
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
        

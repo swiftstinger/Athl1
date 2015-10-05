@@ -39,6 +39,7 @@
         _detailItem = newDetailItem;
         _teamObject = _detailItem;
         // Update the view.
+        NSLog(@"teamObjectname: %@", _teamObject.teamName);
         [self configureView];
         
        
