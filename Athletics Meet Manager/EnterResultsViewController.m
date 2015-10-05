@@ -137,16 +137,20 @@
   
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
+   
+     NSEntityDescription *entity;
     
 if (self.showingBackups) {
   NSLog(@"showing backups in fetchedResultsController");
+  entity = [NSEntityDescription entityForName:@"BackupEvent" inManagedObjectContext:self.managedObjectContext];
 }
 else
 {
     NSLog(@"not showing backups in fetchedResultsController");
+    entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
 
  }
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
     
     [fetchRequest setEntity:entity];
     
@@ -173,7 +177,20 @@ else
     
     
    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
-   NSArray *sortDescriptors = @[sortDescriptor1,sortDescriptor2];
+ NSArray *sortDescriptors;
+    
+if (self.showingBackups) {
+  sortKey = @"backupDate";
+  NSSortDescriptor *sortDescriptor3 = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:NO];
+  sortDescriptors = @[sortDescriptor1,sortDescriptor2,sortDescriptor3];
+}
+else
+{
+    //NSLog(@"not showing backups in fetchedResultsController");
+    sortDescriptors = @[sortDescriptor1,sortDescriptor2];
+
+ }
+    
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
