@@ -8,11 +8,15 @@
 
 #import "EnterResultsViewController.h"
 #import "EventScoreSheetViewController.h"
+#import "EventScoreCopySheetViewController.h"
 #import "GEvent.h"
 #import "Division.h"
 #import "CEventScore.h"
+#import "BackupCEventScore.h"
 #import "Event.h"
+#import "BackupEvent.h"
 #import "Competitor.h"
+#import "BackupCompetitor.h"
 #import "Team.h"
 #import "Meet.h"
 

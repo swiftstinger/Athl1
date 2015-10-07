@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "EventScoreSheetViewController.h"
+#import "EventScoreCopySheetViewController.h"
 #import "Meet.h"
 #import "EventResultTableViewCell.h"
 #import <CloudKit/CloudKit.h>

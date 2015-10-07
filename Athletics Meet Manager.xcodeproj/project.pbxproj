@@ -84,6 +84,8 @@
 		1FAF93B01BC32DDB00B1C725 /* BackupEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF93AF1BC32DDB00B1C725 /* BackupEvent.m */; };
 		1FC88E801B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */; };
 		1FC88E861B3C9A2D00BD0A23 /* CEventResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E851B3C9A2D00BD0A23 /* CEventResultTableViewCell.m */; };
+		1FC94A0E1BC5A7800058CE90 /* EventScoreCopySheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94A0D1BC5A7800058CE90 /* EventScoreCopySheetViewController.m */; };
+		1FC94A111BC5AAC40058CE90 /* EventScoreCopyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94A101BC5AAC40058CE90 /* EventScoreCopyTableViewCell.m */; };
 		1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */; };
 		1FD022001B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */; };
 		1FD6B6391B15DDD200F05968 /* MeetAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B6381B15DDD200F05968 /* MeetAddViewController.m */; };
@@ -237,6 +239,10 @@
 		1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighJumpScoreEnterViewController.m; sourceTree = "<group>"; };
 		1FC88E841B3C9A2D00BD0A23 /* CEventResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEventResultTableViewCell.h; sourceTree = "<group>"; };
 		1FC88E851B3C9A2D00BD0A23 /* CEventResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEventResultTableViewCell.m; sourceTree = "<group>"; };
+		1FC94A0C1BC5A7800058CE90 /* EventScoreCopySheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventScoreCopySheetViewController.h; sourceTree = "<group>"; };
+		1FC94A0D1BC5A7800058CE90 /* EventScoreCopySheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventScoreCopySheetViewController.m; sourceTree = "<group>"; };
+		1FC94A0F1BC5AAC40058CE90 /* EventScoreCopyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventScoreCopyTableViewCell.h; sourceTree = "<group>"; };
+		1FC94A101BC5AAC40058CE90 /* EventScoreCopyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventScoreCopyTableViewCell.m; sourceTree = "<group>"; };
 		1FD021F81B13BA6900F40102 /* MeetTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetTableViewCell.h; sourceTree = "<group>"; };
 		1FD021F91B13BA6900F40102 /* MeetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetTableViewCell.m; sourceTree = "<group>"; };
 		1FD021FF1B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Athletics_Meet_Manager.xcdatamodel; sourceTree = "<group>"; };
@@ -728,6 +734,10 @@
 				1FD6B6971B1F373100F05968 /* EventScoreSheetViewController.m */,
 				1FD6B69D1B1F37E300F05968 /* EventScoreTableViewCell.h */,
 				1FD6B69E1B1F37E300F05968 /* EventScoreTableViewCell.m */,
+				1FC94A0C1BC5A7800058CE90 /* EventScoreCopySheetViewController.h */,
+				1FC94A0D1BC5A7800058CE90 /* EventScoreCopySheetViewController.m */,
+				1FC94A0F1BC5AAC40058CE90 /* EventScoreCopyTableViewCell.h */,
+				1FC94A101BC5AAC40058CE90 /* EventScoreCopyTableViewCell.m */,
 			);
 			name = EventScoreSheet;
 			sourceTree = "<group>";
@@ -916,6 +926,7 @@
 				1FC88E801B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m in Sources */,
 				1FD6B69C1B1F37A200F05968 /* EventScoreAddViewController.m in Sources */,
 				1FD6B6911B1E5C3600F05968 /* CEventResultViewController.m in Sources */,
+				1FC94A0E1BC5A7800058CE90 /* EventScoreCopySheetViewController.m in Sources */,
 				1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */,
 				84B5B8431B15C81D00529756 /* MasterViewController.m in Sources */,
 				1FD6B6501B17366900F05968 /* SetupTeamsViewController.m in Sources */,
@@ -933,6 +944,7 @@
 				1FD6B67E1B1E453F00F05968 /* CompetitorTableViewCell.m in Sources */,
 				1FD6B64D1B17365300F05968 /* SetupGEventsViewController.m in Sources */,
 				1FD6B6731B18851500F05968 /* GEventTableViewCell.m in Sources */,
+				1FC94A111BC5AAC40058CE90 /* EventScoreCopyTableViewCell.m in Sources */,
 				1FD6B6681B1747FA00F05968 /* DivTableViewCell.m in Sources */,
 				1FC88E861B3C9A2D00BD0A23 /* CEventResultTableViewCell.m in Sources */,
 				1F1A3F091B79425200F8D950 /* CEventScore.m in Sources */,
