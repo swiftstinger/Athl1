@@ -3233,7 +3233,7 @@
                             </variation>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="eventScoreCopyCell" id="I6Z-5Q-nJs" customClass="EventScoreTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventScoreCopyCell" id="I6Z-5Q-nJs" customClass="EventScoreCopyTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I6Z-5Q-nJs" id="MJ8-lQ-bYT">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -3311,6 +3311,12 @@
                                             <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
                                                 <rect key="frame" x="472" y="9" width="48" height="26"/>
                                             </variation>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="backup" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BdF-U1-sHo">
+                                            <rect key="frame" x="413" y="8" width="58" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
@@ -3404,9 +3410,9 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="pjO-ql-D1X"/>
-        <segue reference="oBo-Wm-xkL"/>
         <segue reference="kWb-zD-Ztb"/>
         <segue reference="oMD-Bf-krW"/>
+        <segue reference="oBo-Wm-xkL"/>
         <segue reference="HxQ-va-xu1"/>
         <segue reference="hnI-I1-Flr"/>
     </inferredMetricsTieBreakers>

@@ -131,6 +131,8 @@
     }
 }
 
+
+
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -263,6 +265,29 @@ else
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Find the selected cell in the usual way
+    EventResultTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+
+
+    // Do my conditional logic - this was the whole point of changing the segue
+    if (self.showingBackups) {
+        
+        [self performSegueWithIdentifier:@"showEventScoreCopySheet" sender:cell];
+        
+    }
+    else
+    {
+    
+        [self performSegueWithIdentifier:@"showEventScoreSheet" sender:cell];
+        
+    
+    }
+
+}
+
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
@@ -271,44 +296,66 @@ else
 - (void)configureCell:(EventResultTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    Event *event = (Event*)object;
-  
-     GEvent* gevent  = (GEvent*)event.gEvent;
-   NSString *geventname = gevent.gEventName;
-   Division* division  = (Division*)event.division;
-   NSString *divisionname = division.divName;
-   
- //  NSString *eventname = [NSString stringWithFormat:@"%@ - %@", geventname, divisionname];
-
-   
-  cell.eventNameLabel.text = geventname;
-  cell.divisionNameLabel.text = divisionname;
-    if ([event.eventDone boolValue]){
-    
-    
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-      if (![self.meetObject.isOwner boolValue]) {
+    if (self.showingBackups) {
+            BackupEvent *event = (BackupEvent*)object;
+          
+             GEvent* gevent  = (GEvent*)event.gEvent;
+           NSString *geventname = [NSString stringWithFormat:@"%@ BACKUP",gevent.gEventName] ;
+           Division* division  = (Division*)event.division;
+           NSString *divisionname = division.divName;
+           
+         //  NSString *eventname = [NSString stringWithFormat:@"%@ - %@", geventname, divisionname];
         
-            if ([event.edited boolValue]) {
-              
-              cell.accessoryType = UITableViewCellAccessoryDetailButton;
-                if ([event.editDone boolValue]) {
-                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                }
-            }
-        }
-
-  
+           
+          cell.eventNameLabel.text = geventname;
+          cell.divisionNameLabel.text = divisionname;
+        
+            cell.accessoryType = UITableViewCellAccessoryDetailButton;
+        
+        
+            
     }
     else
     {
     
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
+            Event *event = (Event*)object;
+          
+             GEvent* gevent  = (GEvent*)event.gEvent;
+           NSString *geventname = gevent.gEventName;
+           Division* division  = (Division*)event.division;
+           NSString *divisionname = division.divName;
+           
+         //  NSString *eventname = [NSString stringWithFormat:@"%@ - %@", geventname, divisionname];
+
+           
+          cell.eventNameLabel.text = geventname;
+          cell.divisionNameLabel.text = divisionname;
+            if ([event.eventDone boolValue]){
+            
+            
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+              if (![self.meetObject.isOwner boolValue]) {
+                
+                    if ([event.edited boolValue]) {
+                      
+                      cell.accessoryType = UITableViewCellAccessoryDetailButton;
+                        if ([event.editDone boolValue]) {
+                            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                        }
+                    }
+                }
+
+          
+            }
+            else
+            {
+            
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                
+            }
+            
+                NSLog(@"event %@ %@ edited value: %hhd editDone value: %hhd eventdone value: %hhd", event.gEvent.gEventName, event.division.divName, [event.edited boolValue], [event.editDone boolValue], [event.eventDone boolValue]);
     }
-    
-        NSLog(@"event %@ %@ edited value: %hhd editDone value: %hhd eventdone value: %hhd", event.gEvent.gEventName, event.division.divName, [event.edited boolValue], [event.editDone boolValue], [event.eventDone boolValue]);
-    
 }
 #pragma mark - Segues
 
@@ -316,6 +363,16 @@ else
  
 
     if ([[segue identifier] isEqualToString:@"showEventScoreSheet"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        self.lastpathselected = indexPath;
+        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        [[segue destinationViewController] setDetailItem:object];
+        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+        
+      
+    }
+    
+    if ([[segue identifier] isEqualToString:@"showEventScoreCopySheet"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         self.lastpathselected = indexPath;
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
