@@ -86,6 +86,15 @@
     self.updateOnlineButton.enabled = NO;
     self.showingBackups = NO;
     
+    if ([self.meetObject.onlineMeet boolValue]) {
+        
+    }
+    else
+    {
+        self.showBackupButton.enabled = NO;
+        NSLog(@"is not online and not showing button?");
+    }
+    
 }
 
 
@@ -188,7 +197,7 @@ else
 if (self.showingBackups) {
   sortKey = @"backupDate";
   NSSortDescriptor *sortDescriptor3 = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:NO];
-  sortDescriptors = @[sortDescriptor1,sortDescriptor2,sortDescriptor3];
+  sortDescriptors = @[sortDescriptor3, sortDescriptor1,sortDescriptor2];
 }
 else
 {
@@ -310,10 +319,10 @@ else
           cell.eventNameLabel.text = geventname;
           cell.divisionNameLabel.text = divisionname;
         
-            cell.accessoryType = UITableViewCellAccessoryDetailButton;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         
-            
+        
     }
     else
     {

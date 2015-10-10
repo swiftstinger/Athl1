@@ -16,10 +16,10 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) id detailItem;
-@property (strong, nonatomic) Event* eventObject;
+@property (strong, nonatomic) BackupEvent* eventObject;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *resetButton;
-- (IBAction)resetButtonPressed:(UIBarButtonItem *)sender;
+
+
 
 @end

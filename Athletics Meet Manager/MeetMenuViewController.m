@@ -13,8 +13,11 @@
 #import "Team.h"
 #import "GEvent.h"
 #import "CEventScore.h"
+#import "BackupCEventScore.h"
 #import "Event.h"
+#import "BackupEvent.h"
 #import "Competitor.h"
+#import "BackupCompetitor.h"
 
 
 @interface MeetMenuViewController ()
@@ -3722,6 +3725,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                         
                          NSLog(@" new %@ created",objectType);
                          eventObject.updateDateAndTime = oldDate;
+                         eventObject.eventDone = [NSNumber numberWithBool:NO];
                     }
                     
                     if (eventObject.updateDateAndTime != nil)
@@ -3756,6 +3760,11 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                     
                     if (updating)
                         {
+                        
+                        if (eventObject.eventDone) {
+                            [self copyEventToBackUpAndDeleteWithOnlineId:eventObject.onlineID];
+                        }
+                        
                         eventObject.editDone = [NSNumber numberWithBool:YES];
                             eventObject.edited = [NSNumber numberWithBool:NO];
                         eventObject.eventDone = event[@"eventDone"];
@@ -4778,11 +4787,94 @@ NSLog(@"updating owner meet");
     
     
     NSLog(@"copyEventToBackupAndDeleteWithOnlineId");
-                Meet* meetObject = self.meetObject;
+                //Meet* meetObject = self.meetObject;
             NSManagedObjectContext* context = self.managedObjectContext;
 
             NSString* objectType = @"Event";
             Event* thisEventObject = [self fetchObjectType:objectType WithOnlineID:onlineid IsOwnerNumber:[NSNumber numberWithBool:YES]];
+    
+    
+    
+    ////////////////
+    //// Create backups
+    ////////////////
+    if ([thisEventObject.eventDone boolValue]) {
+    
+    
+    
+        BackupEvent *event = [NSEntityDescription insertNewObjectForEntityForName:@"BackupEvent" inManagedObjectContext:context];
+                event.meet = self.meetObject;
+                event.gEvent = thisEventObject.gEvent;
+                event.division = thisEventObject.division;
+                event.eventEdited = thisEventObject.eventEdited;
+                event.eventDone = thisEventObject.eventDone;
+    
+    
+ 
+                event.editDone  = thisEventObject.editDone;
+                event.edited = thisEventObject.edited;
+
+
+                event.eventID = thisEventObject.eventID;
+                event.onlineID = thisEventObject.onlineID;
+                event.startTime = thisEventObject.startTime;
+                event.updateByUser = thisEventObject.updateByUser;
+                event.updateDateAndTime = thisEventObject.updateDateAndTime;
+                event.backupDate = [NSDate date];
+
+                for (CEventScore* oldcscore in thisEventObject.cEventScores) {
+
+                    BackupCEventScore *cscore = [NSEntityDescription insertNewObjectForEntityForName:@"BackupCEventScore" inManagedObjectContext:context];
+                    
+                    
+                        cscore.cEventScoreID = oldcscore.cEventScoreID;
+                        cscore.editDone  = oldcscore.editDone;
+                        cscore.edited = oldcscore.edited;
+                        cscore.highJumpPlacingManual = oldcscore.highJumpPlacingManual;
+                        cscore.onlineID = oldcscore.onlineID;
+                        cscore.personalBest = oldcscore.personalBest;
+                        cscore.placing = oldcscore.placing;
+                        cscore.result = oldcscore.result;
+                        cscore.resultEntered = oldcscore.resultEntered;
+                        cscore.score = oldcscore.score;
+                        cscore.updateByUser = oldcscore.updateByUser;
+                        cscore.updateDateAndTime = oldcscore.updateDateAndTime;
+
+                        cscore.backupEvent = event;
+                    
+                        NSLog(@"event gevent name %@ ", cscore.backupEvent.gEvent.gEventName);
+                        cscore.meet = oldcscore.meet;
+                        cscore.team = oldcscore.team;
+
+                    
+                        BackupCompetitor *comp = [NSEntityDescription insertNewObjectForEntityForName:@"BackupCompetitor" inManagedObjectContext:context];
+                    
+                        Competitor *oldcomp = oldcscore.competitor;
+                    
+                    
+                        comp.compID = oldcomp.compID;
+                        comp.compName = oldcomp.compName;
+                        comp.editDone = oldcomp.editDone;
+                        comp.edited = oldcomp.edited;
+                        comp.onlineID = oldcomp.onlineID;
+                        comp.teamName = oldcomp.teamName;
+                        comp.updateByUser = oldcomp.updateByUser;
+                        comp.updateDateAndTime = oldcomp.updateDateAndTime ;
+
+                        comp.meet = oldcomp.meet;
+                        comp.team = oldcomp.team;
+                        comp.backupEvent = event;
+                    
+                    
+    
+                        cscore.backupCompetitor = comp;
+    
+    
+                }
+    }
+    if ([thisEventObject.meet.isOwner boolValue]) {
+    
+    NSLog(@"backed up and is owner so now deleting");
     
     
             for (CEventScore* cscore in thisEventObject.cEventScores) {
@@ -4790,6 +4882,15 @@ NSLog(@"updating owner meet");
                 [context deleteObject:cscore];
             
             }
+    }
+    else
+    {
+        
+        NSLog(@"backed up and is not owner so not deleting");
+    
+    }
+    
+    [self saveContext];
 
 
 }
@@ -4818,7 +4919,7 @@ NSLog(@"updating owner meet");
                CKModifyRecordsOperation *modifyRecordsOperation = [[CKModifyRecordsOperation alloc] initWithRecordsToSave:localChanges recordIDsToDelete:localDeletions];
                modifyRecordsOperation.savePolicy = CKRecordSaveAllKeys;
 
-               NSLog(@"CLOUDKIT Changes Uploading: %d", localChanges.count);
+               NSLog(@"CLOUDKIT Changes Uploading: %lu", (unsigned long)localChanges.count);
 
                // Add the completion block
                modifyRecordsOperation.modifyRecordsCompletionBlock = ^(NSArray *savedRecords, NSArray *deletedRecordIDs, NSError *error) {

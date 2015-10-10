@@ -1223,6 +1223,12 @@
                                                 <rect key="frame" x="384" y="11" width="375" height="21"/>
                                             </variation>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="this date is here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h7v-A7-DUG">
+                                            <rect key="frame" x="171" y="22" width="261" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.99855981691919193" green="0.11102935061430162" blue="0.099095071482275976" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="WxA-N9-cDH" firstAttribute="leading" secondItem="OoG-iy-DAs" secondAttribute="leading" constant="8" id="ABr-E0-Tch"/>
@@ -1238,7 +1244,6 @@
                                 <connections>
                                     <outlet property="divisionNameLabel" destination="WxA-N9-cDH" id="N64-48-bpY"/>
                                     <outlet property="eventNameLabel" destination="c4F-Vp-2IR" id="NKX-4O-v3b"/>
-                                    <segue destination="Sm8-SY-0ms" kind="show" identifier="showEventScoreSheetOld" id="fZE-8a-4pG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1273,7 +1278,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zfd-JV-ndN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3096" y="1154"/>
+            <point key="canvasLocation" x="3094" y="1146"/>
         </scene>
         <!--Event Score Sheet-->
         <scene sceneID="HRl-kE-X4X">
@@ -1550,6 +1555,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <keyCommands/>
                     <connections>
                         <outlet property="navBar" destination="yqP-FZ-o7e" id="dQT-Yx-mei"/>
                         <outlet property="resetButton" destination="eLe-kW-kvL" id="zy7-UH-0Rv"/>
@@ -3312,12 +3318,6 @@
                                                 <rect key="frame" x="472" y="9" width="48" height="26"/>
                                             </variation>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="backup" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BdF-U1-sHo">
-                                            <rect key="frame" x="413" y="8" width="58" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="chU-iI-ngW" firstAttribute="top" secondItem="MJ8-lQ-bYT" secondAttribute="top" constant="20" id="0wZ-e4-mk8"/>
@@ -3381,24 +3381,16 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem systemItem="done" id="FGb-HK-IUy">
+                        <barButtonItem title="Restore This Backup" id="FGb-HK-IUy">
                             <connections>
                                 <segue destination="C0t-yx-3wJ" kind="unwind" identifier="unwindToEnterResultsSegue" unwindAction="unwindToEnterResultsDone:" id="XwJ-NV-fmf"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="6oc-Il-KiF"/>
-                        <barButtonItem enabled="NO" title="Reset" id="KIB-jE-p9M">
-                            <connections>
-                                <action selector="resetButtonPressed:" destination="299-s9-Cpt" id="jzd-aP-PXB"/>
-                            </connections>
-                        </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="EventNameUpdate" id="HEq-tM-Jgw">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="TkF-gG-0We"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="EventNameUpdate" id="HEq-tM-Jgw"/>
                     <connections>
                         <outlet property="navBar" destination="HEq-tM-Jgw" id="bRi-ew-c64"/>
-                        <outlet property="resetButton" destination="KIB-jE-p9M" id="gbV-Vq-WGj"/>
                         <segue destination="C0t-yx-3wJ" kind="unwind" identifier="unwindToEnterResultResetSegue" unwindAction="unwindToEnterResultsReset:" id="jiK-Oq-pvc"/>
                     </connections>
                 </tableViewController>
@@ -3414,6 +3406,5 @@
         <segue reference="oMD-Bf-krW"/>
         <segue reference="oBo-Wm-xkL"/>
         <segue reference="HxQ-va-xu1"/>
-        <segue reference="hnI-I1-Flr"/>
     </inferredMetricsTieBreakers>
 </document>
