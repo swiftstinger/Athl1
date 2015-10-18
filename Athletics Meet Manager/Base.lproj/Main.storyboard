@@ -1223,18 +1223,20 @@
                                                 <rect key="frame" x="384" y="11" width="375" height="21"/>
                                             </variation>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="this date is here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h7v-A7-DUG">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Backup made: Oct 10, 2015 22:33 Number of Scores 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h7v-A7-DUG">
                                             <rect key="frame" x="171" y="22" width="261" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                             <color key="textColor" red="0.99855981691919193" green="0.11102935061430162" blue="0.099095071482275976" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="centerX" secondItem="h7v-A7-DUG" secondAttribute="centerX" id="3WI-eZ-7aj"/>
                                         <constraint firstItem="WxA-N9-cDH" firstAttribute="leading" secondItem="OoG-iy-DAs" secondAttribute="leading" constant="8" id="ABr-E0-Tch"/>
                                         <constraint firstItem="c4F-Vp-2IR" firstAttribute="top" secondItem="OoG-iy-DAs" secondAttribute="top" constant="11" id="CdV-6b-fnR"/>
                                         <constraint firstItem="c4F-Vp-2IR" firstAttribute="leading" secondItem="WxA-N9-cDH" secondAttribute="trailing" constant="-1" id="HjA-Ko-ysS"/>
                                         <constraint firstItem="WxA-N9-cDH" firstAttribute="top" secondItem="OoG-iy-DAs" secondAttribute="top" constant="11" id="Xcc-VF-v7d"/>
+                                        <constraint firstAttribute="bottom" secondItem="h7v-A7-DUG" secondAttribute="bottom" id="Y5r-Tn-U8V"/>
                                         <constraint firstAttribute="trailing" secondItem="c4F-Vp-2IR" secondAttribute="trailing" constant="8" id="emj-jP-C27"/>
                                         <constraint firstItem="WxA-N9-cDH" firstAttribute="width" secondItem="c4F-Vp-2IR" secondAttribute="width" constant="2" id="fO3-Ie-YAc"/>
                                         <constraint firstAttribute="bottom" secondItem="WxA-N9-cDH" secondAttribute="bottom" constant="10" id="shC-iW-3a6"/>
@@ -1242,6 +1244,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="backupDateLabel" destination="h7v-A7-DUG" id="MPx-sZ-GNH"/>
                                     <outlet property="divisionNameLabel" destination="WxA-N9-cDH" id="N64-48-bpY"/>
                                     <outlet property="eventNameLabel" destination="c4F-Vp-2IR" id="NKX-4O-v3b"/>
                                 </connections>
@@ -3381,7 +3384,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem title="Restore This Backup" id="FGb-HK-IUy">
+                        <barButtonItem enabled="NO" title="Done" id="FGb-HK-IUy">
                             <connections>
                                 <segue destination="C0t-yx-3wJ" kind="unwind" identifier="unwindToEnterResultsSegue" unwindAction="unwindToEnterResultsDone:" id="XwJ-NV-fmf"/>
                             </connections>

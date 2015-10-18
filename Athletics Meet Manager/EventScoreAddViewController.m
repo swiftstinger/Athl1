@@ -173,7 +173,18 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Competitor" inManagedObjectContext: self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.eventObject.meet];
+ 
+    
+    NSArray *array = [self.eventObject.cEventScores allObjects];
+    
+  
+    
+   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(cEventScores, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
+    
+ 
+   
+    
+    
     [fetchRequest setPredicate:predicate];
     
     // Set the batch size to a suitable number.
@@ -199,6 +210,8 @@
 	    // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
 	   // abort();
 	}
+    
+    
     
     return _fetchedResultsController;
 }

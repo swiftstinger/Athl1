@@ -11,6 +11,7 @@
 #import "Division.h"
 #import "GEvent.h"
 #import "Event.h"
+#import "AppDelegate.h"
 
 
 
@@ -71,11 +72,56 @@
     
     
 }
+- (void)loadCSVArray {
+NSLog(@"here");
+
+AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+
+NSArray  *newArray = appDelegate.csvDataArray;
+appDelegate.csvDataArray = nil;
+        for (NSString* string in newArray) {
+                    NSLog(@"%@",string);
+            
+            //create objects here
+            
+            
+            
+            
+            
+        }
+    
+
+
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    //// change to if array not nil
+    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    
+     if (appDelegate.csvDataArray != nil) {
+         NSLog(@"importing csv");
+         
+         /// show button
+         
+         [self loadCSVArray];
+            
+
+     }
+     else
+     {
+        
+            // hide button
+            NSLog(@"not importing");
+
+     }
+    
+    
+    
+    
     
   //  self.navigationItem.leftBarButtonItem = self.editButtonItem;
   /**

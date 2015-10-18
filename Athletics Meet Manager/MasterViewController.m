@@ -20,11 +20,103 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
 }
+/**
+-(void)viewWillAppear:(BOOL)animated{
+   [super viewWillAppear:animated];
+   //something here
+   
+   
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+     
+     
+     
+     if (![defaults objectForKey:@"importingOnlineMeet"]) {
 
+     }
+     else
+     {
+        if ([[defaults objectForKey:@"importingOnlineMeet"] boolValue]) {
+            
+
+            
+        }
+        
+         NSNumber *importing = [NSNumber numberWithBool:FALSE];
+        [defaults setObject: importing forKey:@"importingOnlineMeet"];
+        [defaults synchronize];
+         
+     }
+    
+    
+}
+**/
+- (void) importedMeet {
+    self.segmentedControl.selectedSegmentIndex = 1;
+            NSLog(@"here");
+    
+            [self segmentedControlValueChanged:self.segmentedControl];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                
+                    UIAlertController * alert=   [UIAlertController
+                                            alertControllerWithTitle:@"Online Meet Imported"
+                                            message:@"Imported online meet successfully. \n Tap on meet labeled 'NewOnlineMeet' to download the new meet's name and details. \n\n Notice! \n\n After this the name will change"
+                                            preferredStyle:UIAlertControllerStyleAlert];
+             
+             
+                        UIAlertAction* ok = [UIAlertAction
+                                actionWithTitle:@"OK"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    
+                                    
+                                    
+                                    [alert dismissViewControllerAnimated:YES completion:nil];
+                                    
+                                     
+                                }];
+                                
+                        [alert addAction:ok];
+                        [self presentViewController:alert animated:YES completion:nil];
+                        });
+
+}
+- (void) importedCsv {
+    
+    
+dispatch_async(dispatch_get_main_queue(), ^{
+                
+    UIAlertController * alert=   [UIAlertController
+                        alertControllerWithTitle:@"CSV File Imported"
+                        message:@"Imported CSV file succesfully. \n\n Please navigate to the Meet and Section in which you would like to import the items listed in the .csv file and click Import \n\n Please remember that any text between comma's will be seen as a single entry"
+                        preferredStyle:UIAlertControllerStyleAlert];
+
+
+    UIAlertAction* ok = [UIAlertAction
+            actionWithTitle:@"OK"
+            style:UIAlertActionStyleDefault
+            handler:^(UIAlertAction * action)
+            {
+                
+                [alert dismissViewControllerAnimated:YES completion:nil];
+           
+            }];
+            
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
+});
+
+
+
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+   NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(importedMeet) name:@"importedMeet" object:nil];
+    [center addObserver:self selector:@selector(importedCsv) name:@"importedCsv" object:nil];
    
    // self.navigationItem.leftBarButtonItem = self.editButtonItem;
  /**
@@ -49,7 +141,9 @@
             NSLog(@"not first time");
            // [self performSegueWithIdentifier:@"showTut" sender:self];
         }
-            
+    
+
+    
     
    // [self updateOnlineMeets];
     
@@ -618,7 +712,7 @@ if ([sourceViewController isKindOfClass:[MeetAddViewController class]])
 - (IBAction)segmentedControlValueChanged:(UISegmentedControl *)sender {
 
 self.fetchedResultsController = nil;
-    
+    NSLog(@"here 2");
     [self.tableView reloadData];
     bool isOnlineMeet = [self.segmentedControl selectedSegmentIndex] == 0 ? FALSE : TRUE;
     
@@ -632,7 +726,7 @@ self.fetchedResultsController = nil;
     else
     {
     
-      self.addButton.enabled = YES;
+      self.addButton.enabled = NO;
         
     }
     

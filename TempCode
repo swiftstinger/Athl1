@@ -1,17 +1,84 @@
 
+1. add import and export button to div, gevents, teams, team (comp entry)
+
+2. add [self loadCSVArray]; to import button ibaction method
+
+3. hide and show import button in appdelegate array check
+
+4. add export function to export names of all items to csv and name "meetname_divisions" "meetname_teamname competitors"etc
+
+
+
+- (void)loadCSVArray {
+NSLog(@"here");
+
+AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+
+NSArray  *newArray = appDelegate.csvDataArray;
+//appDelegate.csvDataArray = nil
+        for (NSString* string in newArray) {
+                    NSLog(@"%@",string);
+            
+            //create objects here
+            
+            
+            
+            
+            
+        }
+    
+
+
+}
+
+
+AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    
+     if (appDelegate.csvDataArray != nil) {
+         NSLog(@"importing csv");
+         
+         /// show button
+         
+            [self loadCSVArray];
+            
+
+     }
+     else
+     {
+        
+            // hide button
+            NSLog(@"not importing");
+
+     }
+
+
+
+// add to all importing areas
+
+
+
+
+
+event for competitor, warn if deleting one that has score entered resultentered prompt
+
+keyboard input? validate input already does it, dont know how...
+
 Backups
 ///////
+fixed online update bug when running a host and results entry meet on the same device
 
-create backup view controller, better of new?  Jip  edit segue call
 
-Save backups done now just if done
+
+
+backups only change updatedate if updated itself    not work too many updates
+
 Set restore backups
 
 set info buttons
 
 set not load comps in event in search
 
-
+   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(cEventScores, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
 
 
 what does reset do? tutorial  set as not done and segue back to resutlsenter

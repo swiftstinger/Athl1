@@ -29,4 +29,10 @@
 @dynamic gEvent;
 @dynamic meet;
 
+- (void) awakeFromInsert
+{
+[super awakeFromInsert];
+[self setValue:[NSDate date] forKey:@"updateDateAndTime"];
+}
+
 @end

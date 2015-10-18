@@ -156,85 +156,120 @@ NSInferMappingModelAutomaticallyOption : @YES
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     if (url){
-      NSString *newStr = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-     // NSData *data = [NSData dataWithContentsOfURL:url];
-     // NSLog(@" this data %@", data);
-      
-     // NSString* newStr = [NSString stringWithUTF8String:[data bytes]];
-      
-     NSLog(@"The file contained onlineID: %@",newStr);
-        
-       
+        NSString *path = [url path];
+        NSString *extension = [path pathExtension];
+        NSLog(@"extention: %@",extension);
+        if ([extension isEqualToString:@"ammp"]) {
     
-        Meet *meet;
-    
-        meet = [NSEntityDescription insertNewObjectForEntityForName:@"Meet" inManagedObjectContext:self.managedObjectContext];
-    
-        [meet setValue: @"ONLINE Tap To Update" forKey:@"meetName"];
-    
-        [meet setValue: [NSNumber numberWithBool:YES] forKey:@"onlineMeet"];
-    
-        [meet setValue: [NSNumber numberWithBool:NO] forKey:@"isOwner"];
+              NSString *newStr = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+             // NSData *data = [NSData dataWithContentsOfURL:url];
+             // NSLog(@" this data %@", data);
+              
+             // NSString* newStr = [NSString stringWithUTF8String:[data bytes]];
+              
+             NSLog(@"The file contained onlineID: %@",newStr);
+                
+               
+            
+                Meet *meet;
+            
+                meet = [NSEntityDescription insertNewObjectForEntityForName:@"Meet" inManagedObjectContext:self.managedObjectContext];
+            
+                [meet setValue: @"NewOnlineMeet" forKey:@"meetName"];
+            
+                [meet setValue: [NSNumber numberWithBool:YES] forKey:@"onlineMeet"];
+            
+                [meet setValue: [NSNumber numberWithBool:NO] forKey:@"isOwner"];
 
-    
-        [meet setValue: newStr forKey: @"onlineID"];
+            
+                [meet setValue: newStr forKey: @"onlineID"];
 
-        NSLog(@"new meet set with onlineID onlineID: %@", meet.onlineID);
-    
-    
-    
-        [self saveContext];
-      
-      /**
-      NSDictionary *_dictionary=[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",newIndex],nil] forKeys:[NSArray arrayWithObjects:SELECTED_INDEX,nil]];
+                NSLog(@"new meet set with onlineID onlineID: %@", meet.onlineID);
+            
+            
+            
+                [self saveContext];
+              
+              
+                
+                
+                 NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+                    [center postNotification:[NSNotification notificationWithName:@"importedMeet" object:nil]];
+                      
+                        UINavigationController *navigationController = (UINavigationController  *)self.window.rootViewController;
+                    [navigationController popToRootViewControllerAnimated:YES];
+                   
+                   
+                   
 
-[[NSNotificationCenter defaultCenter] postNotificationName:SELECT_INDEX_NOTIFICATION object:nil userInfo:_dictionary];
-     
-      
-      UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    UINavigationController *rootNavController = (UINavigationController*)window.rootViewController;
-    [rootNavController popToRootViewControllerAnimated:YES];
-    
-    MasterViewController* masterViewController = (MasterViewController*)[rootNavController topViewController];
-
-    [masterViewController setOnlineMeet:newStr];
-    
-    
-    **/
-    
-    /////
-            // remove directory contents
-            ////
-     
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSError *error = nil;
-        NSString *newpath = [NSString stringWithFormat:@"%@/Inbox",  documentsPath];
-        NSArray *directoryContents = [fileManager contentsOfDirectoryAtPath:newpath error:&error];
-        if (error == nil) {
-            for (NSString *path in directoryContents)
+                   
+                   
+                   
+                    NSLog(@"hello here tooo");
+        } // is ammp
+        else
+        {
+            NSLog(@"imported, is not ammp");
+            if ([extension isEqualToString:@"csv"]) {
+                 NSLog(@"imported, is csv");
+                
+                NSString *list = [NSString stringWithContentsOfURL:url encoding:NSASCIIStringEncoding error:nil];
+                NSArray *csvItems = [list componentsSeparatedByString:@","];
+                
+                self.csvDataArray = csvItems;
+                
+                
+               // NSLog(@"csv: %@", csvItems);
+                
+                
+                NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+                    [center postNotification:[NSNotification notificationWithName:@"importedCsv" object:nil]];
+                      
+                UINavigationController *navigationController = (UINavigationController  *)self.window.rootViewController;
+                [navigationController popToRootViewControllerAnimated:YES];
+                
+            }
+            else
             {
-                NSString *fullPath = [newpath stringByAppendingPathComponent:path];
-                BOOL removeSuccess = [fileManager removeItemAtPath:fullPath error:&error];
-                if (!removeSuccess) {
-                    // Error handling
-                    NSLog(@"Could not delete file -:%@ ",[error localizedDescription]);
+                NSLog(@"imported, is not csv");
+            }
+        }
+        
+        
+        
+        
+        
+        
+       // remove directory contents
+                    ////
+             
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                NSError *error = nil;
+                NSString *newpath = [NSString stringWithFormat:@"%@/Inbox",  documentsPath];
+                NSArray *directoryContents = [fileManager contentsOfDirectoryAtPath:newpath error:&error];
+                if (error == nil) {
+                    for (NSString *path in directoryContents)
+                    {
+                        NSString *fullPath = [newpath stringByAppendingPathComponent:path];
+                        BOOL removeSuccess = [fileManager removeItemAtPath:fullPath error:&error];
+                        if (!removeSuccess) {
+                            // Error handling
+                            NSLog(@"Could not delete file -:%@ ",[error localizedDescription]);
+                        }
+                        else
+                        {
+                         NSLog(@"deleted file in url");
+                        }
+                    }
                 }
                 else
                 {
-                 NSLog(@"deleted file in url");
+                    // Error handling not url
+            
                 }
-            }
-        }
-        else
-        {
-            // Error handling not url
-    
-        }
-        
-      
-        
     }
+    
    return YES;
 }
 

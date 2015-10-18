@@ -90,7 +90,7 @@
       
         if (![self.meetObject.onlineMeet boolValue]) {
     
-    
+            self.updateOnlineButton.enabled = NO;
             self.sendPermissionButton.enabled = NO;
             self.shareOnlineButton.title = @"Share Online";
     
@@ -3123,6 +3123,8 @@ UIAlertController * alert;
                             if ([object.editDone boolValue]||(![object.edited boolValue])) {
                                  NSLog(@" editDone or not edited so deleted");
                                 [self.managedObjectContext deleteObject:object];
+                                
+                                NSLog(@"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
     
                             }
                             else
@@ -4162,7 +4164,7 @@ NSLog(@"updating owner meet");
 
 - (void)updateOwnerFromServerTwo: (int) indexOfArray {
     
-    
+    NSLog(@"&&&&&&&&&&&&& uodate server two index %d",indexOfArray);
             Meet* meetObject = self.meetObject;
             NSManagedObjectContext* context = self.managedObjectContext;
 
@@ -4174,6 +4176,7 @@ NSLog(@"updating owner meet");
     
                     if (thisEventObject != nil) {
                         NSLog(@" %@ exists in first bit",objectType);
+                        NSLog(@"******** found an online event and will update owner local ****");
                         [self copyEventToBackUpAndDeleteWithOnlineId:self.updatedNonOwnerEventIDsMutableArray[indexOfArray]];
                     }
                     else
@@ -4791,7 +4794,18 @@ NSLog(@"updating owner meet");
             NSManagedObjectContext* context = self.managedObjectContext;
 
             NSString* objectType = @"Event";
-            Event* thisEventObject = [self fetchObjectType:objectType WithOnlineID:onlineid IsOwnerNumber:[NSNumber numberWithBool:YES]];
+    
+    bool var = YES;
+    
+    if ([self.meetObject.isOwner boolValue]) {
+        var = YES;
+    }
+    else
+    {
+    var = NO;
+    }
+    
+             Event* thisEventObject = [self fetchObjectType:objectType WithOnlineID:onlineid IsOwnerNumber:[NSNumber numberWithBool:var]];
     
     
     
@@ -4872,13 +4886,15 @@ NSLog(@"updating owner meet");
     
                 }
     }
-    if ([thisEventObject.meet.isOwner boolValue]) {
+    NSLog(@"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+    if ([self.meetObject.isOwner boolValue]) {
     
     NSLog(@"backed up and is owner so now deleting");
     
     
             for (CEventScore* cscore in thisEventObject.cEventScores) {
             
+                NSLog(@"deleting object x cscore with value  %@", cscore.result);
                 [context deleteObject:cscore];
             
             }

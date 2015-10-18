@@ -95,7 +95,18 @@
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    BOOL var = YES;
+    
+    if ([self.teamObject.meet.onlineMeet boolValue]) {
+            if (![self.teamObject.meet.isOwner boolValue]) {
+
+                var = NO;
+            }
+          
+        }
+    
+    
+    return var;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

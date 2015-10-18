@@ -11,5 +11,6 @@
 @interface EventResultTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *divisionNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *backupDateLabel;
 
 @end

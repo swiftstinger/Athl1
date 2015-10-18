@@ -122,7 +122,15 @@
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
+    
+    if (self.showingBackups) {
+    return YES;
+    }
+    else
+    {
     return NO;
+    }
+    
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -309,7 +317,7 @@ else
             BackupEvent *event = (BackupEvent*)object;
           
              GEvent* gevent  = (GEvent*)event.gEvent;
-           NSString *geventname = [NSString stringWithFormat:@"%@ BACKUP",gevent.gEventName] ;
+           NSString *geventname = [NSString stringWithFormat:@"%@",gevent.gEventName] ;
            Division* division  = (Division*)event.division;
            NSString *divisionname = division.divName;
            
@@ -321,11 +329,25 @@ else
         
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
+       
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        [format setDateFormat:@"MMM dd, yyyy HH:mm"];
+
+    
+
+        NSString *dateString = [format stringFromDate:event.backupDate];
         
+        int scorenumber = [event.backupCEventScores count];
         
+         NSString* backupdatetext = [NSString stringWithFormat:@" Backup made: %@ Number of Scores %d",dateString,scorenumber];
+         NSLog(backupdatetext);
+        cell.backupDateLabel.text = backupdatetext;
+        cell.backupDateLabel.hidden = NO;
+       
     }
     else
     {
+        cell.backupDateLabel.hidden = YES;
     
             Event *event = (Event*)object;
           

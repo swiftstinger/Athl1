@@ -103,7 +103,18 @@
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    BOOL var = YES;
+    
+    if ([self.meetObject.onlineMeet boolValue]) {
+            if (![self.meetObject.isOwner boolValue]) {
+
+                var = NO;
+            }
+          
+        }
+    
+    
+    return var;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -337,13 +348,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
     
           cell.numberOfCompetitorsLabel.text = [NSString stringWithFormat:@"Competitors: %@",  @([[object valueForKey:@"competitors"] count] )];
     
-        if ([self.meetObject.onlineMeet boolValue]) {
-            if (![self.meetObject.isOwner boolValue]) {
-
-                cell.userInteractionEnabled = NO;
-            }
-          
-        }
+    
+    
 
   }
 
