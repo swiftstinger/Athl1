@@ -21,5 +21,9 @@
 
 @property (weak, nonatomic) NSIndexPath * indexPathForLongPressCell;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *importButton;
+- (IBAction)importButtonPressed:(UIBarButtonItem *)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *exportButton;
+- (IBAction)exportButtonPressed:(UIBarButtonItem *)sender;
 
 @end

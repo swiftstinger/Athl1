@@ -11,6 +11,7 @@
 #import "GEvent.h"
 #import "Division.h"
 #import "Event.h"
+#import "AppDelegate.h"
 
 
 @interface SetupGEventsViewController ()
@@ -73,6 +74,33 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    //// change to if array not nil
+    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    
+     if (appDelegate.csvDataArray != nil) {
+         NSLog(@"importing csv");
+         
+         /// show button
+         
+         self.importButton.enabled = TRUE;
+         
+         
+         
+
+     }
+     else
+     {
+        
+            // hide button
+            self.importButton.enabled = FALSE;
+            NSLog(@"not importing");
+
+     }
+
+    
+    
+    
     
 //    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 /**
@@ -653,37 +681,197 @@ if ([sourceViewController isKindOfClass:[GEventAddViewController class]])
     }
 
 }
-/**
-- (void)tableTapped:(UITapGestureRecognizer *)tap
-{
-   if (([self.meetObject.onlineMeet boolValue])&&(![self.meetObject.isOwner boolValue]))
-        {
-            NSLog(@"not tap");
-        }
-        else
-        {
-            NSLog(@"tap %hhd %hhd",[self.meetObject.onlineMeet boolValue],[self.meetObject.isOwner boolValue]);
-            CGPoint location = [tap locationInView:self.tableView];
-            NSIndexPath *path = [self.tableView indexPathForRowAtPoint:location];
 
-            if(path)
-            {
-                NSLog(@"tap on cell");
-                // tap was on existing row, so pass it to the delegate method
-                //[self tableView:self.tableView didSelectRowAtIndexPath:path];
-            }
-            else
-            {
-                NSLog(@"tap not on cell");
-                // handle tap on empty space below existing rows however you want
-                [self performSegueWithIdentifier:@"addGEvent" sender:self];
+- (void)loadCSVArray {
+NSLog(@"here");
+Meet* meet =  self.meetObject;
+AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+
+NSArray  *newArray = appDelegate.csvDataArray;
+//appDelegate.csvDataArray = nil
+    
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+
+    
+        for (NSString* string in newArray) {
+                    NSLog(@"%@",string);
+            
+            //create objects here
+            
+            
+            
+                // nslog(@"Coming from GEventAdd Done!");
                 
-            }
-        
+                    
+            GEvent *gEvent = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
+                
+
+
+                ////////
+                /////   set values
+                ///////
+             
+                gEvent.gEventName = string;
+                gEvent.gEventType = @"Track";
+                gEvent.competitorsPerTeam = meet.competitorPerTeam;
+                gEvent.maxScoringCompetitors = meet.maxScoringCompetitors;
+                gEvent.scoreForFirstPlace = meet.scoreForFirstPlace;
+                gEvent.decrementPerPlace = meet.decrementPerPlace;
+                gEvent.scoreMultiplier = meet.scoreMultiplier;
+                
+                
+                /////////
+                /// Set Up and link Events
+                ////////
+                
+                
+                    
+                    NSError *error;
+                
+                    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                    NSEntityDescription *entity = [NSEntityDescription
+            entityForName:@"Division" inManagedObjectContext:self.managedObjectContext];
+                    [fetchRequest setEntity:entity];
+                   
+                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.meetObject];
+            [fetchRequest setPredicate:predicate];
+
+                    
+                    
+                    
+                    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+                    
+                    for (Division *div in fetchedObjects) {
+                        
+                        Event *event = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+                        event.meet = self.meetObject;
+                        event.gEvent = gEvent;
+                        event.division = div;
+                        event.eventEdited = [NSNumber numberWithBool:NO];
+                        event.eventDone = [NSNumber numberWithBool:NO];
+                        
+                        
+                         ////////// event id
+                        
+                            NSUserDefaults *defaults1 = [NSUserDefaults standardUserDefaults];
+            
+             
+                            int tempint1 =  [_meetObject.meetID intValue];
+             
+                            NSString * keystring1 = [NSString stringWithFormat:@"%dlastEventID",tempint1];  ////
+             
+                            // nslog(@"%@",keystring1);
+             
+                            if (![defaults1 objectForKey:keystring1]) {                    /////
+             
+                                int idint1 = 0;
+                                NSNumber *idnumber1 = [NSNumber numberWithInt:idint1];
+                                [defaults1 setObject:idnumber1 forKey:keystring1];             ///////
+             
+                                }
+                            NSNumber *oldnumber1 = [defaults1 objectForKey:keystring1];   ///
+                            int oldint1 = [oldnumber1 intValue];
+                            int newint1 = oldint1 + 1;
+                            NSNumber *newnumber1 = [NSNumber numberWithInt:newint1];
+                            [event setValue: newnumber1 forKey: @"eventID"];                  //////////
+                            // nslog(@" eventID %@",  event.eventID);
+
+                            [defaults1 setObject: newnumber1 forKey:keystring1];            /////////
+             
+                            [defaults1 synchronize];
+             
+                            ////
+
+                    }
+            
+                //////
+                // link relationship
+                /////
+                
+                gEvent.meet = self.meetObject;
+                
+                       
+              
+                
+                
+                //////
+                
+                // Store GEventID data
+                
+                
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+             
+             
+             int tempint =  [_meetObject.meetID intValue];
+             
+             NSString * keystring = [NSString stringWithFormat:@"%dlastGEventID",tempint];  ////
+             
+             // nslog(@"%@",keystring);
+             
+             if (![defaults objectForKey:keystring]) {                    /////
+             
+                 int idint = 0;
+                 NSNumber *idnumber = [NSNumber numberWithInt:idint];
+                 [defaults setObject:idnumber forKey:keystring];             ///////
+             
+             }
+            NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+               int oldint = [oldnumber intValue];
+               int newint = oldint + 1;
+               NSNumber *newnumber = [NSNumber numberWithInt:newint];
+               [gEvent setValue: newnumber forKey: @"gEventID"];                  //////////
+               
+
+            [defaults setObject: newnumber forKey:keystring];            /////////
+             
+            [defaults synchronize];
+             
+            ////
+            
+
         }
- 
-    
-    
+
+            [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"eventsDone"];
+            
+            NSError *error = nil;
+
+
+        // Save the context.
+        
+            if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+
 }
-**/
+- (IBAction)importButtonPressed:(UIBarButtonItem *)sender {
+    dispatch_async(dispatch_get_main_queue(), ^{
+                
+    UIAlertController * alert=   [UIAlertController
+                        alertControllerWithTitle:@"Importing Events"
+                        message:@"Event names imported from csv file. \n\n All event types set to 'Track' and scoring options set to Meet defaults. \n\n These can be edited by long pressing on the relavant event cell."
+                        preferredStyle:UIAlertControllerStyleAlert];
+
+
+    UIAlertAction* ok = [UIAlertAction
+            actionWithTitle:@"OK"
+            style:UIAlertActionStyleDefault
+            handler:^(UIAlertAction * action)
+            {
+                
+                [alert dismissViewControllerAnimated:YES completion:nil];
+                [self loadCSVArray];
+           
+            }];
+            
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
+});
+
+
+}
+- (IBAction)exportButtonPressed:(UIBarButtonItem *)sender {
+}
 @end

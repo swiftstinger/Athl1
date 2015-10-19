@@ -10,6 +10,7 @@
 #import "TeamTableViewCell.h"
 #import "Team.h"
 #import "Competitor.h"
+#import "AppDelegate.h"
 
 @interface SetupTeamsViewController ()
 
@@ -70,6 +71,29 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    
+    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    
+     if (appDelegate.csvDataArray != nil) {
+         NSLog(@"importing csv");
+         
+         /// show button
+         
+         self.importButton.enabled = TRUE;
+         
+         
+         
+
+     }
+     else
+     {
+        
+            // hide button
+            self.importButton.enabled = FALSE;
+            NSLog(@"not importing");
+
+     }
     
   //  self.navigationItem.leftBarButtonItem = self.editButtonItem;
   /**
@@ -546,49 +570,138 @@ if ([sourceViewController isKindOfClass:[TeamAddViewController class]])
 
 
 }
-/**
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-  
-    self.indexPathForLongPressCell = indexPath;
-    NSLog(@"Row Selected = %i",indexPath.row);
-    [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-   
-    [self performSegueWithIdentifier:@"showTeam" sender:self.view];
+- (void)loadCSVArray {
+NSLog(@"here");
 
-}
+AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
 
+NSArray  *newArray = appDelegate.csvDataArray;
+//appDelegate.csvDataArray = nil
+    
+   NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+        for (NSString* string in newArray) {
+                    NSLog(@"%@",string);
+            
+            //create objects here
 
-- (void)tableTapped:(UITapGestureRecognizer *)tap
-{
-   if (([self.meetObject.onlineMeet boolValue])&&(![self.meetObject.isOwner boolValue]))
-        {
-            NSLog(@"not tap");
-        }
-        else
-        {
-            NSLog(@"tap %hhd %hhd",[self.meetObject.onlineMeet boolValue],[self.meetObject.isOwner boolValue]);
-            CGPoint location = [tap locationInView:self.tableView];
-            NSIndexPath *path = [self.tableView indexPathForRowAtPoint:location];
-
-            if(path)
-            {
-                NSLog(@"tap on cell");
-                // tap was on existing row, so pass it to the delegate method
-                [self tableView:self.tableView didSelectRowAtIndexPath:path];
-            }
-            else
-            {
-                NSLog(@"tap not on cell");
-                // handle tap on empty space below existing rows however you want
-                [self performSegueWithIdentifier:@"addTeam" sender:self];
                 
-            }
-        
+                Team *team = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
+                
+                
+                
+                
+                ////////
+                /////   set values
+                ///////
+             
+            
+                [team setValue: string forKey:@"teamName"];
+            
+            
+                NSString *abr = nil;
+
+                if ([string length] >= 3) {
+                
+                    abr = [string substringToIndex:3];
+                }
+                else
+                {
+                    abr = string;
+                }
+                [team setValue: abr forKey:@"teamAbr"];
+            
+            
+            
+            
+            
+                 //////
+                // link relationship
+                /////
+                team.meet = self.meetObject;
+               
+                
+                
+                //////
+                
+                  // Store teamID data
+         
+              
+                
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+             
+             int tempint =  [_meetObject.meetID intValue];
+             
+             NSString * keystring = [NSString stringWithFormat:@"%dlastTeamID",tempint];  ////
+             
+            
+             
+             if (![defaults objectForKey:keystring]) {                    /////
+             
+             int idint = 0;
+             NSNumber *idnumber = [NSNumber numberWithInt:idint];
+             [defaults setObject:idnumber forKey:keystring];             ///////
+             
+             }
+            NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+               int oldint = [oldnumber intValue];
+               int newint = oldint + 1;
+               NSNumber *newnumber = [NSNumber numberWithInt:newint];
+               [team setValue: newnumber forKey: @"teamID"];                  //////////
+              
+
+            [defaults setObject: newnumber forKey:keystring];            /////////
+             
+            [defaults synchronize];
+          
+            ////
+            
+      }
+    
+
+        [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"teamsDone"];
+    
+        NSError *error = nil;
+
+    
+    
+
+    // Save the context.
+    
+        if (![context save:&error]) {
+    // Replace this implementation with code to handle the error appropriately.
+    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+        //abort();
         }
- 
-    
-    
+
 }
-**/
+- (IBAction)importButtonPressed:(UIBarButtonItem *)sender {
+    dispatch_async(dispatch_get_main_queue(), ^{
+                
+        UIAlertController * alert=   [UIAlertController
+                            alertControllerWithTitle:@"Importing Teams"
+                            message:@"Team names imported from csv file. \n\n All team abbreviations set to the first 3 letters of the team name. \n\n These can be edited by long pressing on the relavant team cell."
+                            preferredStyle:UIAlertControllerStyleAlert];
+
+
+        UIAlertAction* ok = [UIAlertAction
+                actionWithTitle:@"OK"
+                style:UIAlertActionStyleDefault
+                handler:^(UIAlertAction * action)
+                {
+                    
+                    [alert dismissViewControllerAnimated:YES completion:nil];
+                    [self loadCSVArray];
+               
+                }];
+                
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+    });
+}
+- (IBAction)exportButtonPressed:(UIBarButtonItem *)sender {
+}
 @end

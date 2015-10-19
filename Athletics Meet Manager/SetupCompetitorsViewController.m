@@ -10,6 +10,7 @@
 #import "CompetitorTableViewCell.h"
 #import "Competitor.h"
 #import "Meet.h"
+#import "AppDelegate.h"
 
 @interface SetupCompetitorsViewController ()
 
@@ -67,6 +68,29 @@
 {
     [super viewDidLoad];
 	
+    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+    
+     if (appDelegate.csvDataArray != nil) {
+         NSLog(@"importing csv");
+         
+         /// show button
+         
+         self.importButton.enabled = TRUE;
+         
+         
+         
+
+     }
+     else
+     {
+        
+            // hide button
+            self.importButton.enabled = FALSE;
+            NSLog(@"not importing");
+
+     }
+    
+
     
     [self configureView];
 }
@@ -497,5 +521,109 @@ if (sender.state == UIGestureRecognizerStateBegan)
         [self performSegueWithIdentifier:@"editCompetitor" sender:self];
 	}
 
+}
+
+- (void)loadCSVArray {
+NSLog(@"here");
+
+AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+
+NSArray  *newArray = appDelegate.csvDataArray;
+//appDelegate.csvDataArray = nil
+
+ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+
+        for (NSString* string in newArray) {
+                    NSLog(@"%@",string);
+            
+                        //create objects here
+            
+                    // nslog(@"Coming from CompetitorAdd Done!");
+                    
+            
+                
+                    Competitor *competitor = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
+            
+                    
+                    ////////
+                    /////   set values
+                    ///////
+                 
+                      competitor.compName = string;
+            
+                    
+            
+                    
+                     //////
+                    // link relationships
+                    /////
+                    
+                   
+                    
+                   competitor.team = self.teamObject;
+                    
+                    
+                    [competitor setValue:_teamObject.meet forKey:@"meet"];
+                   
+                    [competitor setValue:_teamObject.teamName forKey:@"teamName"];
+
+                    
+                    //////
+                    
+                      // Store CompID data
+             
+                 
+                    
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                
+              
+                 int tempint =  [_teamObject.meet.meetID intValue];
+                 
+                 NSString * keystring = [NSString stringWithFormat:@"%dlastCompID",tempint];  ////
+                 
+                 
+                 
+                 if (![defaults objectForKey:keystring]) {                    /////
+                 
+                 int idint = 0;
+                 NSNumber *idnumber = [NSNumber numberWithInt:idint];
+                 [defaults setObject:idnumber forKey:keystring];             ///////
+                 
+                 }
+            NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+                   int oldint = [oldnumber intValue];
+                   int newint = oldint + 1;
+                   NSNumber *newnumber = [NSNumber numberWithInt:newint];
+                   [competitor setValue: newnumber forKey: @"compID"];                  //////////
+                 
+
+                [defaults setObject: newnumber forKey:keystring];            /////////
+                 
+                [defaults synchronize];
+              
+                ////
+
+            
+        }
+         NSError *error = nil;
+
+                    
+                    
+
+                    // Save the context.
+                    
+                        if (![context save:&error]) {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                        // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+                        //abort();
+                        }
+
+
+}
+- (IBAction)importButtonPressed:(UIBarButtonItem *)sender {
+    [self loadCSVArray];
+}
+- (IBAction)exportButtonPressed:(UIBarButtonItem *)sender {
 }
 @end

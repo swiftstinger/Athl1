@@ -777,6 +777,19 @@
                             <outlet property="delegate" destination="8Ir-gj-wqw" id="CkI-ps-PlU"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Import" id="ON6-1K-Gdl">
+                            <connections>
+                                <action selector="importButtonPressed:" destination="8Ir-gj-wqw" id="rog-jE-N7j"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="flexibleSpace" id="2KT-Ly-XC3"/>
+                        <barButtonItem title="Export" id="kwt-o2-aLf">
+                            <connections>
+                                <action selector="exportButtonPressed:" destination="8Ir-gj-wqw" id="cw4-iW-zuU"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Group Divisions" id="3bp-av-lKE">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="nJo-77-IqJ">
                             <connections>
@@ -786,6 +799,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="nJo-77-IqJ" id="pvL-DA-TQh"/>
+                        <outlet property="exportButton" destination="kwt-o2-aLf" id="T0g-ns-qUS"/>
+                        <outlet property="importButton" destination="ON6-1K-Gdl" id="paV-uX-MAS"/>
                         <segue destination="lO5-h7-G6N" kind="presentation" identifier="editDiv" modalTransitionStyle="flipHorizontal" id="Kin-H0-cmG"/>
                     </connections>
                 </tableViewController>
@@ -832,6 +847,19 @@
                             <outlet property="delegate" destination="KGd-ro-0EY" id="yTt-Pl-hdY"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Import" id="iu3-in-Hzw">
+                            <connections>
+                                <action selector="importButtonPressed:" destination="KGd-ro-0EY" id="Nfs-0Y-cVb"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="flexibleSpace" id="JJk-dg-Pv5"/>
+                        <barButtonItem title="Export" id="tpX-ed-zrI">
+                            <connections>
+                                <action selector="exportButtonPressed:" destination="KGd-ro-0EY" id="yFz-El-Rlm"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Events at Meet" id="XkJ-qd-JBg">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="bb7-CG-NFS">
                             <connections>
@@ -841,6 +869,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="bb7-CG-NFS" id="IrU-Z0-lfE"/>
+                        <outlet property="exportButton" destination="tpX-ed-zrI" id="ZbR-lo-WpC"/>
+                        <outlet property="importButton" destination="iu3-in-Hzw" id="FfW-JK-oD9"/>
                         <segue destination="NaG-ot-8A6" kind="presentation" identifier="editGEvent" modalTransitionStyle="flipHorizontal" id="zvu-dP-nHM"/>
                     </connections>
                 </tableViewController>
@@ -1159,6 +1189,19 @@
                             <outlet property="delegate" destination="FDm-94-BHM" id="62t-F5-vCq"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Import" id="p7l-nF-uqa">
+                            <connections>
+                                <action selector="importButtonPressed:" destination="FDm-94-BHM" id="ZM5-HO-BhS"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="flexibleSpace" id="v5L-0W-N5Q"/>
+                        <barButtonItem title="Export" id="wcQ-1Z-Ndu">
+                            <connections>
+                                <action selector="exportButtonPressed:" destination="FDm-94-BHM" id="JFI-nN-hBa"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Teams Setup" id="P1a-vU-cyG">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="cG2-0H-OxP">
                             <connections>
@@ -1168,6 +1211,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="cG2-0H-OxP" id="B39-h4-NDn"/>
+                        <outlet property="exportButton" destination="wcQ-1Z-Ndu" id="3Rb-nP-YZ6"/>
+                        <outlet property="importButton" destination="p7l-nF-uqa" id="k7T-bU-JXi"/>
                         <segue destination="oKG-ro-3Rs" kind="presentation" identifier="editTeam" modalTransitionStyle="flipHorizontal" id="KE2-9o-S9o"/>
                     </connections>
                 </tableViewController>
@@ -2019,7 +2064,19 @@
                             <outlet property="delegate" destination="ted-pL-4s5" id="bK6-XP-baG"/>
                         </connections>
                     </tableView>
-                    <toolbarItems/>
+                    <toolbarItems>
+                        <barButtonItem title="Import" id="uT4-Bq-mS1">
+                            <connections>
+                                <action selector="importButtonPressed:" destination="ted-pL-4s5" id="WBM-kO-C8B"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="flexibleSpace" id="XJ2-GD-wN2"/>
+                        <barButtonItem title="Export" id="GFy-mH-mnR">
+                            <connections>
+                                <action selector="exportButtonPressed:" destination="ted-pL-4s5" id="Aes-KM-d0K"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Team name" id="0PB-vq-3LA">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Jlp-9z-GRE">
                             <connections>
@@ -2029,6 +2086,8 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="exportButton" destination="GFy-mH-mnR" id="4QX-Qw-v5T"/>
+                        <outlet property="importButton" destination="uT4-Bq-mS1" id="o20-a2-er4"/>
                         <outlet property="navBar" destination="0PB-vq-3LA" id="yAZ-N4-ORa"/>
                         <segue destination="4Ya-of-ba7" kind="presentation" identifier="editCompetitor" modalTransitionStyle="flipHorizontal" id="oMD-Bf-krW"/>
                     </connections>

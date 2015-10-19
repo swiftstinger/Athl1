@@ -72,27 +72,7 @@
     
     
 }
-- (void)loadCSVArray {
-NSLog(@"here");
 
-AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
-
-NSArray  *newArray = appDelegate.csvDataArray;
-appDelegate.csvDataArray = nil;
-        for (NSString* string in newArray) {
-                    NSLog(@"%@",string);
-            
-            //create objects here
-            
-            
-            
-            
-            
-        }
-    
-
-
-}
 
 - (void)viewDidLoad
 {
@@ -107,14 +87,17 @@ appDelegate.csvDataArray = nil;
          
          /// show button
          
-         [self loadCSVArray];
-            
+         self.importButton.enabled = TRUE;
+         
+         
+         
 
      }
      else
      {
         
             // hide button
+            self.importButton.enabled = FALSE;
             NSLog(@"not importing");
 
      }
@@ -667,50 +650,177 @@ if ([sourceViewController isKindOfClass:[DivAddViewController class]])
 
 
 }
-/**
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-  
+- (void)loadCSVArray {
+NSLog(@"here");
 
-    NSLog(@"Row Selected = %i",indexPath.row);
+AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
 
-//    [self performSegueWithIdentifier:@"addDiv" sender:self.view];
-
-}
-
-**/
-/**
-
-- (void)tableTapped:(UITapGestureRecognizer *)tap
-{
-   if (([self.meetObject.onlineMeet boolValue])&&(![self.meetObject.isOwner boolValue]))
-        {
-            NSLog(@"not tap");
-        }
-        else
-        {
-            NSLog(@"tap %hhd %hhd",[self.meetObject.onlineMeet boolValue],[self.meetObject.isOwner boolValue]);
-            CGPoint location = [tap locationInView:self.tableView];
-            NSIndexPath *path = [self.tableView indexPathForRowAtPoint:location];
-
-            if(path)
-            {
-                NSLog(@"tap on cell");
-                // tap was on existing row, so pass it to the delegate method
-                //[self tableView:self.tableView didSelectRowAtIndexPath:path];
-            }
-            else
-            {
-                NSLog(@"tap not on cell");
-                // handle tap on empty space below existing rows however you want
-                [self performSegueWithIdentifier:@"addDiv" sender:self];
-                
-            }
-        
-        }
+NSArray  *newArray = appDelegate.csvDataArray;
+appDelegate.csvDataArray = nil;
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+        for (NSString* string in newArray) {
+                    NSLog(@"%@",string);
+            
+            //create objects here
+            
+                    
+                    Division *div = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
  
+                        
+                        ////////
+                        /////   set values
+                        ///////
+                     
+            
+                        [div setValue: string forKey:@"divName"];
+                    
+            
+                        [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"divsDone"];
+                        
+                        
+                        /////////
+                        /// Set Up and link Events
+                        ////////
+                        
+    
+                            
+                            NSError *error;
+                        
+                            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                            NSEntityDescription *entity = [NSEntityDescription
+                    entityForName:@"GEvent" inManagedObjectContext:self.managedObjectContext];
+                            [fetchRequest setEntity:entity];
+                            
+                            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.meetObject];
+                    [fetchRequest setPredicate:predicate];
+
+                            
+                            
+                            NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+                            
+                            for (GEvent *gevent in fetchedObjects) {
+                                
+                                Event *event = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+                                event.meet = self.meetObject;
+                                event.gEvent = gevent;
+                                event.division = div;
+                                event.eventEdited = [NSNumber numberWithBool:NO];
+                                event.eventDone = [NSNumber numberWithBool:NO];
+                                
+                               // nslog(@"event name : %@  edited: %@",gevent.gEventName,event.eventEdited);
+                                
+                                ////////// event id
+                                
+                                    NSUserDefaults *defaults1 = [NSUserDefaults standardUserDefaults];
+                    
+                     
+                                    int tempint1 =  [_meetObject.meetID intValue];
+                     
+                                    NSString * keystring1 = [NSString stringWithFormat:@"%dlastEventID",tempint1];  ////
+                     
+                                    // nslog(@"%@",keystring1);
+                     
+                                    if (![defaults1 objectForKey:keystring1]) {                    /////
+                     
+                                        int idint1 = 0;
+                                        NSNumber *idnumber1 = [NSNumber numberWithInt:idint1];
+                                        [defaults1 setObject:idnumber1 forKey:keystring1];             ///////
+                     
+                                        }
+                                    NSNumber *oldnumber1 = [defaults1 objectForKey:keystring1];   ///
+                                    int oldint1 = [oldnumber1 intValue];
+                                    int newint1 = oldint1 + 1;
+                                    NSNumber *newnumber1 = [NSNumber numberWithInt:newint1];
+                                    [event setValue: newnumber1 forKey: @"eventID"];                  //////////
+                                
+                                    [defaults1 setObject: newnumber1 forKey:keystring1];            /////////
+                     
+                                    [defaults1 synchronize];
+                     
+                                    ////
+
+                        
+                                int numberofevents = (int)[[self.meetObject valueForKey:@"events"] count] ;
+
+                        
+                        
+
+                     
+                                   // nslog(@"events in meet = %d",numberofevents);
+                                
+                            }
+                        
+    
+                        //////
+                        // link relationship
+                        /////
+                        
+                       div.meet = self.meetObject;
+                        
+                        //////
+    
+                        // Store divID data
+                        
+                        
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    
+                     
+                     int tempint =  [_meetObject.meetID intValue];
+                     
+                     NSString * keystring = [NSString stringWithFormat:@"%dlastDivID",tempint];  ////
+                     
+                     // nslog(@"%@",keystring);
+                     
+                     if (![defaults objectForKey:keystring]) {                    /////
+                     
+                     int idint = 0;
+                     NSNumber *idnumber = [NSNumber numberWithInt:idint];
+                     [defaults setObject:idnumber forKey:keystring];             ///////
+                     
+                     }
+                NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+                       int oldint = [oldnumber intValue];
+                       int newint = oldint + 1;
+                       NSNumber *newnumber = [NSNumber numberWithInt:newint];
+                       [div setValue: newnumber forKey: @"divID"];                  //////////
+                      
+
+                    [defaults setObject: newnumber forKey:keystring];            /////////
+                     
+                    [defaults synchronize];
+                     
+                    ////
+        }
+                        
+                                NSError *error = nil;
+
+                        
+                        
+
+                        // Save the context.
+                        
+                            if (![context save:&error]) {
+                        // Replace this implementation with code to handle the error appropriately.
+                        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+                            //abort();
+                            }
+                            
+            
+            
+            
     
     
+
+
 }
-**/
+- (IBAction)importButtonPressed:(UIBarButtonItem *)sender {
+
+    [self loadCSVArray];
+
+}
+- (IBAction)exportButtonPressed:(UIBarButtonItem *)sender {
+}
 @end
