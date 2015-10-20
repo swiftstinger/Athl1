@@ -1,4 +1,8 @@
 
+div done but gevent needs to export event type (check if track or field or hight jump, else track) and teams need abreviations and comps need nothing (mabe events check per two cells, if any event has gevent.name and div.name then add to comp(else not add))
+explain adding events via csv file in docs. export event via csv file
+
+
 1. add import and export button to div, gevents, teams, team (comp entry) done
 
 2. add [self loadCSVArray]; to import button ibaction method done
