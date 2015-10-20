@@ -214,12 +214,27 @@ NSInferMappingModelAutomaticallyOption : @YES
                  NSLog(@"imported, is csv");
                 
                 NSString *list = [NSString stringWithContentsOfURL:url encoding:NSASCIIStringEncoding error:nil];
-                NSArray *csvItems = [list componentsSeparatedByString:@","];
-                
+               NSLog(@"list1: %@", list);
+               //  list = [list stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+               NSArray *csvItems = [list componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+                //NSArray *csvItems = [list componentsSeparatedByString:@"\n"];
                 self.csvDataArray = csvItems;
                 
+                NSMutableArray* mutableArrayOfStrings = [self.csvDataArray mutableCopy];
                 
-               // NSLog(@"csv: %@", csvItems);
+                [mutableArrayOfStrings removeObject:@""];
+                
+                self.csvDataArray = [mutableArrayOfStrings copy];
+                
+                NSLog(@"list2: %@", list);
+               NSLog(@"csv: %@", csvItems);
+                
+                for (NSString* string in self.csvDataArray) {
+                    NSLog(@"string: %@", string);
+                    
+                   
+                }
+               
                 
                 
                 NSNotificationCenter *center = [NSNotificationCenter defaultCenter];

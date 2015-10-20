@@ -1,12 +1,12 @@
 
 1. add import and export button to div, gevents, teams, team (comp entry) done
 
-2. add [self loadCSVArray]; to import button ibaction method
+2. add [self loadCSVArray]; to import button ibaction method done
 
-2.1 add objects
-2.2 set alert for gevent added values are default and type is track
+2.1 add objects done
+2.2 set alert for gevent added values are default and type is track done
 
-3. hide and show import button in appdelegate array check divdone
+3. hide and show import button in appdelegate array check div done
 
 4. add export function to export names of all items to csv and name "meetname_divisions" "meetname_teamname competitors"etc
 

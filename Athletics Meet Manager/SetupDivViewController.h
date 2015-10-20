@@ -10,7 +10,8 @@
 #import <CoreData/CoreData.h>
 #import "DivAddViewController.h"
 #import "Meet.h"
-@interface SetupDivViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+#import <MessageUI/MessageUI.h>
+@interface SetupDivViewController : UITableViewController <NSFetchedResultsControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
