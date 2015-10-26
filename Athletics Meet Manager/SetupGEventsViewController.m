@@ -693,144 +693,279 @@ NSArray  *newArray = appDelegate.csvDataArray;
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
 
     
-        for (NSString* string in newArray) {
-                    NSLog(@"%@",string);
+        for (NSString* stringwhole in newArray) {
+                    NSLog(@"%@",stringwhole);
+           
+           NSArray  *gEventArray =  [stringwhole componentsSeparatedByString:@","];
+            NSString* string = @"noname";   //0
+            NSString* type = @"Track";
+            NSNumber* compsPerTeam; //1
+            NSNumber* maxScoring; //2
+            NSNumber* scoreFirst; //3
+            NSNumber* scoreMulti; //4
+            NSNumber* scoreDec; //5
+            NSDate* timing; //6
             
-            //create objects here
-            
-            
-            
-                // nslog(@"Coming from GEventAdd Done!");
-                
-                    
-            GEvent *gEvent = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
-                
+            NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+                f.numberStyle = NSNumberFormatterDecimalStyle;
+           
+           NSLog(@"%lu",(unsigned long)gEventArray.count);
+    
+            if (gEventArray.count > 0) {
+              string  = gEventArray[0];
 
+            }
+            if (gEventArray.count > 1) {
+              type  = gEventArray[1];
 
-                ////////
-                /////   set values
-                ///////
-             
-                gEvent.gEventName = string;
-                gEvent.gEventType = @"Track";
-                gEvent.competitorsPerTeam = meet.competitorPerTeam;
-                gEvent.maxScoringCompetitors = meet.maxScoringCompetitors;
-                gEvent.scoreForFirstPlace = meet.scoreForFirstPlace;
-                gEvent.decrementPerPlace = meet.decrementPerPlace;
-                gEvent.scoreMultiplier = meet.scoreMultiplier;
+            }
+            
+            if (gEventArray.count > 2) {
+            
+                if ([f numberFromString:gEventArray[2]]) {
                 
+                compsPerTeam = [f numberFromString:gEventArray[2]];
+                double doubletemp =[compsPerTeam doubleValue];
+            
+                compsPerTeam    = [NSNumber numberWithDouble:doubletemp];
                 
-                /////////
-                /// Set Up and link Events
-                ////////
+                }
+                else
+                {
+                    compsPerTeam = self.meetObject.competitorPerTeam;
                 
+                }
+            }
+            if (gEventArray.count > 3) {
+                if ([f numberFromString:gEventArray[3]]) {
                 
-                    
-                    NSError *error;
+                maxScoring = [f numberFromString:gEventArray[3]];
+                double doubletemp =[maxScoring doubleValue];
+            
+                maxScoring    = [NSNumber numberWithDouble:doubletemp];
                 
-                    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-                    NSEntityDescription *entity = [NSEntityDescription
-            entityForName:@"Division" inManagedObjectContext:self.managedObjectContext];
-                    [fetchRequest setEntity:entity];
-                   
-                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.meetObject];
-            [fetchRequest setPredicate:predicate];
-
-                    
-                    
-                    
-                    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-                    
-                    for (Division *div in fetchedObjects) {
+                }
+                else
+                {
+                    maxScoring = self.meetObject.maxScoringCompetitors;
+                
+                }
+            }
+            if (gEventArray.count > 4) {
+                if ([f numberFromString:gEventArray[4]]) {
+                
+                scoreFirst = [f numberFromString:gEventArray[4]];
+                double doubletemp =[scoreFirst doubleValue];
+            
+                scoreFirst    = [NSNumber numberWithDouble:doubletemp];
+                
+                }
+                else
+                {
+                    scoreFirst = self.meetObject.scoreForFirstPlace;
+                
+                }
+            }
+            if (gEventArray.count > 5) {
+                if ([f numberFromString:gEventArray[5]]) {
+                
+                scoreMulti = [f numberFromString:gEventArray[5]];
+                double doubletemp =[scoreMulti doubleValue];
+            
+                scoreMulti    = [NSNumber numberWithDouble:doubletemp];
+                
+                }
+                else
+                {
+                    scoreMulti = self.meetObject.scoreMultiplier;
+                
+                }
+            }
+            if (gEventArray.count > 6) {
+                if ([f numberFromString:gEventArray[6]]) {
+                
+                scoreDec = [f numberFromString:gEventArray[6]];
+                double doubletemp =[scoreDec doubleValue];
+            
+                scoreDec    = [NSNumber numberWithDouble:doubletemp];
+                
+                }
+                else
+                {
+                    scoreDec = self.meetObject.decrementPerPlace;
+                
+                }
+            }
+            
+            
+            
+            
+            
+            
+            
+                        // nslog(@"Coming from GEventAdd Done!");
                         
-                        Event *event = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
-                        event.meet = self.meetObject;
-                        event.gEvent = gEvent;
-                        event.division = div;
-                        event.eventEdited = [NSNumber numberWithBool:NO];
-                        event.eventDone = [NSNumber numberWithBool:NO];
+                            
+                    GEvent *gEvent = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
                         
-                        
-                         ////////// event id
-                        
-                            NSUserDefaults *defaults1 = [NSUserDefaults standardUserDefaults];
+
+
+                        ////////
+                        /////   set values
+                        ///////
+                     
+                        gEvent.gEventName = string;
+                        gEvent.gEventType = type;
+                        gEvent.competitorsPerTeam = compsPerTeam;
+                        gEvent.maxScoringCompetitors = maxScoring;
+                        gEvent.scoreForFirstPlace = scoreFirst;
+                        gEvent.scoreMultiplier = scoreMulti;
+                        gEvent.decrementPerPlace = scoreDec;
             
-             
-                            int tempint1 =  [_meetObject.meetID intValue];
-             
-                            NSString * keystring1 = [NSString stringWithFormat:@"%dlastEventID",tempint1];  ////
-             
-                            // nslog(@"%@",keystring1);
-             
-                            if (![defaults1 objectForKey:keystring1]) {                    /////
-             
-                                int idint1 = 0;
-                                NSNumber *idnumber1 = [NSNumber numberWithInt:idint1];
-                                [defaults1 setObject:idnumber1 forKey:keystring1];             ///////
-             
-                                }
-                            NSNumber *oldnumber1 = [defaults1 objectForKey:keystring1];   ///
-                            int oldint1 = [oldnumber1 intValue];
-                            int newint1 = oldint1 + 1;
-                            NSNumber *newnumber1 = [NSNumber numberWithInt:newint1];
-                            [event setValue: newnumber1 forKey: @"eventID"];                  //////////
-                            // nslog(@" eventID %@",  event.eventID);
+            
+                    if (gEventArray.count > 7) {
+    
+                    
+                        NSString *dateString = gEventArray[7];
+                        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
-                            [defaults1 setObject: newnumber1 forKey:keystring1];            /////////
-             
-                            [defaults1 synchronize];
-             
-                            ////
+                        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+                        
+                        
+                        
+                        if ([dateFormatter dateFromString:dateString]) {
+                        
+                            timing = [[NSDate alloc] init];
 
+                            timing = [dateFormatter dateFromString:dateString];
+                            
+                        
+                            gEvent.gEventTiming = timing;
+                            
+                            NSLog(@"found geventtiming");
+                        
+                        }
+                        else
+                        {
+                            NSLog(@"no geventtiming");
+                        }
                     }
-            
-                //////
-                // link relationship
-                /////
-                
-                gEvent.meet = self.meetObject;
-                
+                    else
+                    {
+                        NSLog(@"no geventtiming slot");
+                    }
+                        
+                        /////////
+                        /// Set Up and link Events
+                        ////////
+                        
+                        
+                            
+                            NSError *error;
+                        
+                            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                            NSEntityDescription *entity = [NSEntityDescription
+                    entityForName:@"Division" inManagedObjectContext:self.managedObjectContext];
+                            [fetchRequest setEntity:entity];
+                           
+                            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.meetObject];
+                    [fetchRequest setPredicate:predicate];
+
+                            
+                            
+                            
+                            NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+                            
+                            for (Division *div in fetchedObjects) {
+                                
+                                Event *event = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+                                event.meet = self.meetObject;
+                                event.gEvent = gEvent;
+                                event.division = div;
+                                event.eventEdited = [NSNumber numberWithBool:NO];
+                                event.eventDone = [NSNumber numberWithBool:NO];
+                                
+                                
+                                 ////////// event id
+                                
+                                    NSUserDefaults *defaults1 = [NSUserDefaults standardUserDefaults];
+                    
+                     
+                                    int tempint1 =  [_meetObject.meetID intValue];
+                     
+                                    NSString * keystring1 = [NSString stringWithFormat:@"%dlastEventID",tempint1];  ////
+                     
+                                    // nslog(@"%@",keystring1);
+                     
+                                    if (![defaults1 objectForKey:keystring1]) {                    /////
+                     
+                                        int idint1 = 0;
+                                        NSNumber *idnumber1 = [NSNumber numberWithInt:idint1];
+                                        [defaults1 setObject:idnumber1 forKey:keystring1];             ///////
+                     
+                                        }
+                                    NSNumber *oldnumber1 = [defaults1 objectForKey:keystring1];   ///
+                                    int oldint1 = [oldnumber1 intValue];
+                                    int newint1 = oldint1 + 1;
+                                    NSNumber *newnumber1 = [NSNumber numberWithInt:newint1];
+                                    [event setValue: newnumber1 forKey: @"eventID"];                  //////////
+                                    // nslog(@" eventID %@",  event.eventID);
+
+                                    [defaults1 setObject: newnumber1 forKey:keystring1];            /////////
+                     
+                                    [defaults1 synchronize];
+                     
+                                    ////
+
+                            }
+                    
+                        //////
+                        // link relationship
+                        /////
+                        
+                        gEvent.meet = self.meetObject;
+                        
+                               
+                      
+                        
+                        
+                        //////
+                        
+                        // Store GEventID data
+                        
+                        
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                     
+                     
+                     int tempint =  [_meetObject.meetID intValue];
+                     
+                     NSString * keystring = [NSString stringWithFormat:@"%dlastGEventID",tempint];  ////
+                     
+                     // nslog(@"%@",keystring);
+                     
+                     if (![defaults objectForKey:keystring]) {                    /////
+                     
+                         int idint = 0;
+                         NSNumber *idnumber = [NSNumber numberWithInt:idint];
+                         [defaults setObject:idnumber forKey:keystring];             ///////
+                     
+                     }
+                    NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+                       int oldint = [oldnumber intValue];
+                       int newint = oldint + 1;
+                       NSNumber *newnumber = [NSNumber numberWithInt:newint];
+                       [gEvent setValue: newnumber forKey: @"gEventID"];                  //////////
                        
-              
-                
-                
-                //////
-                
-                // Store GEventID data
-                
-                
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-             
-             
-             int tempint =  [_meetObject.meetID intValue];
-             
-             NSString * keystring = [NSString stringWithFormat:@"%dlastGEventID",tempint];  ////
-             
-             // nslog(@"%@",keystring);
-             
-             if (![defaults objectForKey:keystring]) {                    /////
-             
-                 int idint = 0;
-                 NSNumber *idnumber = [NSNumber numberWithInt:idint];
-                 [defaults setObject:idnumber forKey:keystring];             ///////
-             
-             }
-            NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
-               int oldint = [oldnumber intValue];
-               int newint = oldint + 1;
-               NSNumber *newnumber = [NSNumber numberWithInt:newint];
-               [gEvent setValue: newnumber forKey: @"gEventID"];                  //////////
-               
 
-            [defaults setObject: newnumber forKey:keystring];            /////////
-             
-            [defaults synchronize];
-             
-            ////
+                    [defaults setObject: newnumber forKey:keystring];            /////////
+                     
+                    [defaults synchronize];
+                     
+                    ////
             
-
+            
         }
-
+    
             [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"eventsDone"];
             
             NSError *error = nil;
@@ -851,7 +986,7 @@ NSArray  *newArray = appDelegate.csvDataArray;
                 
     UIAlertController * alert=   [UIAlertController
                         alertControllerWithTitle:@"Importing Events"
-                        message:@"Event names imported from csv file. \n\n All event types set to 'Track' and scoring options set to Meet defaults. \n\n These can be edited by long pressing on the relavant event cell."
+                        message:@"Event names imported from csv file. \n\n First item in row will be treated as the event name. The second the Event Type. Subsequent items will be treated as settings for the Event's scoring options. If only event names are entered or values are missing or not recognised, the default Event Type will be Track and Scoring Options will be set to the Meet defaults. \n\n These can be edited by long pressing on the relavant event cell."
                         preferredStyle:UIAlertControllerStyleAlert];
 
 
@@ -873,5 +1008,206 @@ NSArray  *newArray = appDelegate.csvDataArray;
 
 }
 - (IBAction)exportButtonPressed:(UIBarButtonItem *)sender {
+NSMutableString *resultscsv = [NSMutableString stringWithString:@""];
+
+
+/// fetch divisions
+NSString* entityname = @"GEvent";
+    NSError *error;
+                        
+                            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                            NSEntityDescription *entity = [NSEntityDescription
+                    entityForName: entityname inManagedObjectContext:self.managedObjectContext];
+                            [fetchRequest setEntity:entity];
+                            
+                            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.meetObject];
+                    [fetchRequest setPredicate:predicate];
+                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"gEventID" ascending:YES];
+                   NSArray *sortDescriptors = @[sortDescriptor];
+                    
+                    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+                            
+                            NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+
+/// end fetch divisions
+
+    for (GEvent* gevent in fetchedObjects) {
+        
+        [resultscsv appendString:[NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@,%@",gevent.gEventName, gevent.gEventType, gevent.competitorsPerTeam, gevent.maxScoringCompetitors,gevent.scoreForFirstPlace,gevent.scoreMultiplier,gevent.decrementPerPlace]];
+        
+        
+        
+            if (gevent.gEventTiming) {
+            
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+                NSString *stringDate = [dateFormatter stringFromDate: gevent.gEventTiming];
+                NSLog(@"%@", stringDate);
+                            
+            
+                
+                [resultscsv appendString:[NSString stringWithFormat:@",%@",stringDate]];
+            }
+           NSLog(@" geventtiming %@",gevent.gEventTiming);
+        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+        
+    }
+
+NSString *emailTitle = @"Export GEvents";
+    
+    NSString* subjectString = [NSString stringWithFormat:@"Events From Athletics Meet %@", self.meetObject.meetName];
+    // Email Content
+    NSString *messageBody = [NSString stringWithFormat:@"Events From Athletics Meet %@ \n\n Can Be Imported Into Athletics Meet Manager IOS App. \n\n Long press csv file and choose 'Open in Athletics Meet Manager' to Import", self.meetObject.meetName];
+    // To address
+    
+    NSString* filename = [NSString stringWithFormat:@"%@_Events.csv", self.meetObject.meetName];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setSubject:subjectString];
+    
+    [mc setMessageBody:messageBody isHTML:NO];
+    
+    [mc addAttachmentData:[resultscsv dataUsingEncoding:NSUTF8StringEncoding]
+    
+  //  [mailer addAttachmentData:[NSData dataWithContentsOfFile:@"PathToFile.csv"]
+                     mimeType:@"text/csv" 
+                     fileName:filename];
+    
+    
+    // Present mail view controller on screen
+    
+    
+    
+    [self presentViewController:mc animated:YES completion:NULL];
+
 }
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+
+
+
+dispatch_async(dispatch_get_main_queue(), ^{
+UIAlertController * alert;
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+        {
+                     alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Cancelled"
+                                        message:@"Export Via Email Cancelled By User"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+                //    [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail cancelled");
+           
+            break;
+        }
+        //
+        case MFMailComposeResultSaved:
+        {
+                    alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Mail Saved"
+                                        message:@"Email With Exported Item Names Saved For Later Sending"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+              //      [self presentViewController:alert animated:YES completion:nil];
+
+           NSLog(@"Mail saved");
+            break;
+        }
+            
+           
+        case MFMailComposeResultSent:
+        {
+                     alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Successfull"
+                                        message:@"Item Names Exported Via Email And Mail Sent Successfully"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+             //       [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail sent");
+           
+            break;
+        }
+            //
+            
+        case MFMailComposeResultFailed:
+        {
+                    alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Failed"
+                                        message:@"Sending Mail Failed, Please Check Your Email Settings"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+              //      [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+           
+            break;
+        }
+         //
+            
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self presentViewController:alert animated:YES completion:nil];
+        }];
+  
+  });
+    
+ 
+}
+
 @end

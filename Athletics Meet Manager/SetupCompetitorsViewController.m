@@ -9,8 +9,13 @@
 #import "SetupCompetitorsViewController.h"
 #import "CompetitorTableViewCell.h"
 #import "Competitor.h"
+#import "CEventScore.h"
+#import "Event.h"
+#import "GEvent.h"
+#import "Division.h"
 #import "Meet.h"
 #import "AppDelegate.h"
+
 
 @interface SetupCompetitorsViewController ()
 
@@ -533,13 +538,13 @@ NSArray  *newArray = appDelegate.csvDataArray;
 
  NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
 
-        for (NSString* string in newArray) {
-                    NSLog(@"%@",string);
+        for (NSString* stringWhole in newArray) {
+                    NSLog(@"%@",stringWhole);
             
                         //create objects here
             
                     // nslog(@"Coming from CompetitorAdd Done!");
-                    
+                    NSArray  *CArray =  [stringWhole componentsSeparatedByString:@","];
             
                 
                     Competitor *competitor = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
@@ -548,11 +553,159 @@ NSArray  *newArray = appDelegate.csvDataArray;
                     ////////
                     /////   set values
                     ///////
-                 
-                      competitor.compName = string;
-            
+                    if (CArray.count > 0) {
+    
+                      competitor.compName = CArray[0];
                     
+                    }
+                    int total = CArray.count;
             
+            
+                     NSLog(@"xxxxxxxxxxxxxxxxxxx");
+            
+            
+                    for (int i = 2; i<total; i = i + 2) {
+                        
+                        NSLog(@"i : %d  %@", i-1, CArray[i-1]);
+                       NSLog(@"i + 1: %d  %@", i, CArray[i]);
+                       
+                        
+                        NSString* entityname = @"Event";
+                        NSError *error;
+                        
+                            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                            NSEntityDescription *entity = [NSEntityDescription entityForName: entityname inManagedObjectContext:self.managedObjectContext];
+                            [fetchRequest setEntity:entity];
+                            
+                        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"(meet == %@)", self.teamObject.meet];
+                        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"(gEvent.gEventName == %@)", CArray[i-1]];
+                        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"(division.divName == %@)", CArray[i]];
+                    
+                    NSArray *preds = [NSArray arrayWithObjects: predicate1,predicate2, predicate3,  nil];
+                    NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+                    [fetchRequest setPredicate:andPred];
+                    
+                        
+                    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"eventID" ascending:YES];
+                   NSArray *sortDescriptors = @[sortDescriptor];
+                    
+                    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+                            
+                    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+                        
+                            if (fetchedObjects.count > 0) {
+    
+                                Event* thisEvent = fetchedObjects[0];
+                        
+                        
+                                            NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+                                        
+                                            CEventScore *ceventscore = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
+                                            
+                                            
+
+                                            
+                                            //// Test
+                                            
+                                          //  // nslog(@"Gevent %@ Division %@ ",sourceViewController.event.gEvent.gEventName, sourceViewController.event.division.divName);
+
+                                            
+                                            
+                                            
+                                            ////
+                                            ////////
+                                            /////   set values
+                                            ///////
+                                        
+                                           [ceventscore setValue: nil forKey:@"result"];
+                                           [ceventscore setValue:nil forKey:@"personalBest"];
+                                           [ceventscore setValue:nil forKey:@"placing"];
+                                           [ceventscore setValue:nil forKey:@"score"];
+                                           [ceventscore setValue:nil forKey:@"resultEntered"];
+                                          
+                        
+                                             //////
+                                            // link relationships
+                                            /////
+                                
+                                           
+                                           ceventscore.event = thisEvent;
+                                             
+                                
+                                             
+                                             thisEvent.eventEdited = [NSNumber numberWithBool:YES];
+
+                                
+                                            ceventscore.competitor = competitor;
+                                
+                                            ceventscore.team = competitor.team;
+                                
+                                            ceventscore.meet = competitor.meet;
+                                
+                                           
+                                           
+                                            
+                                            //////
+                                            
+                                            
+                                            
+                                              // Store EventID data
+                                            //  if (!sourceViewController.editing) {
+                                          
+                                            
+                                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                        
+                                         
+                                         int tempint =  [competitor.meet.meetID intValue];
+                                         
+                                         NSString * keystring = [NSString stringWithFormat:@"%dlastcEventScoreID",tempint];  ////
+                                         
+                                        
+                                         
+                                         if (![defaults objectForKey:keystring]) {                    /////
+                                         
+                                         int idint = 0;
+                                         NSNumber *idnumber = [NSNumber numberWithInt:idint];
+                                         [defaults setObject:idnumber forKey:keystring];             ///////
+                                         
+                                         }
+                                    NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+                                           int oldint = [oldnumber intValue];
+                                           int newint = oldint + 1;
+                                           NSNumber *newnumber = [NSNumber numberWithInt:newint];
+                                           [ceventscore setValue: newnumber forKey: @"cEventScoreID"];                  //////////
+                                          
+                                        [defaults setObject: newnumber forKey:keystring];            /////////
+                                         
+                                        [defaults synchronize];
+                                    // }
+                                        ////
+                                      
+                                            
+                                                    NSError *error = nil;
+
+                                            
+                                            
+
+                                            // Save the context.
+                                            
+                                                if (![context save:&error]) {
+                                            // Replace this implementation with code to handle the error appropriately.
+                                            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                                                // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+                                                //abort();
+                                                }
+                       
+                            }
+                            else
+                            {
+                                NSLog(@"no event found for gEvent %@  div %@ ",CArray[i-1],CArray[i] );
+                            }
+                    }
+                    
+                    NSLog(@"xxxxxxxxxxxxxxxxxxx");
                     
                      //////
                     // link relationships
@@ -622,8 +775,229 @@ NSArray  *newArray = appDelegate.csvDataArray;
 
 }
 - (IBAction)importButtonPressed:(UIBarButtonItem *)sender {
-    [self loadCSVArray];
+dispatch_async(dispatch_get_main_queue(), ^{
+                
+        UIAlertController * alert=   [UIAlertController
+                            alertControllerWithTitle:@"Importing Competitors"
+                            message:@"Competitors imported from csv file. \n\n First item in row will be treated as the Competitor Name. Subsequent items will be checked against Event and Division names in pairs seperated by comma. Competitor will be entered if both correspond to a valid Event. \n\n e.g. 'CompetitorName, Event1, Division1, Event2, Division2, ... Etc '\n\n These can be edited by long pressing on the relavant team cell or adding/deleting events for the Competitor."
+                            preferredStyle:UIAlertControllerStyleAlert];
+
+
+        UIAlertAction* ok = [UIAlertAction
+                actionWithTitle:@"OK"
+                style:UIAlertActionStyleDefault
+                handler:^(UIAlertAction * action)
+                {
+                    
+                    [alert dismissViewControllerAnimated:YES completion:nil];
+                    [self loadCSVArray];
+               
+                }];
+                
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+    });
 }
 - (IBAction)exportButtonPressed:(UIBarButtonItem *)sender {
+
+NSMutableString *resultscsv = [NSMutableString stringWithString:@""];
+
+
+/// fetch divisions
+NSString* entityname = @"Competitor";
+    NSError *error;
+                        
+                            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                            NSEntityDescription *entity = [NSEntityDescription
+                    entityForName: entityname inManagedObjectContext:self.managedObjectContext];
+                            [fetchRequest setEntity:entity];
+                            
+                            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.teamObject.meet];
+                    [fetchRequest setPredicate:predicate];
+                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"compID" ascending:YES];
+                   NSArray *sortDescriptors = @[sortDescriptor];
+                    
+                    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+                            
+                            NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+
+/// end fetch divisions
+
+    for (Competitor* comp in fetchedObjects) {
+        
+        [resultscsv appendString:[NSString stringWithFormat:@"%@",comp.compName]];
+        
+        NSSet* cScores= comp.cEventScores;
+        
+        for (CEventScore* cscore in cScores) {
+            NSString* geventname = cscore.event.gEvent.gEventName;
+            
+            
+            NSString* divname = cscore.event.division.divName;
+            
+            [resultscsv appendString:[NSString stringWithFormat:@",%@,%@",geventname,divname]];
+            
+        }
+        
+        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+        
+    }
+
+NSString *emailTitle = @"Export Competitors";
+    
+    NSString* subjectString = [NSString stringWithFormat:@"Competitors From Athletics Meet %@", self.teamObject.meet.meetName];
+    // Email Content
+    NSString *messageBody = [NSString stringWithFormat:@"Competitors From Athletics Meet %@ \n\n Can Be Imported Into Athletics Meet Manager IOS App. \n\n Long press csv file and choose 'Open in Athletics Meet Manager' to Import", self.teamObject.meet.meetName];
+    // To address
+    
+    NSString* filename = [NSString stringWithFormat:@"%@_Competitors.csv", self.teamObject.meet.meetName];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setSubject:subjectString];
+    
+    [mc setMessageBody:messageBody isHTML:NO];
+    
+    [mc addAttachmentData:[resultscsv dataUsingEncoding:NSUTF8StringEncoding]
+    
+  //  [mailer addAttachmentData:[NSData dataWithContentsOfFile:@"PathToFile.csv"]
+                     mimeType:@"text/csv" 
+                     fileName:filename];
+    
+    
+    // Present mail view controller on screen
+    
+    
+    
+    [self presentViewController:mc animated:YES completion:NULL];
+
 }
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+
+
+
+dispatch_async(dispatch_get_main_queue(), ^{
+UIAlertController * alert;
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+        {
+                     alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Cancelled"
+                                        message:@"Export Via Email Cancelled By User"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+                //    [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail cancelled");
+           
+            break;
+        }
+        //
+        case MFMailComposeResultSaved:
+        {
+                    alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Mail Saved"
+                                        message:@"Email With Exported Item Names Saved For Later Sending"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+              //      [self presentViewController:alert animated:YES completion:nil];
+
+           NSLog(@"Mail saved");
+            break;
+        }
+            
+           
+        case MFMailComposeResultSent:
+        {
+                     alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Successfull"
+                                        message:@"Item Names Exported Via Email And Mail Sent Successfully"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+             //       [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail sent");
+           
+            break;
+        }
+            //
+            
+        case MFMailComposeResultFailed:
+        {
+                    alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Failed"
+                                        message:@"Sending Mail Failed, Please Check Your Email Settings"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+              //      [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+           
+            break;
+        }
+         //
+            
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self presentViewController:alert animated:YES completion:nil];
+        }];
+  
+  });
+    
+ 
+}
+
 @end

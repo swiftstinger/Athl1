@@ -10,8 +10,8 @@
 #import <CoreData/CoreData.h>
 #import "GEventAddViewController.h"
 #import "Meet.h"
-
-@interface SetupGEventsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+#import <MessageUI/MessageUI.h>
+@interface SetupGEventsViewController : UITableViewController <NSFetchedResultsControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

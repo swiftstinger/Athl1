@@ -10,8 +10,8 @@
 #import <CoreData/CoreData.h>
 #import "CompetitorAddViewController.h"
 #import "Team.h"
-
-@interface SetupCompetitorsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+#import <MessageUI/MessageUI.h>
+@interface SetupCompetitorsViewController : UITableViewController <NSFetchedResultsControllerDelegate, MFMailComposeViewControllerDelegate>
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) id detailItem;

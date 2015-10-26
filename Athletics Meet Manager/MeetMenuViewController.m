@@ -2272,8 +2272,10 @@ NSLog(@"online id after: %@", newStr);
 
 }
 
-
-
+- (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {
+    [self saveMeetToPlist];
+}
+/**
 - (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {
 
 //check objects vs string values in itterations
@@ -2741,7 +2743,7 @@ for (Event *eventobject in eventSet )
     [self presentViewController:mc animated:YES completion:NULL];
 
 }
-
+**/
 - (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
 
@@ -5630,6 +5632,252 @@ NSLog(@"updating owner meet");
     });
 
 }
+
+
+- (void) saveMeetToPlist {
+//create array and dictionaries from objects with core data model as basis
+//writetofile and initfromfile
+
+//self.meetObject
+
+Meet* meet = self.meetObject;
+
+NSMutableDictionary * meetDict = [[NSMutableDictionary alloc] init];
+
+meetDict[@"cEventLimit"] = meet.cEventLimit;
+meetDict[@"competitorPerTeam"] = meet.competitorPerTeam;
+meetDict[@"decrementPerPlace"] = meet.decrementPerPlace;
+meetDict[@"divsDone"] = meet.divsDone;
+meetDict[@"eventsDone"] = meet.eventsDone;
+meetDict[@"maxScoringCompetitors"] = meet.maxScoringCompetitors;
+meetDict[@"meetDate"] = meet.meetDate;
+meetDict[@"meetEndTime"] = meet.meetEndTime;
+meetDict[@"meetID"] = meet.meetID;
+meetDict[@"meetName"] = meet.meetName;
+meetDict[@"meetStartTime"] = meet.meetStartTime;
+meetDict[@"scoreForFirstPlace"] = meet.scoreForFirstPlace;
+meetDict[@"scoreMultiplier"] = meet.scoreMultiplier;
+meetDict[@"teamsDone"] = meet.teamsDone;
+meetDict[@"onlineMeet"] = meet.onlineMeet;
+meetDict[@"updateDateAndTime"] = meet.updateDateAndTime;
+meetDict[@"updateByUser"] = meet.updateByUser;
+meetDict[@"isOwner"] = meet.isOwner;
+meetDict[@"onlineID"] = meet.onlineID;
+meetDict[@"editDone"] = meet.editDone;
+meetDict[@"edited"] = meet.edited;
+
+///////
+//@property (nonatomic, retain) NSSet *divisions;
+
+NSMutableArray* divisionsArray = [[NSMutableArray alloc] init];
+    for (Division* div in meet.divisions) {
+       NSMutableDictionary * divDict = [[NSMutableDictionary alloc] init];
+       
+        divDict[@"divID"] =  div.divID;
+        divDict[@"divName"] = div.divName;
+        divDict[@"updateByUser"] = div.updateByUser;
+        divDict[@"updateDateAndTime"] = div.updateDateAndTime;
+        divDict[@"onlineID"] = div.onlineID;
+        divDict[@"editDone"] = div.editDone;
+        divDict[@"edited"] = div.edited;
+        
+        // events
+        divDict[@"meet"] = div.meet.meetName;
+        
+        [divisionsArray addObject:divDict];
+    }
+
+meetDict[@"divisions"] = divisionsArray;
+
+//////
+//@property (nonatomic, retain) NSSet *gEvents;
+
+NSMutableArray* gEventsArray = [[NSMutableArray alloc] init];
+    for (GEvent* gevent in meet.gEvents) {
+       NSMutableDictionary * gEventDict = [[NSMutableDictionary alloc] init];
+       
+        gEventDict[@"competitorsPerTeam"] = gevent.competitorsPerTeam;
+        gEventDict[@"decrementPerPlace"] = gevent.decrementPerPlace;
+        gEventDict[@"gEventID"] = gevent.gEventID;
+        gEventDict[@"gEventName"] = gevent.gEventName;
+        gEventDict[@"gEventTiming"] = gevent.gEventTiming;
+        gEventDict[@"gEventType"] = gevent.gEventType;
+        gEventDict[@"maxScoringCompetitors"] = gevent.maxScoringCompetitors;
+        gEventDict[@"scoreForFirstPlace"] = gevent.scoreForFirstPlace;
+        gEventDict[@"scoreMultiplier"] = gevent.scoreMultiplier;
+        gEventDict[@"updateByUser"] = gevent.updateByUser;
+        gEventDict[@"updateDateAndTime"] = gevent.updateDateAndTime;
+        gEventDict[@"onlineID"] = gevent.onlineID;
+        gEventDict[@"editDone"] = gevent.editDone;
+        gEventDict[@"edited"] = gevent.edited;
+        
+        // events = do in event
+        gEventDict[@"meet"] = gevent.meet.meetName;
+        
+        [gEventsArray addObject:gEventDict];
+    }
+
+meetDict[@"gEvents"] = gEventsArray;
+
+//////
+//@property (nonatomic, retain) NSSet *teams;
+
+NSMutableArray* teamsArray = [[NSMutableArray alloc] init];
+    for (Team* team in meet.teams) {
+       NSMutableDictionary * teamDict = [[NSMutableDictionary alloc] init];
+       
+        teamDict[@"teamAbr"] = team.teamAbr;
+        teamDict[@"teamID"] = team.teamID;
+        teamDict[@"teamName"] = team.teamName;
+        teamDict[@"teamPlace"] = team.teamPlace;
+        teamDict[@"teamScore"] = team.teamScore;
+        teamDict[@"updateDateAndTime"] = team.updateDateAndTime;
+        teamDict[@"updateByUser"] = team.updateByUser;
+        teamDict[@"onlineID"] = team.onlineID;
+        teamDict[@"editDone"] = team.editDone;
+        teamDict[@"edited"] = team.edited;
+
+
+        
+        //competitors, ceventscores do in them
+        teamDict[@"meet"] = team.meet.meetID;
+        
+        [teamsArray addObject:teamDict];
+    }
+
+meetDict[@"teams"] = teamsArray;
+
+
+
+//////
+//@property (nonatomic, retain) NSSet *competitors;
+
+NSMutableArray* compsArray = [[NSMutableArray alloc] init];
+    for (Competitor* comp in meet.competitors) {
+       NSMutableDictionary * compDict = [[NSMutableDictionary alloc] init];
+       
+        compDict[@"compID"] = comp.compID;
+        compDict[@"compName"] = comp.compName;
+        compDict[@"teamName"] = comp.teamName;
+        compDict[@"updateByUser"] = comp.updateByUser;
+        compDict[@"updateDateAndTime"] = comp.updateDateAndTime;
+        compDict[@"onlineID"] = comp.onlineID;
+        compDict[@"editDone"] = comp.editDone;
+        compDict[@"edited"] = comp.edited;
+        
+        //ceventscores do in them
+        compDict[@"team"] = comp.team.teamID;
+        compDict[@"meet"] = comp.meet.meetID;
+        [compsArray addObject:compDict];
+    }
+
+meetDict[@"competitors"] = compsArray;
+
+
+//////
+//@property (nonatomic, retain) NSSet *events;
+
+NSMutableArray* eventsArray = [[NSMutableArray alloc] init];
+    for (Event* event in meet.events) {
+       NSMutableDictionary * eventDict = [[NSMutableDictionary alloc] init];
+       
+        eventDict[@"eventDone"] = event.eventDone;
+        eventDict[@"eventEdited"] = event.eventEdited;
+        eventDict[@"eventID"] = event.eventID;
+        eventDict[@"startTime"] = event.startTime;
+        eventDict[@"updateByUser"] = event.updateByUser;
+        eventDict[@"updateDateAndTime"] = event.updateDateAndTime;
+        eventDict[@"onlineID"] = event.onlineID;
+        eventDict[@"editDone"] = event.editDone;
+        eventDict[@"edited"] = event.edited;
+
+
+        
+        //ceventscores do in them
+        eventDict[@"division"] = event.division.divID;
+        eventDict[@"gEvent"] = event.gEvent.gEventID;
+        eventDict[@"meet"] = event.meet.meetID;
+        [eventsArray addObject:eventDict];
+    }
+
+meetDict[@"events"] = eventsArray;
+
+
+
+//////
+//@property (nonatomic, retain) NSSet *cEventsScores;
+
+NSMutableArray* cscoresArray = [[NSMutableArray alloc] init];
+    for (CEventScore* cscore in meet.cEventsScores) {
+       NSMutableDictionary * cscoreDict = [[NSMutableDictionary alloc] init];
+       
+        cscoreDict[@"cEventScoreID"] = cscore.cEventScoreID;
+        cscoreDict[@"highJumpPlacingManual"] = cscore.highJumpPlacingManual;
+        cscoreDict[@"personalBest"] = cscore.personalBest;
+        cscoreDict[@"placing"] = cscore.placing;
+        cscoreDict[@"result"] = cscore.result;
+        cscoreDict[@"resultEntered"] = cscore.resultEntered;
+        cscoreDict[@"score"] = cscore.score;
+        cscoreDict[@"updateByUser"] = cscore.updateByUser;
+        cscoreDict[@"updateDateAndTime"] = cscore.updateDateAndTime;
+        cscoreDict[@"onlineID"] = cscore.onlineID;
+        cscoreDict[@"edited"] = cscore.edited;
+        cscoreDict[@"editDone"] = cscore.editDone;
+
+
+        cscoreDict[@"competitor"] = cscore.competitor.compID;
+        cscoreDict[@"event"] = cscore.event.eventID;
+        cscoreDict[@"team"] = cscore.team.teamID;
+        cscoreDict[@"meet"] = cscore.meet.meetID;
+        [cscoresArray addObject:cscoreDict];
+    }
+
+meetDict[@"cEventsScores"] = cscoresArray;
+
+
+NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [path objectAtIndex:0];
+    
+    NSString *plistFileName = [NSString stringWithFormat:@"%@.plist",self.meetObject.meetName];
+    
+NSString*plistPath = [documentDirectory stringByAppendingPathComponent:plistFileName];
+
+[meetDict writeToFile:plistPath atomically: YES];
+
+
+NSString *emailTitle = @"Export Meet Plist";
+    
+    NSString* subjectString = [NSString stringWithFormat:@"Plist Of Athletics Meet %@", self.meetObject.meetName];
+    // Email Content
+    NSString *messageBody = [NSString stringWithFormat:@"Plist of Athletics Meet %@ ", self.meetObject.meetName];
+    // To address
+    
+    
+    NSData *myData = [NSData dataWithContentsOfFile:plistPath];
+    
+    
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setSubject:subjectString];
+    
+    [mc setMessageBody:messageBody isHTML:NO];
+    
+    [mc addAttachmentData:myData mimeType:@"application/xml" fileName:plistFileName];
+    
+   
+    
+    
+    // Present mail view controller on screen
+    
+    
+    
+    [self presentViewController:mc animated:YES completion:NULL];
+
+}
+
+
 
 
 @end

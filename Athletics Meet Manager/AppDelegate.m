@@ -11,6 +11,7 @@
 //#import "MeetMenuViewController.h"
 #import "MasterViewController.h"
 #import "Meet.h"
+#import "Flurry.h"
 
 @interface AppDelegate ()
 
@@ -21,6 +22,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [Flurry startSession:@"M65479RVRBXH8V8QV8R6"];
+    
+    
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     MasterViewController *controller = (MasterViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;

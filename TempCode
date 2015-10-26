@@ -3,6 +3,14 @@ div done but gevent needs to export event type (check if track or field or hight
 explain adding events via csv file in docs. export event via csv file
 
 
+DO NOT MAKE SAME ONINEID, REGENERATE ALL ON LOAD
+dict1[@"key"] = @"value";
+To get a value with shorthand:
+
+NSString *value = dict1[@"key"];
+
+
+
 1. add import and export button to div, gevents, teams, team (comp entry) done
 
 2. add [self loadCSVArray]; to import button ibaction method done
@@ -12,13 +20,30 @@ explain adding events via csv file in docs. export event via csv file
 
 3. hide and show import button in appdelegate array check div done
 
-4. add export function to export names of all items to csv and name "meetname_divisions" "meetname_teamname competitors"etc
+4. add export function to export names of all items to csv and name "meetname_divisions" "meetname_teamname competitors"etc done
+
+444 divs done
+    gevents done
+    Teams done
+    competitors (add events by itterating and checking each against event list) done
+
+5 default meets
+6 preview files
+
+7 print or html view make pictures
+
+
 
 5. info buttons tut expand
 
 6 combine comps
 
-7
+7 add new yahoo flurry
+
+
+[Flurry logEvent:@"Article_Read"];
+
+
 
 - (void)loadCSVArray {
 NSLog(@"here");

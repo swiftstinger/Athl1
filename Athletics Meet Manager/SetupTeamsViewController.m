@@ -581,8 +581,8 @@ NSArray  *newArray = appDelegate.csvDataArray;
     
    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
-        for (NSString* string in newArray) {
-                    NSLog(@"%@",string);
+        for (NSString* stringwhole in newArray) {
+                    NSLog(@"%@",stringwhole);
             
             //create objects here
 
@@ -595,22 +595,35 @@ NSArray  *newArray = appDelegate.csvDataArray;
                 ////////
                 /////   set values
                 ///////
-             
-            
-                [team setValue: string forKey:@"teamName"];
-            
-            
+                NSArray  *tmArray =  [stringwhole componentsSeparatedByString:@","];
                 NSString *abr = nil;
+                if (tmArray.count > 0) {
+                    
+                   team.teamName = tmArray[0];
+                    if ([tmArray[0] length] >= 3) {
+                    
+                        abr = [tmArray[0] substringToIndex:3];
+                    }
+                    else
+                    {
+                        abr = tmArray[0];
+                    }
+                }
+            
+            
 
-                if ([string length] >= 3) {
-                
-                    abr = [string substringToIndex:3];
+                if (tmArray.count > 1) {
+                    abr = tmArray[1];
+                    NSLog(@"abr found");
                 }
                 else
                 {
-                    abr = string;
+                
+                    NSLog(@"no abr found");
+            
+                    
                 }
-                [team setValue: abr forKey:@"teamAbr"];
+                team.teamAbr = abr;
             
             
             
@@ -683,7 +696,7 @@ NSArray  *newArray = appDelegate.csvDataArray;
                 
         UIAlertController * alert=   [UIAlertController
                             alertControllerWithTitle:@"Importing Teams"
-                            message:@"Team names imported from csv file. \n\n All team abbreviations set to the first 3 letters of the team name. \n\n These can be edited by long pressing on the relavant team cell."
+                            message:@"Team names imported from csv file. \n\n First item in row will be treated as the Team Name. The second the Team Abbreviation. \n\n These can be edited by long pressing on the relavant team cell."
                             preferredStyle:UIAlertControllerStyleAlert];
 
 
@@ -703,5 +716,192 @@ NSArray  *newArray = appDelegate.csvDataArray;
     });
 }
 - (IBAction)exportButtonPressed:(UIBarButtonItem *)sender {
+NSMutableString *resultscsv = [NSMutableString stringWithString:@""];
+
+
+/// fetch divisions
+NSString* entityname = @"Team";
+    NSError *error;
+                        
+                            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                            NSEntityDescription *entity = [NSEntityDescription
+                    entityForName: entityname inManagedObjectContext:self.managedObjectContext];
+                            [fetchRequest setEntity:entity];
+                            
+                            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", self.meetObject];
+                    [fetchRequest setPredicate:predicate];
+                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"teamID" ascending:YES];
+                   NSArray *sortDescriptors = @[sortDescriptor];
+                    
+                    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+                            
+                            NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+
+/// end fetch divisions
+
+    for (Team* team in fetchedObjects) {
+        
+        [resultscsv appendString:[NSString stringWithFormat:@"%@,%@",team.teamName, team.teamAbr]];
+        
+        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+        
+    }
+
+NSString *emailTitle = @"Export Teams";
+    
+    NSString* subjectString = [NSString stringWithFormat:@"Teams From Athletics Meet %@", self.meetObject.meetName];
+    // Email Content
+    NSString *messageBody = [NSString stringWithFormat:@"Teams From Athletics Meet %@ \n\n Can Be Imported Into Athletics Meet Manager IOS App. \n\n Long press csv file and choose 'Open in Athletics Meet Manager' to Import", self.meetObject.meetName];
+    // To address
+    
+    NSString* filename = [NSString stringWithFormat:@"%@_Teams.csv", self.meetObject.meetName];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setSubject:subjectString];
+    
+    [mc setMessageBody:messageBody isHTML:NO];
+    
+    [mc addAttachmentData:[resultscsv dataUsingEncoding:NSUTF8StringEncoding]
+    
+  //  [mailer addAttachmentData:[NSData dataWithContentsOfFile:@"PathToFile.csv"]
+                     mimeType:@"text/csv" 
+                     fileName:filename];
+    
+    
+    // Present mail view controller on screen
+    
+    
+    
+    [self presentViewController:mc animated:YES completion:NULL];
+
 }
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+
+
+
+dispatch_async(dispatch_get_main_queue(), ^{
+UIAlertController * alert;
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+        {
+                     alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Cancelled"
+                                        message:@"Export Via Email Cancelled By User"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+                //    [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail cancelled");
+           
+            break;
+        }
+        //
+        case MFMailComposeResultSaved:
+        {
+                    alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Mail Saved"
+                                        message:@"Email With Exported Item Names Saved For Later Sending"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+              //      [self presentViewController:alert animated:YES completion:nil];
+
+           NSLog(@"Mail saved");
+            break;
+        }
+            
+           
+        case MFMailComposeResultSent:
+        {
+                     alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Successfull"
+                                        message:@"Item Names Exported Via Email And Mail Sent Successfully"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+             //       [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail sent");
+           
+            break;
+        }
+            //
+            
+        case MFMailComposeResultFailed:
+        {
+                    alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Failed"
+                                        message:@"Sending Mail Failed, Please Check Your Email Settings"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+              //      [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+           
+            break;
+        }
+         //
+            
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self presentViewController:alert animated:YES completion:nil];
+        }];
+  
+  });
+    
+ 
+}
+
 @end
