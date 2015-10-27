@@ -9,7 +9,8 @@ To get a value with shorthand:
 
 NSString *value = dict1[@"key"];
 
-
+NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"plistName" ofType:@"plist"]; 
+NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
 
 1. add import and export button to div, gevents, teams, team (comp entry) done
 

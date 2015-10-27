@@ -10,6 +10,12 @@
 #import "MeetMenuViewController.h"
 #import "MeetTableViewCell.h"
 #import "Meet.h"
+#import "Division.h"
+#import "GEvent.h"
+#import "Team.h"
+#import "Competitor.h"
+#import "CEventScore.h"
+#import "Event.h"
 
 @interface MasterViewController ()
 
@@ -110,6 +116,379 @@ dispatch_async(dispatch_get_main_queue(), ^{
 
 
 }
+- (void) setExampleMeet {
+
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"ExampleMeet" ofType:@"plist"];
+NSMutableDictionary *meetDict = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+
+NSLog(@"meetname %@",meetDict[@"meetName"]);
+
+NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+    Meet *meet = [NSEntityDescription insertNewObjectForEntityForName:@"Meet" inManagedObjectContext:context];
+    
+        
+        ////////
+        /////   set values
+        ///////
+        if (meetDict[@"meetName"]) {
+        [meet setValue: meetDict[@"meetName"] forKey:@"meetName"];
+            
+        }
+        if (meetDict[@"meetDate"]) {
+        [meet setValue: meetDict[@"meetDate"] forKey:@"meetDate"];
+            
+        }
+        if (meetDict[@"cEventLimit"]) {
+        [meet setValue: meetDict[@"cEventLimit"] forKey:@"cEventLimit"];
+            
+        }
+        
+        
+        if (meetDict[@"competitorPerTeam"]) {
+        [meet setValue: meetDict[@"competitorPerTeam"] forKey:@"competitorPerTeam"];
+    
+        }
+
+        
+        if (meetDict[@"maxScoringCompetitors"]) {
+        [meet setValue: meetDict[@"maxScoringCompetitors"] forKey:@"maxScoringCompetitors"];
+    
+        }
+        
+        if (meetDict[@"scoreForFirstPlace"]) {
+        [meet setValue: meetDict[@"scoreForFirstPlace"] forKey:@"scoreForFirstPlace"];
+    
+        }
+        
+        if (meetDict[@"decrementPerPlace"]) {
+        [meet setValue: meetDict[@"decrementPerPlace"] forKey:@"decrementPerPlace"];
+    
+        }
+        
+        
+         if (meetDict[@"scoreMultiplier"]) {
+        [meet setValue: meetDict[@"scoreMultiplier"] forKey:@"scoreMultiplier"];
+    
+        }
+        
+    
+        
+        meet.onlineMeet = meetDict[@"onlineMeet"];
+        meet.divsDone = meetDict[@"divsDone"];
+        meet.eventsDone = meetDict[@"eventsDone"];
+        meet.teamsDone = meetDict[@"teamsDone"];
+        meet.meetID = meetDict[@"meetID"];
+    
+        ///////
+        // Store onlineID data
+        ////////
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+     
+     
+     
+     if (![defaults objectForKey:@"lastMeetID"]) {
+     
+     int idint = 0;
+     NSNumber *idnumber = [NSNumber numberWithInt:idint];
+     
+     
+     [defaults setObject:idnumber forKey:@"lastMeetID"];
+     
+     }
+       
+       NSNumber *oldnumber = [defaults objectForKey:@"lastMeetID"];
+       
+       
+       int oldint = [oldnumber intValue];
+       
+       int newint = oldint + 1;
+       
+       NSNumber *newnumber = [NSNumber numberWithInt:newint];
+       
+       
+    
+    NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
+    
+    NSString* newdevID;
+
+    NSRange numberrange = [devID rangeOfString:@">" ];
+    if (numberrange.location != NSNotFound) {
+         newdevID = [devID substringFromIndex:numberrange.location + 2];
+    } else {
+         newdevID = devID;
+    }
+
+    devID = newdevID;
+    
+       
+    NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    
+    
+    
+      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, newnumber,timestamp];
+      [meet setValue: onlineID forKey: @"onlineID"];
+
+        NSLog(@"timestamp %@  onlineID: %@",timestamp, onlineID);
+
+    [defaults setObject: newnumber forKey:@"lastMeetID"];
+     
+    [defaults synchronize];
+     
+    ////
+    
+    // Divs
+    
+    ///
+    
+    NSArray* divsArray  = meetDict[@"divisions"];
+    
+        for (NSDictionary* divDict in divsArray) {
+                Division *div = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
+            
+            
+                div.divID = divDict[@"divID"];
+                div.divName = divDict[@"divName"];
+                div.updateByUser = divDict[@"updateByUser"];
+                //divDict[@"updateDateAndTime"] = div.updateDateAndTime;
+                //divDict[@"onlineID"] = div.onlineID;
+                div.editDone = divDict[@"editDone"];
+                div.edited = divDict[@"edited"];
+                
+                // events
+                div.meet = meet;
+    
+        
+        }
+    /////////////////
+    
+    
+    
+      NSArray* gEventsArray  = meetDict[@"gEvents"];
+    
+        for (NSDictionary* gEventDict in gEventsArray) {
+        
+        GEvent *gevent = [NSEntityDescription insertNewObjectForEntityForName:@"GEvent" inManagedObjectContext:context];
+        
+        
+            gevent.competitorsPerTeam = gEventDict[@"competitorsPerTeam"];
+        gevent.decrementPerPlace = gEventDict[@"decrementPerPlace"];
+        gevent.gEventID = gEventDict[@"gEventID"];
+        gevent.gEventName = gEventDict[@"gEventName"];
+       // gEventDict[@"gEventTiming"] = gevent.gEventTiming;
+        gevent.gEventType = gEventDict[@"gEventType"];
+        gevent.maxScoringCompetitors =  gEventDict[@"maxScoringCompetitors"];
+        gevent.scoreForFirstPlace = gEventDict[@"scoreForFirstPlace"];
+        gevent.scoreMultiplier = gEventDict[@"scoreMultiplier"];
+        gevent.updateByUser = gEventDict[@"updateByUser"];
+        //gEventDict[@"updateDateAndTime"] = gevent.updateDateAndTime;
+       // gEventDict[@"onlineID"] = gevent.onlineID;
+        gevent.editDone = gEventDict[@"editDone"];
+        gevent.edited = gEventDict[@"edited"];
+        
+        // events = do in event
+        gevent.meet = meet;
+        
+        
+        }
+    
+        //////////////
+    
+        NSArray* teamsArray  = meetDict[@"teams"];
+    
+        for (NSDictionary* teamDict in teamsArray) {
+    
+            Team *team = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
+            
+            team.teamAbr = teamDict[@"teamAbr"];
+            team.teamID = teamDict[@"teamID"];
+            team.teamName = teamDict[@"teamName"];
+            team.teamPlace = teamDict[@"teamPlace"];
+            team.teamScore = teamDict[@"teamScore"];
+            //teamDict[@"updateDateAndTime"] = team.updateDateAndTime;
+            team.updateByUser = teamDict[@"updateByUser"];
+            //teamDict[@"onlineID"] = team.onlineID;
+            team.editDone = teamDict[@"editDone"];
+            team.edited = teamDict[@"edited"];
+
+
+            
+            //competitors, ceventscores do in them
+            team.meet = meet;
+            
+            
+        }
+    
+    
+[self saveContext];
+    
+         NSArray* compsArray  = meetDict[@"competitors"];
+    
+        for (NSDictionary* compDict in compsArray) {
+    
+            Competitor *comp = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
+            
+            comp.compID = compDict[@"compID"];
+            comp.compName = compDict[@"compName"];
+            comp.teamName = compDict[@"teamName"];
+            comp.updateByUser = compDict[@"updateByUser"];
+           // compDict[@"updateDateAndTime"] = comp.updateDateAndTime;
+           // compDict[@"onlineID"] = comp.onlineID;
+            comp.editDone = compDict[@"editDone"];
+            comp.edited = compDict[@"edited"];
+            
+            //ceventscores do in them
+            comp.team = (Team*)[self getObjectWithID:compDict[@"team"] IDLabel:@"teamID" AndType:@"Team" FromMeet:meet];
+            comp.meet = meet;
+            
+            
+        }
+    
+[self saveContext];
+    
+        NSArray* eventsArray  = meetDict[@"events"];
+    
+        for (NSDictionary* eventDict in eventsArray) {
+    
+            Event *event = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:context];
+            
+            event.eventDone = eventDict[@"eventDone"];
+            event.eventEdited = eventDict[@"eventEdited"];
+            event.eventID = eventDict[@"eventID"];
+           // eventDict[@"startTime"] = event.startTime;
+            event.updateByUser = eventDict[@"updateByUser"];
+           // eventDict[@"updateDateAndTime"] = event.updateDateAndTime;
+           // eventDict[@"onlineID"] = event.onlineID;
+            event.editDone = eventDict[@"editDone"];
+            event.edited = eventDict[@"edited"];
+
+
+            
+            //ceventscores do in them
+            event.division = (Division*)[self getObjectWithID:eventDict[@"division"] IDLabel:@"divID" AndType:@"Division" FromMeet:meet];
+            
+            
+           
+            event.gEvent = (GEvent*)[self getObjectWithID:eventDict[@"gEvent"]IDLabel:@"gEventID" AndType:@"GEvent" FromMeet:meet];
+            event.meet = meet;
+            
+            
+        }
+    
+[self saveContext];
+
+        NSArray* cscoresArray  = meetDict[@"cEventsScores"];
+    
+        for (NSDictionary* cscoreDict in cscoresArray) {
+    
+            CEventScore *cscore = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
+             cscore.competitor = (Competitor*)[self getObjectWithID:cscoreDict[@"competitor"] IDLabel:@"compID" AndType:@"Competitor" FromMeet:meet];
+             cscore.event = (Event*)[self getObjectWithID:cscoreDict[@"event"] IDLabel:@"eventID" AndType:@"Event" FromMeet:meet];
+            if (cscoreDict[@"cEventScoreID"]) {
+                cscore.cEventScoreID = cscoreDict[@"cEventScoreID"];
+            }
+            if (cscoreDict[@"highJumpPlacingManual"]) {
+                cscore.highJumpPlacingManual = cscoreDict[@"highJumpPlacingManual"];
+            }
+            //cscoreDict[@"personalBest"] = cscore.personalBest;
+        //    if (cscoreDict[@"placing"]) {
+                cscore.placing = cscoreDict[@"placing"];
+        //    }
+        //    if (cscoreDict[@"result"]) {
+                cscore.result = cscoreDict[@"result"];
+                NSLog(@"was found  result for %@ in event %@ %@  newresult: %@ oldResult: %@",cscore.competitor.compName,cscore.event.gEvent.gEventName,cscore.event.division.divName,cscore.result,cscoreDict[@"result"]);
+        //    }
+            
+            if (cscoreDict[@"resultEntered"]) {
+                 cscore.resultEntered = cscoreDict[@"resultEntered"];
+            }
+           
+        //    if (cscoreDict[@"score"]) {
+                cscore.score = cscoreDict[@"score"];
+        //    }
+            if (cscoreDict[@"updateByUser"]) {
+                cscore.updateByUser = cscoreDict[@"updateByUser"];
+            }
+            //cscoreDict[@"updateDateAndTime"] = cscore.updateDateAndTime;
+            //cscoreDict[@"onlineID"] = cscore.onlineID;
+            if (cscoreDict[@"edited"]) {
+                cscore.edited = cscoreDict[@"edited"];
+            }
+            if (cscoreDict[@"editDone"]) {
+                cscore.editDone = cscoreDict[@"editDone"];
+            }
+            
+           
+            
+            
+           
+            
+           
+            
+            cscore.team = (Team*)[self getObjectWithID:cscoreDict[@"team"] IDLabel:@"teamID" AndType:@"Team" FromMeet:meet];
+            cscore.meet = meet;
+            
+            
+        }
+    
+[self saveContext];
+
+
+
+
+}
+
+- (id) getObjectWithID: (NSString*) objectID IDLabel: (NSString*)idLabel AndType: (NSString*) type FromMeet: (Meet*) meet
+{
+
+        NSError *error;
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *description = [NSEntityDescription entityForName:type inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+
+            NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(meet == %@)", meet];
+            NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(%K == %@)", idLabel,objectID];
+            NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+            NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+            [fetchRequest setPredicate:andPred];
+    
+            NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    
+            if (fetchedObjects.count > 0) {
+                NSLog(@"object found");
+                return fetchedObjects[0];
+                
+            }
+            else
+            {
+                NSLog(@"no object found");
+                return nil;
+            }
+
+}
+
+- (void) saveContext {
+
+
+        NSError *error = nil;
+
+        // Save the context.
+        
+            if (![self.managedObjectContext save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -127,12 +506,13 @@ dispatch_async(dispatch_get_main_queue(), ^{
     NSLog(@"view did load");
      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
      
-     
+     [self setExampleMeet];
+
      
      if (![defaults objectForKey:@"firstTimeDone"]) {
 
         [defaults setObject: @"1" forKey:@"firstTimeDone"];
-    
+         
             [self performSegueWithIdentifier:@"showTut" sender:self];
         
         }

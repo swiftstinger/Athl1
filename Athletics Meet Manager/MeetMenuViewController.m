@@ -24,6 +24,7 @@
 @property  BOOL updateOnlineSuccess;
 @property  BOOL sharing;
 @property  BOOL exportresults;
+@property  BOOL exportmeet;
 @property  BOOL sendpermission;
 @property BOOL doUpdate;
 @property NSMutableArray *divServerMutableArray;
@@ -192,7 +193,7 @@ if ([self.meetObject.onlineMeet boolValue]) {
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
     
-    
+    self.exportmeet = NO;
     self.exportresults = NO;
     self.sendpermission = NO;
     
@@ -2272,478 +2273,7 @@ NSLog(@"online id after: %@", newStr);
 
 }
 
-- (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {
-    [self saveMeetToPlist];
-}
-/**
-- (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {
 
-//check objects vs string values in itterations
-
-NSSet* teamSet = self.meetObject.teams;
-NSSet* divSet = self.meetObject.divisions;
-NSSet* gEventSet = self.meetObject.gEvents;
-
-
-//NSArray *teamsArray = [[NSMutableArray alloc] init];
-double teamArray[[teamSet count]];
-
-//[teamsArray addObject:object];
-int teamcounter;
-
-NSMutableString *resultscsv = [NSMutableString stringWithString:@""];
-
-//add your content to the csv
-//[csv appendFormat:@"MY DATA YADA YADA"];
-    
-    double globalTeamArray[[teamSet count]];
-
-    
-        for (int i = 0; i < [teamSet count]; i++) {
-        
-            globalTeamArray[i] = 0.0;
-            
-        }
-    
-        
-
-
-
-
-for (Division *divobject in divSet )
-    {
-
-    //=== write new line
-    [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
-
-
-
-    //=== write div name //not comma
-
-
-    [resultscsv appendString:[NSString stringWithFormat:@"%@",divobject.divName]];
-
-        teamcounter = 0;
-        for (Team *teamobject in teamSet )
-        {
-    
-        //int inttemp = 0;
-    
-        teamArray[teamcounter] = 0.0;
-        // === write , team name
-        [resultscsv appendString:[NSString stringWithFormat:@",%@",teamobject.teamName]];
-        teamcounter++;
-        }
- 
- 
- 
-
-
-        for (GEvent *geventobject in gEventSet )
-        {
-            //=== write new line
-            [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
-        
-            //===  write event name
-            [resultscsv appendString:[NSString stringWithFormat:@"%@",geventobject.gEventName]];
-        
-        
-                //loop teams in teamarray
-                NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-                NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
-        
-                [fetchRequest setEntity:description];
-        
-                teamcounter = 0;
-        
-            for (Team *teamobject in teamSet )
-            {
-            
-                    //get all score with div and event and team
-                
-                
-            
-
-                NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(score != NULL)", nil];
-                NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(event.division == %@)", divobject];
-                NSPredicate *pred3 = [NSPredicate predicateWithFormat:@"(event.gEvent == %@)", geventobject];
-                NSPredicate *pred4 = [NSPredicate predicateWithFormat:@"(team == %@)", teamobject];
-            
-                NSArray *preds = [NSArray arrayWithObjects: pred1,pred2,pred3,pred4, nil];
-                NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
-
-                [fetchRequest setPredicate:andPred];
-    
-    
-                NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
-                       NSArray *sortDescriptors = @[highestToLowest];
-    
-                [fetchRequest setSortDescriptors:sortDescriptors];
-
-
-                NSError *error;
-                NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
- 
-    
-    
-                double score = 0.0;
-
-                NSNumber *currentScore;
-                for(CEventScore *object in results) {
-       
-                    currentScore = object.score;
-                    score = score + [currentScore doubleValue];
-        
-                }
-
-               // teamobject.teamScore = [NSNumber numberWithInt:score];
-// nslog(@" team : %@ score set at %@", teamobject.teamName,teamobject.teamScore);
-                
-                
-                
-               // === write ,resultstotal
-               [resultscsv appendString:[NSString stringWithFormat:@", %f",score]];
-               
-               
-            
-                
-                double teamvalue = teamArray[teamcounter];
-                
-                teamvalue = teamvalue + score;
-                teamArray[teamcounter] = teamvalue;
-                
-                teamcounter++;
-            //end team loop
-            }
-        
-        //end geventloop
-        }
-    
-        //=== write new line
-        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
-        //=== write Total
-        [resultscsv appendString:[NSString stringWithFormat:@"Total"]];
-    
-    
-        teamcounter = 0;
-        NSMutableDictionary *teamDictInDiv = [[NSMutableDictionary alloc] init];
-        
-        for (Team *teamobject in teamSet )
-            {
-                
-                //=== write , doubleteamscore
-                [resultscsv appendString:[NSString stringWithFormat:@", %f",teamArray[teamcounter]]];
-               // NSLog(@"teamresult for %@ is %f",teamobject.teamName,teamArray[teamcounter]);
-                
-                 double globalteamvalue = globalTeamArray[teamcounter];
-                
-                globalteamvalue = globalteamvalue + teamArray[teamcounter];
-                globalTeamArray[teamcounter] = globalteamvalue;
-                
-                [teamDictInDiv setObject:[NSNumber numberWithDouble: teamArray[teamcounter]] forKey: teamobject.teamID];
-               
-                 teamcounter++;
-            }
- 
-        
-        //work out ranking
-   
-        NSArray *sortedKeysArray =
-        [teamDictInDiv keysSortedByValueUsingSelector:@selector(compare:)];
-    
-        
-        // sortedKeysArray contains: Geography, History, Mathematics, English ascending
-        int teamnumber = [teamSet count];
-     
-        NSMutableArray *newsortedkeysarray = [[NSMutableArray alloc] init];
-    
-        NSMutableDictionary*placedictionary = [[NSMutableDictionary alloc]  init];
-    
-        int lastplace = 0;
-        double lastvalue = 0.0;
-        double currentResultDouble = 0.0;
-        for (int i = 0; i < teamnumber; i++)
-        {
-    
-    
-      
-        [newsortedkeysarray addObject: sortedKeysArray[(teamnumber - 1) - i]];
-      
-        NSString* currentResultKey = sortedKeysArray[(teamnumber - 1) - i];
-        NSNumber* currentResultsNumber = [teamDictInDiv objectForKey:currentResultKey];
-        currentResultDouble = [currentResultsNumber doubleValue];
-      //   currentResultDouble = currentResultDouble + 1;
-            
-                 if (  currentResultDouble == lastvalue)
-                {
-                    NSNumber* lastplacenumber = [NSNumber numberWithInt:lastplace];
-                    
-                    [placedictionary setObject:lastplacenumber forKey:currentResultKey];
-                
-                
-            
-                }
-                else
-                {
-                    lastplace = i + 1;
-                
-                    NSNumber* lastplacenumber = [NSNumber numberWithInt:lastplace];
-                    
-                    [placedictionary setObject:lastplacenumber forKey:currentResultKey];
-                
-                    
-                    lastvalue = currentResultDouble;
-                }
-            
-
-      
-        }
-    
-        // end work out rankings
-    
-    
-        
-        
-    
-    
-        //=== write new line
-        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
-        //== write Rank
-        [resultscsv appendString:[NSString stringWithFormat:@"Rank"]];
-        
-        for (Team *teamobject in teamSet )
-        {
-      
-            NSNumber* placenumber =  [placedictionary objectForKey:teamobject.teamID];
-            int placeint = [placenumber intValue];
-           
-             //=== write , placedictionary value for teamid
-            [resultscsv appendString:[NSString stringWithFormat:@", %d",placeint]];
-      
-        
-      
-        }
-
-        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
-        
-        for (int j = 0; j < ([teamSet count]-1); j++)
-        
-        {
-            
-            [resultscsv appendString:[NSString stringWithFormat:@","]];
-      
-        }
-
-        
-    //end of div loop
-    }
-
-[resultscsv appendString:[NSString stringWithFormat:@"\n"]];
- [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
-        
-        for (int k = 0; k < ([teamSet count]-1); k++)
-        
-        {
-            
-            [resultscsv appendString:[NSString stringWithFormat:@","]];
-      
-        }
-
-
-
-
-
-// final rankings
-
-        //=== write new line
-        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
-        //=== write Overall Total
-        [resultscsv appendString:[NSString stringWithFormat:@"Overall Total"]];
-    
-    
-        teamcounter = 0;
-        NSMutableDictionary *teamTotalDict = [[NSMutableDictionary alloc] init];
-        
-        for (Team *teamobject in teamSet )
-            {
-                
-                //=== write , doubleteamscore
-                [resultscsv appendString:[NSString stringWithFormat:@", %f",globalTeamArray[teamcounter]]];
-               // NSLog(@"teamresult for %@ is %f",teamobject.teamName,teamArray[teamcounter]);
-                
-                [teamTotalDict setObject:[NSNumber numberWithDouble: globalTeamArray[teamcounter]] forKey: teamobject.teamID];
-                teamcounter++;
-            }
-   
-        
-        //work out ranking
-   
-        NSArray *sortedKeysArray =
-        [teamTotalDict keysSortedByValueUsingSelector:@selector(compare:)];
-    
-        // sortedKeysArray contains: Geography, History, Mathematics, English ascending
-        int teamnumber = [teamSet count];
-     
-        NSMutableArray *newsortedkeysarray = [[NSMutableArray alloc] init];
-    
-        NSMutableDictionary*finalplacedictionary = [[NSMutableDictionary alloc] init];
-    
-        int lastplace = 0;
-        double lastvalue = 0.0;
-    
-        for (int i = 0; i < teamnumber; i++)
-        {
-    
-    
-      
-        [newsortedkeysarray addObject: sortedKeysArray[(teamnumber - 1) - i]];
-      
-        NSString* currentResultKey = sortedKeysArray[(teamnumber - 1) - i];
-        NSNumber* currentResultsNumber = [teamTotalDict objectForKey:currentResultKey];
-       double currentResultDouble = [currentResultsNumber doubleValue];
-            
-                 if (  currentResultDouble == lastvalue)
-                {
-                    NSNumber* lastplacenumber = [NSNumber numberWithInt:lastplace];
-                    
-                    [finalplacedictionary setObject:lastplacenumber forKey:currentResultKey];
-                
-                
-            
-                }
-                else
-                {
-                    lastplace = i + 1;
-                
-                    NSNumber* lastplacenumber = [NSNumber numberWithInt:lastplace];
-                    
-                    [finalplacedictionary setObject:lastplacenumber forKey:currentResultKey];
-                
-                    
-                    lastvalue = currentResultDouble;
-                }
-            
-
-      
-        }
-    
-        // end work out rankings
-    
-    
-        
-        
-    
-    
-        //=== write new line
-        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
-        //== write Rank
-        [resultscsv appendString:[NSString stringWithFormat:@"Overall Rank"]];
-    
-        for (Team *teamobject in teamSet )
-        {
-      
-            NSNumber* placenumber =  [finalplacedictionary objectForKey:teamobject.teamID];
-            int placeint = [placenumber intValue];
-           
-             //=== write , placedictionary value for teamid
-            [resultscsv appendString:[NSString stringWithFormat:@", %d",placeint]];
-      
-        
-      
-        }
-        
-
-
-
-
-
-
-
-
-
-
-//NSLog(@"%@",resultscsv);
-
-
-///////////
-
-// event results
-
-
-//////
-
-
-NSMutableString *eventscsv = [NSMutableString stringWithString:@""];
-
-NSSet* eventSet = self.meetObject.events;
-NSSet* scoreSet;
-for (Event *eventobject in eventSet )
-    {
-        [eventscsv appendString:[NSString stringWithFormat:@"%@,%@,Name, Team, Result, Placing, Score", eventobject.gEvent.gEventName,eventobject.division.divName]];
-    scoreSet = eventobject.cEventScores;
-    
-    for (CEventScore *scoreobject in scoreSet )
-        {
-            [eventscsv appendString:[NSString stringWithFormat:@"\n"]];
-            
-            [eventscsv appendString:[NSString stringWithFormat:@"%@,%@,%@,%@,%f,%d,%d", eventobject.gEvent.gEventName,eventobject.division.divName,scoreobject.competitor.compName,scoreobject.team.teamName,[scoreobject.result doubleValue],[scoreobject.placing intValue],[scoreobject.score intValue]]];
-        
-        
-        
-        }
-    
-    [eventscsv appendString:[NSString stringWithFormat:@"\n"]];
-    for (int k = 0; k < 6; k++)
-        
-        {
-            
-            [eventscsv appendString:[NSString stringWithFormat:@","]];
-      
-        }
-    [eventscsv appendString:[NSString stringWithFormat:@"\n"]];
-    
-    }
-    
-
-
-
-
-    NSString *emailTitle = @"Export Results";
-    
-    NSString* subjectString = [NSString stringWithFormat:@"Results From Athletics Meet %@", self.meetObject.meetName];
-    // Email Content
-    NSString *messageBody = [NSString stringWithFormat:@"Results From Athletics Meet %@ Recorded With Athletics Meet Manager IOS App", self.meetObject.meetName];;
-    // To address
-    
-    
-    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
-    mc.mailComposeDelegate = self;
-    [mc setSubject:emailTitle];
-    [mc setSubject:subjectString];
-    
-    [mc setMessageBody:messageBody isHTML:NO];
-    
-    [mc addAttachmentData:[resultscsv dataUsingEncoding:NSUTF8StringEncoding]
-    
-  //  [mailer addAttachmentData:[NSData dataWithContentsOfFile:@"PathToFile.csv"]
-                     mimeType:@"text/csv" 
-                     fileName:@"Overall Results.csv"];
-    
-    [mc addAttachmentData:[eventscsv dataUsingEncoding:NSUTF8StringEncoding]
-    
-  //  [mailer addAttachmentData:[NSData dataWithContentsOfFile:@"PathToFile.csv"]
-                     mimeType:@"text/csv" 
-                     fileName:@"Event Results.csv"];
-
-    // Present mail view controller on screen
-    
-    self.exportresults = YES;
-    
-    [self presentViewController:mc animated:YES completion:NULL];
-
-}
-**/
 - (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
 
@@ -2994,6 +2524,129 @@ UIAlertController * alert;
   });
     
  }
+if (self.exportmeet) {
+    self.exportmeet = NO;
+ dispatch_async(dispatch_get_main_queue(), ^{
+UIAlertController * alert;
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+        {
+                     alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Cancelled"
+                                        message:@"Export Via Email Cancelled By User"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+                //    [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail cancelled");
+           
+            break;
+        }
+        //
+        case MFMailComposeResultSaved:
+        {
+                    alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Mail Saved"
+                                        message:@"Email With Exported Item Names Saved For Later Sending"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+              //      [self presentViewController:alert animated:YES completion:nil];
+
+           NSLog(@"Mail saved");
+            break;
+        }
+            
+           
+        case MFMailComposeResultSent:
+        {
+                     alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Successfull"
+                                        message:@"Item Names Exported Via Email And Mail Sent Successfully"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+             //       [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail sent");
+           
+            break;
+        }
+            //
+            
+        case MFMailComposeResultFailed:
+        {
+                    alert=   [UIAlertController
+                                        alertControllerWithTitle:@"Export Failed"
+                                        message:@"Sending Mail Failed, Please Check Your Email Settings"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                            }];
+                        
+                    [alert addAction:ok];
+     
+              //      [self presentViewController:alert animated:YES completion:nil];
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+           
+            break;
+        }
+         //
+            
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self presentViewController:alert animated:YES completion:nil];
+        }];
+  
+  });
+    
+}
+ 
+ 
 }
 - (void)endUpdateOnlineMeetWithSuccess: (BOOL) success {
 
@@ -5651,18 +5304,18 @@ meetDict[@"divsDone"] = meet.divsDone;
 meetDict[@"eventsDone"] = meet.eventsDone;
 meetDict[@"maxScoringCompetitors"] = meet.maxScoringCompetitors;
 meetDict[@"meetDate"] = meet.meetDate;
-meetDict[@"meetEndTime"] = meet.meetEndTime;
+//meetDict[@"meetEndTime"] = meet.meetEndTime;
 meetDict[@"meetID"] = meet.meetID;
 meetDict[@"meetName"] = meet.meetName;
-meetDict[@"meetStartTime"] = meet.meetStartTime;
+//meetDict[@"meetStartTime"] = meet.meetStartTime;
 meetDict[@"scoreForFirstPlace"] = meet.scoreForFirstPlace;
 meetDict[@"scoreMultiplier"] = meet.scoreMultiplier;
 meetDict[@"teamsDone"] = meet.teamsDone;
 meetDict[@"onlineMeet"] = meet.onlineMeet;
-meetDict[@"updateDateAndTime"] = meet.updateDateAndTime;
+//meetDict[@"updateDateAndTime"] = meet.updateDateAndTime;
 meetDict[@"updateByUser"] = meet.updateByUser;
 meetDict[@"isOwner"] = meet.isOwner;
-meetDict[@"onlineID"] = meet.onlineID;
+//meetDict[@"onlineID"] = meet.onlineID;
 meetDict[@"editDone"] = meet.editDone;
 meetDict[@"edited"] = meet.edited;
 
@@ -5676,13 +5329,13 @@ NSMutableArray* divisionsArray = [[NSMutableArray alloc] init];
         divDict[@"divID"] =  div.divID;
         divDict[@"divName"] = div.divName;
         divDict[@"updateByUser"] = div.updateByUser;
-        divDict[@"updateDateAndTime"] = div.updateDateAndTime;
-        divDict[@"onlineID"] = div.onlineID;
+        //divDict[@"updateDateAndTime"] = div.updateDateAndTime;
+        //divDict[@"onlineID"] = div.onlineID;
         divDict[@"editDone"] = div.editDone;
         divDict[@"edited"] = div.edited;
         
         // events
-        divDict[@"meet"] = div.meet.meetName;
+        divDict[@"meet"] = div.meet.meetID;
         
         [divisionsArray addObject:divDict];
     }
@@ -5700,19 +5353,19 @@ NSMutableArray* gEventsArray = [[NSMutableArray alloc] init];
         gEventDict[@"decrementPerPlace"] = gevent.decrementPerPlace;
         gEventDict[@"gEventID"] = gevent.gEventID;
         gEventDict[@"gEventName"] = gevent.gEventName;
-        gEventDict[@"gEventTiming"] = gevent.gEventTiming;
+       // gEventDict[@"gEventTiming"] = gevent.gEventTiming;
         gEventDict[@"gEventType"] = gevent.gEventType;
         gEventDict[@"maxScoringCompetitors"] = gevent.maxScoringCompetitors;
         gEventDict[@"scoreForFirstPlace"] = gevent.scoreForFirstPlace;
         gEventDict[@"scoreMultiplier"] = gevent.scoreMultiplier;
         gEventDict[@"updateByUser"] = gevent.updateByUser;
-        gEventDict[@"updateDateAndTime"] = gevent.updateDateAndTime;
-        gEventDict[@"onlineID"] = gevent.onlineID;
+        //gEventDict[@"updateDateAndTime"] = gevent.updateDateAndTime;
+       // gEventDict[@"onlineID"] = gevent.onlineID;
         gEventDict[@"editDone"] = gevent.editDone;
         gEventDict[@"edited"] = gevent.edited;
         
         // events = do in event
-        gEventDict[@"meet"] = gevent.meet.meetName;
+        gEventDict[@"meet"] = gevent.meet.meetID;
         
         [gEventsArray addObject:gEventDict];
     }
@@ -5731,9 +5384,9 @@ NSMutableArray* teamsArray = [[NSMutableArray alloc] init];
         teamDict[@"teamName"] = team.teamName;
         teamDict[@"teamPlace"] = team.teamPlace;
         teamDict[@"teamScore"] = team.teamScore;
-        teamDict[@"updateDateAndTime"] = team.updateDateAndTime;
+        //teamDict[@"updateDateAndTime"] = team.updateDateAndTime;
         teamDict[@"updateByUser"] = team.updateByUser;
-        teamDict[@"onlineID"] = team.onlineID;
+        //teamDict[@"onlineID"] = team.onlineID;
         teamDict[@"editDone"] = team.editDone;
         teamDict[@"edited"] = team.edited;
 
@@ -5760,8 +5413,8 @@ NSMutableArray* compsArray = [[NSMutableArray alloc] init];
         compDict[@"compName"] = comp.compName;
         compDict[@"teamName"] = comp.teamName;
         compDict[@"updateByUser"] = comp.updateByUser;
-        compDict[@"updateDateAndTime"] = comp.updateDateAndTime;
-        compDict[@"onlineID"] = comp.onlineID;
+       // compDict[@"updateDateAndTime"] = comp.updateDateAndTime;
+       // compDict[@"onlineID"] = comp.onlineID;
         compDict[@"editDone"] = comp.editDone;
         compDict[@"edited"] = comp.edited;
         
@@ -5784,10 +5437,10 @@ NSMutableArray* eventsArray = [[NSMutableArray alloc] init];
         eventDict[@"eventDone"] = event.eventDone;
         eventDict[@"eventEdited"] = event.eventEdited;
         eventDict[@"eventID"] = event.eventID;
-        eventDict[@"startTime"] = event.startTime;
+       // eventDict[@"startTime"] = event.startTime;
         eventDict[@"updateByUser"] = event.updateByUser;
-        eventDict[@"updateDateAndTime"] = event.updateDateAndTime;
-        eventDict[@"onlineID"] = event.onlineID;
+       // eventDict[@"updateDateAndTime"] = event.updateDateAndTime;
+       // eventDict[@"onlineID"] = event.onlineID;
         eventDict[@"editDone"] = event.editDone;
         eventDict[@"edited"] = event.edited;
 
@@ -5811,24 +5464,44 @@ NSMutableArray* cscoresArray = [[NSMutableArray alloc] init];
     for (CEventScore* cscore in meet.cEventsScores) {
        NSMutableDictionary * cscoreDict = [[NSMutableDictionary alloc] init];
        
+       if (cscore.cEventScoreID) {
         cscoreDict[@"cEventScoreID"] = cscore.cEventScoreID;
+        }
+        if (cscore.highJumpPlacingManual) {
         cscoreDict[@"highJumpPlacingManual"] = cscore.highJumpPlacingManual;
-        cscoreDict[@"personalBest"] = cscore.personalBest;
+        }
+        //cscoreDict[@"personalBest"] = cscore.personalBest;
+        if (cscore.placing) {
         cscoreDict[@"placing"] = cscore.placing;
+        }
+        if (cscore.result) {
         cscoreDict[@"result"] = cscore.result;
-        cscoreDict[@"resultEntered"] = cscore.resultEntered;
+        }
+        if (cscore.resultEntered) {
+            cscoreDict[@"resultEntered"] = cscore.resultEntered;
+        }
+       
+        if (cscore.score) {
         cscoreDict[@"score"] = cscore.score;
+        }
+        if (cscore.updateByUser) {
         cscoreDict[@"updateByUser"] = cscore.updateByUser;
-        cscoreDict[@"updateDateAndTime"] = cscore.updateDateAndTime;
-        cscoreDict[@"onlineID"] = cscore.onlineID;
+        }
+        //cscoreDict[@"updateDateAndTime"] = cscore.updateDateAndTime;
+        //cscoreDict[@"onlineID"] = cscore.onlineID;
+        if (cscore.edited) {
         cscoreDict[@"edited"] = cscore.edited;
+        }
+        if (cscore.editDone) {
         cscoreDict[@"editDone"] = cscore.editDone;
-
-
+        }
+        
         cscoreDict[@"competitor"] = cscore.competitor.compID;
         cscoreDict[@"event"] = cscore.event.eventID;
         cscoreDict[@"team"] = cscore.team.teamID;
         cscoreDict[@"meet"] = cscore.meet.meetID;
+        
+        
         [cscoresArray addObject:cscoreDict];
     }
 
@@ -5871,13 +5544,484 @@ NSString *emailTitle = @"Export Meet Plist";
     
     // Present mail view controller on screen
     
-    
+    self.exportmeet = YES;
     
     [self presentViewController:mc animated:YES completion:NULL];
 
 }
 
+- (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {
+    [self saveMeetToPlist];
+}
+/**
+- (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {
 
+//check objects vs string values in itterations
+
+NSSet* teamSet = self.meetObject.teams;
+NSSet* divSet = self.meetObject.divisions;
+NSSet* gEventSet = self.meetObject.gEvents;
+
+
+//NSArray *teamsArray = [[NSMutableArray alloc] init];
+double teamArray[[teamSet count]];
+
+//[teamsArray addObject:object];
+int teamcounter;
+
+NSMutableString *resultscsv = [NSMutableString stringWithString:@""];
+
+//add your content to the csv
+//[csv appendFormat:@"MY DATA YADA YADA"];
+    
+    double globalTeamArray[[teamSet count]];
+
+    
+        for (int i = 0; i < [teamSet count]; i++) {
+        
+            globalTeamArray[i] = 0.0;
+            
+        }
+    
+        
+
+
+
+
+for (Division *divobject in divSet )
+    {
+
+    //=== write new line
+    [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+
+
+
+    //=== write div name //not comma
+
+
+    [resultscsv appendString:[NSString stringWithFormat:@"%@",divobject.divName]];
+
+        teamcounter = 0;
+        for (Team *teamobject in teamSet )
+        {
+    
+        //int inttemp = 0;
+    
+        teamArray[teamcounter] = 0.0;
+        // === write , team name
+        [resultscsv appendString:[NSString stringWithFormat:@",%@",teamobject.teamName]];
+        teamcounter++;
+        }
+ 
+ 
+ 
+
+
+        for (GEvent *geventobject in gEventSet )
+        {
+            //=== write new line
+            [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+        
+            //===  write event name
+            [resultscsv appendString:[NSString stringWithFormat:@"%@",geventobject.gEventName]];
+        
+        
+                //loop teams in teamarray
+                NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
+        
+                [fetchRequest setEntity:description];
+        
+                teamcounter = 0;
+        
+            for (Team *teamobject in teamSet )
+            {
+            
+                    //get all score with div and event and team
+                
+                
+            
+
+                NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(score != NULL)", nil];
+                NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(event.division == %@)", divobject];
+                NSPredicate *pred3 = [NSPredicate predicateWithFormat:@"(event.gEvent == %@)", geventobject];
+                NSPredicate *pred4 = [NSPredicate predicateWithFormat:@"(team == %@)", teamobject];
+            
+                NSArray *preds = [NSArray arrayWithObjects: pred1,pred2,pred3,pred4, nil];
+                NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+                [fetchRequest setPredicate:andPred];
+    
+    
+                NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
+                       NSArray *sortDescriptors = @[highestToLowest];
+    
+                [fetchRequest setSortDescriptors:sortDescriptors];
+
+
+                NSError *error;
+                NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+ 
+    
+    
+                double score = 0.0;
+
+                NSNumber *currentScore;
+                for(CEventScore *object in results) {
+       
+                    currentScore = object.score;
+                    score = score + [currentScore doubleValue];
+        
+                }
+
+               // teamobject.teamScore = [NSNumber numberWithInt:score];
+// nslog(@" team : %@ score set at %@", teamobject.teamName,teamobject.teamScore);
+                
+                
+                
+               // === write ,resultstotal
+               [resultscsv appendString:[NSString stringWithFormat:@", %f",score]];
+               
+               
+            
+                
+                double teamvalue = teamArray[teamcounter];
+                
+                teamvalue = teamvalue + score;
+                teamArray[teamcounter] = teamvalue;
+                
+                teamcounter++;
+            //end team loop
+            }
+        
+        //end geventloop
+        }
+    
+        //=== write new line
+        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+        //=== write Total
+        [resultscsv appendString:[NSString stringWithFormat:@"Total"]];
+    
+    
+        teamcounter = 0;
+        NSMutableDictionary *teamDictInDiv = [[NSMutableDictionary alloc] init];
+        
+        for (Team *teamobject in teamSet )
+            {
+                
+                //=== write , doubleteamscore
+                [resultscsv appendString:[NSString stringWithFormat:@", %f",teamArray[teamcounter]]];
+               // NSLog(@"teamresult for %@ is %f",teamobject.teamName,teamArray[teamcounter]);
+                
+                 double globalteamvalue = globalTeamArray[teamcounter];
+                
+                globalteamvalue = globalteamvalue + teamArray[teamcounter];
+                globalTeamArray[teamcounter] = globalteamvalue;
+                
+                [teamDictInDiv setObject:[NSNumber numberWithDouble: teamArray[teamcounter]] forKey: teamobject.teamID];
+               
+                 teamcounter++;
+            }
+ 
+        
+        //work out ranking
+   
+        NSArray *sortedKeysArray =
+        [teamDictInDiv keysSortedByValueUsingSelector:@selector(compare:)];
+    
+        
+        // sortedKeysArray contains: Geography, History, Mathematics, English ascending
+        int teamnumber = [teamSet count];
+     
+        NSMutableArray *newsortedkeysarray = [[NSMutableArray alloc] init];
+    
+        NSMutableDictionary*placedictionary = [[NSMutableDictionary alloc]  init];
+    
+        int lastplace = 0;
+        double lastvalue = 0.0;
+        double currentResultDouble = 0.0;
+        for (int i = 0; i < teamnumber; i++)
+        {
+    
+    
+      
+        [newsortedkeysarray addObject: sortedKeysArray[(teamnumber - 1) - i]];
+      
+        NSString* currentResultKey = sortedKeysArray[(teamnumber - 1) - i];
+        NSNumber* currentResultsNumber = [teamDictInDiv objectForKey:currentResultKey];
+        currentResultDouble = [currentResultsNumber doubleValue];
+      //   currentResultDouble = currentResultDouble + 1;
+            
+                 if (  currentResultDouble == lastvalue)
+                {
+                    NSNumber* lastplacenumber = [NSNumber numberWithInt:lastplace];
+                    
+                    [placedictionary setObject:lastplacenumber forKey:currentResultKey];
+                
+                
+            
+                }
+                else
+                {
+                    lastplace = i + 1;
+                
+                    NSNumber* lastplacenumber = [NSNumber numberWithInt:lastplace];
+                    
+                    [placedictionary setObject:lastplacenumber forKey:currentResultKey];
+                
+                    
+                    lastvalue = currentResultDouble;
+                }
+            
+
+      
+        }
+    
+        // end work out rankings
+    
+    
+        
+        
+    
+    
+        //=== write new line
+        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+        //== write Rank
+        [resultscsv appendString:[NSString stringWithFormat:@"Rank"]];
+        
+        for (Team *teamobject in teamSet )
+        {
+      
+            NSNumber* placenumber =  [placedictionary objectForKey:teamobject.teamID];
+            int placeint = [placenumber intValue];
+           
+             //=== write , placedictionary value for teamid
+            [resultscsv appendString:[NSString stringWithFormat:@", %d",placeint]];
+      
+        
+      
+        }
+
+        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+        
+        for (int j = 0; j < ([teamSet count]-1); j++)
+        
+        {
+            
+            [resultscsv appendString:[NSString stringWithFormat:@","]];
+      
+        }
+
+        
+    //end of div loop
+    }
+
+[resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+ [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+        
+        for (int k = 0; k < ([teamSet count]-1); k++)
+        
+        {
+            
+            [resultscsv appendString:[NSString stringWithFormat:@","]];
+      
+        }
+
+
+
+
+
+// final rankings
+
+        //=== write new line
+        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+        //=== write Overall Total
+        [resultscsv appendString:[NSString stringWithFormat:@"Overall Total"]];
+    
+    
+        teamcounter = 0;
+        NSMutableDictionary *teamTotalDict = [[NSMutableDictionary alloc] init];
+        
+        for (Team *teamobject in teamSet )
+            {
+                
+                //=== write , doubleteamscore
+                [resultscsv appendString:[NSString stringWithFormat:@", %f",globalTeamArray[teamcounter]]];
+               // NSLog(@"teamresult for %@ is %f",teamobject.teamName,teamArray[teamcounter]);
+                
+                [teamTotalDict setObject:[NSNumber numberWithDouble: globalTeamArray[teamcounter]] forKey: teamobject.teamID];
+                teamcounter++;
+            }
+   
+        
+        //work out ranking
+   
+        NSArray *sortedKeysArray =
+        [teamTotalDict keysSortedByValueUsingSelector:@selector(compare:)];
+    
+        // sortedKeysArray contains: Geography, History, Mathematics, English ascending
+        int teamnumber = [teamSet count];
+     
+        NSMutableArray *newsortedkeysarray = [[NSMutableArray alloc] init];
+    
+        NSMutableDictionary*finalplacedictionary = [[NSMutableDictionary alloc] init];
+    
+        int lastplace = 0;
+        double lastvalue = 0.0;
+    
+        for (int i = 0; i < teamnumber; i++)
+        {
+    
+    
+      
+        [newsortedkeysarray addObject: sortedKeysArray[(teamnumber - 1) - i]];
+      
+        NSString* currentResultKey = sortedKeysArray[(teamnumber - 1) - i];
+        NSNumber* currentResultsNumber = [teamTotalDict objectForKey:currentResultKey];
+       double currentResultDouble = [currentResultsNumber doubleValue];
+            
+                 if (  currentResultDouble == lastvalue)
+                {
+                    NSNumber* lastplacenumber = [NSNumber numberWithInt:lastplace];
+                    
+                    [finalplacedictionary setObject:lastplacenumber forKey:currentResultKey];
+                
+                
+            
+                }
+                else
+                {
+                    lastplace = i + 1;
+                
+                    NSNumber* lastplacenumber = [NSNumber numberWithInt:lastplace];
+                    
+                    [finalplacedictionary setObject:lastplacenumber forKey:currentResultKey];
+                
+                    
+                    lastvalue = currentResultDouble;
+                }
+            
+
+      
+        }
+    
+        // end work out rankings
+    
+    
+        
+        
+    
+    
+        //=== write new line
+        [resultscsv appendString:[NSString stringWithFormat:@"\n"]];
+        //== write Rank
+        [resultscsv appendString:[NSString stringWithFormat:@"Overall Rank"]];
+    
+        for (Team *teamobject in teamSet )
+        {
+      
+            NSNumber* placenumber =  [finalplacedictionary objectForKey:teamobject.teamID];
+            int placeint = [placenumber intValue];
+           
+             //=== write , placedictionary value for teamid
+            [resultscsv appendString:[NSString stringWithFormat:@", %d",placeint]];
+      
+        
+      
+        }
+        
+
+
+
+
+
+
+
+
+
+
+//NSLog(@"%@",resultscsv);
+
+
+///////////
+
+// event results
+
+
+//////
+
+
+NSMutableString *eventscsv = [NSMutableString stringWithString:@""];
+
+NSSet* eventSet = self.meetObject.events;
+NSSet* scoreSet;
+for (Event *eventobject in eventSet )
+    {
+        [eventscsv appendString:[NSString stringWithFormat:@"%@,%@,Name, Team, Result, Placing, Score", eventobject.gEvent.gEventName,eventobject.division.divName]];
+    scoreSet = eventobject.cEventScores;
+    
+    for (CEventScore *scoreobject in scoreSet )
+        {
+            [eventscsv appendString:[NSString stringWithFormat:@"\n"]];
+            
+            [eventscsv appendString:[NSString stringWithFormat:@"%@,%@,%@,%@,%f,%d,%d", eventobject.gEvent.gEventName,eventobject.division.divName,scoreobject.competitor.compName,scoreobject.team.teamName,[scoreobject.result doubleValue],[scoreobject.placing intValue],[scoreobject.score intValue]]];
+        
+        
+        
+        }
+    
+    [eventscsv appendString:[NSString stringWithFormat:@"\n"]];
+    for (int k = 0; k < 6; k++)
+        
+        {
+            
+            [eventscsv appendString:[NSString stringWithFormat:@","]];
+      
+        }
+    [eventscsv appendString:[NSString stringWithFormat:@"\n"]];
+    
+    }
+    
+
+
+
+
+    NSString *emailTitle = @"Export Results";
+    
+    NSString* subjectString = [NSString stringWithFormat:@"Results From Athletics Meet %@", self.meetObject.meetName];
+    // Email Content
+    NSString *messageBody = [NSString stringWithFormat:@"Results From Athletics Meet %@ Recorded With Athletics Meet Manager IOS App", self.meetObject.meetName];;
+    // To address
+    
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setSubject:subjectString];
+    
+    [mc setMessageBody:messageBody isHTML:NO];
+    
+    [mc addAttachmentData:[resultscsv dataUsingEncoding:NSUTF8StringEncoding]
+    
+  //  [mailer addAttachmentData:[NSData dataWithContentsOfFile:@"PathToFile.csv"]
+                     mimeType:@"text/csv" 
+                     fileName:@"Overall Results.csv"];
+    
+    [mc addAttachmentData:[eventscsv dataUsingEncoding:NSUTF8StringEncoding]
+    
+  //  [mailer addAttachmentData:[NSData dataWithContentsOfFile:@"PathToFile.csv"]
+                     mimeType:@"text/csv" 
+                     fileName:@"Event Results.csv"];
+
+    // Present mail view controller on screen
+    
+    self.exportresults = YES;
+    
+    [self presentViewController:mc animated:YES completion:NULL];
+
+}
+**/
 
 
 @end

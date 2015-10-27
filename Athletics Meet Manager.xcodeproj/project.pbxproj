@@ -83,6 +83,7 @@
 		1FAF93AA1BC312BB00B1C725 /* BackupCEventScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF93A91BC312BB00B1C725 /* BackupCEventScore.m */; };
 		1FB470D01BDE72EF009820D9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB470CF1BDE72EF009820D9 /* Security.framework */; };
 		1FB470D51BDE731C009820D9 /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB470D41BDE731C009820D9 /* libFlurry_7.2.1.a */; };
+		1FB470D81BDE80F5009820D9 /* ExampleMeet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FB470D71BDE80F5009820D9 /* ExampleMeet.plist */; };
 		1FC88E801B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */; };
 		1FC88E861B3C9A2D00BD0A23 /* CEventResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E851B3C9A2D00BD0A23 /* CEventResultTableViewCell.m */; };
 		1FC94A0E1BC5A7800058CE90 /* EventScoreCopySheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC94A0D1BC5A7800058CE90 /* EventScoreCopySheetViewController.m */; };
@@ -239,6 +240,8 @@
 		1FB470D21BDE731C009820D9 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		1FB470D31BDE731C009820D9 /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
 		1FB470D41BDE731C009820D9 /* libFlurry_7.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.2.1.a; sourceTree = "<group>"; };
+		1FB470D61BDE74F0009820D9 /* Athletics_Meet_Manager 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Athletics_Meet_Manager 5.xcdatamodel"; sourceTree = "<group>"; };
+		1FB470D71BDE80F5009820D9 /* ExampleMeet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ExampleMeet.plist; sourceTree = "<group>"; };
 		1FC88E7E1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighJumpScoreEnterViewController.h; sourceTree = "<group>"; };
 		1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighJumpScoreEnterViewController.m; sourceTree = "<group>"; };
 		1FC88E841B3C9A2D00BD0A23 /* CEventResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEventResultTableViewCell.h; sourceTree = "<group>"; };
@@ -396,6 +399,7 @@
 		1F095F211B0FB765000FE30A = {
 			isa = PBXGroup;
 			children = (
+				1FB470D71BDE80F5009820D9 /* ExampleMeet.plist */,
 				1FB470CF1BDE72EF009820D9 /* Security.framework */,
 				1F11C8B91BDC2D7600ACE8AF /* SystemConfiguration.framework */,
 				1FAF939A1BB737D500B1C725 /* Tut Images */,
@@ -897,6 +901,7 @@
 				1F005AC11B9523B0003C4392 /* 48.png in Resources */,
 				1F005AA41B9523B0003C4392 /* 19.png in Resources */,
 				1F005AA11B9523B0003C4392 /* 16.png in Resources */,
+				1FB470D81BDE80F5009820D9 /* ExampleMeet.plist in Resources */,
 				1F005A9D1B9523B0003C4392 /* 12.png in Resources */,
 				1F005AA71B9523B0003C4392 /* 22.png in Resources */,
 				1F005ABF1B9523B0003C4392 /* 46.png in Resources */,
@@ -1271,11 +1276,12 @@
 		1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				1FB470D61BDE74F0009820D9 /* Athletics_Meet_Manager 5.xcdatamodel */,
 				1FAF939B1BB741D900B1C725 /* Athletics_Meet_Manager 3.xcdatamodel */,
 				1F1A3E9C1B6958BD00F8D950 /* Athletics_Meet_Manager 2.xcdatamodel */,
 				1FD021FF1B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodel */,
 			);
-			currentVersion = 1FAF939B1BB741D900B1C725 /* Athletics_Meet_Manager 3.xcdatamodel */;
+			currentVersion = 1FB470D61BDE74F0009820D9 /* Athletics_Meet_Manager 5.xcdatamodel */;
 			name = Athletics_Meet_Manager.xcdatamodeld;
 			path = "../../../../programming/ios/Athletics Meet Manager/Athletics Meet Manager/Athletics_Meet_Manager.xcdatamodeld";
 			sourceTree = "<group>";
