@@ -506,13 +506,13 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
     NSLog(@"view did load");
      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
      
-     [self setExampleMeet];
+     
 
      
      if (![defaults objectForKey:@"firstTimeDone"]) {
 
         [defaults setObject: @"1" forKey:@"firstTimeDone"];
-         
+            [self setExampleMeet];
             [self performSegueWithIdentifier:@"showTut" sender:self];
         
         }

@@ -543,7 +543,6 @@
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="sDp-AS-UWB"/>
                                                         <action selector="maxCompPerTeamStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="pD1-oB-H6e"/>
                                                     </connections>
                                                 </stepper>
@@ -569,7 +568,6 @@
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="zuT-dk-kUB"/>
                                                         <action selector="maxScoringCompPerTeamStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="30u-pC-1wv"/>
                                                     </connections>
                                                 </stepper>
@@ -596,7 +594,6 @@
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="7pk-f7-70c"/>
                                                         <action selector="firstPlaceScoreStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="pjC-go-vU4"/>
                                                     </connections>
                                                 </stepper>
@@ -622,7 +619,6 @@
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="gLi-9T-j2v"/>
                                                         <action selector="reductionPerPlaceStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="ISp-lZ-8GC"/>
                                                     </connections>
                                                 </stepper>
@@ -648,7 +644,6 @@
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="mAK-Uv-sd8"/>
                                                         <action selector="scoreMultiplierStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="5Zt-9d-U6o"/>
                                                     </connections>
                                                 </stepper>
@@ -1778,7 +1773,6 @@
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="AJm-li-MgP"/>
                                                         <action selector="maxScoringCompStepperValueChanged:" destination="qeN-Jl-Jeh" eventType="valueChanged" id="Co9-Eh-CWT"/>
                                                     </connections>
                                                 </stepper>
@@ -1805,7 +1799,6 @@
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="r29-Kq-i6M"/>
                                                         <action selector="scoreForFirstStepperValueChanged:" destination="qeN-Jl-Jeh" eventType="valueChanged" id="Cae-IL-4aQ"/>
                                                     </connections>
                                                 </stepper>
@@ -1831,7 +1824,6 @@
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="hIG-eE-Xav"/>
                                                         <action selector="scoreMultiplierStepperValueChanged:" destination="qeN-Jl-Jeh" eventType="valueChanged" id="8Zk-hB-IWV"/>
                                                     </connections>
                                                 </stepper>
@@ -1857,7 +1849,6 @@
                                                     <rect key="frame" x="63" y="7" width="94" height="29"/>
                                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <connections>
-                                                        <action selector="cEventLimitStepperValueChanged:" destination="T3l-tU-Cpz" eventType="valueChanged" id="ITC-Xc-Uj3"/>
                                                         <action selector="reductionPerPlaceStepperValueChanged:" destination="qeN-Jl-Jeh" eventType="valueChanged" id="HoX-At-5FA"/>
                                                     </connections>
                                                 </stepper>

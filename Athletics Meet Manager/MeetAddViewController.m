@@ -297,17 +297,20 @@
 - (IBAction)cEventLimitStepperValueChanged:(UIStepper *)sender
 {
   NSUInteger value = sender.value;
+  NSLog(@"ceventlimitlabel");
   self.cEventLimitLabel.text = [NSString stringWithFormat:@"%@",@(value)];
  
 }
 
 - (IBAction)maxCompPerTeamStepperValueChanged:(UIStepper *)sender {
   NSUInteger value = sender.value;
+   NSLog(@"maxcompperteam");
   self.maxCompPerTeamLabel.text = [NSString stringWithFormat:@"%@",@(value)];
  
 }
 - (IBAction)maxScoringCompPerTeamStepperValueChanged:(UIStepper *)sender {
   NSUInteger value = sender.value;
+   NSLog(@"maxscoringcompperteam");
   self.maxScoringCompPerTeamLabel.text = [NSString stringWithFormat:@"%@",@(value)];
  
 

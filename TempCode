@@ -1,45 +1,19 @@
 
-div done but gevent needs to export event type (check if track or field or hight jump, else track) and teams need abreviations and comps need nothing (mabe events check per two cells, if any event has gevent.name and div.name then add to comp(else not add))
-explain adding events via csv file in docs. export event via csv file
+done import
+todo:
 
 
-DO NOT MAKE SAME ONINEID, REGENERATE ALL ON LOAD
-dict1[@"key"] = @"value";
-To get a value with shorthand:
+5. preview files done
 
-NSString *value = dict1[@"key"];
+6.  print or html view make pictures
 
-NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"plistName" ofType:@"plist"]; 
-NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath];
+6. change icons
 
-1. add import and export button to div, gevents, teams, team (comp entry) done
+7. info buttons tut expand
 
-2. add [self loadCSVArray]; to import button ibaction method done
+8. combine comps
+9. log events
 
-2.1 add objects done
-2.2 set alert for gevent added values are default and type is track done
-
-3. hide and show import button in appdelegate array check div done
-
-4. add export function to export names of all items to csv and name "meetname_divisions" "meetname_teamname competitors"etc done
-
-444 divs done
-    gevents done
-    Teams done
-    competitors (add events by itterating and checking each against event list) done
-
-5 default meets
-6 preview files
-
-7 print or html view make pictures
-
-
-
-5. info buttons tut expand
-
-6 combine comps
-
-7 add new yahoo flurry
 
 
 [Flurry logEvent:@"Article_Read"];

@@ -82,7 +82,6 @@
 		1F54BD721B48E41D0046BA87 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F421B0FB765000FE30A /* LaunchScreen.xib */; };
 		1FAF93AA1BC312BB00B1C725 /* BackupCEventScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAF93A91BC312BB00B1C725 /* BackupCEventScore.m */; };
 		1FB470D01BDE72EF009820D9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB470CF1BDE72EF009820D9 /* Security.framework */; };
-		1FB470D51BDE731C009820D9 /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB470D41BDE731C009820D9 /* libFlurry_7.2.1.a */; };
 		1FB470D81BDE80F5009820D9 /* ExampleMeet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FB470D71BDE80F5009820D9 /* ExampleMeet.plist */; };
 		1FC88E801B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */; };
 		1FC88E861B3C9A2D00BD0A23 /* CEventResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E851B3C9A2D00BD0A23 /* CEventResultTableViewCell.m */; };
@@ -122,6 +121,7 @@
 		1FDA11ED1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDA11EC1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m */; };
 		1FDEC0DB1B48D35400B1CB21 /* Lanes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1FDEC0DA1B48D35400B1CB21 /* Lanes.jpg */; };
 		1FE6D9AE1B62686F00F921A6 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE6D9AD1B62686F00F921A6 /* CloudKit.framework */; };
+		1FEEE5BD1BE1051400D53412 /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FEEE5BC1BE104D600D53412 /* libFlurry_7.2.1.a */; };
 		1FFB4F7C1B1535C100C6309C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFB4F7B1B1535C100C6309C /* CoreData.framework */; };
 		84B5B8431B15C81D00529756 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B5B8421B15C81D00529756 /* MasterViewController.m */; };
 /* End PBXBuildFile section */
@@ -237,9 +237,6 @@
 		1FAF93A81BC312BB00B1C725 /* BackupCEventScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupCEventScore.h; sourceTree = "<group>"; };
 		1FAF93A91BC312BB00B1C725 /* BackupCEventScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupCEventScore.m; sourceTree = "<group>"; };
 		1FB470CF1BDE72EF009820D9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		1FB470D21BDE731C009820D9 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		1FB470D31BDE731C009820D9 /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
-		1FB470D41BDE731C009820D9 /* libFlurry_7.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.2.1.a; sourceTree = "<group>"; };
 		1FB470D61BDE74F0009820D9 /* Athletics_Meet_Manager 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Athletics_Meet_Manager 5.xcdatamodel"; sourceTree = "<group>"; };
 		1FB470D71BDE80F5009820D9 /* ExampleMeet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ExampleMeet.plist; sourceTree = "<group>"; };
 		1FC88E7E1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighJumpScoreEnterViewController.h; sourceTree = "<group>"; };
@@ -315,6 +312,9 @@
 		1FDEC0DA1B48D35400B1CB21 /* Lanes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Lanes.jpg; path = ../athleticsimages/Lanes.jpg; sourceTree = "<group>"; };
 		1FE6D9AC1B6267FB00F921A6 /* Athletics Meet Manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athletics Meet Manager.entitlements"; sourceTree = "<group>"; };
 		1FE6D9AD1B62686F00F921A6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		1FEEE5BA1BE104D600D53412 /* Flurry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		1FEEE5BB1BE104D600D53412 /* FlurryWatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
+		1FEEE5BC1BE104D600D53412 /* libFlurry_7.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.2.1.a; sourceTree = "<group>"; };
 		1FFB4F7B1B1535C100C6309C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		84B5B8421B15C81D00529756 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -324,7 +324,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FB470D51BDE731C009820D9 /* libFlurry_7.2.1.a in Frameworks */,
+				1FEEE5BD1BE1051400D53412 /* libFlurry_7.2.1.a in Frameworks */,
 				1FB470D01BDE72EF009820D9 /* Security.framework in Frameworks */,
 				1F11C8BA1BDC2D7600ACE8AF /* SystemConfiguration.framework in Frameworks */,
 				1FFB4F7C1B1535C100C6309C /* CoreData.framework in Frameworks */,
@@ -399,6 +399,7 @@
 		1F095F211B0FB765000FE30A = {
 			isa = PBXGroup;
 			children = (
+				1FEEE5B91BE104D600D53412 /* Flurry */,
 				1FB470D71BDE80F5009820D9 /* ExampleMeet.plist */,
 				1FB470CF1BDE72EF009820D9 /* Security.framework */,
 				1F11C8B91BDC2D7600ACE8AF /* SystemConfiguration.framework */,
@@ -425,7 +426,6 @@
 		1F095F2C1B0FB765000FE30A /* Athletics Meet Manager */ = {
 			isa = PBXGroup;
 			children = (
-				1FB470D11BDE731C009820D9 /* Flurry */,
 				1FE6D9AC1B6267FB00F921A6 /* Athletics Meet Manager.entitlements */,
 				1FD6B6581B1736D900F05968 /* DataObjects */,
 				1FD6B6591B17372B00F05968 /* MainMenu */,
@@ -538,16 +538,6 @@
 				1F005A911B9523B0003C4392 /* 49.png */,
 			);
 			name = "Tut Images";
-			sourceTree = "<group>";
-		};
-		1FB470D11BDE731C009820D9 /* Flurry */ = {
-			isa = PBXGroup;
-			children = (
-				1FB470D21BDE731C009820D9 /* Flurry.h */,
-				1FB470D31BDE731C009820D9 /* FlurryWatch.h */,
-				1FB470D41BDE731C009820D9 /* libFlurry_7.2.1.a */,
-			);
-			path = Flurry;
 			sourceTree = "<group>";
 		};
 		1FD6B6571B1736B400F05968 /* MeetAdd */ = {
@@ -787,6 +777,17 @@
 				1FDA11EC1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m */,
 			);
 			name = CompertitorAddInResultSheet;
+			sourceTree = "<group>";
+		};
+		1FEEE5B91BE104D600D53412 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				1FEEE5BA1BE104D600D53412 /* Flurry.h */,
+				1FEEE5BB1BE104D600D53412 /* FlurryWatch.h */,
+				1FEEE5BC1BE104D600D53412 /* libFlurry_7.2.1.a */,
+			);
+			name = Flurry;
+			path = "Athletics Meet Manager/Flurry";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1158,6 +1159,9 @@
 					"$(PROJECT_DIR)/Athletics",
 					Meet,
 					Manager/Flurry,
+					"$(PROJECT_DIR)/Athletics",
+					Meet,
+					Manager/Flurry,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1196,6 +1200,9 @@
 					viPhone,
 					SDK,
 					"7/Flurry-iOS-7.2.1/FlurryAds",
+					"$(PROJECT_DIR)/Athletics",
+					Meet,
+					Manager/Flurry,
 					"$(PROJECT_DIR)/Athletics",
 					Meet,
 					Manager/Flurry,
