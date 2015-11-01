@@ -512,7 +512,7 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
      if (![defaults objectForKey:@"firstTimeDone"]) {
 
         [defaults setObject: @"1" forKey:@"firstTimeDone"];
-            [self setExampleMeet];
+         
             [self performSegueWithIdentifier:@"showTut" sender:self];
         
         }
@@ -521,7 +521,19 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
             NSLog(@"not first time");
            // [self performSegueWithIdentifier:@"showTut" sender:self];
         }
-    
+    if (![defaults objectForKey:@"defaultAdded"]) {
+
+        [defaults setObject: @"1" forKey:@"defaultAdded"];
+            [self setExampleMeet];
+        
+        
+        }
+        else
+        {
+            NSLog(@"not first time");
+           
+        }
+
 
     
     

@@ -76,6 +76,8 @@
 		1F1A3F0C1B79425300F8D950 /* GEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A3F0B1B79425300F8D950 /* GEvent.m */; };
 		1F1A3F0F1B79425300F8D950 /* Division.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A3F0E1B79425300F8D950 /* Division.m */; };
 		1F1A3F121B79425300F8D950 /* Competitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A3F111B79425300F8D950 /* Competitor.m */; };
+		1F470E351BE5295B0049D4F5 /* ResultsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F470E341BE5295B0049D4F5 /* ResultsWebViewController.m */; };
+		1F470E361BE52C880049D4F5 /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FEEE5C11BE10C2800D53412 /* libFlurry_7.2.1.a */; };
 		1F49C9BA1B8F1076007FB39C /* TutContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F49C9B91B8F1076007FB39C /* TutContentViewController.m */; };
 		1F49C9BD1B8F120F007FB39C /* TutMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F49C9BC1B8F120F007FB39C /* TutMainViewController.m */; };
 		1F54BD711B48E3A70046BA87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F3D1B0FB765000FE30A /* Main.storyboard */; };
@@ -121,7 +123,6 @@
 		1FDA11ED1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDA11EC1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m */; };
 		1FDEC0DB1B48D35400B1CB21 /* Lanes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1FDEC0DA1B48D35400B1CB21 /* Lanes.jpg */; };
 		1FE6D9AE1B62686F00F921A6 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE6D9AD1B62686F00F921A6 /* CloudKit.framework */; };
-		1FEEE5BD1BE1051400D53412 /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FEEE5BC1BE104D600D53412 /* libFlurry_7.2.1.a */; };
 		1FFB4F7C1B1535C100C6309C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFB4F7B1B1535C100C6309C /* CoreData.framework */; };
 		84B5B8431B15C81D00529756 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B5B8421B15C81D00529756 /* MasterViewController.m */; };
 /* End PBXBuildFile section */
@@ -229,6 +230,8 @@
 		1F1A3F0E1B79425300F8D950 /* Division.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Division.m; sourceTree = "<group>"; };
 		1F1A3F101B79425300F8D950 /* Competitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Competitor.h; sourceTree = "<group>"; };
 		1F1A3F111B79425300F8D950 /* Competitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Competitor.m; sourceTree = "<group>"; };
+		1F470E331BE5295B0049D4F5 /* ResultsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsWebViewController.h; sourceTree = "<group>"; };
+		1F470E341BE5295B0049D4F5 /* ResultsWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsWebViewController.m; sourceTree = "<group>"; };
 		1F49C9B81B8F1076007FB39C /* TutContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutContentViewController.h; sourceTree = "<group>"; };
 		1F49C9B91B8F1076007FB39C /* TutContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutContentViewController.m; sourceTree = "<group>"; };
 		1F49C9BB1B8F120F007FB39C /* TutMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutMainViewController.h; sourceTree = "<group>"; };
@@ -312,9 +315,9 @@
 		1FDEC0DA1B48D35400B1CB21 /* Lanes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Lanes.jpg; path = ../athleticsimages/Lanes.jpg; sourceTree = "<group>"; };
 		1FE6D9AC1B6267FB00F921A6 /* Athletics Meet Manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athletics Meet Manager.entitlements"; sourceTree = "<group>"; };
 		1FE6D9AD1B62686F00F921A6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		1FEEE5BA1BE104D600D53412 /* Flurry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		1FEEE5BB1BE104D600D53412 /* FlurryWatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
-		1FEEE5BC1BE104D600D53412 /* libFlurry_7.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.2.1.a; sourceTree = "<group>"; };
+		1FEEE5BF1BE10C2800D53412 /* Flurry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		1FEEE5C01BE10C2800D53412 /* FlurryWatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
+		1FEEE5C11BE10C2800D53412 /* libFlurry_7.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.2.1.a; sourceTree = "<group>"; };
 		1FFB4F7B1B1535C100C6309C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		84B5B8421B15C81D00529756 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -324,7 +327,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FEEE5BD1BE1051400D53412 /* libFlurry_7.2.1.a in Frameworks */,
+				1F470E361BE52C880049D4F5 /* libFlurry_7.2.1.a in Frameworks */,
 				1FB470D01BDE72EF009820D9 /* Security.framework in Frameworks */,
 				1F11C8BA1BDC2D7600ACE8AF /* SystemConfiguration.framework in Frameworks */,
 				1FFB4F7C1B1535C100C6309C /* CoreData.framework in Frameworks */,
@@ -399,7 +402,7 @@
 		1F095F211B0FB765000FE30A = {
 			isa = PBXGroup;
 			children = (
-				1FEEE5B91BE104D600D53412 /* Flurry */,
+				1FEEE5BE1BE10C2800D53412 /* Flurry */,
 				1FB470D71BDE80F5009820D9 /* ExampleMeet.plist */,
 				1FB470CF1BDE72EF009820D9 /* Security.framework */,
 				1F11C8B91BDC2D7600ACE8AF /* SystemConfiguration.framework */,
@@ -435,6 +438,7 @@
 				1FD6B65E1B1738A500F05968 /* SetupTeams */,
 				1FD6B65F1B1738BB00F05968 /* EnterResults */,
 				1FD6B6601B1738D400F05968 /* FinalResultsTables */,
+				1F470E321BE528E90049D4F5 /* Print Results Webview */,
 				1F095F421B0FB765000FE30A /* LaunchScreen.xib */,
 				1FD021FE1B13CA0400F40102 /* Athletics_Meet_Manager.xcdatamodeld */,
 				1F095F3D1B0FB765000FE30A /* Main.storyboard */,
@@ -470,6 +474,15 @@
 				1F095F4E1B0FB765000FE30A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1F470E321BE528E90049D4F5 /* Print Results Webview */ = {
+			isa = PBXGroup;
+			children = (
+				1F470E331BE5295B0049D4F5 /* ResultsWebViewController.h */,
+				1F470E341BE5295B0049D4F5 /* ResultsWebViewController.m */,
+			);
+			name = "Print Results Webview";
 			sourceTree = "<group>";
 		};
 		1FA7E9E81B2C4C6000B924EF /* EnterScore */ = {
@@ -779,12 +792,12 @@
 			name = CompertitorAddInResultSheet;
 			sourceTree = "<group>";
 		};
-		1FEEE5B91BE104D600D53412 /* Flurry */ = {
+		1FEEE5BE1BE10C2800D53412 /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
-				1FEEE5BA1BE104D600D53412 /* Flurry.h */,
-				1FEEE5BB1BE104D600D53412 /* FlurryWatch.h */,
-				1FEEE5BC1BE104D600D53412 /* libFlurry_7.2.1.a */,
+				1FEEE5BF1BE10C2800D53412 /* Flurry.h */,
+				1FEEE5C01BE10C2800D53412 /* FlurryWatch.h */,
+				1FEEE5C11BE10C2800D53412 /* libFlurry_7.2.1.a */,
 			);
 			name = Flurry;
 			path = "Athletics Meet Manager/Flurry";
@@ -969,6 +982,7 @@
 				1FD6B68D1B1E559C00F05968 /* EventForCAddViewController.m in Sources */,
 				1FAF93AA1BC312BB00B1C725 /* BackupCEventScore.m in Sources */,
 				1F095F331B0FB765000FE30A /* AppDelegate.m in Sources */,
+				1F470E351BE5295B0049D4F5 /* ResultsWebViewController.m in Sources */,
 				1FD6B6761B18852E00F05968 /* TeamTableViewCell.m in Sources */,
 				1FCCFA691BC9435C00872004 /* BackupCompetitor.m in Sources */,
 				1FD6B6941B1F365900F05968 /* EventResultTableViewCell.m in Sources */,
@@ -1135,34 +1149,7 @@
 				INFOPLIST_FILE = "Athletics Meet Manager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-					iPhone,
-					SDK,
-					viPhone,
-					SDK,
-					"7/Flurry-iOS-7.2.1/Flurry",
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-					iPhone,
-					SDK,
-					viPhone,
-					SDK,
-					"7/Flurry-iOS-7.2.1/FlurryAds",
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Athletics Meet Manager/Flurry";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1179,34 +1166,7 @@
 				INFOPLIST_FILE = "Athletics Meet Manager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-					iPhone,
-					SDK,
-					viPhone,
-					SDK,
-					"7/Flurry-iOS-7.2.1/Flurry",
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-					iPhone,
-					SDK,
-					viPhone,
-					SDK,
-					"7/Flurry-iOS-7.2.1/FlurryAds",
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Athletics Meet Manager/Flurry";
 				PRODUCT_NAME = "Athletics Meet Manager";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
