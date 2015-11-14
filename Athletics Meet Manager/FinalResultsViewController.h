@@ -11,7 +11,7 @@
 
 #import "Meet.h"
 
-@interface FinalResultsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface FinalResultsViewController : UITableViewController <NSFetchedResultsControllerDelegate,UITabBarControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

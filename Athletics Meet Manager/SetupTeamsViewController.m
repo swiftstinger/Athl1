@@ -577,8 +577,8 @@ NSLog(@"here");
 AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
 
 NSArray  *newArray = appDelegate.csvDataArray;
-//appDelegate.csvDataArray = nil
-    
+appDelegate.csvDataArray = nil;
+ self.importButton.enabled = FALSE;
    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
         for (NSString* stringwhole in newArray) {

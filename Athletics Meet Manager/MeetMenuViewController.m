@@ -9,6 +9,7 @@
 #import "MeetMenuViewController.h"
 #import "MeetMenuViewCell.h"
 #import "FinalResultsViewController.h"
+#import "ResultsWebViewController.h"
 #import "Division.h"
 #import "Team.h"
 #import "GEvent.h"
@@ -264,19 +265,29 @@ else
     if ([[segue identifier] isEqualToString:@"finalResults"]) {
         // nslog(@"final results");
         
-        
+      
       
         UITabBarController *barController = (UITabBarController*)[segue destinationViewController];
-        FinalResultsViewController* finalResultsController = (FinalResultsViewController*)[barController.viewControllers objectAtIndex:0];
+        
+        /*
+        
+        ResultsWebViewController* finalResultsController = (ResultsWebViewController*)[barController.viewControllers objectAtIndex:0];
        
         [finalResultsController setDetailItem:self.meetObject];
        
        [finalResultsController setManagedObjectContext:self.managedObjectContext];
-     /*
-        NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
-        [setValue:value forKey:@"orientation"];
-    */
-}
+     */
+     
+         UINavigationController *navController = (UINavigationController *)[barController.viewControllers objectAtIndex:0];
+       // UINavigationController *navController = (UINavigationController *) viewController;
+        
+        FinalResultsViewController* resultsController = (FinalResultsViewController*)[navController topViewController];
+        [resultsController setDetailItem:self.meetObject];
+        [resultsController setManagedObjectContext:self.managedObjectContext];
+
+
+    
+    }
 
     else
     {
@@ -6024,5 +6035,17 @@ for (Event *eventobject in eventSet )
 }
 
 
+- (IBAction)unwindToMeetMenu:(UIStoryboardSegue *)unwindSegue
+{
+
+    
+
+    /*
+    if ([unwindSegue.sourceViewController isKindOfClass:[MeetAddViewController class]])
+    {
+    
+    }
+    */
+}
 
 @end

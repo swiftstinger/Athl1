@@ -68,6 +68,8 @@
 		1F095F331B0FB765000FE30A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F095F321B0FB765000FE30A /* AppDelegate.m */; };
 		1F095F411B0FB765000FE30A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F401B0FB765000FE30A /* Images.xcassets */; };
 		1F095F501B0FB765000FE30A /* Athletics_Meet_ManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F095F4F1B0FB765000FE30A /* Athletics_Meet_ManagerTests.m */; };
+		1F0A4BC11BF265AF00FBA30A /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FEEE5C11BE10C2800D53412 /* libFlurry_7.2.1.a */; };
+		1F0A4BC31BF3F75000FBA30A /* resultsLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0A4BC21BF3F75000FBA30A /* resultsLogo.png */; };
 		1F11C8BA1BDC2D7600ACE8AF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F11C8B91BDC2D7600ACE8AF /* SystemConfiguration.framework */; };
 		1F1A3F001B79424F00F8D950 /* Meet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A3EFF1B79424F00F8D950 /* Meet.m */; };
 		1F1A3F031B79425000F8D950 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A3F021B79425000F8D950 /* Team.m */; };
@@ -77,7 +79,6 @@
 		1F1A3F0F1B79425300F8D950 /* Division.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A3F0E1B79425300F8D950 /* Division.m */; };
 		1F1A3F121B79425300F8D950 /* Competitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A3F111B79425300F8D950 /* Competitor.m */; };
 		1F470E351BE5295B0049D4F5 /* ResultsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F470E341BE5295B0049D4F5 /* ResultsWebViewController.m */; };
-		1F470E361BE52C880049D4F5 /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FEEE5C11BE10C2800D53412 /* libFlurry_7.2.1.a */; };
 		1F49C9BA1B8F1076007FB39C /* TutContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F49C9B91B8F1076007FB39C /* TutContentViewController.m */; };
 		1F49C9BD1B8F120F007FB39C /* TutMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F49C9BC1B8F120F007FB39C /* TutMainViewController.m */; };
 		1F54BD711B48E3A70046BA87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F3D1B0FB765000FE30A /* Main.storyboard */; };
@@ -214,6 +215,7 @@
 		1F095F491B0FB765000FE30A /* Athletics Meet ManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Athletics Meet ManagerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F095F4E1B0FB765000FE30A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F095F4F1B0FB765000FE30A /* Athletics_Meet_ManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Athletics_Meet_ManagerTests.m; sourceTree = "<group>"; };
+		1F0A4BC21BF3F75000FBA30A /* resultsLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resultsLogo.png; sourceTree = "<group>"; };
 		1F11C8B91BDC2D7600ACE8AF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1F1A3E9C1B6958BD00F8D950 /* Athletics_Meet_Manager 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Athletics_Meet_Manager 2.xcdatamodel"; sourceTree = "<group>"; };
 		1F1A3EFE1B79424F00F8D950 /* Meet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meet.h; sourceTree = "<group>"; };
@@ -327,7 +329,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F470E361BE52C880049D4F5 /* libFlurry_7.2.1.a in Frameworks */,
+				1F0A4BC11BF265AF00FBA30A /* libFlurry_7.2.1.a in Frameworks */,
 				1FB470D01BDE72EF009820D9 /* Security.framework in Frameworks */,
 				1F11C8BA1BDC2D7600ACE8AF /* SystemConfiguration.framework in Frameworks */,
 				1FFB4F7C1B1535C100C6309C /* CoreData.framework in Frameworks */,
@@ -402,6 +404,7 @@
 		1F095F211B0FB765000FE30A = {
 			isa = PBXGroup;
 			children = (
+				1F0A4BC21BF3F75000FBA30A /* resultsLogo.png */,
 				1FEEE5BE1BE10C2800D53412 /* Flurry */,
 				1FB470D71BDE80F5009820D9 /* ExampleMeet.plist */,
 				1FB470CF1BDE72EF009820D9 /* Security.framework */,
@@ -942,6 +945,7 @@
 				1F005AB11B9523B0003C4392 /* 32.png in Resources */,
 				1F005AB51B9523B0003C4392 /* 36.png in Resources */,
 				1F095F411B0FB765000FE30A /* Images.xcassets in Resources */,
+				1F0A4BC31BF3F75000FBA30A /* resultsLogo.png in Resources */,
 				1F005AA81B9523B0003C4392 /* 23.png in Resources */,
 				1F005AAB1B9523B0003C4392 /* 26.png in Resources */,
 				1FDEC0DB1B48D35400B1CB21 /* Lanes.jpg in Resources */,
@@ -1149,7 +1153,14 @@
 				INFOPLIST_FILE = "Athletics Meet Manager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Athletics Meet Manager/Flurry";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Athletics",
+					Meet,
+					Manager/Flurry,
+					"$(PROJECT_DIR)/Athletics",
+					Meet,
+					Manager/Flurry,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1166,7 +1177,14 @@
 				INFOPLIST_FILE = "Athletics Meet Manager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Athletics Meet Manager/Flurry";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Athletics",
+					Meet,
+					Manager/Flurry,
+					"$(PROJECT_DIR)/Athletics",
+					Meet,
+					Manager/Flurry,
+				);
 				PRODUCT_NAME = "Athletics Meet Manager";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

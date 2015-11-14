@@ -658,6 +658,7 @@ AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]deleg
 
 NSArray  *newArray = appDelegate.csvDataArray;
 appDelegate.csvDataArray = nil;
+self.importButton.enabled = FALSE;
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     int number = 0;
     

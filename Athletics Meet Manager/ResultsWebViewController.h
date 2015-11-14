@@ -13,8 +13,8 @@
 #import "Team.h"
 #import "Division.h"
 #import "GEvent.h"
-
-@interface ResultsWebViewController : UIViewController
+#import "CEventScore.h"
+@interface ResultsWebViewController : UIViewController <UITabBarControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

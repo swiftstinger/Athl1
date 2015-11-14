@@ -8,6 +8,7 @@
 
 #import "FinalResultsViewController.h"
 #import "TeamDivResultViewController.h"
+#import "ResultsWebViewController.h"
 #import "TeamFinalResultsTableViewCell.h"
 #import "Team.h"
 #import "CEventScore.h"
@@ -72,6 +73,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
   //  self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.tabBarController.delegate = self;
     
     for (Team *object in _meetObject.teams) {
         
@@ -80,12 +82,7 @@
     
     }
     
-    for (Team *object in _meetObject.teams) {
-        
-        [self sumResultsForTeam:object];
-    
-    
-    }
+   
     
     [self setPlaceForTeamsInMeet:_meetObject];
     
@@ -397,6 +394,16 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@)", _meet
     
   
     
+}
+
+-(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController{
+    if ([viewController isKindOfClass:[ResultsWebViewController class]]){
+        ResultsWebViewController *rvc = (ResultsWebViewController *) viewController;
+        
+        [rvc setDetailItem:self.meetObject];
+        [rvc setManagedObjectContext:self.managedObjectContext];
+    }
+    return TRUE;
 }
 
 
