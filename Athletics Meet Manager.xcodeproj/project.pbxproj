@@ -1283,7 +1283,7 @@
 				1F1A3E9C1B6958BD00F8D950 /* Athletics_Meet_Manager 2.xcdatamodel */,
 				1FD021FF1B13CA0500F40102 /* Athletics_Meet_Manager.xcdatamodel */,
 			);
-			currentVersion = 1FB470D61BDE74F0009820D9 /* Athletics_Meet_Manager 5.xcdatamodel */;
+			currentVersion = 1FEDB6BA1C00795F0073D277 /* Athletics_Meet_Manager 6.xcdatamodel */;
 			name = Athletics_Meet_Manager.xcdatamodeld;
 			path = "../../../../programming/ios/Athletics Meet Manager/Athletics Meet Manager/Athletics_Meet_Manager.xcdatamodeld";
 			sourceTree = "<group>";
