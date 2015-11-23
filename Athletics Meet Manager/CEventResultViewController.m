@@ -14,6 +14,7 @@
 #import "Division.h"
 #import "Event.h"
 #import "Meet.h"
+#import "Team.h"
 
 @interface CEventResultViewController ()
 
@@ -220,13 +221,45 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     CEventScore *ceventscore = (CEventScore*)object;
+  NSString *gEventType = ceventscore.event.gEvent.gEventType;
   
-     NSString* compName  = ceventscore.competitor.compName;
-    NSString* compTeam  = ceventscore.competitor.teamName;
-     cell.competitorNameLabel.text = compName;
-    cell.competitorTeamLabel.text = compTeam;
     
     
+    NSString* compName  = ceventscore.competitor.anyObject;
+    NSString* compTeam  = ceventscore.team.teamName;
+    NSMutableString * teamSpaceString = [NSMutableString stringWithString:@""];
+    
+    if ([gEventType isEqualToString:@"Relay"]) {
+            cell.competitorNameLabel.text = compTeam;
+            int count = 0;
+            for (Competitor* comp in ceventscore.competitor) {
+                if (count > 0) {
+                [teamSpaceString appendFormat:@", %@", comp.compName];
+                }
+                else
+                {
+                    [teamSpaceString appendFormat:@"%@", comp.compName];
+                    count++;
+                }
+            }
+    }
+    else
+    {
+        if (compName != nil) {
+            cell.competitorNameLabel.text = compName;
+        }
+        else
+        {
+            cell.competitorNameLabel.text = compTeam;
+        }
+
+        [teamSpaceString appendFormat:@"%@",compTeam];
+    
+    }
+  
+
+
+    cell.competitorTeamLabel.text = teamSpaceString;
     
     if (ceventscore.result) {
        cell.competitorResultLabel.text = [ceventscore.result description];

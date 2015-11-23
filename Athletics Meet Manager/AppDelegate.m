@@ -11,7 +11,7 @@
 //#import "MeetMenuViewController.h"
 #import "MasterViewController.h"
 #import "Meet.h"
-#import "Flurry.h"
+#import "Flurry/Flurry.h"
 
 @interface AppDelegate ()
 

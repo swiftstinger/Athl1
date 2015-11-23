@@ -96,7 +96,11 @@
         self.gEventType.selectedSegmentIndex = 2;
         
         }
-      
+      if ([self.gEventTypeValue isEqualToString: [self.gEventType titleForSegmentAtIndex:3]])
+      {
+        self.gEventType.selectedSegmentIndex = 3;
+        
+        }
       
        
       // maxcomp

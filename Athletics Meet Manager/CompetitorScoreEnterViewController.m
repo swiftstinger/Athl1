@@ -128,16 +128,16 @@ Event * event = thisscore.event;
     
                 NSSortDescriptor *sorter;
     
-                if ([event.gEvent.gEventType isEqualToString:@"Track"] ) {
+                if ([event.gEvent.gEventType isEqualToString:@"Track"]|| [event.gEvent.gEventType isEqualToString:@"Relay"]) {
                     sorter = lowestToHighest;
                 }
-                else if ([event.gEvent.gEventType isEqualToString:@"Field"]){
+                else if ([event.gEvent.gEventType isEqualToString:@"Field"]||[event.gEvent.gEventType isEqualToString:@"High Jump"]){
                     sorter = highestToLowest;
     
                 }
                 else
                 {
-                    // nslog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
+                    NSLog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
                     }
     
     

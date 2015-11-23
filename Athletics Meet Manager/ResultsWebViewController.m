@@ -8,6 +8,8 @@
 
 #import "ResultsWebViewController.h"
 #import "FinalResultsViewController.h"
+#import "TeamPlacesViewController.h"
+
 
 @interface ResultsWebViewController ()
 
@@ -189,13 +191,14 @@ int fullspannumber = self.meetObject.teams.count +1;
     
     // Bumf
 [mutableHTML appendString:@"<html> <head>"];
-[mutableHTML appendString:@"<style> <!--table {} @page {margin:.75in .7in .75in .7in; }"];
-
+//[mutableHTML appendString:@"<style> <!--table {} @page {margin:.75in .7in .75in .7in; }"];
+[mutableHTML appendString:@"<style> <!--table {} @page {margin:.01in .01in .01in .01in; }"];
 [mutableHTML appendString:@"td { padding:0px; mso-ignore:padding; color:windowtext; font-size:10.0pt; font-weight:700; font-style:normal; text-decoration:none; white-space:nowrap; font-family:Garamond, serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext;; white-space:normal; width:136pt; height:19pt } --> </style>"];
 
 [mutableHTML appendString:@"</head><body>"];
 
 [mutableHTML appendString:@"<table border=0 cellpadding=0 cellspacing=0  style='border-collapse: collapse;'><tr  style='height:59.25pt'> "];
+//[mutableHTML appendString:@"<table border=0 cellpadding=0 cellspacing=0  style='border-collapse: collapse;'><tr  style='height:30pt'> "];
 
 [mutableHTML appendString:@"<td colspan="];
 [mutableHTML appendFormat:@"%d",fullspannumber]; //columbs
@@ -293,7 +296,8 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
      
  /// Place
  [mutableHTML appendString:@"<tr> <td style='font-size:16.0pt' >"];
- [mutableHTML appendString:@"Div Place"];
+// [mutableHTML appendString:@"<tr style='height:10pt'> <td style='font-size:12.0pt; height:16pt' >"];
+ [mutableHTML appendString:@"Rank"];
  [mutableHTML appendString:@"</td>"];
      
      
@@ -316,6 +320,7 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
             }
             
             [mutableHTML appendString:@"<td style='color:blue;font-size:16.0pt'>"];
+          //  [mutableHTML appendString:@"<td style='color:blue;font-size:12.0pt; height:16pt'>"];
             NSNumber* numberInt = [NSNumber numberWithInt: counter+1];
             [mutableHTML appendFormat:@"%@",numberInt];
             [mutableHTML appendString:@"</td>"];
@@ -337,7 +342,7 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
   
   /// Final Total
   
-  [mutableHTML appendString:@"<tr> <td style='font-size:20.0pt'>"];
+  [mutableHTML appendString:@"<tr style='height:24pt'> <td style='font-size:20.0pt'>"];
   [mutableHTML appendString:@"TOTAL"];
   [mutableHTML appendString:@"</td>"];
   
@@ -353,11 +358,11 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
  
         }
         [mutableHTML appendString:@" </tr>"];
-
+//26.25
   
  
-  [mutableHTML appendString:@"<tr > <td style='font-size:20.0pt'>"];
-  [mutableHTML appendString:@"POSITION"];
+ [mutableHTML appendString:@"<tr style='height:24pt'> <td style='font-size:20.0pt'>"];
+   [mutableHTML appendString:@"POSITION"];
   [mutableHTML appendString:@"</td>"];
   
   
@@ -378,7 +383,9 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
 
 
     NSString *myHTML = mutableHTML;
-    NSLog(@"%@",myHTML);
+  //  NSLog(@"%@",myHTML);
+  
+  self.htmlString = myHTML;
     [self.webWiew loadHTMLString:myHTML baseURL:nil];
 }
 
@@ -480,22 +487,97 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
 
 }
 
+
+
+
+- (IBAction)ActionButtonPressed:(UIBarButtonItem *)sender {
+
+
+    
+         UIPrintInfo *printInfo = [UIPrintInfo printInfo];
+        printInfo.outputType = UIPrintInfoOutputGeneral;
+        printInfo.jobName = @"MeetResults";
+        printInfo.orientation = UIPrintInfoOrientationLandscape;
+    
+        UIViewPrintFormatter *formatter = [self.webWiew viewPrintFormatter];
+    
+            self.formatter = formatter;
+            self.printInfo = printInfo;
+   
+                NSLog(@"started");
+            self.htmlPdfKit = [[BNHtmlPdfKit alloc] init];
+            self.htmlPdfKit.delegate = self;
+            [self.htmlPdfKit saveHtmlAsPdf:self.htmlString];
+    
+
+}
+- (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didSavePdfData:(NSData *)data {
+
+        NSLog(@"in delegate");
+    
+    
+        NSArray *activityItems = @[self.printInfo, self.formatter, data];
+    
+    
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    
+    
+        
+
+
+        if ( [activityController respondsToSelector:@selector(popoverPresentationController)] ) {
+            // iOS8
+            activityController.popoverPresentationController.barButtonItem = self.ActionButton;
+        }
+
+
+         [self presentViewController:activityController animated:YES completion:nil];
+         
+    
+}
+- (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didFailWithError:(NSError *)error {
+  NSLog(@"PDF Error");
+}
 -(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UINavigationController *)viewController{
     if ([viewController isKindOfClass:[UINavigationController class]]){
         UINavigationController *navController = (UINavigationController *) viewController;
         NSLog(@"helloooooooooo");
-        FinalResultsViewController* resultsController = (FinalResultsViewController*)[navController topViewController];
-        [resultsController setDetailItem:self.meetObject];
+        
+        UIViewController *resultsViewController = [navController topViewController];
+        
+        
+        
+        if ([resultsViewController isKindOfClass:[FinalResultsViewController class]]) {
+           FinalResultsViewController* resultsController = (FinalResultsViewController*)resultsViewController;
+           [resultsController setDetailItem:self.meetObject];
         [resultsController setManagedObjectContext:self.managedObjectContext];
-    
-    
-    
+        }
+        else
+        {
+            if ([resultsViewController isKindOfClass:[TeamPlacesViewController class]]) {
+                
+                NSLog(@"resultsViewControllerMaster");
+                TeamPlacesViewController* resultsController = (TeamPlacesViewController*)resultsViewController;
+                [resultsController setDetailItem:self.meetObject];
+                [resultsController setManagedObjectContext:self.managedObjectContext];
+
+            }
+            
+        }
+        
+        
+        /*
+        FinalResultsViewController* resultsController = (FinalResultsViewController*)[navController topViewController];
+        */
+        
+        
+        
+   
     
     }
     
     
     return TRUE;
 }
-
 
 @end
