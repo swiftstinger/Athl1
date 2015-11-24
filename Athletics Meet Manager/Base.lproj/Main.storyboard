@@ -1102,7 +1102,7 @@
         <scene sceneID="wTY-yo-sgu">
             <objects>
                 <tabBarController id="hCO-Gl-YyC" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" itemPositioning="fill" id="0j7-Pl-3Xu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

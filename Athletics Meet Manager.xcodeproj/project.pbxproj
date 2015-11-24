@@ -68,7 +68,6 @@
 		1F095F331B0FB765000FE30A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F095F321B0FB765000FE30A /* AppDelegate.m */; };
 		1F095F411B0FB765000FE30A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F401B0FB765000FE30A /* Images.xcassets */; };
 		1F095F501B0FB765000FE30A /* Athletics_Meet_ManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F095F4F1B0FB765000FE30A /* Athletics_Meet_ManagerTests.m */; };
-		1F0A4BC11BF265AF00FBA30A /* libFlurry_7.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FEEE5C11BE10C2800D53412 /* libFlurry_7.2.1.a */; };
 		1F0A4BC31BF3F75000FBA30A /* resultsLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0A4BC21BF3F75000FBA30A /* resultsLogo.png */; };
 		1F11C8BA1BDC2D7600ACE8AF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F11C8B91BDC2D7600ACE8AF /* SystemConfiguration.framework */; };
 		1F1A3F001B79424F00F8D950 /* Meet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A3EFF1B79424F00F8D950 /* Meet.m */; };
@@ -317,9 +316,6 @@
 		1FDEC0DA1B48D35400B1CB21 /* Lanes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Lanes.jpg; path = ../athleticsimages/Lanes.jpg; sourceTree = "<group>"; };
 		1FE6D9AC1B6267FB00F921A6 /* Athletics Meet Manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athletics Meet Manager.entitlements"; sourceTree = "<group>"; };
 		1FE6D9AD1B62686F00F921A6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		1FEEE5BF1BE10C2800D53412 /* Flurry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		1FEEE5C01BE10C2800D53412 /* FlurryWatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
-		1FEEE5C11BE10C2800D53412 /* libFlurry_7.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.2.1.a; sourceTree = "<group>"; };
 		1FFB4F7B1B1535C100C6309C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		84B5B8421B15C81D00529756 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -329,7 +325,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F0A4BC11BF265AF00FBA30A /* libFlurry_7.2.1.a in Frameworks */,
 				1FB470D01BDE72EF009820D9 /* Security.framework in Frameworks */,
 				1F11C8BA1BDC2D7600ACE8AF /* SystemConfiguration.framework in Frameworks */,
 				1FFB4F7C1B1535C100C6309C /* CoreData.framework in Frameworks */,
@@ -405,7 +400,6 @@
 			isa = PBXGroup;
 			children = (
 				1F0A4BC21BF3F75000FBA30A /* resultsLogo.png */,
-				1FEEE5BE1BE10C2800D53412 /* Flurry */,
 				1FB470D71BDE80F5009820D9 /* ExampleMeet.plist */,
 				1FB470CF1BDE72EF009820D9 /* Security.framework */,
 				1F11C8B91BDC2D7600ACE8AF /* SystemConfiguration.framework */,
@@ -793,17 +787,6 @@
 				1FDA11EC1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m */,
 			);
 			name = CompertitorAddInResultSheet;
-			sourceTree = "<group>";
-		};
-		1FEEE5BE1BE10C2800D53412 /* Flurry */ = {
-			isa = PBXGroup;
-			children = (
-				1FEEE5BF1BE10C2800D53412 /* Flurry.h */,
-				1FEEE5C01BE10C2800D53412 /* FlurryWatch.h */,
-				1FEEE5C11BE10C2800D53412 /* libFlurry_7.2.1.a */,
-			);
-			name = Flurry;
-			path = "Athletics Meet Manager/Flurry";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
