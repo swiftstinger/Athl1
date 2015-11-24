@@ -221,16 +221,17 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     CEventScore *ceventscore = (CEventScore*)object;
-  NSString *gEventType = ceventscore.event.gEvent.gEventType;
+    NSString *gEventType = ceventscore.event.gEvent.gEventType;
   
-    
-    
-    NSString* compName  = ceventscore.competitor.anyObject;
+    NSString* compName  = ceventscore.competitor.compName;
     NSString* compTeam  = ceventscore.team.teamName;
     NSMutableString * teamSpaceString = [NSMutableString stringWithString:@""];
     
     if ([gEventType isEqualToString:@"Relay"]) {
             cell.competitorNameLabel.text = compTeam;
+        
+        /*
+        
             int count = 0;
             for (Competitor* comp in ceventscore.competitor) {
                 if (count > 0) {
@@ -242,6 +243,10 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
                     count++;
                 }
             }
+            
+        */
+        
+        [teamSpaceString appendFormat:@"%@",compTeam];
     }
     else
     {

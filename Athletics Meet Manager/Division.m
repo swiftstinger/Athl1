@@ -2,11 +2,12 @@
 //  Division.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 10/08/2015.
+//  Created by Ailsa Huysamen on 24/11/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
 #import "Division.h"
+#import "BackupEvent.h"
 #import "Event.h"
 #import "Meet.h"
 
@@ -15,11 +16,12 @@
 
 @dynamic divID;
 @dynamic divName;
-@dynamic updateByUser;
-@dynamic updateDateAndTime;
-@dynamic onlineID;
 @dynamic editDone;
 @dynamic edited;
+@dynamic onlineID;
+@dynamic updateByUser;
+@dynamic updateDateAndTime;
+@dynamic backupEvents;
 @dynamic events;
 @dynamic meet;
 

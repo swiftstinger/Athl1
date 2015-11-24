@@ -2,7 +2,7 @@
 //  Event.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 10/08/2015.
+//  Created by Ailsa Huysamen on 24/11/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -15,24 +15,18 @@
 
 @implementation Event
 
+@dynamic editDone;
+@dynamic edited;
 @dynamic eventDone;
 @dynamic eventEdited;
 @dynamic eventID;
+@dynamic onlineID;
 @dynamic startTime;
 @dynamic updateByUser;
 @dynamic updateDateAndTime;
-@dynamic onlineID;
-@dynamic editDone;
-@dynamic edited;
 @dynamic cEventScores;
 @dynamic division;
 @dynamic gEvent;
 @dynamic meet;
-
-- (void) awakeFromInsert
-{
-[super awakeFromInsert];
-[self setValue:[NSDate date] forKey:@"updateDateAndTime"];
-}
 
 @end

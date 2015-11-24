@@ -2,7 +2,7 @@
 //  CEventScore.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 21/11/2015.
+//  Created by Ailsa Huysamen on 24/11/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 #import "Event.h"
 #import "Meet.h"
 #import "Team.h"
-#import "GEvent.h"
+
 
 @implementation CEventScore
 
@@ -31,18 +31,5 @@
 @dynamic event;
 @dynamic meet;
 @dynamic team;
-
-- (void)willSave
-{
-    [super willSave];
-
-    if (self.isDeleted)
-        return;
-    if (![self.event.gEvent.gEventType isEqualToString:@"Relay"]) {
-        if (self.competitor.count == 0)
-            [self.managedObjectContext deleteObject:self];
-    }
-    
-}
 
 @end

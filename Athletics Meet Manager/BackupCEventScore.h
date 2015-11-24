@@ -2,7 +2,7 @@
 //  BackupCEventScore.h
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 21/11/2015.
+//  Created by Ailsa Huysamen on 24/11/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -25,17 +25,9 @@
 @property (nonatomic, retain) NSNumber * score;
 @property (nonatomic, retain) NSString * updateByUser;
 @property (nonatomic, retain) NSDate * updateDateAndTime;
-@property (nonatomic, retain) NSSet *backupCompetitor;
+@property (nonatomic, retain) BackupCompetitor *backupCompetitor;
 @property (nonatomic, retain) BackupEvent *backupEvent;
 @property (nonatomic, retain) Meet *meet;
 @property (nonatomic, retain) Team *team;
-@end
-
-@interface BackupCEventScore (CoreDataGeneratedAccessors)
-
-- (void)addBackupCompetitorObject:(BackupCompetitor *)value;
-- (void)removeBackupCompetitorObject:(BackupCompetitor *)value;
-- (void)addBackupCompetitor:(NSSet *)values;
-- (void)removeBackupCompetitor:(NSSet *)values;
 
 @end

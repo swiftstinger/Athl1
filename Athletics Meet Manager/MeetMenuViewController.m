@@ -10,6 +10,7 @@
 #import "MeetMenuViewCell.h"
 #import "FinalResultsViewController.h"
 #import "ResultsWebViewController.h"
+#import "TeamPlacesViewController.h"
 #import "Division.h"
 #import "Team.h"
 #import "GEvent.h"
@@ -281,7 +282,7 @@ else
          UINavigationController *navController = (UINavigationController *)[barController.viewControllers objectAtIndex:0];
        // UINavigationController *navController = (UINavigationController *) viewController;
         
-        FinalResultsViewController* resultsController = (FinalResultsViewController*)[navController topViewController];
+        TeamPlacesViewController* resultsController = (TeamPlacesViewController*)[navController topViewController];
         [resultsController setDetailItem:self.meetObject];
         [resultsController setManagedObjectContext:self.managedObjectContext];
 
@@ -6038,7 +6039,6 @@ for (Event *eventobject in eventSet )
 - (IBAction)unwindToMeetMenu:(UIStoryboardSegue *)unwindSegue
 {
 
-    
 
     /*
     if ([unwindSegue.sourceViewController isKindOfClass:[MeetAddViewController class]])

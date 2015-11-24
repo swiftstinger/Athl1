@@ -255,13 +255,18 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
   
     
     
-    NSString* compName  = ceventscore.competitor.anyObject;
+    NSString* compName  = ceventscore.competitor.compName;
     NSString* compTeam  = ceventscore.team.teamName;
     NSMutableString * teamSpaceString = [NSMutableString stringWithString:@""];
     
     if ([gEventType isEqualToString:@"Relay"]) {
             cell.competitorNameLabel.text = compTeam;
+     
+      
+    
+       /*
             int count = 0;
+        
             for (Competitor* comp in ceventscore.competitor) {
                 if (count > 0) {
                 [teamSpaceString appendFormat:@", %@", comp.compName];
@@ -272,6 +277,10 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
                     count++;
                 }
             }
+        
+        */
+        
+        [teamSpaceString appendFormat:@"%@",compTeam];
     }
     else
     {
@@ -541,7 +550,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
         
        
         
-        [ceventscore addCompetitorObject: newcompetitorObject];
+        ceventscore.competitor = newcompetitorObject;
         ceventscore.event = self.eventObject;
         ceventscore.meet = self.eventObject.meet;
         ceventscore.team = sourceViewController.team;
@@ -641,7 +650,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
         
        
         
-        [ceventscore addCompetitorObject:  sourceViewController.competitorObject ];
+        ceventscore.competitor =  sourceViewController.competitorObject;
         ceventscore.event = self.eventObject;
         ceventscore.meet = self.eventObject.meet;
         ceventscore.team = sourceViewController.competitorObject.team;
@@ -965,7 +974,7 @@ if ([sourceViewController isKindOfClass:[EventScoreAddViewController class]])
                 }
                 else
                 {
-                    NSlog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
+                    NSLog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
                     }
     
     

@@ -340,7 +340,7 @@ else
         int scorenumber = [event.backupCEventScores count];
         
          NSString* backupdatetext = [NSString stringWithFormat:@" Backup made: %@ Number of Scores %d",dateString,scorenumber];
-         NSLog(backupdatetext);
+         NSLog(@"%@",backupdatetext);
         cell.backupDateLabel.text = backupdatetext;
         cell.backupDateLabel.hidden = NO;
        

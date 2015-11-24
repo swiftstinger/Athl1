@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
-#import "ResultsWebViewController.h"
-#import "FinalResultsViewController.h"
-#import "TeamPlacesViewController.h"
 
+#import "FinalResultsViewController.h"
+#import "ResultsWebViewController.h"
+#import "TeamPlacesViewController.h"
 
 @interface ResultsWebViewController ()
 
@@ -541,11 +541,8 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
 -(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UINavigationController *)viewController{
     if ([viewController isKindOfClass:[UINavigationController class]]){
         UINavigationController *navController = (UINavigationController *) viewController;
-        NSLog(@"helloooooooooo");
         
         UIViewController *resultsViewController = [navController topViewController];
-        
-        
         
         if ([resultsViewController isKindOfClass:[FinalResultsViewController class]]) {
            FinalResultsViewController* resultsController = (FinalResultsViewController*)resultsViewController;
@@ -556,28 +553,48 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
         {
             if ([resultsViewController isKindOfClass:[TeamPlacesViewController class]]) {
                 
-                NSLog(@"resultsViewControllerMaster");
                 TeamPlacesViewController* resultsController = (TeamPlacesViewController*)resultsViewController;
                 [resultsController setDetailItem:self.meetObject];
                 [resultsController setManagedObjectContext:self.managedObjectContext];
 
             }
             
+            if ([resultsViewController isKindOfClass:[ResultsWebViewController class]]){
+                ResultsWebViewController *resultsController = (ResultsWebViewController *) resultsViewController;
+        
+                [resultsController setDetailItem:self.meetObject];
+                [resultsController setManagedObjectContext:self.managedObjectContext];
+            }
+            
+            /*
+            
+            if ([resultsViewController isKindOfClass:[TeamPlacesViewController class]]) {
+                
+                NSLog(@"resultsViewControllerMaster");
+                TeamPlacesViewController* resultsController = (TeamPlacesViewController*)resultsViewController;
+                [resultsController setDetailItem:self.meetObject];
+                [resultsController setManagedObjectContext:self.managedObjectContext];
+
+            }
+            if ([resultsViewController isKindOfClass:[TeamPlacesViewController class]]) {
+                
+                NSLog(@"resultsViewControllerMaster");
+                TeamPlacesViewController* resultsController = (TeamPlacesViewController*)resultsViewController;
+                [resultsController setDetailItem:self.meetObject];
+                [resultsController setManagedObjectContext:self.managedObjectContext];
+
+            }
+
+            */
+            
         }
         
-        
-        /*
-        FinalResultsViewController* resultsController = (FinalResultsViewController*)[navController topViewController];
-        */
-        
-        
-        
-   
-    
+
     }
     
     
     return TRUE;
 }
+
 
 @end

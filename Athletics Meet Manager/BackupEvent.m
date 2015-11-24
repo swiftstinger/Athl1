@@ -2,7 +2,7 @@
 //  BackupEvent.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 10/10/2015.
+//  Created by Ailsa Huysamen on 24/11/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -27,9 +27,9 @@
 @dynamic updateByUser;
 @dynamic updateDateAndTime;
 @dynamic backupCEventScores;
+@dynamic backupCompetitor;
 @dynamic division;
 @dynamic gEvent;
 @dynamic meet;
-@dynamic backupCompetitor;
 
 @end
