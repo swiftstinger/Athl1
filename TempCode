@@ -1,3 +1,73 @@
+Dont show this again tick boxes with data for each scene
+
+
+Comp # in import later
+
+add/view comps on long press
+add label to relay
+change cell
+
+
+delete competitor
+
+in ceventscores and backup ceventscores
+
+- (void)willSave
+{
+    [super willSave];
+
+    if (self.isDeleted)
+        return;
+
+    if (self.products.count == 0)
+        [self.managedObjectContext deleteObject:self];
+}
+
+
+relays
+
+
+enter relay result how to set up relay teams to make results entry usefull.
+
+        need to view and enter comps but click should add result (mabe add section at bottom of view that can add and delete?  and have result at top?)
+
+Event types track field High Jump Relay  add relay to
+A Event make menu
+B import done
+C Export done
+D Scores done
+E backup and online?
+
+.competitor.
+
+
+1. Comp in team view
+    Unwind done trigger alert with ifs for add
+    conditional segue for com result view (mabe only change cell to show team not name)
+2. Competitor resultsview/ new for relays    if relays in comp in team view (mabe only change cell to show team not name)
+
+3. enter results view controller conditional segue depending on result type (good for high jump and throws later as well)
+4. 4.1 New eventcontroller choose team for plus
+   4.2  new controller for click and
+    4.3 then choose comp with team name for plus
+
+
+4. showeventscorecopysheet set cell on check to team name if Backupevent is relay
+
+
+5. go through all backups and saves and ensure comps are changed to nsset handle on copy and save
+
+6. server change ceventscores to comps many
+
+
+7. Details result view comp view cell change for relay
+
+
+
+////// NSSET for ceventscore and backupceventscore and server ceventscore /////
+
+
+// try new webview with html
 
 Previews
 
@@ -26,7 +96,10 @@ Print Final results
 - Print formatter
 
 
-add colspans = number of columbs in results
+
+//////
+
+IDS give new on load from import to make order good
 
 
 
@@ -535,3 +608,196 @@ cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[obj
     [defaults synchronize];
      
     ////
+
+
+        
+    // Bumf
+[mutableHTML appendString:@"<html> <head>"];
+[mutableHTML appendString:@"<style> <!--table {} @page {margin:.75in .7in .75in .7in; }"];
+
+[mutableHTML appendString:@"td { padding:0px; mso-ignore:padding; color:windowtext; font-size:10.0pt; font-weight:700; font-style:normal; text-decoration:none; white-space:nowrap; font-family:Garamond, serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext;; white-space:normal; width:136pt; height:19pt } --> </style>"];
+
+[mutableHTML appendString:@"</head><body>"];
+
+[mutableHTML appendString:@"<table border=0 cellpadding=0 cellspacing=0  style='border-collapse: collapse;'><tr  style='height:59.25pt'> "];
+//[mutableHTML appendString:@"<table border=0 cellpadding=0 cellspacing=0  style='border-collapse: collapse;'><tr  style='height:30pt'> "];
+
+[mutableHTML appendString:@"<td colspan="];
+[mutableHTML appendFormat:@"%d",fullspannumber]; //columbs
+ [mutableHTML appendString:@" style='font-size:28.0pt;'>"];
+ 
+ // Meet Name and Date
+ 
+ /*
+NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+[dateFormat setDateFormat:@"yyyy-MM-dd"];
+
+NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
+[timeFormat setDateFormat:@"HH:mm:ss"];
+
+//NSDate *date = [[NSDate alloc] init];
+NSDate *date = self.meetObject.meetDate;
+
+NSString *theDate = [dateFormat stringFromDate:date];
+//NSString *theTime = [timeFormat stringFromDate:date];
+
+
+
+
+ 
+ [mutableHTML appendFormat:@"%@  %@",self.meetObject.meetName,theDate];
+ */
+ 
+ [mutableHTML appendFormat:@"%@",self.meetObject.meetName];
+ 
+ //
+ [mutableHTML appendString:@"</td> </tr><tr style='height:26.25pt'> "];
+ [mutableHTML appendString:@"<td colspan="];
+  [mutableHTML appendFormat:@"%d",fullspannumber]; //columbs
+  [mutableHTML appendString:@" "];
+[mutableHTML appendString:@"style='font-size:20.0pt'>"];
+[mutableHTML appendString:@"OVERALL TOTALS"];
+[mutableHTML appendString:@"</td>"];
+[mutableHTML appendString:@"</tr> <tr > <td style='font-size:16.0pt'>"];
+[mutableHTML appendString:@"DIVISION"];
+[mutableHTML appendString:@"</td>"];
+
+for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"teamID" ascending:YES]]]) {
+
+
+ [mutableHTML appendString:@"<td style='font-size:20.0pt'>"];
+ [mutableHTML appendFormat:@"%@",team.teamName];
+ [mutableHTML appendString:@"</td>"];
+ 
+ 
+ }
+ [mutableHTML appendString:@"</tr>"];
+ 
+ 
+ 
+ for (Division* div in [self.meetObject.divisions sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"divID" ascending:YES]]]) {
+	
+    [mutableHTML appendString:@"<tr > <td style='font-size:16.0pt' >"];
+    [mutableHTML appendFormat:@"%@",div.divName];
+    [mutableHTML appendString:@"</td>"];
+     
+     NSMutableArray* scoreArray = [[NSMutableArray alloc]init];
+     NSMutableDictionary* nameDict = [[NSMutableDictionary alloc] init];
+        for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"teamID" ascending:YES]]]) {
+
+
+            [mutableHTML appendString:@"<td style='color:blue;font-size:16.0pt'>"];
+            NSNumber* numberInt = [NSNumber numberWithInt: [self sumResultsForTeam:team AndDiv:div]];
+            [mutableHTML appendFormat:@"%@",numberInt];
+            [mutableHTML appendString:@"</td>"];
+            
+            [scoreArray addObject:numberInt];
+            [nameDict setObject:numberInt forKey:team.teamName];
+            
+ 
+        }
+     
+        [mutableHTML appendString:@" </tr>"];
+     /**
+     
+            spare outfits 2
+     vest long top leggings cardy
+     
+     slippers
+     
+     outfit for tomorrow
+     
+     sleepingbag
+     
+     light on
+     
+     book
+     
+     
+     **/
+     
+ /// Place
+ [mutableHTML appendString:@"<tr> <td style='font-size:16.0pt' >"];
+ [mutableHTML appendString:@"Rank"];
+ [mutableHTML appendString:@"</td>"];
+     
+     
+        int counter;
+     
+     
+        for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"teamID" ascending:YES]]]) {
+            
+            NSNumber* tempnumber = [nameDict objectForKey:team.teamName];
+            NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
+            NSArray*sortArray = [NSArray arrayWithObject:highestToLowest];
+            [scoreArray sortUsingDescriptors:sortArray];
+            counter = 0;
+            NSNumber* scorenumber = scoreArray[counter];
+            
+            
+            while (tempnumber != scorenumber) {
+                counter++;
+                scorenumber = scoreArray[counter];
+            }
+            
+            [mutableHTML appendString:@"<td style='color:blue;font-size:16.0pt'>"];
+            NSNumber* numberInt = [NSNumber numberWithInt: counter+1];
+            [mutableHTML appendFormat:@"%@",numberInt];
+            [mutableHTML appendString:@"</td>"];
+ 
+        }
+        [mutableHTML appendString:@" </tr>"];
+     
+     
+     
+
+  
+     
+
+}
+ 
+ // Event
+ 
+
+  
+  /// Final Total
+  
+  [mutableHTML appendString:@"<tr> <td style='font-size:20.0pt'>"];
+  [mutableHTML appendString:@"TOTAL"];
+  [mutableHTML appendString:@"</td>"];
+  
+ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"teamID" ascending:YES]]])
+    {
+        
+
+            [mutableHTML appendString:@"<td style='color:blue;font-size:16.0pt'>"];
+            NSNumber* numberInt = team.teamScore;
+            [mutableHTML appendFormat:@"%@",numberInt];
+            [mutableHTML appendString:@"</td>"];
+ 
+ 
+        }
+        [mutableHTML appendString:@" </tr>"];
+//26.25
+  
+ 
+ [mutableHTML appendString:@"<tr style='height:48pt'> <td style='font-size:20.0pt'>"];
+   [mutableHTML appendString:@"POSITION"];
+  [mutableHTML appendString:@"</td>"];
+  
+  
+ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"teamID" ascending:YES]]]) {
+
+
+            [mutableHTML appendString:@"<td style='color:blue;font-size:16.0pt'>"];
+            NSNumber* numberInt = team.teamPlace;
+            [mutableHTML appendFormat:@"%@",numberInt];
+            [mutableHTML appendString:@"</td>"];
+ 
+ 
+        }
+        [mutableHTML appendString:@" </tr>"];
+
+
+  [mutableHTML appendString:@"</table></body></html>"];
+

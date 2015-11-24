@@ -251,11 +251,54 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     CEventScore *ceventscore = (CEventScore*)object;
+    NSString *gEventType = ceventscore.event.gEvent.gEventType;
   
-     NSString* compName  = ceventscore.competitor.compName;
-    NSString* compTeam  = ceventscore.competitor.teamName;
-     cell.competitorNameLabel.text = compName;
-    cell.competitorTeamLabel.text = compTeam;
+    
+    
+    NSString* compName  = ceventscore.competitor.compName;
+    NSString* compTeam  = ceventscore.team.teamName;
+    NSMutableString * teamSpaceString = [NSMutableString stringWithString:@""];
+    
+    if ([gEventType isEqualToString:@"Relay"]) {
+            cell.competitorNameLabel.text = compTeam;
+     
+      
+    
+       /*
+            int count = 0;
+        
+            for (Competitor* comp in ceventscore.competitor) {
+                if (count > 0) {
+                [teamSpaceString appendFormat:@", %@", comp.compName];
+                }
+                else
+                {
+                    [teamSpaceString appendFormat:@"%@", comp.compName];
+                    count++;
+                }
+            }
+        
+        */
+        
+        [teamSpaceString appendFormat:@"%@",compTeam];
+    }
+    else
+    {
+        if (compName != nil) {
+            cell.competitorNameLabel.text = compName;
+        }
+        else
+        {
+            cell.competitorNameLabel.text = compTeam;
+        }
+
+        [teamSpaceString appendFormat:@"%@",compTeam];
+    
+    }
+  
+
+
+    cell.competitorTeamLabel.text = teamSpaceString;
     
     
     
@@ -310,9 +353,13 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
                      [self performSegueWithIdentifier:@"enterHighJumpResult" sender:self];
     
                 }
+                else if ([eventtypestring isEqualToString:@"Relay"]){
+                     [self performSegueWithIdentifier:@"enterResult" sender:self];
+    
+                }
                 else
                 {
-                    // nslog(@"whooooops geventtyp not either %@", eventtypestring);
+                     NSLog(@"whooooops geventtyp not either %@", eventtypestring);
                 }
 
 
@@ -338,7 +385,14 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
         
         [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
     }
-
+    
+    if ([[segue identifier] isEqualToString:@"enterRelayResult"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        [[segue destinationViewController] setDetailItem:object];
+        
+        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+    }
     
     if ([[segue identifier] isEqualToString:@"eventScoreAdd"]) {
         
@@ -596,7 +650,7 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
         
        
         
-        ceventscore.competitor = sourceViewController.competitorObject;
+        ceventscore.competitor =  sourceViewController.competitorObject;
         ceventscore.event = self.eventObject;
         ceventscore.meet = self.eventObject.meet;
         ceventscore.team = sourceViewController.competitorObject.team;
@@ -907,7 +961,7 @@ if ([sourceViewController isKindOfClass:[EventScoreAddViewController class]])
     
                 NSSortDescriptor *sorter;
     
-                if ([event.gEvent.gEventType isEqualToString:@"Track"] ) {
+                if ([event.gEvent.gEventType isEqualToString:@"Track"]||[event.gEvent.gEventType isEqualToString:@"Relay"] ) {
                     sorter = lowestToHighest;
                 }
                 else if ([event.gEvent.gEventType isEqualToString:@"Field"]){
@@ -920,7 +974,7 @@ if ([sourceViewController isKindOfClass:[EventScoreAddViewController class]])
                 }
                 else
                 {
-                    // nslog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
+                    NSLog(@"whooooops geventtyp not either %@", event.gEvent.gEventType);
                     }
     
     

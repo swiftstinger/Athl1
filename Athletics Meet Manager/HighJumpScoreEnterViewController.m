@@ -129,7 +129,7 @@ Event * event = thisscore.event;
     
                 NSSortDescriptor *sorter;
     
-                if ([event.gEvent.gEventType isEqualToString:@"Track"] ) {
+                if ([event.gEvent.gEventType isEqualToString:@"Track"] || [event.gEvent.gEventType isEqualToString:@"Relay"] ) {
                     sorter = lowestToHighest;
                 }
                 else if ([event.gEvent.gEventType isEqualToString:@"Field"]){
