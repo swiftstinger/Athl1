@@ -1136,14 +1136,7 @@
 				INFOPLIST_FILE = "Athletics Meet Manager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1160,14 +1153,7 @@
 				INFOPLIST_FILE = "Athletics Meet Manager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-					"$(PROJECT_DIR)/Athletics",
-					Meet,
-					Manager/Flurry,
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "Athletics Meet Manager";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
