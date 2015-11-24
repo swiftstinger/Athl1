@@ -607,7 +607,6 @@ cell.numberOfTeamsLabel.text = [NSString stringWithFormat:@"Teams: %@",  @([[obj
      
     [defaults synchronize];
      
-    ////
 
 
         
@@ -801,3 +800,4 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
 
   [mutableHTML appendString:@"</table></body></html>"];
 
+    ////

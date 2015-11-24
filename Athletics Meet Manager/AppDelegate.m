@@ -11,7 +11,7 @@
 //#import "MeetMenuViewController.h"
 #import "MasterViewController.h"
 #import "Meet.h"
-//#import "Flurry.h"
+//#import "Flurry/Flurry.h"
 
 @interface AppDelegate ()
 
@@ -23,7 +23,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
- //   [Flurry startSession:@"M65479RVRBXH8V8QV8R6"];
+  //  [Flurry startSession:@"M65479RVRBXH8V8QV8R6"];
     
     
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
