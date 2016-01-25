@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14F27" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="BackupCEventScore" representedClassName="BackupCEventScore" syncable="YES">
         <attribute name="cEventScoreID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="editDone" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
@@ -8,12 +8,14 @@
         <attribute name="onlineID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="personalBest" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="placing" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="relayDisc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="result" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="resultEntered" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="updateByUser" optional="YES" attributeType="String" defaultValueString="owner" syncable="YES"/>
         <attribute name="updateDateAndTime" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="backupCompetitor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BackupCompetitor" inverseName="backupCEventScores" inverseEntity="BackupCompetitor" syncable="YES"/>
+        <relationship name="backupEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupEntry" inverseName="backupCEventScore" inverseEntity="BackupEntry" syncable="YES"/>
         <relationship name="backupEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BackupEvent" inverseName="backupCEventScores" inverseEntity="BackupEvent" syncable="YES"/>
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="backupCEventScores" inverseEntity="Meet" syncable="YES"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="backupCEventScores" inverseEntity="Team" syncable="YES"/>
@@ -27,10 +29,22 @@
         <attribute name="teamName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updateByUser" optional="YES" attributeType="String" defaultValueString="owner" syncable="YES"/>
         <attribute name="updateDateAndTime" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="backupCEventScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupCEventScore" inverseName="backupCompetitor" inverseEntity="BackupCEventScore" syncable="YES"/>
+        <relationship name="backupCEventScores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BackupCEventScore" inverseName="backupCompetitor" inverseEntity="BackupCEventScore" syncable="YES"/>
+        <relationship name="backupEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupEntry" inverseName="backupCompetitor" inverseEntity="BackupEntry" syncable="YES"/>
         <relationship name="backupEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BackupEvent" inverseName="backupCompetitor" inverseEntity="BackupEvent" syncable="YES"/>
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="backupCompetitors" inverseEntity="Meet" syncable="YES"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="backupCompetitors" inverseEntity="Team" syncable="YES"/>
+    </entity>
+    <entity name="BackupEntry" representedClassName="BackupEntry" syncable="YES">
+        <attribute name="editDone" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="edited" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="entryID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="onlineID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updateByUser" optional="YES" attributeType="String" defaultValueString="owner" syncable="YES"/>
+        <attribute name="updateDateAndTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="backupCEventScore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BackupCEventScore" inverseName="backupEntries" inverseEntity="BackupCEventScore" syncable="YES"/>
+        <relationship name="backupCompetitor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BackupCompetitor" inverseName="backupEntries" inverseEntity="BackupCompetitor" syncable="YES"/>
+        <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="backupEntry" inverseEntity="Meet" syncable="YES"/>
     </entity>
     <entity name="BackupEvent" representedClassName="BackupEvent" syncable="YES">
         <attribute name="backupDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -57,12 +71,14 @@
         <attribute name="onlineID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="personalBest" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="placing" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="relayDisc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="result" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="resultEntered" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="updateByUser" optional="YES" attributeType="String" defaultValueString="owner" syncable="YES"/>
         <attribute name="updateDateAndTime" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="competitor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Competitor" inverseName="cEventScores" inverseEntity="Competitor" syncable="YES"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Entry" inverseName="cEventScore" inverseEntity="Entry" syncable="YES"/>
         <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="cEventScores" inverseEntity="Event" syncable="YES"/>
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="cEventsScores" inverseEntity="Meet" syncable="YES"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="cEventScores" inverseEntity="Team" syncable="YES"/>
@@ -76,7 +92,8 @@
         <attribute name="teamName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updateByUser" optional="YES" attributeType="String" defaultValueString="owner" syncable="YES"/>
         <attribute name="updateDateAndTime" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="cEventScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CEventScore" inverseName="competitor" inverseEntity="CEventScore" syncable="YES"/>
+        <relationship name="cEventScores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CEventScore" inverseName="competitor" inverseEntity="CEventScore" syncable="YES"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Entry" inverseName="competitor" inverseEntity="Entry" syncable="YES"/>
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="competitors" inverseEntity="Meet" syncable="YES"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="competitors" inverseEntity="Team" syncable="YES"/>
     </entity>
@@ -91,6 +108,17 @@
         <relationship name="backupEvents" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupEvent" inverseName="division" inverseEntity="BackupEvent" syncable="YES"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Event" inverseName="division" inverseEntity="Event" syncable="YES"/>
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="divisions" inverseEntity="Meet" syncable="YES"/>
+    </entity>
+    <entity name="Entry" representedClassName="Entry" syncable="YES">
+        <attribute name="editDone" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="edited" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="entryID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="onlineID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updateByUser" optional="YES" attributeType="String" defaultValueString="owner" syncable="YES"/>
+        <attribute name="updateDateAndTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="cEventScore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CEventScore" inverseName="entries" inverseEntity="CEventScore" syncable="YES"/>
+        <relationship name="competitor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Competitor" inverseName="entries" inverseEntity="Competitor" syncable="YES"/>
+        <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="entry" inverseEntity="Meet" syncable="YES"/>
     </entity>
     <entity name="Event" representedClassName="Event" syncable="YES">
         <attribute name="editDone" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
@@ -150,10 +178,12 @@
         <attribute name="updateDateAndTime" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="backupCEventScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupCEventScore" inverseName="meet" inverseEntity="BackupCEventScore" syncable="YES"/>
         <relationship name="backupCompetitors" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupCompetitor" inverseName="meet" inverseEntity="BackupCompetitor" syncable="YES"/>
+        <relationship name="backupEntry" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupEntry" inverseName="meet" inverseEntity="BackupEntry" syncable="YES"/>
         <relationship name="backupEvents" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupEvent" inverseName="meet" inverseEntity="BackupEvent" syncable="YES"/>
         <relationship name="cEventsScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CEventScore" inverseName="meet" inverseEntity="CEventScore" syncable="YES"/>
         <relationship name="competitors" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Competitor" inverseName="meet" inverseEntity="Competitor" syncable="YES"/>
         <relationship name="divisions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Division" inverseName="meet" inverseEntity="Division" syncable="YES"/>
+        <relationship name="entry" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Entry" inverseName="meet" inverseEntity="Entry" syncable="YES"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Event" inverseName="meet" inverseEntity="Event" syncable="YES"/>
         <relationship name="gEvents" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GEvent" inverseName="meet" inverseEntity="GEvent" syncable="YES"/>
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Team" inverseName="meet" inverseEntity="Team" syncable="YES"/>
@@ -176,15 +206,17 @@
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="teams" inverseEntity="Meet" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BackupCEventScore" positionX="-12069" positionY="-13491" width="128" height="285"/>
-        <element name="BackupCompetitor" positionX="-12078" positionY="-13500" width="128" height="225"/>
+        <element name="BackupCEventScore" positionX="-12069" positionY="-13491" width="128" height="315"/>
+        <element name="BackupCompetitor" positionX="-12078" positionY="-13500" width="128" height="240"/>
         <element name="BackupEvent" positionX="-12087" positionY="-13509" width="128" height="270"/>
-        <element name="CEventScore" positionX="-12071" positionY="-12879" width="128" height="285"/>
-        <element name="Competitor" positionX="-12267" positionY="-13032" width="128" height="30"/>
+        <element name="CEventScore" positionX="-12071" positionY="-12879" width="128" height="315"/>
+        <element name="Competitor" positionX="-12267" positionY="-13032" width="128" height="225"/>
         <element name="Division" positionX="-12042" positionY="-13392" width="128" height="195"/>
         <element name="Event" positionX="-11871" positionY="-13185" width="128" height="240"/>
         <element name="GEvent" positionX="-11486" positionY="-13366" width="128" height="300"/>
-        <element name="Meet" positionX="-11999" positionY="-13671" width="128" height="495"/>
+        <element name="Meet" positionX="-11999" positionY="-13671" width="128" height="525"/>
         <element name="Team" positionX="-12303" positionY="-13399" width="128" height="270"/>
+        <element name="Entry" positionX="-12096" positionY="-13518" width="128" height="180"/>
+        <element name="BackupEntry" positionX="-12087" positionY="-13509" width="128" height="180"/>
     </elements>
 </model>

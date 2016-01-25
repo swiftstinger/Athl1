@@ -508,6 +508,7 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
      
      
 
+
      
      if (![defaults objectForKey:@"firstTimeDone"]) {
 

@@ -35,22 +35,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Athletics Meet Manager/EventScoreSheetViewController.m"
-            timestampString = "462756900.285641"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "696"
-            endingLineNumber = "696"
-            landmarkName = "-unwindToEventScoreSheetDone:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Athletics Meet Manager/FinalResultsViewController.m"
             timestampString = "468972959.527787"
             startingColumnNumber = "9223372036854775807"
@@ -89,7 +73,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2889"
             endingLineNumber = "2889"
-            landmarkName = "-updateOnlineMeet"
+            landmarkName = "-fetchObjectType:WithOnlineID:IsOwnerNumber:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -121,7 +105,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2664"
             endingLineNumber = "2664"
-            landmarkName = "-endUpdateOnlineMeetWithSuccess:"
+            landmarkName = "-mailComposeController:didFinishWithResult:error:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -187,6 +171,54 @@
                   offsetFromSymbolStart = "3744">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Athletics Meet Manager/MeetMenuViewController.m"
+            timestampString = "474669665.48127"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1775"
+            endingLineNumber = "1775"
+            landmarkName = "-removeAllOnline"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Athletics Meet Manager/MeetMenuViewController.m"
+            timestampString = "474670390.128953"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3751"
+            endingLineNumber = "3751"
+            landmarkName = "-updateOwnerFromServer"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Athletics Meet Manager/EventScoreSheetViewController.m"
+            timestampString = "475457069.736134"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "533"
+            endingLineNumber = "533"
+            landmarkName = "-setAllNotEditedAndDoneForEvent:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

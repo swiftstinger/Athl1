@@ -9,8 +9,9 @@
 #import "EventScoreAddViewController.h"
 #import "CompetitorAddInResultSheetViewController.h"
 #import "GEvent.h"
-#import "Team.h"
 #import "Meet.h"
+#import "CEventScore.h"
+#import "Entry.h"
 
 @interface EventScoreAddViewController ()
 @property (nonatomic, strong) NSFetchedResultsController *searchFetchedResultsController;
@@ -37,11 +38,25 @@
     [super awakeFromNib];
 }
 
-- (void)setDetailItem:(id)newDetailItem
+- (void)setEventObject:(Event *)newObject
 {
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-        _eventObject = _detailItem;
+    if (_eventObject != newObject) {
+        
+        _eventObject = newObject;
+        
+        // Update the view.
+        [self configureView];
+        
+       
+        
+    }
+}
+
+- (void)setTeamObject:(Team *)newObject
+{
+    if (_teamObject != newObject) {
+        
+        _teamObject = newObject;
         
         // Update the view.
         [self configureView];
@@ -52,13 +67,31 @@
 }
 
 
-
 - (void)configureView
 {
 
 
     // Update the user interface for the detail item.
-    if (_detailItem) {
+    if (_eventObject) {
+        if ([self.eventObject.gEvent.gEventType isEqualToString:@"Relay"])
+        {
+            
+            self.SkipCancel.title = @"Cancel";
+           
+            
+        
+        }
+        else
+        {
+            self.SkipCancel.title = @"Skip";
+        
+        
+        }
+
+      
+
+    }
+     if (_teamObject) {
         
       
 
@@ -71,6 +104,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
     
 }
 
@@ -146,10 +180,26 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
-       if ([self shouldPerformSegueWithIdentifier:@"competitorSelectedSegue" sender:self]) {
-            [self performSegueWithIdentifier:@"competitorSelectedSegue" sender:self];
-        }
+       
+       if ([self.eventObject.gEvent.gEventType isEqualToString:@"Relay"])
+        {
+            
+            if ([self shouldPerformSegueWithIdentifier:@"eventScoreAddRelaySelectedSeque" sender:self])
+            {
+                [self performSegueWithIdentifier:@"eventScoreAddRelaySelectedSeque" sender:self];
+            }
+            
         
+        }
+        else
+        {
+                if ([self shouldPerformSegueWithIdentifier:@"eventScoreAddNormSelectedSeque" sender:self])
+                {
+                    [self performSegueWithIdentifier:@"eventScoreAddNormSelectedSeque" sender:self];
+        
+        
+                }
+        }
     }
 }
 
@@ -175,14 +225,28 @@
     
  
     
-    NSArray *array = [self.eventObject.cEventScores allObjects];
+    NSArray *array1 = [self.eventObject.cEventScores allObjects];
     
+    NSMutableArray *entryArray = [[NSMutableArray alloc] init];
+    
+    for (CEventScore* cscore in array1) {
+        NSArray *arraytemp = [cscore.entries allObjects];
+            for (Entry* entrytemp in arraytemp) {
+                    [entryArray addObject:entrytemp];
+            }
+    }
+  NSArray *array = [entryArray copy];
   
     
-   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(cEventScores, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
-    
- 
+   NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(cEventScores, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
    
+   
+    NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(team == %@)", self.teamObject];
+        
+        NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+        NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+
     
     
     [fetchRequest setPredicate:predicate];
@@ -191,7 +255,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSString *sortKey =  @"teamName";
+    NSString *sortKey =  @"compName";
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
@@ -235,6 +299,21 @@
     
     // Get the search string and set the predicate.
     NSString *searchText = self.searchDisplayController.searchBar.text;
+   
+     NSArray *array1 = [self.eventObject.cEventScores allObjects];
+    
+    NSMutableArray *entryArray = [[NSMutableArray alloc] init];
+    
+        for (CEventScore* cscore in array1) {
+            NSArray *arraytemp = [cscore.entries allObjects];
+                for (Entry* entrytemp in arraytemp) {
+                        [entryArray addObject:entrytemp];
+                }
+        }
+    NSArray *array = [entryArray copy];
+    
+    
+    
     if ([searchText length] > 0) {
         
        
@@ -247,10 +326,14 @@
         NSArray *preds1 = [NSArray arrayWithObjects: pred1,pred2, nil];
         NSPredicate *orPred = [NSCompoundPredicate orPredicateWithSubpredicates:preds1];
 
+
+        NSPredicate *pred3 = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(cEventScores, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
+   
+   
+        NSPredicate *pred4 = [NSPredicate predicateWithFormat:@"(team == %@)", self.teamObject];
         
-        NSPredicate *pred3 = [NSPredicate predicateWithFormat:@"(meet == %@)", self.eventObject.meet];
         
-        NSArray *preds2 = [NSArray arrayWithObjects: orPred,pred3, nil];
+        NSArray *preds2 = [NSArray arrayWithObjects: orPred,pred3,pred4, nil];
         NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds2];
 
         
@@ -259,8 +342,18 @@
     }
     else
     {
-    NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(meet == %@)", self.eventObject.meet];
-     [fetchRequest setPredicate:pred1];
+    
+  
+    
+        NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(cEventScores, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
+   
+   
+        NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(team == %@)", self.teamObject];
+        
+        NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+        NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+        
+        [fetchRequest setPredicate:andPred];
     }
     
     
@@ -393,10 +486,19 @@
     }
 }
 */
+
+
+
+
+
+
+
+#pragma mark - Segues
+
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-   // nslog(@"hahhhhhhhhhhhhhhhhhh");
+   
     
-    if ([identifier isEqualToString:@"competitorSelectedSegue"]) {
+    if ([identifier isEqualToString:@"eventScoreAddRelaySelectedSeque"]) {
         
         UITableView *tableView = [sender isEqual:self] ? self.searchDisplayController.searchResultsTableView : self.tableView;
         
@@ -404,123 +506,50 @@
         NSManagedObject *object = [[self fetchedResultsControllerForTableView:tableView] objectAtIndexPath:indexPath];
         
         self.competitorObject = (Competitor*)object;
-// nslog(@"competitor selected and object name is %@", self.competitorObject.compName);
-      //  self.eventObject
-        
-        
-        
-        
-        
-        if ([[self.competitorObject valueForKeyPath:@"cEventScores.event"] containsObject:self.eventObject]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertController * alert =   [UIAlertController
-                                    alertControllerWithTitle:@"Chosen competitor is already competing in this event."
-                                    message:@"Please pick a different competitor"
-                                    preferredStyle:UIAlertControllerStyleAlert];
-     
-     
-                UIAlertAction* ok = [UIAlertAction
-                        actionWithTitle:@"OK"
-                        style:UIAlertActionStyleDefault
-                        handler:^(UIAlertAction * action)
-                        {
-                            [alert dismissViewControllerAnimated:YES completion:nil];
-                             
-                        }];
-                        
-                [alert addAction:ok];
-     
-                [self presentViewController:alert animated:YES completion:nil];
-                
-             });
-            return NO;
-        }
-        
-
-   
-        
-       
-        
-        
-   /////////////
-   ///////////// //check 1 competitors per team
-   /////////////
-        
-        Team *team = self.competitorObject.team;
-        
-        int limitperteam = [self.eventObject.gEvent.competitorsPerTeam intValue ];
-    
-    
-        if (limitperteam != 0) {
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
-            NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
-
-            [fetchRequest setEntity:description];
-
-
-            NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(team == %@)", team];
-            NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(event == %@)", self.eventObject];
-            NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
-            NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
-
-            [fetchRequest setPredicate:andPred];
-
-
-            NSError *err;
-            NSUInteger eventscorecount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&err];
-        
-        
-            if(eventscorecount == NSNotFound) {
-                //Handle error
-            }
-        
-    
-    
-    
-    
-            int currentEventNumber = (int)eventscorecount ;
-        
-     
-        
+    // nslog(@"competitor selected and object name is %@", self.competitorObject.compName);
+          //  self.eventObject
             
-            if (!(limitperteam>currentEventNumber)) {
-    
-               //self.competitorObject = nil;
+            // check comp in event
+            /**
+            
+            
+            if ([[self.competitorObject valueForKeyPath:@"cEventScores.event"] containsObject:self.eventObject]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                UIAlertController * alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Already too many competitors from this team in the Event"
-                                    message:@"Please delete a competitor from this event or change the number of competitors allowed per team for this event"
-                                    preferredStyle:UIAlertControllerStyleAlert];
-     
-     
-                UIAlertAction* ok = [UIAlertAction
-                        actionWithTitle:@"OK"
-                        style:UIAlertActionStyleDefault
-                        handler:^(UIAlertAction * action)
-                        {
-                            [alert dismissViewControllerAnimated:YES completion:nil];
-                             
-                        }];
-                        
-                [alert addAction:ok];
-     
-                [self presentViewController:alert animated:YES completion:nil];
-                
-                });
-                
+                UIAlertController * alert =   [UIAlertController
+                                        alertControllerWithTitle:@"Chosen competitor is already competing in this event."
+                                        message:@"Please pick a different competitor"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+         
+         
+                    UIAlertAction* ok = [UIAlertAction
+                            actionWithTitle:@"OK"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                                 
+                            }];
+                            
+                    [alert addAction:ok];
+         
+                    [self presentViewController:alert animated:YES completion:nil];
+                    
+                 });
                 return NO;
-                }
-                
-        }
+            }
+            
+            **/
+   
+
         
    /////////////
-   /////////////
+   ///////////// check comp limit
    /////////////
         
         int limitpercompetitor =  [self.competitorObject.meet.cEventLimit intValue];
         if (limitpercompetitor != 0) {
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
-            NSEntityDescription *description = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext: self.managedObjectContext];
+            NSEntityDescription *description = [NSEntityDescription entityForName:@"Entry" inManagedObjectContext: self.managedObjectContext];
 
             [fetchRequest setEntity:description];
 
@@ -578,11 +607,82 @@
         
         
     }
+    if ([identifier isEqualToString:@"eventScoreAddNormSelectedSeque"]) {
+        
+        UITableView *tableView = [sender isEqual:self] ? self.searchDisplayController.searchResultsTableView : self.tableView;
+        
+        NSIndexPath *indexPath = [tableView indexPathForSelectedRow];
+        NSManagedObject *object = [[self fetchedResultsControllerForTableView:tableView] objectAtIndexPath:indexPath];
+        
+        self.competitorObject = (Competitor*)object;
+        
+   /////////////
+   ///////////// check comp limit
+   /////////////
+        
+        int limitpercompetitor =  [self.competitorObject.meet.cEventLimit intValue];
+        if (limitpercompetitor != 0) {
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+            NSEntityDescription *description = [NSEntityDescription entityForName:@"Entry" inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+
+            NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(competitor == %@)", self.competitorObject];
+            
+
+            [fetchRequest setPredicate:pred1];
+
+
+            NSError *err;
+            NSUInteger eventscorecountforc = [self.managedObjectContext countForFetchRequest:fetchRequest error:&err];
+        
+        
+            if(eventscorecountforc == NSNotFound) {
+                //Handle error
+            }
+        
     
+    
+    
+    
+            int currentEventNumber = (int)eventscorecountforc ;
+        
+     
+        
+            
+            if (!(limitpercompetitor>currentEventNumber)) {
+    
+              // self.competitorObject = nil;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"This competitor is already in too many events"
+                                    message:@"Please remove competitor from another event or change the number of events allowed per competitor"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                });
+                return NO;
+                }
+                
+        }
+        
+        
+    }
     return YES;              
 }
-
-#pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  
@@ -595,6 +695,7 @@
         
         
         [competitorAddController setDetailItem:self.eventObject];
+        [competitorAddController setTeamItem:self.teamObject];
          // nslog(@"not added context");
         [competitorAddController setManagedObjectContext:self.managedObjectContext];
     }
@@ -606,7 +707,7 @@
 
 UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
-if ([sourceViewController isKindOfClass:[CompetitorAddInResultSheetViewController class]])
+    if ([sourceViewController isKindOfClass:[CompetitorAddInResultSheetViewController class]])
     {
         // nslog(@"Coming from CompertitorAddInResults Cancel!");
     }
@@ -614,4 +715,24 @@ if ([sourceViewController isKindOfClass:[CompetitorAddInResultSheetViewControlle
    
 }
 
+- (IBAction)SkipCancel:(UIBarButtonItem *)sender {
+
+    if ([self.eventObject.gEvent.gEventType isEqualToString:@"Relay"])
+        {
+            
+        [self performSegueWithIdentifier:@"eventScoreAddRelayCancelledSeque" sender:self];
+           
+            
+        
+        }
+        else
+        {
+            [self performSegueWithIdentifier:@"eventScoreAddNormSkippedSeque" sender:self];
+        
+        
+        }
+
+
+
+}
 @end

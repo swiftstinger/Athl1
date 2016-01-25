@@ -10,14 +10,18 @@
 #import <CoreData/CoreData.h>
 #import "Competitor.h"
 #import "Event.h"
+#import "Team.h"
 
 @interface EventScoreAddViewController : UITableViewController <NSFetchedResultsControllerDelegate, UISearchBarDelegate,  UISearchControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Team* teamObject;
 @property (strong, nonatomic) Competitor* competitorObject;
 @property (strong, nonatomic) Event* eventObject;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *SkipCancel;
+- (IBAction)SkipCancel:(UIBarButtonItem *)sender;
 
 
 @end

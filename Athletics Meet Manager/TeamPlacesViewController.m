@@ -2,7 +2,7 @@
 //  TeamPlacesViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 19/11/2015.
+//  Created by Rudi Huysamen on 19/11/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -184,16 +184,18 @@ teamobject.teamScore = [NSNumber numberWithInt:score];
     
 //// Calculations //////
 
-int fullspannumber = (int)self.meetObject.teams.count +1;
+//int fullspannumber = (int)self.meetObject.teams.count +1;
 
-
+int fullspannumber = 3;
     
     
     // Bumf
 [mutableHTML appendString:@"<html> <head>"];
 //[mutableHTML appendString:@"<style> <!--table {} @page {margin:.75in .7in .75in .7in; }"];
 [mutableHTML appendString:@"<style> <!--table {} @page {margin:.01in .01in .01in .01in; }"];
-[mutableHTML appendString:@"td { padding:0px; mso-ignore:padding; color:windowtext; font-size:10.0pt; font-weight:700; font-style:normal; text-decoration:none; white-space:nowrap; font-family:Garamond, serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext;; white-space:normal; width:136pt; height:19pt } --> </style>"];
+//[mutableHTML appendString:@"td { padding:0px; mso-ignore:padding; color:windowtext; font-size:10.0pt; font-weight:700; font-style:normal; text-decoration:none; white-space:nowrap; font-family:Garamond, serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext;; white-space:normal; width:136pt; height:19pt } --> </style>"];
+//[mutableHTML appendString:@"td { padding:0px; mso-ignore:padding; color:windowtext; font-size:10.0pt; font-weight:700; font-style:normal; text-decoration:none; white-space:nowrap; font-family:Garamond, serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext;; white-space:normal; width:136pt; height:19pt } --> </style>"];
+[mutableHTML appendString:@"td { padding:0px; mso-ignore:padding; color:windowtext; font-size:10.0pt; font-weight:700; font-style:normal; text-decoration:none; white-space:nowrap; font-family:\"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext;; white-space:normal; width:136pt; height:19pt } --> </style>"];
 
 [mutableHTML appendString:@"</head><body>"];
 
@@ -229,29 +231,59 @@ NSString *theDate = [dateFormat stringFromDate:date];
  [mutableHTML appendFormat:@"%@",self.meetObject.meetName];
  
  //
- [mutableHTML appendString:@"</td> </tr><tr style='height:26.25pt'> "];
- [mutableHTML appendString:@"<td colspan="];
-  [mutableHTML appendFormat:@"%d",fullspannumber]; //columbs
-  [mutableHTML appendString:@" "];
-[mutableHTML appendString:@"style='font-size:20.0pt'>"];
-[mutableHTML appendString:@"OVERALL TOTALS"];
+[mutableHTML appendString:@"</td> </tr><tr style=' height:28.25pt'> "];
+[mutableHTML appendString:@"<td colspan="];
+[mutableHTML appendFormat:@"%d",fullspannumber]; //columbs
+[mutableHTML appendString:@" "];
+[mutableHTML appendString:@"style='font-size:20pt'>"];
+[mutableHTML appendString:@"RESULTS"];
 [mutableHTML appendString:@"</td>"];
-[mutableHTML appendString:@"</tr> <tr > <td style='font-size:16.0pt'>"];
-[mutableHTML appendString:@"DIVISION"];
+[mutableHTML appendString:@"</tr>"];
+
+int count = 0;
+
+for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"teamScore" ascending:NO]]]) {
+count++;
+
+
+
+
+
+[mutableHTML appendString:@" <tr >"];
+[mutableHTML appendString:@"<td style='width:136pt; height:40pt; font-size:20.0pt'>"];
+[mutableHTML appendFormat:@"%d",count];
+
+if (count == 1) {
+    [mutableHTML appendString:@"<sup>st</sup>"];
+}
+else if (count == 2){
+[mutableHTML appendString:@"<sup>nd</sup>"];
+}
+else if (count == 3){
+
+[mutableHTML appendString:@"<sup>rd</sup>"];
+}
+else
+{
+[mutableHTML appendString:@"<sup>th</sup>"];
+
+}
+
+
+
 [mutableHTML appendString:@"</td>"];
-
-for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"teamID" ascending:YES]]]) {
-
-
- [mutableHTML appendString:@"<td style='font-size:20.0pt'>"];
- [mutableHTML appendFormat:@"%@",team.teamName];
- [mutableHTML appendString:@"</td>"];
+[mutableHTML appendString:@"<td style='color:blue; width:680pt; height:40pt; font-size:20.0pt; border-right:none'>"];
+[mutableHTML appendFormat:@"%@",team.teamName];
+[mutableHTML appendString:@"</td>"];
+[mutableHTML appendString:@"<td style='width:136pt; height:40pt; font-size:20.0pt; border-left:none'>"];
+//[mutableHTML appendFormat:@"%@",team.teamName];
+[mutableHTML appendString:@"</td>"];
+[mutableHTML appendString:@"</tr>"];
+ 
+}
  
  
- }
- [mutableHTML appendString:@"</tr>"];
- 
- 
+/*
  
  for (Division* div in [self.meetObject.divisions sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"divID" ascending:YES]]]) {
 	
@@ -276,24 +308,7 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
         }
      
         [mutableHTML appendString:@" </tr>"];
-     /**
-     
-            spare outfits 2
-     vest long top leggings cardy
-     
-     slippers
-     
-     outfit for tomorrow
-     
-     sleepingbag
-     
-     light on
-     
-     book
-     
-     
-     **/
-     
+ 
  /// Place
  [mutableHTML appendString:@"<tr> <td style='font-size:16.0pt' >"];
 // [mutableHTML appendString:@"<tr style='height:10pt'> <td style='font-size:12.0pt; height:16pt' >"];
@@ -377,7 +392,7 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
  
         }
         [mutableHTML appendString:@" </tr>"];
-
+*/
 
   [mutableHTML appendString:@"</table></body></html>"];
 

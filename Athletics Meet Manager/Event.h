@@ -2,7 +2,7 @@
 //  Event.h
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 24/11/2015.
+//  Created by Rudi Huysamen on 24/11/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 

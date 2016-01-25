@@ -788,6 +788,8 @@ self.sharing = YES;
         
         [localChangesMute addObject:cscorerecord];
     }
+    
+    // relayflag addentryonline
   
 
   [self modifyOnlineWithChanges:localChangesMute AndDeletions:localDeletionsMute];
@@ -1498,7 +1500,7 @@ NSArray *array = [mutableArray copy];
 //////////////
 //////////////
 
-    cscore[@"competitor"] = cscoreObject.competitor.onlineID;
+    cscore[@"competitor"] = cscoreObject.competitor.onlineID;  /// = 
     cscore[@"event"] = cscoreObject.event.onlineID;
     cscore[@"team"] = cscoreObject.team.onlineID;
     cscore[@"meetOnlineID"] = cscoreObject.meet.onlineID;
@@ -1509,6 +1511,8 @@ return cscore;
 
 }
 
+//addEntryOnline
+// relayflag
 
 - (void) modifyOnlineWithChanges: (NSMutableArray*) changesMute AndDeletions: (NSMutableArray*) deletionsMute {
 
@@ -3590,7 +3594,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
                queryOpCScore.database = publicDatabase;
             //execute query
-    self.cscoreServerMutableArray = [[NSMutableArray alloc] init];
+    self.cscoreServerMutableArray = [[NSMutableArray alloc] init]; //relayflag
     
                 queryOpCScore.recordFetchedBlock = ^(CKRecord *cscore)
                 {
@@ -3682,7 +3686,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                     {
                      NSLog(@"query cscore succesful");
                         
-                       [self endUpdateOnlineMeetWithSuccess:YES];
+                       [self endUpdateOnlineMeetWithSuccess:YES]; // //relayflag
 
                      }
                     
@@ -3696,7 +3700,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
     
    
     
-    
+    //relayflag
     
     
 
@@ -3708,7 +3712,7 @@ NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"meet.isOwner == %@", isO
                 [queue addOperation: queryOpEvent];
                 [queue addOperation: queryOpComp];
                 [queue addOperation: queryOpCScore];
-
+                //relayflag
 }
 
 
@@ -3844,7 +3848,7 @@ NSLog(@"updating owner meet");
                     if (thisEventObject != nil) {
                         NSLog(@" %@ exists in first bit",objectType);
                         NSLog(@"******** found an online event and will update owner local ****");
-                        [self copyEventToBackUpAndDeleteWithOnlineId:self.updatedNonOwnerEventIDsMutableArray[indexOfArray]];
+                        [self copyEventToBackUpAndDeleteWithOnlineId:self.updatedNonOwnerEventIDsMutableArray[indexOfArray]]; //relayflag
                     }
                     else
                     {
@@ -4306,7 +4310,7 @@ NSLog(@"updating owner meet");
                         cscoreObject.team = teamObject;
                    
                     
-                    
+                    //relayflag
                     
                     //////// start query 6 Comp
                     
@@ -4421,6 +4425,7 @@ NSLog(@"updating owner meet");
     
     //////// end query 7 cscore
 
+//relayflag  //add entry  if no entry handle for verion problem? check first and then try
     
     ////////// end operation start
     [saveContextOp addDependency:queryOpEvent];
@@ -4750,7 +4755,7 @@ NSLog(@"updating owner meet");
     self.eventLocalMutableArray = [[NSMutableArray alloc] init];
     self.compLocalMutableArray = [[NSMutableArray alloc] init];
     self.cscoreLocalMutableArray = [[NSMutableArray alloc] init];
-    
+    //relayflag
     
     
    
@@ -4817,7 +4822,7 @@ NSLog(@"updating owner meet");
         [localChangesMute addObject:cscorerecord];
     }
     
-    
+    //relayflag add entryonline
     //////////
     ////
     //////////
@@ -5111,6 +5116,8 @@ NSLog(@"updating owner meet");
                        NSLog(@"all deletes and all adds done sending");
                        
                         [self ownerUpdateOnlineWithChanges:localChangesMute AndDeletions:self.serverdeletes];
+                        
+                        //relayflag
                      }
                     
                 };
@@ -5121,7 +5128,7 @@ NSLog(@"updating owner meet");
     
     //////// end query 7 Event
     
-   
+   //relayflag  query entry
     
     
     
@@ -5151,7 +5158,7 @@ NSLog(@"updating owner meet");
 
 
   
-  
+  //relayflag
   
     NSArray *localChanges = [changesMute copy];
     NSArray *localDeletions = [deletionsMute copy];
@@ -5298,7 +5305,7 @@ NSLog(@"updating owner meet");
 
 }
 
-
+//relayflag
 - (void) saveMeetToPlist {
 //create array and dictionaries from objects with core data model as basis
 //writetofile and initfromfile
@@ -5519,6 +5526,8 @@ NSMutableArray* cscoresArray = [[NSMutableArray alloc] init];
 
 meetDict[@"cEventsScores"] = cscoresArray;
 
+//relayflag
+
 
 NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [path objectAtIndex:0];
@@ -5564,7 +5573,7 @@ NSString *emailTitle = @"Export Meet Plist";
 /**
 - (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {
     [self saveMeetToPlist];
-}
+}  //relayflag
 **/
 
 - (IBAction)ExportResultsButton:(UIBarButtonItem *)sender {

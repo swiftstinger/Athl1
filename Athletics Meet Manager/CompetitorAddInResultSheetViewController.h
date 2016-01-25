@@ -12,18 +12,20 @@
 #import "Team.h"
 #import "Event.h"
 
-@interface CompetitorAddInResultSheetViewController : UITableViewController  <NSFetchedResultsControllerDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface CompetitorAddInResultSheetViewController : UITableViewController  < UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *competitorName;
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
 @property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) Meet* meet;
 @property (strong, nonatomic) Event* event;
-@property (strong, nonatomic) Team* team;
+@property (strong, nonatomic) Team* teamItem;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property BOOL isEditing;
 @property BOOL isOnTextField;
 
-@property (weak, nonatomic) IBOutlet UIPickerView *picker;
+
+- (IBAction)doneButton:(UIBarButtonItem *)sender;
+
 
 @end

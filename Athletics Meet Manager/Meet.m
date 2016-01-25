@@ -2,17 +2,19 @@
 //  Meet.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 24/11/2015.
-//  Copyright (c) 2015 rudi huysamen. All rights reserved.
+//  Created by Ailsa Huysamen on 25/01/2016.
+//  Copyright (c) 2016 rudi huysamen. All rights reserved.
 //
 
 #import "Meet.h"
 #import "BackupCEventScore.h"
 #import "BackupCompetitor.h"
+#import "BackupEntry.h"
 #import "BackupEvent.h"
 #import "CEventScore.h"
 #import "Competitor.h"
 #import "Division.h"
+#import "Entry.h"
 #import "Event.h"
 #import "GEvent.h"
 #import "Team.h"
@@ -50,5 +52,7 @@
 @dynamic events;
 @dynamic gEvents;
 @dynamic teams;
+@dynamic backupEntry;
+@dynamic entry;
 
 @end

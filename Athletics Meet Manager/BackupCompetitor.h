@@ -2,14 +2,14 @@
 //  BackupCompetitor.h
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 24/11/2015.
-//  Copyright (c) 2015 rudi huysamen. All rights reserved.
+//  Created by Ailsa Huysamen on 20/01/2016.
+//  Copyright (c) 2016 rudi huysamen. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class BackupCEventScore, BackupEvent, Meet, Team;
+@class BackupCEventScore, BackupEntry, BackupEvent, Meet, Team;
 
 @interface BackupCompetitor : NSManagedObject
 
@@ -25,6 +25,7 @@
 @property (nonatomic, retain) BackupEvent *backupEvent;
 @property (nonatomic, retain) Meet *meet;
 @property (nonatomic, retain) Team *team;
+@property (nonatomic, retain) NSSet *backupEntries;
 @end
 
 @interface BackupCompetitor (CoreDataGeneratedAccessors)
@@ -33,5 +34,10 @@
 - (void)removeBackupCEventScoresObject:(BackupCEventScore *)value;
 - (void)addBackupCEventScores:(NSSet *)values;
 - (void)removeBackupCEventScores:(NSSet *)values;
+
+- (void)addBackupEntriesObject:(BackupEntry *)value;
+- (void)removeBackupEntriesObject:(BackupEntry *)value;
+- (void)addBackupEntries:(NSSet *)values;
+- (void)removeBackupEntries:(NSSet *)values;
 
 @end

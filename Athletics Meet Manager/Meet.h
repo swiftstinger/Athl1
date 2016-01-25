@@ -2,14 +2,14 @@
 //  Meet.h
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 24/11/2015.
-//  Copyright (c) 2015 rudi huysamen. All rights reserved.
+//  Created by Ailsa Huysamen on 25/01/2016.
+//  Copyright (c) 2016 rudi huysamen. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class BackupCEventScore, BackupCompetitor, BackupEvent, CEventScore, Competitor, Division, Event, GEvent, Team;
+@class BackupCEventScore, BackupCompetitor, BackupEntry, BackupEvent, CEventScore, Competitor, Division, Entry, Event, GEvent, Team;
 
 @interface Meet : NSManagedObject
 
@@ -43,6 +43,8 @@
 @property (nonatomic, retain) NSSet *events;
 @property (nonatomic, retain) NSSet *gEvents;
 @property (nonatomic, retain) NSSet *teams;
+@property (nonatomic, retain) NSSet *backupEntry;
+@property (nonatomic, retain) NSSet *entry;
 @end
 
 @interface Meet (CoreDataGeneratedAccessors)
@@ -91,5 +93,15 @@
 - (void)removeTeamsObject:(Team *)value;
 - (void)addTeams:(NSSet *)values;
 - (void)removeTeams:(NSSet *)values;
+
+- (void)addBackupEntryObject:(BackupEntry *)value;
+- (void)removeBackupEntryObject:(BackupEntry *)value;
+- (void)addBackupEntry:(NSSet *)values;
+- (void)removeBackupEntry:(NSSet *)values;
+
+- (void)addEntryObject:(Entry *)value;
+- (void)removeEntryObject:(Entry *)value;
+- (void)addEntry:(NSSet *)values;
+- (void)removeEntry:(NSSet *)values;
 
 @end

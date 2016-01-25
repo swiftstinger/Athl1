@@ -22,4 +22,10 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *resetButton;
 - (IBAction)resetButtonPressed:(UIBarButtonItem *)sender;
 
+
+- (IBAction)addCEventScore:(UIBarButtonItem *)sender;
+
+
+
+
 @end

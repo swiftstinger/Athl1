@@ -1,3 +1,30 @@
+text box and all previews set conditions
+
+entry edited and edit done check and add to set all as edited and as done etc
+
+check all .ceventscore or ceventscore references
+
+Eventscoresheet add longpress recognizer edit entries
+
+online add etc with competitor nil
+relaydisc in ceventscore everywhere
+
+meetmenuviewcontroller
+  xxx  addcscoreonline
+   xx     cscore[@"competitor"] = cscoreObject.competitor.onlineID;  /// = cscoreObject.entry.competitors[0];
+
+   xxx addentryonline
+
+xxx cscoreservermutablearray????
+
+after online check old meet event not there
+    version onine check?
+    incompatiple version
+        send version to meet
+
+//relayflag
+
+
 Dont show this again tick boxes with data for each scene
 
 

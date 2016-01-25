@@ -2,13 +2,14 @@
 //  Competitor.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 24/11/2015.
-//  Copyright (c) 2015 rudi huysamen. All rights reserved.
+//  Created by Ailsa Huysamen on 20/01/2016.
+//  Copyright (c) 2016 rudi huysamen. All rights reserved.
 //
 
 #import "Competitor.h"
 #import "CEventScore.h"
 #import "Meet.h"
+#import "NSManagedObject.h"
 #import "Team.h"
 
 
@@ -25,5 +26,6 @@
 @dynamic cEventScores;
 @dynamic meet;
 @dynamic team;
+@dynamic entries;
 
 @end

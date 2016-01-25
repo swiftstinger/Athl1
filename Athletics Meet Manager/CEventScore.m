@@ -2,12 +2,13 @@
 //  CEventScore.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 24/11/2015.
-//  Copyright (c) 2015 rudi huysamen. All rights reserved.
+//  Created by Ailsa Huysamen on 20/01/2016.
+//  Copyright (c) 2016 rudi huysamen. All rights reserved.
 //
 
 #import "CEventScore.h"
 #import "Competitor.h"
+#import "Entry.h"
 #import "Event.h"
 #import "Meet.h"
 #import "Team.h"
@@ -27,9 +28,11 @@
 @dynamic score;
 @dynamic updateByUser;
 @dynamic updateDateAndTime;
+@dynamic relayDisc;
 @dynamic competitor;
 @dynamic event;
 @dynamic meet;
 @dynamic team;
+@dynamic entries;
 
 @end

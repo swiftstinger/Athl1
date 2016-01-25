@@ -2,14 +2,14 @@
 //  Competitor.h
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 24/11/2015.
-//  Copyright (c) 2015 rudi huysamen. All rights reserved.
+//  Created by Ailsa Huysamen on 20/01/2016.
+//  Copyright (c) 2016 rudi huysamen. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class CEventScore, Meet, Team;
+@class CEventScore, Meet, NSManagedObject, Team;
 
 @interface Competitor : NSManagedObject
 
@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSSet *cEventScores;
 @property (nonatomic, retain) Meet *meet;
 @property (nonatomic, retain) Team *team;
+@property (nonatomic, retain) NSSet *entries;
 @end
 
 @interface Competitor (CoreDataGeneratedAccessors)
@@ -32,5 +33,10 @@
 - (void)removeCEventScoresObject:(CEventScore *)value;
 - (void)addCEventScores:(NSSet *)values;
 - (void)removeCEventScores:(NSSet *)values;
+
+- (void)addEntriesObject:(NSManagedObject *)value;
+- (void)removeEntriesObject:(NSManagedObject *)value;
+- (void)addEntries:(NSSet *)values;
+- (void)removeEntries:(NSSet *)values;
 
 @end

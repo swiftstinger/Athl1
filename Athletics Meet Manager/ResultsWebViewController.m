@@ -2,7 +2,7 @@
 //  ResultsWebViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 31/10/2015.
+//  Created by Rudi Huysamen on 31/10/2015.
 //  Copyright (c) 2015 rudi huysamen. All rights reserved.
 //
 
@@ -193,7 +193,7 @@ int fullspannumber = self.meetObject.teams.count +1;
 [mutableHTML appendString:@"<html> <head>"];
 //[mutableHTML appendString:@"<style> <!--table {} @page {margin:.75in .7in .75in .7in; }"];
 [mutableHTML appendString:@"<style> <!--table {} @page {margin:.01in .01in .01in .01in; }"];
-[mutableHTML appendString:@"td { padding:0px; mso-ignore:padding; color:windowtext; font-size:10.0pt; font-weight:700; font-style:normal; text-decoration:none; white-space:nowrap; font-family:Garamond, serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext;; white-space:normal; width:136pt; height:19pt } --> </style>"];
+[mutableHTML appendString:@"td { padding:0px; mso-ignore:padding; color:windowtext; font-size:10.0pt; font-weight:700; font-style:normal; text-decoration:none; white-space:nowrap; font-family:\"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; text-align:center; vertical-align:middle; border-top:1.0pt solid windowtext; border-right:1.0pt solid windowtext; border-bottom:1.0pt solid windowtext; border-left:1.0pt solid windowtext;; white-space:normal; width:136pt; height:19pt } --> </style>"];
 
 [mutableHTML appendString:@"</head><body>"];
 
