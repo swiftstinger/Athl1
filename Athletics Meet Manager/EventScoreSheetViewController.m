@@ -137,6 +137,9 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
         [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+        self.eventObject.edited = [NSNumber numberWithBool:YES];
+        self.eventObject.editDone = [NSNumber numberWithBool:NO];
             
         NSError *error = nil;
         if (![context save:&error]) {
@@ -254,8 +257,11 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     
     CEventScore *ceventscore = (CEventScore*)object;
     NSString *gEventType = ceventscore.event.gEvent.gEventType;
-  
-    NSString* relayDisc = ceventscore.relayDisc;
+    
+    NSString* relayDisc;
+    
+    
+    
     Competitor* comp = [ceventscore.entries anyObject];
     NSString* compName;
     if (comp != nil) {
@@ -267,6 +273,15 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     }
     
     NSString* compTeam  = ceventscore.team.teamName;
+    
+    if (ceventscore.relayDisc) {
+        relayDisc = ceventscore.relayDisc;
+    }
+    else
+    {
+        ceventscore.relayDisc = [NSString stringWithFormat:@"%@ %@",ceventscore.team.teamName,ceventscore.cEventScoreID];
+        relayDisc = ceventscore.relayDisc;
+    }
     
     NSMutableString * teamSpaceString = [NSMutableString stringWithString:@""];
     
@@ -324,6 +339,28 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
 
 
   }
+
+#pragma mark - Touches
+
+- (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender {
+
+    if (sender.state == UIGestureRecognizerStateBegan)
+        {
+    
+            CGPoint location = [sender locationInView:self.tableView];
+            self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
+        
+        
+            
+        
+            [self performSegueWithIdentifier:@"editResultsEntries" sender:self];
+        }
+
+}
+
+
+
+
 #pragma mark - Segues
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -379,9 +416,9 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
         
         [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
     }
-    
+  
     if ([[segue identifier] isEqualToString:@"editResultsEntries"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSIndexPath *indexPath = self.indexPathForLongPressCell;
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [[segue destinationViewController] setDetailItem:object];
         
@@ -871,9 +908,7 @@ NSLog(@"set all not edited and done for event %@ %@", event.division.divName, ev
     }
     
     
-     ////
-    /// check rest down there
-    ////
+    
     
     
     if ([unwindSegue.sourceViewController isKindOfClass:[EventScoreAddViewController class]])
@@ -1565,4 +1600,6 @@ return intvalue;
     
     
 }
+
+
 @end

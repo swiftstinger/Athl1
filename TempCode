@@ -1,8 +1,14 @@
-text box and all previews set conditions
+set event edited and not done when deleting ceventscore or entry ? good idea
+
+
+add manual placing to all results not just high jump
+text box and all previews set conditional formatting
 
 entry edited and edit done check and add to set all as edited and as done etc
 
 check all .ceventscore or ceventscore references
+check all relay disc and eventscore.competitor and sanitise not having any
+
 
 Eventscoresheet add longpress recognizer edit entries
 

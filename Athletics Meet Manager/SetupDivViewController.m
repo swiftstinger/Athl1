@@ -638,7 +638,7 @@ if ([sourceViewController isKindOfClass:[DivAddViewController class]])
             self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
         
         
-            // nslog(@"Long-pressed cell at row %@", self.indexPathForLongPressCell);
+            
         
             [self performSegueWithIdentifier:@"editDiv" sender:self];
         }

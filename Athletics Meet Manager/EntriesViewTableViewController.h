@@ -7,7 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
+#import "EventScoreAddViewController.h"
+#import "Event.h"
+#import "CEventScore.h"
 
-@interface EntriesViewTableViewController : UITableViewController
+@interface EntriesViewTableViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) CEventScore* cScoreItem;
+@property (strong, nonatomic) Event* eventObject;
+
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editRelayDiscButton;
 
 @end

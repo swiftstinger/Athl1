@@ -3298,6 +3298,11 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TWo-72-iAy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="MVk-hM-YBr" userLabel="Exit" sceneMemberID="exit"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="jmC-At-zDA">
+                    <connections>
+                        <action selector="longPressRecognizer:" destination="wCZ-w4-a0b" id="NIy-2e-mdf"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4660" y="394"/>
         </scene>
@@ -3832,7 +3837,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="entryCell" textLabel="5ag-VT-fnq" detailTextLabel="uuX-vO-M4s" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="aL4-ZA-dFb">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="entryCell" textLabel="5ag-VT-fnq" detailTextLabel="uuX-vO-M4s" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="aL4-ZA-dFb" customClass="EntriesViewTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aL4-ZA-dFb" id="Yus-e7-q3Q">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -3851,6 +3856,10 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="Title" destination="5ag-VT-fnq" id="OtU-sI-lfm"/>
+                                    <outlet property="subtitle" destination="uuX-vO-M4s" id="43t-d7-Mqd"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -3875,6 +3884,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addButton" destination="sVT-eK-o2i" id="xx1-xj-7Cf"/>
+                        <outlet property="editRelayDiscButton" destination="tsA-Th-sDk" id="cYg-sO-G5F"/>
+                        <outlet property="navBar" destination="m04-5k-0Sl" id="uul-sB-Hlw"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dvU-l1-RdG" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="NnA-Pe-Zrm">
@@ -4112,7 +4126,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="iM2-Qd-8bg"/>
         <segue reference="pjO-ql-D1X"/>
-        <segue reference="DDw-EA-Bfp"/>
+        <segue reference="PVp-iO-EbP"/>
         <segue reference="HxQ-va-xu1"/>
         <segue reference="oBo-Wm-xkL"/>
         <segue reference="kWb-zD-Ztb"/>
