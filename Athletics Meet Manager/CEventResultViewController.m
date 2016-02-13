@@ -15,6 +15,7 @@
 #import "Event.h"
 #import "Meet.h"
 #import "Team.h"
+#import "Entry.h"
 
 @interface CEventResultViewController ()
 
@@ -218,44 +219,75 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
 }
 
 - (void)configureCell:(CEventResultTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     CEventScore *ceventscore = (CEventScore*)object;
     NSString *gEventType = ceventscore.event.gEvent.gEventType;
-  
-    NSString* compName  = ceventscore.competitor.compName;
+    
+    NSString* relayDisc;
+    
+    
+    
+    Entry* entry = [ceventscore.entries anyObject];
+    
+    Competitor* comp;
+    if (entry!=nil) {
+        comp = entry.competitor;
+        NSLog(@"entry not nil");
+    }
+    else
+    {
+        comp = nil;
+        NSLog(@"entry nil");
+    }
+    
+    
+    NSString* compName;
+    if (comp != nil) {
+        compName  = comp.compName;
+        NSLog(@"comp not nil");
+    }
+    else
+    {
+        compName = nil;
+        NSLog(@"comp nil");
+    }
+    
     NSString* compTeam  = ceventscore.team.teamName;
+    NSLog(@"team name %@",compTeam);
+    
+    if (ceventscore.relayDisc) {
+        
+       
+        relayDisc = ceventscore.relayDisc;
+        
+        NSLog(@"has relaydisc %@", relayDisc);
+    }
+    else
+    {
+        ceventscore.relayDisc = [NSString stringWithFormat:@"%@ %@",ceventscore.team.teamName,ceventscore.cEventScoreID];
+        relayDisc = ceventscore.relayDisc;
+    }
+    
     NSMutableString * teamSpaceString = [NSMutableString stringWithString:@""];
     
     if ([gEventType isEqualToString:@"Relay"]) {
-            cell.competitorNameLabel.text = compTeam;
-        
-        /*
-        
-            int count = 0;
-            for (Competitor* comp in ceventscore.competitor) {
-                if (count > 0) {
-                [teamSpaceString appendFormat:@", %@", comp.compName];
-                }
-                else
-                {
-                    [teamSpaceString appendFormat:@"%@", comp.compName];
-                    count++;
-                }
-            }
-            
-        */
-        
+            cell.competitorNameLabel.text = relayDisc;
+     
+        NSLog(@"relay");
         [teamSpaceString appendFormat:@"%@",compTeam];
     }
     else
     {
+        NSLog(@"not relay");
         if (compName != nil) {
             cell.competitorNameLabel.text = compName;
+            NSLog(@"compname not nil");
         }
         else
         {
             cell.competitorNameLabel.text = compTeam;
+            NSLog(@"compname nil %@", compTeam);
         }
 
         [teamSpaceString appendFormat:@"%@",compTeam];
@@ -265,6 +297,8 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
 
 
     cell.competitorTeamLabel.text = teamSpaceString;
+    
+    
     
     if (ceventscore.result) {
        cell.competitorResultLabel.text = [ceventscore.result description];
@@ -289,438 +323,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
         cell.competitorScoreLabel.text = @"";
     }
 
-
-    
-
-
   }
-#pragma mark - Segues
-/*
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        CEventScore * ceventscore = (CEventScore*)object;
 
-        NSString *eventtypestring = ceventscore.event.gEvent.gEventType;
-   
-                if ([eventtypestring isEqualToString:@"Track"] ) {
-                        [self performSegueWithIdentifier:@"enterResult" sender:self];
-
-                }
-                else if ([eventtypestring isEqualToString:@"Field"]){
-                     [self performSegueWithIdentifier:@"enterResult" sender:self];
-
-    
-                }
-                else if ([eventtypestring isEqualToString:@"High Jump"]){
-                     [self performSegueWithIdentifier:@"enterHighJumpResult" sender:self];
-    
-                }
-                else
-                {
-                    // nslog(@"whooooops geventtyp not either %@", eventtypestring);
-                }
-
-
-
-    
-    // nslog(@"in tap and event is %@", eventtypestring);
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- 
-
-    if ([[segue identifier] isEqualToString:@"enterResult"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
-        
-        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
-    }
-    if ([[segue identifier] isEqualToString:@"enterHighJumpResult"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
-        
-        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
-    }
-
-    
-    if ([[segue identifier] isEqualToString:@"eventScoreAdd"]) {
-        
-        UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
-        EventScoreAddViewController* eventScoreAddController = (EventScoreAddViewController*)[navController topViewController];
-        
-        
-        [eventScoreAddController setDetailItem:self.eventObject];
-         // nslog(@"not added context");
-        [eventScoreAddController setManagedObjectContext:self.managedObjectContext];
-    }
-    
-}
-
-
-
-
-#pragma mark - MeetAddViewControllerUnwinds
-
-- (IBAction)unwindToEventScoreSheetDone:(UIStoryboardSegue *)unwindSegue
-{
-    if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorAddInResultSheetViewController class]])
-        {
-        // nslog(@"Coming from CompertitorAddInResults Done!");
-        
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    CompetitorAddInResultSheetViewController *sourceViewController = unwindSegue.sourceViewController;
-    
-    /////
-    // ad new competitor chosen in source
-    ////
-    ////
-    ////
-    ////
-    ///
-        
-
-    
-     Competitor* newcompetitorObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
-        
-        
-        ////////
-        /////   set values
-        ///////
-     
-           if (sourceViewController.competitorName) {
-        [newcompetitorObject setValue: sourceViewController.competitorName.text forKey:@"compName"];
-    
-        }
-        
-        
-        
-         //////
-        // link relationships
-        /////
-        
-        newcompetitorObject.team = sourceViewController.team;
-        newcompetitorObject.meet = self.eventObject.meet;
-        newcompetitorObject.teamName = sourceViewController.team.teamName;
-       
-        
-        
-        
-        
-        //////
-        
-          // Store CompID data
-
-     
-        
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-  
-     int tempint =  [self.eventObject.meet.meetID intValue];
-     
-     NSString * keystring = [NSString stringWithFormat:@"%dlastCompID",tempint];  ////
-     
-     
-     
-     if (![defaults objectForKey:keystring]) {                    /////
-     
-     int idint = 0;
-     NSNumber *idnumber = [NSNumber numberWithInt:idint];
-     [defaults setObject:idnumber forKey:keystring];             ///////
-     
-     }
-NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
-       int oldint = [oldnumber intValue];
-       int newint = oldint + 1;
-       NSNumber *newnumber = [NSNumber numberWithInt:newint];
-       [newcompetitorObject setValue: newnumber forKey: @"compID"];                  //////////
-     
-
-    [defaults setObject: newnumber forKey:keystring];            /////////
-     
-    [defaults synchronize];
-  
-    ////
-    
-    
-    
-    ////////
-    ///////
-    ///////
-    ///////
-    //////
-    //////
-    
-    
-        CEventScore *ceventscore = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
-        
-        
-        
-        
-        
-        ////////
-        /////   set values
-        ///////
-        [ceventscore setValue: NULL forKey:@"result"];
-       [ceventscore setValue:NULL forKey:@"personalBest"];
-       [ceventscore setValue:NULL forKey:@"placing"];
-       [ceventscore setValue:NULL forKey:@"score"];
-       [ceventscore setValue:NULL forKey:@"resultEntered"];
-        
-        
-         //////
-        // link relationships
-        /////
-        
-       
-        
-        ceventscore.competitor = newcompetitorObject;
-        ceventscore.event = self.eventObject;
-        ceventscore.meet = self.eventObject.meet;
-        ceventscore.team = sourceViewController.team;
-        //////
-        
-                 // Store cEventsScoreID data
-  
-      
-        
-    defaults = [NSUserDefaults standardUserDefaults];
-    
-     
-      tempint =  [self.eventObject.meet.meetID intValue];
-     
-      keystring = [NSString stringWithFormat:@"%dlastcEventScoreID",tempint];  ////
-     
-     // nslog(@"%@",keystring);
-     
-     if (![defaults objectForKey:keystring]) {                    /////
-     
-     int idint = 0;
-     NSNumber *idnumber = [NSNumber numberWithInt:idint];
-     [defaults setObject:idnumber forKey:keystring];             ///////
-     
-     }
-        oldnumber = [defaults objectForKey:keystring];   ///
-        oldint = [oldnumber intValue];
-        newint = oldint + 1;
-        newnumber = [NSNumber numberWithInt:newint];
-       [ceventscore setValue: newnumber forKey: @"cEventScoreID"];                  //////////
-       
-
-    [defaults setObject: newnumber forKey:keystring];            /////////
-     
-    [defaults synchronize];
- 
-    ////
-    
-        
-                NSError *error = nil;
-
-        
-        
-
-        // Save the context.
-        
-            if (![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
-            //abort();
-            }
-        
-    }
-    
-    if ([unwindSegue.sourceViewController isKindOfClass:[EventScoreAddViewController class]])
-        {
-        // nslog(@"Coming from EventScoreAdd Done!");
-        
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    
-        CEventScore *ceventscore = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
-        
-        
-        EventScoreAddViewController *sourceViewController = unwindSegue.sourceViewController;
-        ////////
-        /////   set values
-        ///////
-     [ceventscore setValue: NULL forKey:@"result"];
-       [ceventscore setValue:NULL forKey:@"personalBest"];
-       [ceventscore setValue:NULL forKey:@"placing"];
-       [ceventscore setValue:NULL forKey:@"score"];
-       [ceventscore setValue:NULL forKey:@"resultEntered"];
-    
-     
- 
-        
-        
-        
-        //validation in source
-             //   ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result]   ;
-        
-        
-         //////
-        // link relationships
-        /////
-        
-       
-        
-        ceventscore.competitor = sourceViewController.competitorObject;
-        ceventscore.event = self.eventObject;
-        ceventscore.meet = self.eventObject.meet;
-        ceventscore.team = sourceViewController.competitorObject.team;
-        //////
-        
-          // Store cEventsScoreID data
-  
-      
-        
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-     
-     int tempint =  [self.eventObject.meet.meetID intValue];
-     
-     NSString * keystring = [NSString stringWithFormat:@"%dlastcEventScoreID",tempint];  ////
-     
-     // nslog(@"%@",keystring);
-     
-     if (![defaults objectForKey:keystring]) {                    /////
-     
-     int idint = 0;
-     NSNumber *idnumber = [NSNumber numberWithInt:idint];
-     [defaults setObject:idnumber forKey:keystring];             ///////
-     
-     }
-NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
-       int oldint = [oldnumber intValue];
-       int newint = oldint + 1;
-       NSNumber *newnumber = [NSNumber numberWithInt:newint];
-       [ceventscore setValue: newnumber forKey: @"cEventScoreID"];                  //////////
-        // nslog(@"compname %@  cEventScoreID %@", sourceViewController.competitorObject.compName, ceventscore.cEventScoreID);
-
-    [defaults setObject: newnumber forKey:keystring];            /////////
-     
-    [defaults synchronize];
- 
-    ////
-    
-        
-                NSError *error = nil;
-
-        
-        
-
-        // Save the context.
-        
-            if (![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
-            //abort();
-            }
-        
-    }
-   
-   
-   if ([unwindSegue.sourceViewController isKindOfClass:[CompetitorScoreEnterViewController class]])
-    {
-        // nslog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
-        
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    
-        
-        CompetitorScoreEnterViewController *sourceViewController = unwindSegue.sourceViewController;
-        
-        CEventScore *ceventscore = sourceViewController.cEventScore;
-        
-        
-        ////////
-        /////   set values
-        ///////
-        
-        //validation in source
-        // nslog(@"source results %f",sourceViewController.result);
-        ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result];
-    
-        
-            ////
-    
-        
-                NSError *error = nil;
-
-        
-        
-
-        // Save the context.
-        
-            if (![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
-            //abort();
-            }
-        
-    }
-   
-   if ([unwindSegue.sourceViewController isKindOfClass:[HighJumpScoreEnterViewController class]])
-    {
-        // nslog(@"Coming from competitorscoreneter  in eventscoresheet Done!");
-        
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    
-        
-        CompetitorScoreEnterViewController *sourceViewController = unwindSegue.sourceViewController;
-        
-        CEventScore *ceventscore = sourceViewController.cEventScore;
-        
-        
-        ////////
-        /////   set values
-        ///////
-        
-        //validation in source
-        // nslog(@"source results %f",sourceViewController.result);
-        ceventscore.result = [NSNumber numberWithDouble:  sourceViewController.result];
-    
-        
-            ////
-    
-        
-                NSError *error = nil;
-
-        
-        
-
-        // Save the context.
-        
-            if (![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
-            //abort();
-            }
-        
-    }
-
-
-}
-- (IBAction)unwindToEventScoreSheetCancel:(UIStoryboardSegue *)unwindSegue
-{
-
-UIViewController* sourceViewController = unwindSegue.sourceViewController;
-
-if ([sourceViewController isKindOfClass:[EventScoreAddViewController class]])
-    {
-        // nslog(@"Coming from cEventScoreAdd  in eventscoresheet Cancel!");
-    }
-    
-    if ([sourceViewController isKindOfClass:[CompetitorScoreEnterViewController class]])
-    {
-        // nslog(@"Coming from competitorscoreneter  in eventscoresheet Cancel!");
-    }
-}
-*/
 
 @end

@@ -27,8 +27,10 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 
 //- (void)setOnlineMeet:(NSString *)meetOnlineID;
-- (IBAction)InfoButton:(UIBarButtonItem *)sender;
+- (IBAction)showAllTuts:(UIBarButtonItem *)sender;
 
+
+@property (strong, nonatomic) NSString *latestAppVersion;
 
 
 @end

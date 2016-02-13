@@ -102,6 +102,8 @@
         
         object.teamPlace = [NSNumber numberWithInt:placing];
         
+       // NSLog(@"teamplacing %d %@", placing, object.teamPlace);
+        
         // nslog(@" team : %@  ranking =  %@  and Points =  %@",object.teamName, object.teamPlace,object.teamScore);
         
        
@@ -152,6 +154,8 @@
 
 teamobject.teamScore = [NSNumber numberWithInt:score];
 // nslog(@" team : %@ score set at %@", teamobject.teamName,teamobject.teamScore);
+
+[self saveContext];
 
 }
 
@@ -240,26 +244,87 @@ NSString *theDate = [dateFormat stringFromDate:date];
 [mutableHTML appendString:@"</td>"];
 [mutableHTML appendString:@"</tr>"];
 
-int count = 0;
+//int count = 0;
+
+NSNumber* lastteamplace = [NSNumber numberWithInt: 1 ];
+
+NSString* PlaceTeamName = @"";
+NSNumber* LastPlaceScore = [NSNumber numberWithInt:0];
+NSMutableArray* TeamPlaces = [[NSMutableArray alloc] init];
+NSArray* NamePlaceScoreArray;
+int placescounter = 0;
+
+for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"teamScore" ascending:NO]]]) {
+    
+    NSLog(@"1");
+    NSLog(@"place %@ lastplace %@",team.teamPlace, lastteamplace );
+    
+    if ([team.teamPlace intValue] == [lastteamplace intValue]) {
+    NSLog(@"2");
+        PlaceTeamName = [NSString stringWithFormat:@"%@ %@",PlaceTeamName, team.teamName];
+        LastPlaceScore = team.teamScore;
+    }
+    else
+    {
+        NSLog(@"3");
+        NamePlaceScoreArray = @[PlaceTeamName,lastteamplace, LastPlaceScore];
+        [TeamPlaces addObject:NamePlaceScoreArray];
+        placescounter ++;
+        PlaceTeamName = team.teamName;
+        lastteamplace = team.teamPlace;
+        LastPlaceScore = team.teamScore;
+        
+    }
+    
+}
+NSLog(@"4");
+        NamePlaceScoreArray = @[PlaceTeamName,lastteamplace, LastPlaceScore];
+        [TeamPlaces addObject:NamePlaceScoreArray];
+        placescounter ++;
+/**
 
 for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"teamScore" ascending:NO]]]) {
 count++;
+**/
+
+for (int i = 0; i < placescounter; i++) {
 
 
+/**
 
+if ([team.teamScore intValue] == [lastteamscore intValue]) {
+    
+     NSLog(@"same %d %d", [team.teamScore intValue], [lastteamscore intValue]);
+    PlaceTeamName = [NSString stringWithFormat:@"%@ %@",PlaceTeamName, team.teamName];
+    
+}
+else
+{
+   PlaceTeamName = team.teamName;
+    NSLog(@"not same");
+    NSLog(@"same %d %d", [team.teamScore intValue], [lastteamscore intValue]);
+}
+lastteamscore = team.teamScore;
+
+**/
+
+// teamplace score
+NamePlaceScoreArray = TeamPlaces[i];
+
+NSLog(@"team name %@ place %@ score %@", NamePlaceScoreArray[0],NamePlaceScoreArray[1],NamePlaceScoreArray[2]);
 
 
 [mutableHTML appendString:@" <tr >"];
 [mutableHTML appendString:@"<td style='width:136pt; height:40pt; font-size:20.0pt'>"];
-[mutableHTML appendFormat:@"%d",count];
+[mutableHTML appendFormat:@"%@",NamePlaceScoreArray[1]];
 
-if (count == 1) {
+if ([NamePlaceScoreArray[1] intValue] == 1) {
     [mutableHTML appendString:@"<sup>st</sup>"];
 }
-else if (count == 2){
+else if ([NamePlaceScoreArray[1] intValue] == 2){
 [mutableHTML appendString:@"<sup>nd</sup>"];
 }
-else if (count == 3){
+else if ([NamePlaceScoreArray[1] intValue] == 3){
 
 [mutableHTML appendString:@"<sup>rd</sup>"];
 }
@@ -273,7 +338,7 @@ else
 
 [mutableHTML appendString:@"</td>"];
 [mutableHTML appendString:@"<td style='color:blue; width:680pt; height:40pt; font-size:20.0pt; border-right:none'>"];
-[mutableHTML appendFormat:@"%@",team.teamName];
+[mutableHTML appendFormat:@"%@",NamePlaceScoreArray[0]];
 [mutableHTML appendString:@"</td>"];
 [mutableHTML appendString:@"<td style='width:136pt; height:40pt; font-size:20.0pt; border-left:none'>"];
 //[mutableHTML appendFormat:@"%@",team.teamName];
@@ -613,6 +678,22 @@ else
     
     
     return TRUE;
+}
+- (void) saveContext {
+
+
+NSError *error = nil;
+
+        // Save the context.
+        
+            if (![self.managedObjectContext save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+    
+
 }
 
 @end

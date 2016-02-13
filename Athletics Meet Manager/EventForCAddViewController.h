@@ -34,6 +34,8 @@
 @property Competitor* competitorObject;
 @property (weak, nonatomic) IBOutlet UIPickerView *divPicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *eventPicker;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *DoneNextButton;
+- (IBAction)DoneNextButtonPressed:(UIBarButtonItem *)sender;
 
 #define divpicker 0
 #define eventpicker 1

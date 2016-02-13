@@ -11,6 +11,7 @@
 #import "Event.h"
 #import "CEventScore.h"
 #import "Competitor.h"
+#import "Entry.h"
 
 @interface TeamCompetitorResultsViewController ()
 
@@ -263,18 +264,83 @@ NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(score != NULL)", nil];
 }
 
 - (void)configureCell:(TeamCompetitorResultTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+   
+NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    CEventScore * ceventscoreobject = (CEventScore*) object;
-  
-
-//
-Competitor* comp = ceventscoreobject.competitor;
-
-  
-          cell.nameLabel.text = [[comp valueForKey:@"compName"] description];
+    CEventScore *ceventscore = (CEventScore*)object;
+    NSString *gEventType = ceventscore.event.gEvent.gEventType;
     
-        cell.scoreLabel.text = [NSString stringWithFormat:@" Score: %@",ceventscoreobject.score ] ;
+    NSString* relayDisc;
+    
+    
+    
+    Entry* entry = [ceventscore.entries anyObject];
+    
+    Competitor* comp;
+    if (entry!=nil) {
+        comp = entry.competitor;
+        NSLog(@"entry not nil");
+    }
+    else
+    {
+        comp = nil;
+        NSLog(@"entry nil");
+    }
+    
+    
+    NSString* compName;
+    if (comp != nil) {
+        compName  = comp.compName;
+        NSLog(@"comp not nil");
+    }
+    else
+    {
+        compName = nil;
+        NSLog(@"comp nil");
+    }
+    
+    NSString* compTeam  = ceventscore.team.teamName;
+    NSLog(@"team name %@",compTeam);
+    
+    if (ceventscore.relayDisc) {
+        
+       
+        relayDisc = ceventscore.relayDisc;
+        
+        NSLog(@"has relaydisc %@", relayDisc);
+    }
+    else
+    {
+        ceventscore.relayDisc = [NSString stringWithFormat:@"%@ %@",ceventscore.team.teamName,ceventscore.cEventScoreID];
+        relayDisc = ceventscore.relayDisc;
+    }
+    
+    
+    
+    if ([gEventType isEqualToString:@"Relay"]) {
+            cell.nameLabel.text = relayDisc;
+     
+        NSLog(@"relay");
+        
+    }
+    else
+    {
+        NSLog(@"not relay");
+        if (compName != nil) {
+            cell.nameLabel.text = compName;
+            NSLog(@"compname not nil");
+        }
+        else
+        {
+            cell.nameLabel.text = compTeam;
+            NSLog(@"compname nil %@", compTeam);
+        }
+
+        
+    }
+  
+    
+        cell.scoreLabel.text = [NSString stringWithFormat:@" Score: %@",ceventscore.score ] ;
 
 }
 

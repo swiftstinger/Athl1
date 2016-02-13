@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "EventScoreAddViewController.h"
+#import "EditRelayDiscViewController.h"
 #import "Event.h"
 #import "CEventScore.h"
 

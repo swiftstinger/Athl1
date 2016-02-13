@@ -16,6 +16,9 @@
 @interface EventScoreAddViewController ()
 @property (nonatomic, strong) NSFetchedResultsController *searchFetchedResultsController;
 
+@property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) NSMutableArray *searchResults;
+
 - (void)fetchedResultsController:(NSFetchedResultsController *)controller configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -105,6 +108,24 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    // NEW CODE
+
+    
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    
+    // The searchcontroller's searchResultsUpdater property will contain our tableView.
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = false;
+    self.searchController.definesPresentationContext = true;
+    
+    // The searchBar contained in XCode's storyboard is a leftover from UISearchDisplayController.
+    // Don't use this. Instead, we'll create the searchBar programatically.
+    self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x,
+                                                       self.searchController.searchBar.frame.origin.y,
+                                                       self.searchController.searchBar.frame.size.width, 44.0);
+    
+    self.tableView.tableHeaderView = self.searchController.searchBar;
     
 }
 
@@ -116,15 +137,30 @@
 
 #pragma mark -
 #pragma mark Actions
-
-
-
+/*
+if searchController.active && searchController.searchBar.text != "" {
+    return filteredCandies.count
+  }
+  return candies.count
+*/
 #pragma mark - Table View
 
 - (NSFetchedResultsController *)fetchedResultsControllerForTableView:(UITableView *)tableView
 {
-    return [tableView isEqual:self.tableView] ? self.fetchedResultsController : self.searchFetchedResultsController;
+    if (self.searchController.active && (![self.searchController.searchBar.text  isEqual: @""]))
+        {
+        
+            return self.searchFetchedResultsController;
+        
+        }
+        else
+        {
+            return self.fetchedResultsController;
+        
+        }
+
 }
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -137,23 +173,7 @@
     return [sectionInfo numberOfObjects];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = nil;
-    if ([tableView isEqual:self.tableView]) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"SearchCell" forIndexPath:indexPath];
-    }
-    else {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"SearchCell"];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"SearchCell"];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-    }
-    
-    [self fetchedResultsController:[self fetchedResultsControllerForTableView:tableView] configureCell:cell atIndexPath:indexPath];
-    return cell;
-}
+
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -177,9 +197,39 @@
     }   
 }
 
+
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // The table view should not be re-orderable.
+    return NO;
+}
+
+// Called when the search bar becomes first responder
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    if (self.searchController.active && (![self.searchController.searchBar.text isEqual: @""]))
+        {
+        
+            self.searchFetchedResultsController = nil;
+        
+        }
+        else
+        {
+             self.fetchedResultsController = nil;
+        
+        }
+   
+    [self.tableView reloadData];
+    
+    
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
+    if (self.searchController.active && (![self.searchController.searchBar.text isEqual: @""])) {
+    
+    NSLog(@"table search on");
        
        if ([self.eventObject.gEvent.gEventType isEqualToString:@"Relay"])
         {
@@ -201,14 +251,75 @@
                 }
         }
     }
+    else
+    {
+        NSLog(@"table search off");
+        if ([self.eventObject.gEvent.gEventType isEqualToString:@"Relay"])
+        {
+            
+            if ([self shouldPerformSegueWithIdentifier:@"eventScoreAddRelaySelectedSeque" sender:self])
+            {
+                [self performSegueWithIdentifier:@"eventScoreAddRelaySelectedSeque" sender:self];
+            }
+            
+        
+        }
+        else
+        {
+                if ([self shouldPerformSegueWithIdentifier:@"eventScoreAddNormSelectedSeque" sender:self])
+                {
+                    [self performSegueWithIdentifier:@"eventScoreAddNormSelectedSeque" sender:self];
+        
+        
+                }
+        }
+
+    }
 }
 
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // The table view should not be re-orderable.
-    return NO;
+    UITableViewCell *cell = nil;
+    
+   /**
+    
+      if (self.searchController.active && (![self.searchController.searchBar.text isEqual: @""])) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"SearchCell" forIndexPath:indexPath];
+    }
+    else {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"SearchCell"];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"SearchCell"];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+    }
+    **/
+    
+    cell = [tableView dequeueReusableCellWithIdentifier:@"SearchCell" forIndexPath:indexPath];
+   
+   if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"SearchCell"];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+    
+    [self fetchedResultsController:[self fetchedResultsControllerForTableView:tableView] configureCell:cell atIndexPath:indexPath];
+    return cell;
 }
 
+ 
+- (void)fetchedResultsController:(NSFetchedResultsController *)controller configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+
+
+    NSManagedObject *object = [controller objectAtIndexPath:indexPath];
+    Competitor* comp = (Competitor*) object;
+    
+    
+    cell.textLabel.text = [comp.compName description];
+    cell.detailTextLabel.text = [comp.team.teamName description];
+    
+    
+}
 
 #pragma mark - Fetched results controller
 
@@ -238,7 +349,7 @@
   NSArray *array = [entryArray copy];
   
     
-   NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(cEventScores, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
+   NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(entries, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
    
    
     NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(team == %@)", self.teamObject];
@@ -298,7 +409,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Get the search string and set the predicate.
-    NSString *searchText = self.searchDisplayController.searchBar.text;
+    NSString *searchText = self.searchController.searchBar.text;
    
      NSArray *array1 = [self.eventObject.cEventScores allObjects];
     
@@ -327,7 +438,7 @@
         NSPredicate *orPred = [NSCompoundPredicate orPredicateWithSubpredicates:preds1];
 
 
-        NSPredicate *pred3 = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(cEventScores, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
+        NSPredicate *pred3 = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(entries, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
    
    
         NSPredicate *pred4 = [NSPredicate predicateWithFormat:@"(team == %@)", self.teamObject];
@@ -344,9 +455,7 @@
     {
     
   
-    
-        NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(cEventScores, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
-   
+        NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(entries, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
    
         NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(team == %@)", self.teamObject];
         
@@ -354,6 +463,7 @@
         NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
         
         [fetchRequest setPredicate:andPred];
+    
     }
     
     
@@ -387,13 +497,34 @@
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    UITableView *tableView = [controller isEqual:self.fetchedResultsController] ? self.tableView : self.searchDisplayController.searchResultsTableView;
+   UITableView *tableView =  self.tableView;
+    
     [tableView beginUpdates];
+    
+    /**
+    
+          UITableView *tableView = [controller isEqual:self.fetchedResultsController] ? self.tableView : self.searchController.searchResultsTableView;
+    [tableView beginUpdates];
+    **/
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
+    UITableView *tableView =  self.tableView;
+
+
+        switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+
+/**
     UITableView *tableView = [controller isEqual:self.fetchedResultsController] ? self.tableView : self.searchDisplayController.searchResultsTableView;
     
     switch(type) {
@@ -405,13 +536,15 @@
             [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
+**/
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    UITableView *tableView = [controller isEqual:self.fetchedResultsController] ? self.tableView : self.searchDisplayController.searchResultsTableView;
+   // UITableView *tableView = [controller isEqual:self.fetchedResultsController] ? self.tableView : self.searchDisplayController.searchResultsTableView;
+   UITableView *tableView =  self.tableView;
     
     switch(type) {
         case NSFetchedResultsChangeInsert:
@@ -435,7 +568,9 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    UITableView *tableView = [controller isEqual:self.fetchedResultsController] ? self.tableView : self.searchDisplayController.searchResultsTableView;
+    UITableView *tableView = self.tableView;
+    
+    //UITableView *tableView = [controller isEqual:self.fetchedResultsController] ? self.tableView : self.searchDisplayController.searchResultsTableView;
     [tableView endUpdates];
 }
 
@@ -449,17 +584,11 @@
 }
  */
 
-- (void)fetchedResultsController:(NSFetchedResultsController *)controller configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    NSManagedObject *object = [controller objectAtIndexPath:indexPath];
-    Competitor* comp = (Competitor*) object;
-    cell.textLabel.text = [comp.compName description];
-    cell.detailTextLabel.text = [comp.team.teamName description];
-}
+
 
 #pragma mark -
 #pragma mark UISeachDisplayDelegate methods
-
+/**
 - (void)searchDisplayController:(UISearchDisplayController *)controller willUnloadSearchResultsTableView:(UITableView *)tableView
 {
     self.searchFetchedResultsController = nil;
@@ -470,7 +599,7 @@
     self.searchFetchedResultsController = nil;
     return YES;
 }
-
+**/
 
 /*
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -500,13 +629,13 @@
     
     if ([identifier isEqualToString:@"eventScoreAddRelaySelectedSeque"]) {
         
-        UITableView *tableView = [sender isEqual:self] ? self.searchDisplayController.searchResultsTableView : self.tableView;
+        UITableView *tableView = self.tableView;
         
         NSIndexPath *indexPath = [tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsControllerForTableView:tableView] objectAtIndexPath:indexPath];
         
         self.competitorObject = (Competitor*)object;
-    // nslog(@"competitor selected and object name is %@", self.competitorObject.compName);
+     NSLog(@"competitor selected and object name is %@", self.competitorObject.compName);
           //  self.eventObject
             
             // check comp in event
@@ -609,13 +738,13 @@
     }
     if ([identifier isEqualToString:@"eventScoreAddNormSelectedSeque"]) {
         
-        UITableView *tableView = [sender isEqual:self] ? self.searchDisplayController.searchResultsTableView : self.tableView;
+        UITableView *tableView = self.tableView;
         
         NSIndexPath *indexPath = [tableView indexPathForSelectedRow];
         NSManagedObject *object = [[self fetchedResultsControllerForTableView:tableView] objectAtIndexPath:indexPath];
         
         self.competitorObject = (Competitor*)object;
-        
+        NSLog(@"competitor selected and object name is %@", self.competitorObject.compName);
    /////////////
    ///////////// check comp limit
    /////////////

@@ -62,9 +62,11 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (strong, nonatomic) Meet* meetObject;
+@property (strong, nonatomic) GEvent* gEventObject;
 @property BOOL isEditing;
 @property BOOL isOnTextField;
 
 
+@property BOOL changedFromRelay;
 
 @end

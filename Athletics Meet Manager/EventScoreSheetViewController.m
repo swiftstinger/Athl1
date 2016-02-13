@@ -12,6 +12,7 @@
 #import "CompetitorAddInResultSheetViewController.h"
 #import "EventScoreTableViewCell.h"
 #import "EventScorePickTeamViewController.h"
+#import "EntriesViewTableViewController.h"
 #import "CEventScore.h"
 #import "Competitor.h"
 #import "GEvent.h"
@@ -262,20 +263,40 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     
     
     
-    Competitor* comp = [ceventscore.entries anyObject];
+    Entry* entry = [ceventscore.entries anyObject];
+    
+    Competitor* comp;
+    if (entry!=nil) {
+        comp = entry.competitor;
+        NSLog(@"entry not nil");
+    }
+    else
+    {
+        comp = nil;
+        NSLog(@"entry nil");
+    }
+    
+    
     NSString* compName;
     if (comp != nil) {
         compName  = comp.compName;
+        NSLog(@"comp not nil");
     }
     else
     {
         compName = nil;
+        NSLog(@"comp nil");
     }
     
     NSString* compTeam  = ceventscore.team.teamName;
+    NSLog(@"team name %@",compTeam);
     
     if (ceventscore.relayDisc) {
+        
+       
         relayDisc = ceventscore.relayDisc;
+        
+        NSLog(@"has relaydisc %@", relayDisc);
     }
     else
     {
@@ -288,17 +309,20 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     if ([gEventType isEqualToString:@"Relay"]) {
             cell.competitorNameLabel.text = relayDisc;
      
-        
+        NSLog(@"relay");
         [teamSpaceString appendFormat:@"%@",compTeam];
     }
     else
     {
+        NSLog(@"not relay");
         if (compName != nil) {
             cell.competitorNameLabel.text = compName;
+            NSLog(@"compname not nil");
         }
         else
         {
             cell.competitorNameLabel.text = compTeam;
+            NSLog(@"compname nil %@", compTeam);
         }
 
         [teamSpaceString appendFormat:@"%@",compTeam];
@@ -341,12 +365,12 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
   }
 
 #pragma mark - Touches
-
+/**
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender {
-
+    NSLog(@"in long press?");
     if (sender.state == UIGestureRecognizerStateBegan)
         {
-    
+            NSLog(@"in long press");
             CGPoint location = [sender locationInView:self.tableView];
             self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
         
@@ -358,8 +382,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
 
 }
 
-
-
+**/
 
 #pragma mark - Segues
 
@@ -420,9 +443,14 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(event == %@)", self
     if ([[segue identifier] isEqualToString:@"editResultsEntries"]) {
         NSIndexPath *indexPath = self.indexPathForLongPressCell;
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
+       
+        UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
+        EntriesViewTableViewController* viewController = (EntriesViewTableViewController*)[navController topViewController];
         
-        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+        
+            [viewController setDetailItem:object];
+        
+        [viewController setManagedObjectContext:self.managedObjectContext];
     }
     
     if ([[segue identifier] isEqualToString:@"eventScoreAddRelay"]) {
@@ -605,8 +633,14 @@ NSLog(@"set all not edited and done for event %@ %@", event.division.divName, ev
         ceventscore.event = self.eventObject;
         ceventscore.meet = self.eventObject.meet;
         ceventscore.team = sourceViewController.teamSelected;
-        ceventscore.relayDisc = sourceViewController.relayDiscString;
-        
+        NSLog(@"team name of ceventscore made %@",sourceViewController.teamSelected.teamName);
+        if (![sourceViewController.relayDisc.text isEqualToString:@""]) {
+            ceventscore.relayDisc = sourceViewController.relayDisc.text;
+        }
+        else
+        {
+            ceventscore.relayDisc = nil;
+        }
         //////
         
           // Store cEventsScoreID data
@@ -948,6 +982,10 @@ NSLog(@"set all not edited and done for event %@ %@", event.division.divName, ev
         ceventscore.meet = self.eventObject.meet;
         ceventscore.team = sourceViewController.competitorObject.team;
         //////
+        
+        NSLog(@"comp name %@ team name %@", sourceViewController.competitorObject.compName,sourceViewController.competitorObject.team.teamName);
+        
+        //findmerelay
         
           // Store cEventsScoreID data
   
@@ -1600,6 +1638,23 @@ return intvalue;
     
     
 }
+
+- (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender {
+ NSLog(@"in long press?");
+    if (sender.state == UIGestureRecognizerStateBegan)
+        {
+            NSLog(@"in long press");
+            CGPoint location = [sender locationInView:self.tableView];
+            self.indexPathForLongPressCell = [self.tableView indexPathForRowAtPoint:location];
+        
+        
+            
+        
+            [self performSegueWithIdentifier:@"editResultsEntries" sender:self];
+        }
+
+}
+
 
 
 @end

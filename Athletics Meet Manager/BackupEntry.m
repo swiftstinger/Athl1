@@ -2,13 +2,14 @@
 //  BackupEntry.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 25/01/2016.
+//  Created by Ailsa Huysamen on 11/02/2016.
 //  Copyright (c) 2016 rudi huysamen. All rights reserved.
 //
 
 #import "BackupEntry.h"
 #import "BackupCEventScore.h"
 #import "BackupCompetitor.h"
+#import "BackupEvent.h"
 #import "Meet.h"
 
 
@@ -20,8 +21,9 @@
 @dynamic onlineID;
 @dynamic updateByUser;
 @dynamic updateDateAndTime;
-@dynamic backupCompetitor;
 @dynamic backupCEventScore;
+@dynamic backupCompetitor;
 @dynamic meet;
+@dynamic backupEvent;
 
 @end

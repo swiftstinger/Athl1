@@ -12,7 +12,7 @@
 #import "Event.h"
 #import "Team.h"
 
-@interface EventScoreAddViewController : UITableViewController <NSFetchedResultsControllerDelegate, UISearchBarDelegate,  UISearchControllerDelegate>
+@interface EventScoreAddViewController : UITableViewController <NSFetchedResultsControllerDelegate, UISearchResultsUpdating>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

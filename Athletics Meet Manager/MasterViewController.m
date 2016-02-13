@@ -16,6 +16,7 @@
 #import "Competitor.h"
 #import "CEventScore.h"
 #import "Event.h"
+#import "Entry.h"
 
 @interface MasterViewController ()
 
@@ -25,7 +26,9 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    [self tutorialCode];
 }
+
 /**
 -(void)viewWillAppear:(BOOL)animated{
    [super viewWillAppear:animated];
@@ -178,65 +181,70 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
         meet.divsDone = meetDict[@"divsDone"];
         meet.eventsDone = meetDict[@"eventsDone"];
         meet.teamsDone = meetDict[@"teamsDone"];
-        meet.meetID = meetDict[@"meetID"];
     
-        ///////
-        // Store onlineID data
-        ////////
+        meet.appVersionUpdatedFor = meetDict[@"appVersionUpdatedFor"];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-     
-     
-     
-     if (![defaults objectForKey:@"lastMeetID"]) {
-     
-     int idint = 0;
-     NSNumber *idnumber = [NSNumber numberWithInt:idint];
-     
-     
-     [defaults setObject:idnumber forKey:@"lastMeetID"];
-     
-     }
-       
-       NSNumber *oldnumber = [defaults objectForKey:@"lastMeetID"];
-       
-       
-       int oldint = [oldnumber intValue];
-       
-       int newint = oldint + 1;
-       
-       NSNumber *newnumber = [NSNumber numberWithInt:newint];
-       
-       
     
-    NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
     
-    NSString* newdevID;
+    
+    
+            // Store meetID data
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+             
+             
+             
+             if (![defaults objectForKey:@"lastMeetID"]) {
+             
+             int idint = 0;
+             NSNumber *idnumber = [NSNumber numberWithInt:idint];
+             
+             
+             [defaults setObject:idnumber forKey:@"lastMeetID"];
+             
+             }
+               
+               NSNumber *oldnumber = [defaults objectForKey:@"lastMeetID"];
+               
+               
+               int oldint = [oldnumber intValue];
+               
+               int newint = oldint + 1;
+               
+               NSNumber *newnumber = [NSNumber numberWithInt:newint];
+               
+            meet.meetID = newnumber;
+            
+            NSString *devID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
+            
+            NSString* newdevID;
 
-    NSRange numberrange = [devID rangeOfString:@">" ];
-    if (numberrange.location != NSNotFound) {
-         newdevID = [devID substringFromIndex:numberrange.location + 2];
-    } else {
-         newdevID = devID;
-    }
+            NSRange numberrange = [devID rangeOfString:@">" ];
+        if (numberrange.location != NSNotFound) {
+             newdevID = [devID substringFromIndex:numberrange.location + 2];
+        } else {
+             newdevID = devID;
+        }
 
-    devID = newdevID;
-    
-       
-    NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
-        timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
-        devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    
-    
-    
-      NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, newnumber,timestamp];
-      [meet setValue: onlineID forKey: @"onlineID"];
+            devID = newdevID;
+            
+               
+            NSString*   timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSinceReferenceDate]];
+                timestamp = [timestamp stringByReplacingOccurrencesOfString:@"." withString:@""];
+                devID = [newdevID stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            
+            
+            
+              NSString* onlineID = [NSString stringWithFormat:@"%@%@%@",devID, newnumber,timestamp];
+              [meet setValue: onlineID forKey: @"onlineID"];
 
-        NSLog(@"timestamp %@  onlineID: %@",timestamp, onlineID);
+                NSLog(@"timestamp %@  onlineID: %@",timestamp, onlineID);
 
-    [defaults setObject: newnumber forKey:@"lastMeetID"];
-     
-    [defaults synchronize];
+            [defaults setObject: newnumber forKey:@"lastMeetID"];
+             
+            [defaults synchronize];
+    
+    
+    
      
     ////
     
@@ -250,7 +258,7 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
                 Division *div = [NSEntityDescription insertNewObjectForEntityForName:@"Division" inManagedObjectContext:context];
             
             
-                div.divID = divDict[@"divID"];
+            
                 div.divName = divDict[@"divName"];
                 div.updateByUser = divDict[@"updateByUser"];
                 //divDict[@"updateDateAndTime"] = div.updateDateAndTime;
@@ -260,6 +268,38 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
                 
                 // events
                 div.meet = meet;
+            
+            
+            
+                // Store divID data
+        
+        
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+     
+     int tempint =  [meet.meetID intValue];
+     
+     NSString * keystring = [NSString stringWithFormat:@"%dlastDivID",tempint];  ////
+     
+     // nslog(@"%@",keystring);
+     
+     if (![defaults objectForKey:keystring]) {                    /////
+     
+     int idint = 0;
+     NSNumber *idnumber = [NSNumber numberWithInt:idint];
+     [defaults setObject:idnumber forKey:keystring];             ///////
+     
+     }
+    NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+       int oldint = [oldnumber intValue];
+       int newint = oldint + 1;
+       NSNumber *newnumber = [NSNumber numberWithInt:newint];
+                        //////////
+      div.divID = newnumber;
+
+    [defaults setObject: newnumber forKey:keystring];            /////////
+     
+    [defaults synchronize];
     
         
         }
@@ -276,7 +316,7 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
         
             gevent.competitorsPerTeam = gEventDict[@"competitorsPerTeam"];
         gevent.decrementPerPlace = gEventDict[@"decrementPerPlace"];
-        gevent.gEventID = gEventDict[@"gEventID"];
+        
         gevent.gEventName = gEventDict[@"gEventName"];
        // gEventDict[@"gEventTiming"] = gevent.gEventTiming;
         gevent.gEventType = gEventDict[@"gEventType"];
@@ -293,6 +333,40 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
         gevent.meet = meet;
         
         
+        
+        
+        // Store GEventID data
+        
+        
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+     
+     
+     int tempint =  [meet.meetID intValue];
+     
+     NSString * keystring = [NSString stringWithFormat:@"%dlastGEventID",tempint];  ////
+     
+     // nslog(@"%@",keystring);
+     
+     if (![defaults objectForKey:keystring]) {                    /////
+     
+     int idint = 0;
+     NSNumber *idnumber = [NSNumber numberWithInt:idint];
+     [defaults setObject:idnumber forKey:keystring];             ///////
+     
+     }
+NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+       int oldint = [oldnumber intValue];
+       int newint = oldint + 1;
+       NSNumber *newnumber = [NSNumber numberWithInt:newint];
+                       //////////
+       gevent.gEventID = newnumber ;
+
+    [defaults setObject: newnumber forKey:keystring];            /////////
+     
+    [defaults synchronize];
+        
+        
+        
         }
     
         //////////////
@@ -304,7 +378,7 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
             Team *team = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:context];
             
             team.teamAbr = teamDict[@"teamAbr"];
-            team.teamID = teamDict[@"teamID"];
+            
             team.teamName = teamDict[@"teamName"];
             team.teamPlace = teamDict[@"teamPlace"];
             team.teamScore = teamDict[@"teamScore"];
@@ -319,6 +393,39 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
             //competitors, ceventscores do in them
             team.meet = meet;
             
+
+            
+            // Store teamID data
+         
+              
+                
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+             
+             int tempint =  [meet.meetID intValue];
+             
+             NSString * keystring = [NSString stringWithFormat:@"%dlastTeamID",tempint];  ////
+             
+            
+             
+             if (![defaults objectForKey:keystring]) {                    /////
+             
+             int idint = 0;
+             NSNumber *idnumber = [NSNumber numberWithInt:idint];
+             [defaults setObject:idnumber forKey:keystring];             ///////
+             
+             }
+            NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+               int oldint = [oldnumber intValue];
+               int newint = oldint + 1;
+               NSNumber *newnumber = [NSNumber numberWithInt:newint];
+            
+            team.teamID = newnumber;                  //////////
+              
+
+            [defaults setObject: newnumber forKey:keystring];            /////////
+             
+            [defaults synchronize];
             
         }
     
@@ -331,7 +438,7 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
     
             Competitor *comp = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
             
-            comp.compID = compDict[@"compID"];
+            
             comp.compName = compDict[@"compName"];
             comp.teamName = compDict[@"teamName"];
             comp.updateByUser = compDict[@"updateByUser"];
@@ -345,6 +452,38 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
             comp.meet = meet;
             
             
+            
+            // Store CompID data
+             
+                 
+                    
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                
+              
+                 int tempint =  [meet.meetID intValue];
+                 
+                 NSString * keystring = [NSString stringWithFormat:@"%dlastCompID",tempint];  ////
+                 
+                 
+                 
+                 if (![defaults objectForKey:keystring]) {                    /////
+                 
+                 int idint = 0;
+                 NSNumber *idnumber = [NSNumber numberWithInt:idint];
+                 [defaults setObject:idnumber forKey:keystring];             ///////
+                 
+                 }
+            NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+                   int oldint = [oldnumber intValue];
+                   int newint = oldint + 1;
+                   NSNumber *newnumber = [NSNumber numberWithInt:newint];
+                    comp.compID = newnumber;                  //////////
+                 
+
+                [defaults setObject: newnumber forKey:keystring];            /////////
+                 
+                [defaults synchronize];
+
         }
     
 [self saveContext];
@@ -357,7 +496,7 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
             
             event.eventDone = eventDict[@"eventDone"];
             event.eventEdited = eventDict[@"eventEdited"];
-            event.eventID = eventDict[@"eventID"];
+            
            // eventDict[@"startTime"] = event.startTime;
             event.updateByUser = eventDict[@"updateByUser"];
            // eventDict[@"updateDateAndTime"] = event.updateDateAndTime;
@@ -376,6 +515,39 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
             event.meet = meet;
             
             
+            
+            
+             ////////// event id
+                
+                    NSUserDefaults *defaults1 = [NSUserDefaults standardUserDefaults];
+    
+     
+                    int tempint1 =  [meet.meetID intValue];
+     
+                    NSString * keystring1 = [NSString stringWithFormat:@"%dlastEventID",tempint1];  ////
+     
+                    // nslog(@"%@",keystring1);
+     
+                    if (![defaults1 objectForKey:keystring1]) {                    /////
+     
+                        int idint1 = 0;
+                        NSNumber *idnumber1 = [NSNumber numberWithInt:idint1];
+                        [defaults1 setObject:idnumber1 forKey:keystring1];             ///////
+     
+                        }
+                    NSNumber *oldnumber1 = [defaults1 objectForKey:keystring1];   ///
+                    int oldint1 = [oldnumber1 intValue];
+                    int newint1 = oldint1 + 1;
+                    NSNumber *newnumber1 = [NSNumber numberWithInt:newint1];
+            
+                    event.eventID = newnumber1 ;                  //////////
+                    // nslog(@" eventID %@",  event.eventID);
+
+                    [defaults1 setObject: newnumber1 forKey:keystring1];            /////////
+     
+                    [defaults1 synchronize];
+            
+            
         }
     
 [self saveContext];
@@ -387,9 +559,7 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
             CEventScore *cscore = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
              cscore.competitor = (Competitor*)[self getObjectWithID:cscoreDict[@"competitor"] IDLabel:@"compID" AndType:@"Competitor" FromMeet:meet];
              cscore.event = (Event*)[self getObjectWithID:cscoreDict[@"event"] IDLabel:@"eventID" AndType:@"Event" FromMeet:meet];
-            if (cscoreDict[@"cEventScoreID"]) {
-                cscore.cEventScoreID = cscoreDict[@"cEventScoreID"];
-            }
+            
             if (cscoreDict[@"highJumpPlacingManual"]) {
                 cscore.highJumpPlacingManual = cscoreDict[@"highJumpPlacingManual"];
             }
@@ -399,7 +569,7 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
         //    }
         //    if (cscoreDict[@"result"]) {
                 cscore.result = cscoreDict[@"result"];
-                NSLog(@"was found  result for %@ in event %@ %@  newresult: %@ oldResult: %@",cscore.competitor.compName,cscore.event.gEvent.gEventName,cscore.event.division.divName,cscore.result,cscoreDict[@"result"]);
+              //  NSLog(@"was found  result for %@ in event %@ %@  newresult: %@ oldResult: %@",cscore.competitor.compName,cscore.event.gEvent.gEventName,cscore.event.division.divName,cscore.result,cscoreDict[@"result"]);
         //    }
             
             if (cscoreDict[@"resultEntered"]) {
@@ -421,7 +591,9 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
                 cscore.editDone = cscoreDict[@"editDone"];
             }
             
-           
+           if (cscoreDict[@"relayDisc"]) {
+                cscore.relayDisc = cscoreDict[@"relayDisc"];
+            }
             
             
            
@@ -432,12 +604,250 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
             cscore.meet = meet;
             
             
+            
+            
+           // Store cEventsScoreID data
+  
+      
+        
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+             
+             int tempint =  [meet.meetID intValue];
+             
+             NSString * keystring = [NSString stringWithFormat:@"%dlastcEventScoreID",tempint];  ////
+             
+             // nslog(@"%@",keystring);
+             
+             if (![defaults objectForKey:keystring]) {                    /////
+             
+             int idint = 0;
+             NSNumber *idnumber = [NSNumber numberWithInt:idint];
+             [defaults setObject:idnumber forKey:keystring];             ///////
+             
+             }
+            NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+               int oldint = [oldnumber intValue];
+               int newint = oldint + 1;
+               NSNumber *newnumber = [NSNumber numberWithInt:newint];
+                cscore.cEventScoreID = newnumber;
+            [defaults setObject: newnumber forKey:keystring];            /////////
+             
+            [defaults synchronize];
+         
+
+            
+            
+        }
+    
+[self saveContext];
+
+        NSArray* entriesArray  = meetDict[@"entries"];
+    
+    NSLog(@"hello %@", entriesArray);
+    
+        for (NSDictionary* entryDict in entriesArray) {
+            NSLog(@"hello");
+            Entry *entry = [NSEntityDescription insertNewObjectForEntityForName:@"Entry" inManagedObjectContext:context];
+             entry.competitor = (Competitor*)[self getObjectWithID:entryDict[@"competitor"] IDLabel:@"compID" AndType:@"Competitor" FromMeet:meet];
+             entry.cEventScore = (CEventScore*)[self getObjectWithID:entryDict[@"cEventScore"] IDLabel:@"cEventScoreID" AndType:@"CEventScore" FromMeet:meet];
+            
+            
+            if (entryDict[@"updateByUser"]) {
+                entry.updateByUser = entryDict[@"updateByUser"];
+            }
+            //cscoreDict[@"updateDateAndTime"] = cscore.updateDateAndTime;
+            //cscoreDict[@"onlineID"] = cscore.onlineID;
+            if (entryDict[@"edited"]) {
+                entry.edited = entryDict[@"edited"];
+            }
+            if (entryDict[@"editDone"]) {
+                entry.editDone = entryDict[@"editDone"];
+            }
+            
+           
+            entry.meet = meet;
+            
+           
+            
+             // Store entryID data
+          
+              
+                
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+             
+              int tempint =  [meet.meetID intValue];
+             
+              NSString *keystring = [NSString stringWithFormat:@"%dlastentryID",tempint];  ////
+             
+             // nslog(@"%@",keystring);
+             
+             if (![defaults objectForKey:keystring]) {                    /////
+             
+             int idint = 0;
+             NSNumber *idnumber = [NSNumber numberWithInt:idint];
+             [defaults setObject:idnumber forKey:keystring];             ///////
+             
+             }
+                NSNumber* oldnumber = [defaults objectForKey:keystring];   ///
+                int oldint = [oldnumber intValue];
+                int newint = oldint + 1;
+                NSNumber* newnumber = [NSNumber numberWithInt:newint];
+            
+               entry.entryID = newnumber;                  //////////
+               
+
+            [defaults setObject: newnumber forKey:keystring];            /////////
+             
+            [defaults synchronize];
+            
+            
         }
     
 [self saveContext];
 
 
+}
 
+- (void) updateMeetsToCurrent {
+
+
+
+            NSError *error;
+    
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+            NSEntityDescription *description = [NSEntityDescription entityForName:@"Meet" inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+
+            /**
+            
+            NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(meet == %@)", meet];
+            NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(%K == %@)", idLabel,objectID];
+            NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+            NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+            [fetchRequest setPredicate:andPred];
+            
+            **/
+    
+            NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    
+            for (Meet* meetobject in fetchedObjects) {
+    
+    
+                if ([meetobject.appVersionUpdatedFor isEqualToString:@"6"]) {
+                    NSLog(@"Meet %@ Up To Date", meetobject.meetName);
+                }
+                else
+                {
+                        //// add different version check and handling here later
+                    
+                    
+                    
+                    
+                    for (CEventScore* cscoreobject in meetobject.cEventsScores) {
+                    
+                        
+                        Competitor* compobject = cscoreobject.competitor;
+                        
+                        
+                        //////
+                        //////  Entry Add
+                        
+                        
+                            Entry *entry = [NSEntityDescription insertNewObjectForEntityForName:@"Entry" inManagedObjectContext:self.managedObjectContext];
+                            
+                            
+                            
+                            
+                            
+                            ////////
+                            /////   set values
+                            ///////
+                            
+                          
+                            entry.edited = [NSNumber numberWithBool:NO];
+                            entry.editDone = [NSNumber numberWithBool:YES];
+                            
+                            
+                             //////
+                            // link relationships
+                            /////
+                            
+                           
+                            
+                            entry.competitor = compobject;
+                            entry.cEventScore = cscoreobject;
+                            entry.meet = meetobject;
+                            
+                            
+                            
+                            //////
+                            
+                                     // Store entryID data
+
+                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                         
+                         int tempint =  [meetobject.meetID intValue];
+                         
+                         NSString* keystring = [NSString stringWithFormat:@"%dlastentryID",tempint];  ////
+                         
+                         // nslog(@"%@",keystring);
+                         
+                         if (![defaults objectForKey:keystring]) {                    /////
+                         
+                         int idint = 0;
+                         NSNumber *idnumber = [NSNumber numberWithInt:idint];
+                         [defaults setObject:idnumber forKey:keystring];             ///////
+                         
+                         }
+                          NSNumber*  oldnumber = [defaults objectForKey:keystring];   ///
+                          int  oldint = [oldnumber intValue];
+                           int newint = oldint + 1;
+                           NSNumber* newnumber = [NSNumber numberWithInt:newint];
+                           entry.entryID = newnumber;                  //////////
+                           
+
+                        [defaults setObject: newnumber forKey:keystring];            /////////
+                         
+                        [defaults synchronize];
+                     
+                        ////
+
+                    
+                        
+                    
+                    
+
+                    [self saveContext];
+                    
+
+                    
+                    
+                    
+                    } // end for eventscores
+
+
+
+
+                
+
+                meetobject.appVersionUpdatedFor = @"6";
+                [self saveContext];
+
+
+                NSLog(@"meet %@ updated",meetobject.meetName);
+                } //end else meet not up to date
+    
+    
+    
+    
+    
+            } // end for meets
 
 }
 
@@ -462,7 +872,7 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
     
     
             if (fetchedObjects.count > 0) {
-                NSLog(@"object found");
+               // NSLog(@"object found");
                 return fetchedObjects[0];
                 
             }
@@ -498,11 +908,9 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
     [center addObserver:self selector:@selector(importedCsv) name:@"importedCsv" object:nil];
    
    // self.navigationItem.leftBarButtonItem = self.editButtonItem;
- /**
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-    **/
-    
+ 
+    self.latestAppVersion = @"6";
+ 
     NSLog(@"view did load");
      NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
      
@@ -522,7 +930,13 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
             NSLog(@"not first time");
            // [self performSegueWithIdentifier:@"showTut" sender:self];
         }
-    if (![defaults objectForKey:@"defaultAdded"]) {
+   
+    
+    
+    
+    
+    
+     if (![defaults objectForKey:@"defaultAdded"]) {
 
         [defaults setObject: @"1" forKey:@"defaultAdded"];
             [self setExampleMeet];
@@ -532,9 +946,38 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
         else
         {
             NSLog(@"not first time");
-           
+          // [self setExampleMeet];  /// comment/uncomment to test
         }
 
+    
+
+        if ([defaults objectForKey:@"appVersionMeetsUpdatedFor"]) {
+
+            if ([[defaults objectForKey:@"appVersionMeetsUpdatedFor"] isEqualToString:self.latestAppVersion]) {
+                NSLog(@"all meets up to date");
+                
+              //  [self updateMeetsToCurrent];  // comment/uncomment to test
+            }
+            else
+            {
+                
+                [self updateMeetsToCurrent];
+                
+                [defaults setObject: @"6" forKey:@"appVersionMeetsUpdatedFor"];
+                
+            }
+            
+            
+        
+        }
+        else
+        {
+        
+                [self updateMeetsToCurrent];
+        
+                [defaults setObject: @"6" forKey:@"appVersionMeetsUpdatedFor"];
+            
+        }
 
     
     
@@ -558,6 +1001,9 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
         
     }
     **/
+   
+    
+    
 }
 
 
@@ -631,11 +1077,13 @@ NSManagedObjectContext *context = [self.fetchedResultsController managedObjectCo
           
           context = [self deleteOnlineMeet: meetObject InContext: context];
         }
+        else
+        {
         
         NSLog(@"here");
             [context deleteObject:meetObject];
         
-        
+        }
         
             
         NSError *error = nil;
@@ -666,11 +1114,35 @@ NSLog(@"deleteonlinemeet");
           if(error) {
             
                 NSLog(@"Uh oh, there was an error deleting ... %@", error);
+              
+              dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertController * alert =   [UIAlertController
+                                    alertControllerWithTitle:@"Removal From Database Failed"
+                                    message:@"Failed to remove from online database, please check your internet connection, ensure you are signed in to iCloud and you have upgraded to iCloud Drive before trying again"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                });
+
           
             //handle successful save
             } else {
             
+            
                 NSLog(@"deleted successfully");
+                [context deleteObject:meetObject];
    
             }
   
@@ -715,8 +1187,8 @@ NSLog(@"deleteonlinemeet");
      cell.hostLabel.hidden = YES;
      
     }
-        NSLog(@"in configurecell");
-    NSLog(@"MEET NAME %@  owner value %hhd online %hhd", [[object valueForKey:@"meetName"] description],[[object valueForKey:@"isOwner"] boolValue],[[object valueForKey:@"onlineMeet"] boolValue]);
+   //     NSLog(@"in configurecell");
+  //  NSLog(@"MEET NAME %@  owner value %hhd online %hhd", [[object valueForKey:@"meetName"] description],[[object valueForKey:@"isOwner"] boolValue],[[object valueForKey:@"onlineMeet"] boolValue]);
 
     
  //   [[object valueForKey:@"meetDate"] description];
@@ -919,6 +1391,8 @@ NSLog(@"deleteonlinemeet");
         ////////
         /////   set values
         ///////
+        meet.appVersionUpdatedFor = self.latestAppVersion;
+        
         if (sourceViewController.meetName) {
         [meet setValue: sourceViewController.meetName.text forKey:@"meetName"];
             
@@ -1065,8 +1539,6 @@ if ([sourceViewController isKindOfClass:[MeetAddViewController class]])
 /**
 #pragma mark - MeetAddViewControllerDelegate
 
-
-
 - (void)MeetAddViewControllerDidCancel:(MeetAddViewController *)controller
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -1078,6 +1550,7 @@ if ([sourceViewController isKindOfClass:[MeetAddViewController class]])
 }
 
 **/
+
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender {
 // nslog(@"long press fire");
 // only when gesture was recognized, not when ended
@@ -1295,6 +1768,107 @@ self.fetchedResultsController = nil;
         }
 }
 
-- (IBAction)InfoButton:(UIBarButtonItem *)sender {
+
+- (IBAction)showAllTuts:(UIBarButtonItem *)sender {
+
+NSUserDefaults *defaultstut = [NSUserDefaults standardUserDefaults];
+
+NSString* mainTutString = @"Tutorials";
+
+NSMutableDictionary* tutDict = [[NSMutableDictionary alloc] init];
+
+[defaultstut setObject: tutDict forKey:mainTutString];
+[defaultstut synchronize];
+[self tutorialCode];
+
 }
+
+/////////
+// Tutorial Code Start
+////////
+
+
+- (void) tutorialCode {
+
+        // Edit these
+    NSString* thisTutKeyString = @"tut2";
+    NSString* tutTitleString = @"Tutorial";
+    NSString* tutMessageString = @"Tutorial Text";
+        // Rest Done
+
+    NSString* mainTutString = @"Tutorials";
+    NSUserDefaults *defaultstut = [NSUserDefaults standardUserDefaults];
+
+  
+   if (! [[[defaultstut objectForKey:mainTutString] objectForKey:thisTutKeyString] boolValue]) {
+    NSLog(@"showing");
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:tutTitleString
+                                    message:tutMessageString
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* dontshow = [UIAlertAction
+                        actionWithTitle:@"Don't Show This Again"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            NSMutableDictionary* tutDict = [defaultstut objectForKey:mainTutString];
+                            
+                            
+                            
+                            if (!(tutDict)) {
+                                tutDict = [[NSMutableDictionary alloc] init];
+                            }
+                            
+                        
+                            
+                                [tutDict setObject:[NSNumber numberWithBool:YES] forKey:thisTutKeyString];
+                                [defaultstut setObject: tutDict forKey:mainTutString];
+                                [defaultstut synchronize];
+                           
+                            
+                            
+                            
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+                        UIAlertAction* done = [UIAlertAction
+                        actionWithTitle:@"Close"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+    
+                [alert addAction:done];
+                [alert addAction:dontshow];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+        });
+    
+    }
+    else
+    {
+        NSLog(@"not showing");
+    
+    }
+
+}
+-(void)viewWillAppear:(BOOL)animated{
+   [super viewWillAppear:animated];
+   //something here
+   [self tutorialCode];
+}
+/////////
+// Tutorial Code End
+////////
+
 @end

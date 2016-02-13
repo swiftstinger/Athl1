@@ -14,6 +14,10 @@
 #import "GEvent.h"
 #import "Entry.h"
 #import "Competitor.h"
+#import "Division.h"
+#import "Event.h"
+#import "CEventScore.h"
+
 
 @interface EntriesViewTableViewController ()
 
@@ -40,12 +44,17 @@
 
 - (void)setDetailItem:(id)newDetailItem
 {
+    
     if (_detailItem != newDetailItem) {
+        _detailItem = newDetailItem;
         _cScoreItem = _detailItem;
         _eventObject = _cScoreItem.event;
+        
+        NSLog(@"score event div %@  event gevent %@ ", _cScoreItem.event.division.divName, _eventObject.gEvent.gEventName);
+        
         // Update the view.
         [self configureView];
-        
+        NSLog(@"in entryview");
        
         
     }
@@ -110,11 +119,6 @@
 }
 
 
-
-
-
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -128,10 +132,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    
-    
-    
-    
+ 
     return [sectionInfo numberOfObjects];
 }
 
@@ -141,6 +142,7 @@
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
     return YES;
@@ -303,6 +305,35 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(cEventScore == %@)"
 /////////
 ///////
 /////////
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ 
+
+    if ([[segue identifier] isEqualToString:@"pickCompRelay"]) {
+        
+        UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
+        EventScoreAddViewController* eventScoreAddController = (EventScoreAddViewController*)[navController topViewController];
+        
+        [eventScoreAddController setEventObject:self.eventObject];
+        [eventScoreAddController setTeamObject:self.cScoreItem.team];
+        
+        [eventScoreAddController setManagedObjectContext:self.managedObjectContext];
+    }
+    
+    
+    if ([[segue identifier] isEqualToString:@"editRelayDiscSegue"]) {
+        
+        UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
+        EditRelayDiscViewController* editRelayDiscController = (EditRelayDiscViewController*)[navController topViewController];
+        
+       
+        [editRelayDiscController setDetailItem:self.cScoreItem];
+        
+        [editRelayDiscController setManagedObjectContext:self.managedObjectContext];
+    }
+}
+
+
 /////////
 ////////
 
@@ -427,7 +458,168 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(cEventScore == %@)"
         
         // add new comp , add entry with comp  to ceventscore here
         
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+            CompetitorAddInResultSheetViewController *sourceViewController = unwindSegue.sourceViewController;
+            
+            /////
+            // ad new competitor chosen in source
+            ////
+            ////
+            ////
+            ////
+            ///
+                
+
+            
+             Competitor* newcompetitorObject = [NSEntityDescription insertNewObjectForEntityForName:@"Competitor" inManagedObjectContext:context];
+                
+                
+                ////////
+                /////   set values
+                ///////
+             
+                   if (sourceViewController.competitorName) {
+                [newcompetitorObject setValue: sourceViewController.competitorName.text forKey:@"compName"];
+            
+                }
+                
+                
+                
+                 //////
+                // link relationships
+                /////
+                
+                newcompetitorObject.team = sourceViewController.teamItem;
+                newcompetitorObject.meet = self.eventObject.meet;
+                newcompetitorObject.teamName = sourceViewController.teamItem.teamName;
+                newcompetitorObject.edited = [NSNumber numberWithBool:YES];
+                newcompetitorObject.editDone = [NSNumber numberWithBool:NO];
+                
+                
+                
+                //////
+                
+                  // Store CompID data
+
+             
+                
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+          
+             int tempint =  [self.eventObject.meet.meetID intValue];
+             
+             NSString * keystring = [NSString stringWithFormat:@"%dlastCompID",tempint];  ////
+             
+             
+             
+             if (![defaults objectForKey:keystring]) {                    /////
+             
+             int idint = 0;
+             NSNumber *idnumber = [NSNumber numberWithInt:idint];
+             [defaults setObject:idnumber forKey:keystring];             ///////
+             
+             }
+        NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
+               int oldint = [oldnumber intValue];
+               int newint = oldint + 1;
+               NSNumber *newnumber = [NSNumber numberWithInt:newint];
+               [newcompetitorObject setValue: newnumber forKey: @"compID"];                  //////////
+             
+
+            [defaults setObject: newnumber forKey:keystring];            /////////
+             
+            [defaults synchronize];
+          
+            ////
+            
+            
+            
+            ////////
+            ///////
+            ///////
+            ///////
+            
+            
+            
+            
+            
         
+                
+                
+        
+                self.cScoreItem.competitor = newcompetitorObject;
+        
+                
+                
+        
+             //////
+            //////  Entry Add
+            
+            
+                Entry *entry = [NSEntityDescription insertNewObjectForEntityForName:@"Entry" inManagedObjectContext:context];
+                
+                
+                
+                
+                
+                ////////
+                /////   set values
+                ///////
+                
+              
+                entry.edited = [NSNumber numberWithBool:YES];
+                entry.editDone = [NSNumber numberWithBool:NO];
+                
+                
+                 //////
+                // link relationships
+                /////
+                
+               
+                
+                entry.competitor = newcompetitorObject;
+                entry.cEventScore = self.cScoreItem;
+                entry.meet = self.eventObject.meet;
+                
+                
+                
+                //////
+                
+                         // Store entryID data
+          
+              
+                
+            defaults = [NSUserDefaults standardUserDefaults];
+            
+             
+              tempint =  [self.eventObject.meet.meetID intValue];
+             
+              keystring = [NSString stringWithFormat:@"%dlastentryID",tempint];  ////
+             
+             // nslog(@"%@",keystring);
+             
+             if (![defaults objectForKey:keystring]) {                    /////
+             
+             int idint = 0;
+             NSNumber *idnumber = [NSNumber numberWithInt:idint];
+             [defaults setObject:idnumber forKey:keystring];             ///////
+             
+             }
+                oldnumber = [defaults objectForKey:keystring];   ///
+                oldint = [oldnumber intValue];
+                newint = oldint + 1;
+                newnumber = [NSNumber numberWithInt:newint];
+               entry.entryID = newnumber;                  //////////
+               
+
+            [defaults setObject: newnumber forKey:keystring];            /////////
+             
+            [defaults synchronize];
+         
+            ////
+                 
+                  
+
         
         
         

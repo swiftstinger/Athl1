@@ -1,23 +1,203 @@
-set event edited and not done when deleting ceventscore or entry ? good idea
+----
+/////////
+// Tutorial Code Start
+////////
 
 
-add manual placing to all results not just high jump
-text box and all previews set conditional formatting
+- (void) tutorialCode {
 
+        // Edit these
+    NSString* thisTutKeyString = @"tut2";
+    NSString* tutTitleString = @"Tutorial";
+    NSString* tutMessageString = @"Tutorial Text";
+        // Rest Done
+
+    NSString* mainTutString = @"Tutorials";
+    NSUserDefaults *defaultstut = [NSUserDefaults standardUserDefaults];
+
+  
+   if (! [[[defaultstut objectForKey:mainTutString] objectForKey:thisTutKeyString] boolValue]) {
+    NSLog(@"showing");
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:tutTitleString
+                                    message:tutMessageString
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* dontshow = [UIAlertAction
+                        actionWithTitle:@"Don't Show This Again"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            NSMutableDictionary* tutDict = [defaultstut objectForKey:mainTutString];
+                            
+                            
+                            
+                            if (!(tutDict)) {
+                                tutDict = [[NSMutableDictionary alloc] init];
+                            }
+                            
+                        
+                            
+                                [tutDict setObject:[NSNumber numberWithBool:YES] forKey:thisTutKeyString];
+                                [defaultstut setObject: tutDict forKey:mainTutString];
+                                [defaultstut synchronize];
+                           
+                            
+                            
+                            
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+                        UIAlertAction* done = [UIAlertAction
+                        actionWithTitle:@"Close"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                            
+                             
+                        }];
+    
+                [alert addAction:done];
+                [alert addAction:dontshow];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+        });
+    
+    }
+    else
+    {
+        NSLog(@"not showing");
+    
+    }
+
+}
+-(void)viewWillAppear:(BOOL)animated{
+   [super viewWillAppear:animated];
+   //something here
+   [self tutorialCode];
+}
+/////////
+// Tutorial Code End
+////////
+
+----
+
+----
+
+Done MeetAddViewControllet
+Done MasterViewController  only update ownerMeets not online not ownermeets. still to do _____  check how server behaves between versions.
+Done MeetTableViewCell
+Done TutContentViewController
+Done TutMainViewController
+Done MeetMenuViewController
+                                exportresultsbuttonpressed todo to make default
+Done MeetMenuViewCell
+Done SetupDiv
+Done AddDiv
+Done DivTableViewCell
+Done GEventAdd
+Done SetupGevent
+Done GeventTableviewCell
+Done TeamAdd
+Done SetupTeams
+Done TeamTableViewCel
+Done SetupCompetitors - test import
+Done CompetitorTableViewCell
+Done CompetitorAdd
+
+//// prechecked
+SetupEventsforC
+EventForCtableviewCell
+CEventResultsViewController
+CEventResutlsTableViewCell
+EventForCAdd
+PickRelayTeamsForC
+relayteamsforctableviewcell
+add relayteamforC
+/////
+EnterResults Folder
+///
+/// prechecked done
+
+
+
+add meet versions to add default
+
+---
+
+check how many meets by counting isowner?  maybe with onlinemeet? isowner gets changed to no...  cant hurt... test
+---
+
+meetmenu remove removedivsonline
+
+---
+Done 0. new id's n default load'
+
+11. add search to eventslist
+
+22. result for each comp search and show in table inividual competitor results rank by result/team and then id export to csv
+
+33. set event edited and not done when deleting ceventscore or entry ? good idea   === commitEditingStyle
+
+44. add manual placing to all results not just high jump
+
+5. text box and all previews set conditional formatting  ////////////
+
+6. Dont show this again tick boxes with data for each scene //////////
+
+88. combine comps
+
+999. log events
+
+Done 10. add new id's to excel imports
+
+111111. Restore Backups option
+
+121212. slave update server push???
+
+Done 13. Manage Ceventscores when moving from relay to other event mabe just warn
+
+Done 14. import teams edit for relaydisc
+Done 15. Tie in TeamPlacesViewController
+16. Iphone 6 Results spacing = check all spacing...   ////////
+
+17. Add score to teamplaces results table
+
+
+------
+
+5. text box and all previews set conditional formatting  ////////////
+
+6. Dont show this again tick boxes with data for each scene //////////
+
+
+16. Iphone 6 Results spacing = check all spacing...   ////////
+
+------
+
+A. backupevent to check
+
+
+ce
 entry edited and edit done check and add to set all as edited and as done etc
 
 check all .ceventscore or ceventscore references
 check all relay disc and eventscore.competitor and sanitise not having any
 
 
-Eventscoresheet add longpress recognizer edit entries
-
 online add etc with competitor nil
 relaydisc in ceventscore everywhere
 
 meetmenuviewcontroller
   xxx  addcscoreonline
-   xx     cscore[@"competitor"] = cscoreObject.competitor.onlineID;  /// = cscoreObject.entry.competitors[0];
+   xx     cscore[@"competitor"] = cscoreObject.competitor.onlineID;  /// = cscoreObject.entry.competitors[0]; anyobject
 
    xxx addentryonline
 
@@ -31,17 +211,18 @@ after online check old meet event not there
 //relayflag
 
 
-Dont show this again tick boxes with data for each scene
 
 
-Comp # in import later
+
+Comp # in import later  check in cycle of ceventscores if 1 is taken, otherwise allocate, if yes counter + 1
+when counter = number of entries then add to end.
 
 add/view comps on long press
 add label to relay
 change cell
 
 
-delete competitor
+delete competitor  // nullify
 
 in ceventscores and backup ceventscores
 
@@ -55,101 +236,6 @@ in ceventscores and backup ceventscores
     if (self.products.count == 0)
         [self.managedObjectContext deleteObject:self];
 }
-
-
-relays
-
-
-enter relay result how to set up relay teams to make results entry usefull.
-
-        need to view and enter comps but click should add result (mabe add section at bottom of view that can add and delete?  and have result at top?)
-
-Event types track field High Jump Relay  add relay to
-A Event make menu
-B import done
-C Export done
-D Scores done
-E backup and online?
-
-.competitor.
-
-
-1. Comp in team view
-    Unwind done trigger alert with ifs for add
-    conditional segue for com result view (mabe only change cell to show team not name)
-2. Competitor resultsview/ new for relays    if relays in comp in team view (mabe only change cell to show team not name)
-
-3. enter results view controller conditional segue depending on result type (good for high jump and throws later as well)
-4. 4.1 New eventcontroller choose team for plus
-   4.2  new controller for click and
-    4.3 then choose comp with team name for plus
-
-
-4. showeventscorecopysheet set cell on check to team name if Backupevent is relay
-
-
-5. go through all backups and saves and ensure comps are changed to nsset handle on copy and save
-
-6. server change ceventscores to comps many
-
-
-7. Details result view comp view cell change for relay
-
-
-
-////// NSSET for ceventscore and backupceventscore and server ceventscore /////
-
-
-// try new webview with html
-
-Previews
-
-Immediate Accurate Results
-
-
-- Results view screens
-- Colour and output?
-
-Share and Input scores from other devices
-
-- Other devices while next to track picture
-
-Import and populate Events in seconds
-
-- How to show import functions
-
-
-
-Export For post event Publication and Analysis
-
-- Excell sheets with details
-
-Print Final results
-
-- Print formatter
-
-
-
-//////
-
-IDS give new on load from import to make order good
-
-
-
-done import
-todo:
-
-
-
-
-6.  print or html view make pictures
-
-6. change icons
-
-7. info buttons tut expand
-
-8. combine comps
-9. log events
 
 
 
@@ -201,85 +287,6 @@ AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication]deleg
 
 
 
-// add to all importing areas
-
-
-
-
-
-event for competitor, warn if deleting one that has score entered resultentered prompt
-
-keyboard input? validate input already does it, dont know how...
-
-Backups
-///////
-fixed online update bug when running a host and results entry meet on the same device
-
-
-
-
-backups only change updatedate if updated itself    not work too many updates
-
-Set restore backups
-
-set info buttons
-
-set not load comps in event in search
-
-   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(meet == %@) AND (SUBQUERY(cEventScores, $x, $x IN %@).@count < 1)",self.eventObject.meet, array];
-
-
-what does reset do? tutorial  set as not done and segue back to resutlsenter
-
-
-
-////////////
-want in tutorial
-///////////
-
-set not edited if owner done
-
-!!! check owner id before ship in recodnames done
-
-
-
-1. pause when done event enter in slave needed? done
-
-2. change indicator on edited not done    done
-
-8 done
-
-2. hook up refresh scores or remove (i vote for remove) done
-
-0.1 indicator if owner, change number of online meets to 2 now at 4
-
-
-1. lock slave changes done
-
-2. tut set up done, now do pictures
-
-3. save backup of events that were done in master or sent in slave  mabeeee
-
-
-
-4. send button instead of done for slave?
-
-5. update all ceventscores on results view (plus pause)  not needed but test more late
-
-
-
-
-///
-
-error checking
-1. check if any other objects need to be checked for before fetch completion
-
-2. delete slave block ui? not found
-
-
-3. save context on deletes chekc all
-
-
 
 //
 
@@ -294,21 +301,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 ///////////////
 ////////////
 
-///
-owner update push  (on create with updatebyuser not owner  );  later
-    retrieve object and then push object and meet with new date.
 
-servant update server push later
-
-
-5. add competitor merge later
-
-
-
-check internet connection before load try and handle error
-
-
-add merge competitors section (hou kop met all die verskillende areas wat moet merge en verander..)
 
 
 
@@ -330,12 +323,6 @@ add merge competitors section (hou kop met all die verskillende areas wat moet m
 //////
 //////
 //////
-
-
-learn how to set up defaults
-
-set save as default option at bottom (lets do first option first and then after launch do next)
-
 
 
 ////
@@ -730,24 +717,8 @@ for (Team* team in [self.meetObject.teams sortedArrayUsingDescriptors:[NSArray a
         }
      
         [mutableHTML appendString:@" </tr>"];
-     /**
-     
-            spare outfits 2
-     vest long top leggings cardy
-     
-     slippers
-     
-     outfit for tomorrow
-     
-     sleepingbag
-     
-     light on
-     
-     book
-     
-     
-     **/
-     
+
+               
  /// Place
  [mutableHTML appendString:@"<tr> <td style='font-size:16.0pt' >"];
  [mutableHTML appendString:@"Rank"];

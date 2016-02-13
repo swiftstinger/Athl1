@@ -7,8 +7,11 @@
 //
 
 #import "EventForCAddViewController.h"
+#import "PickRelayTeamForCViewController.h"
 #import "CEventScore.h"
 #import "Team.h"
+#import "Entry.h"
+
 
 @interface EventForCAddViewController ()
 
@@ -300,45 +303,45 @@ if(pickerView.tag == divpicker)
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  
 
-    if ([[segue identifier] isEqualToString:@"unwindToSetupEventsForCDoneSegue"]) {
+    if ([[segue identifier] isEqualToString:@"unwindToSetupEventsForCDoneSeque"]) {
         
        
        
         
            }
     
+    if ([[segue identifier] isEqualToString:@"pickRelayTeamForC"])
+    {
+        
+        
+       
+        UINavigationController *navController = (UINavigationController*)[segue destinationViewController];
+        PickRelayTeamForCViewController* viewController = (PickRelayTeamForCViewController*)[navController topViewController];
+        
+        
+        [viewController setEventObject:self.event];
+        [viewController setCompetitorObject:self.competitorObject];
+        
+        [viewController setManagedObjectContext:self.managedObjectContext];
+       
+        
+        
+    }
+    
     
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-   
+   NSLog(@"111111");
     
-    if ([identifier isEqualToString:@"unwindToSetupEventsForCDoneSegue"]) {
+    if ([identifier isEqualToString:@"unwindToSetupEventsForCDoneSeque"]) {
         
-        
-        NSInteger divrow = [self.divPicker selectedRowInComponent:0];
-      
-        self.division = [[[self divFetchedResultsController] fetchedObjects] objectAtIndex:divrow];
-       
-      NSInteger eventrow = [self.eventPicker selectedRowInComponent:0];
-        self.gevent = [[[self gEventFetchedResultsController] fetchedObjects] objectAtIndex:eventrow];
-       
-     
-
-        self.event = [self selectedEvent];
+       NSLog(@"22222"); 
         
         // check duplicate events
-        
-     /*
 
-        if ([[self.competitorObject valueForKeyPath:@"c.name"] containsObject:cityName]) {
-            // ...
-        }
         
-      */
-       // self.competitorObject.cEventScores
-        
-        if ([[self.competitorObject valueForKeyPath:@"cEventScores.event"] containsObject:self.event]) {
+        if ([[self.competitorObject valueForKeyPath:@"entries.cEventScore.event"] containsObject:self.event]) {
             dispatch_async(dispatch_get_main_queue(), ^{
 
 
@@ -369,6 +372,116 @@ if(pickerView.tag == divpicker)
         
         //check if too many people from this team involved
    
+            Team *team = self.competitorObject.team;
+            int limitperteam = [self.gevent.competitorsPerTeam intValue ];
+     if (limitperteam != 0) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+        NSEntityDescription *description = [NSEntityDescription entityForName:@"Entry" inManagedObjectContext: self.managedObjectContext];
+
+            [fetchRequest setEntity:description];
+
+
+            NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"(team == %@)", team];
+            NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"(cEventScore.event == %@)", self.event];
+            NSArray *preds = [NSArray arrayWithObjects: pred1,pred2, nil];
+            NSPredicate *andPred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+
+            [fetchRequest setPredicate:andPred];
+
+
+            NSError *err;
+            NSUInteger eventscorecount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&err];
+        
+        
+            if(eventscorecount == NSNotFound) {
+                //Handle error
+            }
+        
+    
+    
+    
+    
+        int currentEventNumber = (int)eventscorecount ;
+        
+     
+        
+            
+                    if (!(limitperteam>currentEventNumber)) {
+    
+               dispatch_async(dispatch_get_main_queue(), ^{
+
+
+                
+                UIAlertController * alert=   [UIAlertController
+                                    alertControllerWithTitle:@"Too many competitors from this team in Event"
+                                    message:@"Please delete a competitor from this event, pick a different event or change the number of competitors allowed per event"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                
+                });
+                return NO;
+                    }
+                
+            }
+        
+   
+        
+    }
+    
+   
+    if ([identifier isEqualToString:@"pickRelayTeamForC"]) {
+        
+        
+          
+        // check duplicate events
+
+        
+        if ([[self.competitorObject valueForKeyPath:@"entries.cEventScore.event"] containsObject:self.event]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+
+
+            UIAlertController * alert =   [UIAlertController
+                                    alertControllerWithTitle:@"This competitor is already in chosen event"
+                                    message:@"Please pick a different event"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+     
+     
+                UIAlertAction* ok = [UIAlertAction
+                        actionWithTitle:@"OK"
+                        style:UIAlertActionStyleDefault
+                        handler:^(UIAlertAction * action)
+                        {
+                            [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                        }];
+                        
+                [alert addAction:ok];
+     
+                [self presentViewController:alert animated:YES completion:nil];
+                
+                });
+                
+            return NO;
+        }
+        
+        //This is for relay check in add ceventscore for relay
+      
+        
+        //check if too many people from this team involved
+    /**
             Team *team = self.competitorObject.team;
             int limitperteam = [self.gevent.competitorsPerTeam intValue ];
      if (limitperteam != 0) {
@@ -434,11 +547,14 @@ if(pickerView.tag == divpicker)
                 
             }
         
-   
+       
+        **/
+     
+        
         
     }
     
-   
+
     
     
     
@@ -447,4 +563,41 @@ if(pickerView.tag == divpicker)
 
 
 
+- (IBAction)DoneNextButtonPressed:(UIBarButtonItem *)sender {
+    
+    NSInteger divrow = [self.divPicker selectedRowInComponent:0];
+      
+        self.division = [[[self divFetchedResultsController] fetchedObjects] objectAtIndex:divrow];
+       
+      NSInteger eventrow = [self.eventPicker selectedRowInComponent:0];
+        self.gevent = [[[self gEventFetchedResultsController] fetchedObjects] objectAtIndex:eventrow];
+       
+     
+
+        self.event = [self selectedEvent];
+    
+    
+    if ([self.event.gEvent.gEventType isEqualToString:@"Relay"])
+    {
+        if ([self shouldPerformSegueWithIdentifier:@"pickRelayTeamForC" sender:self]) {
+            [self performSegueWithIdentifier:@"pickRelayTeamForC" sender:self];
+        }
+    }
+    else
+    {
+        
+        
+        if ([self shouldPerformSegueWithIdentifier:@"unwindToSetupEventsForCDoneSeque" sender:self]) {
+            NSLog(@"hereeee");
+            [self performSegueWithIdentifier:@"unwindToSetupEventsForCDoneSeque" sender:self];
+
+        }
+        
+        
+    
+    }
+    
+  
+
+}
 @end

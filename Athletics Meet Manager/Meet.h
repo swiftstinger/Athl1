@@ -2,7 +2,7 @@
 //  Meet.h
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 25/01/2016.
+//  Created by Ailsa Huysamen on 09/02/2016.
 //  Copyright (c) 2016 rudi huysamen. All rights reserved.
 //
 
@@ -13,6 +13,7 @@
 
 @interface Meet : NSManagedObject
 
+@property (nonatomic, retain) NSString * appVersionUpdatedFor;
 @property (nonatomic, retain) NSNumber * cEventLimit;
 @property (nonatomic, retain) NSNumber * competitorPerTeam;
 @property (nonatomic, retain) NSNumber * decrementPerPlace;
@@ -36,15 +37,15 @@
 @property (nonatomic, retain) NSDate * updateDateAndTime;
 @property (nonatomic, retain) NSSet *backupCEventScores;
 @property (nonatomic, retain) NSSet *backupCompetitors;
+@property (nonatomic, retain) NSSet *backupEntries;
 @property (nonatomic, retain) NSSet *backupEvents;
 @property (nonatomic, retain) NSSet *cEventsScores;
 @property (nonatomic, retain) NSSet *competitors;
 @property (nonatomic, retain) NSSet *divisions;
+@property (nonatomic, retain) NSSet *entries;
 @property (nonatomic, retain) NSSet *events;
 @property (nonatomic, retain) NSSet *gEvents;
 @property (nonatomic, retain) NSSet *teams;
-@property (nonatomic, retain) NSSet *backupEntry;
-@property (nonatomic, retain) NSSet *entry;
 @end
 
 @interface Meet (CoreDataGeneratedAccessors)
@@ -58,6 +59,11 @@
 - (void)removeBackupCompetitorsObject:(BackupCompetitor *)value;
 - (void)addBackupCompetitors:(NSSet *)values;
 - (void)removeBackupCompetitors:(NSSet *)values;
+
+- (void)addBackupEntriesObject:(BackupEntry *)value;
+- (void)removeBackupEntriesObject:(BackupEntry *)value;
+- (void)addBackupEntries:(NSSet *)values;
+- (void)removeBackupEntries:(NSSet *)values;
 
 - (void)addBackupEventsObject:(BackupEvent *)value;
 - (void)removeBackupEventsObject:(BackupEvent *)value;
@@ -79,6 +85,11 @@
 - (void)addDivisions:(NSSet *)values;
 - (void)removeDivisions:(NSSet *)values;
 
+- (void)addEntriesObject:(Entry *)value;
+- (void)removeEntriesObject:(Entry *)value;
+- (void)addEntries:(NSSet *)values;
+- (void)removeEntries:(NSSet *)values;
+
 - (void)addEventsObject:(Event *)value;
 - (void)removeEventsObject:(Event *)value;
 - (void)addEvents:(NSSet *)values;
@@ -93,15 +104,5 @@
 - (void)removeTeamsObject:(Team *)value;
 - (void)addTeams:(NSSet *)values;
 - (void)removeTeams:(NSSet *)values;
-
-- (void)addBackupEntryObject:(BackupEntry *)value;
-- (void)removeBackupEntryObject:(BackupEntry *)value;
-- (void)addBackupEntry:(NSSet *)values;
-- (void)removeBackupEntry:(NSSet *)values;
-
-- (void)addEntryObject:(Entry *)value;
-- (void)removeEntryObject:(Entry *)value;
-- (void)addEntry:(NSSet *)values;
-- (void)removeEntry:(NSSet *)values;
 
 @end

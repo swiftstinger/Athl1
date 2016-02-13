@@ -32,6 +32,7 @@
    if (_detailItem != newDetailItem) {
 
         _detailItem = newDetailItem;
+        self.gEventObject = (GEvent*)_detailItem;
        
         self.isEditing = TRUE;
       
@@ -194,6 +195,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.changedFromRelay = NO;
     
    [self.gEventName becomeFirstResponder];
     
@@ -256,15 +258,68 @@ self.gEventTypeValue= [sender titleForSegmentAtIndex:[sender selectedSegmentInde
         //checks
         // nslog(@"GEventType: %@",self.gEventTypeValue);
         
-        if (FALSE) {
-        
-        // nslog(@"in shouldperformsegue no");
-        return NO;
+        if ((self.editing) && ([self.gEventObject.gEventType isEqualToString:@"Relay"]) && (![self.gEventTypeValue isEqualToString:@"Relay"])) {
+    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertController * alert=   [UIAlertController
+                                            alertControllerWithTitle:@"Confirm Event Type Change"
+                                            message:@"If you continue, this will no longer be a Relay event. \n Any events of this type that have more that one competitor added to any of it's Entries will have all but one of those competitors removed. \n This will not effect any results entered in these events."
+                                            preferredStyle:UIAlertControllerStyleAlert];
+             
+             
+                        UIAlertAction* delete = [UIAlertAction
+                                actionWithTitle:@"CONTINUE"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    
+                                    
+                                    [alert dismissViewControllerAnimated:YES completion:nil];
+                                    self.changedFromRelay = true;
+                                    [self doneSequeCheckPassed];
+                                     
+                                }];
+                                UIAlertAction* cancel = [UIAlertAction
+                                actionWithTitle:@"CANCEL"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    
+                                    [alert dismissViewControllerAnimated:YES completion:nil];
+                                    
+                                     
+                                }];
+            
+                        [alert addAction:delete];
+                        [alert addAction:cancel];
+             
+                        [self presentViewController:alert animated:YES completion:nil];
+                });
+    
+            return NO;
         }
-   
+        else
+        {
+            return YES;
+        }
+        
+    
+    }
+    else
+    {
+    
+        return YES;
     }
     
-    return YES;              
+    
+}
+
+- (void) doneSequeCheckPassed {
+
+    
+    [self performSegueWithIdentifier:@"unwindToSetupGEventDoneSegue" sender:self];
+    
+
 }
 
 

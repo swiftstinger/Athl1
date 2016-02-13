@@ -11,6 +11,8 @@
 #import "GEvent.h"
 #import "Division.h"
 #import "Event.h"
+#import "CEventScore.h"
+#import "Entry.h"
 #import "AppDelegate.h"
 
 
@@ -465,7 +467,7 @@ if ([[segue identifier] isEqualToString:@"addGEvent"]) {
                 if (sourceViewController.gEventType) {
         [gEvent setValue: [sourceViewController.gEventType titleForSegmentAtIndex:[sourceViewController.gEventType selectedSegmentIndex]] forKey:@"gEventType"];
     
-      
+            //relayflag  if from relay to other remove all entries bar one and add that comp to ceventscore
           }
         
         [self.meetObject setValue:[NSNumber numberWithBool:YES] forKey:@"eventsDone"];
@@ -642,6 +644,54 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
             // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
             //abort();
             }
+        
+        
+        if (sourceViewController.changedFromRelay) {
+            int counter = 0;
+            NSLog(@"in changed from relay");
+            
+            for (Event* event in gEvent.events) {
+                
+                for (CEventScore* cscore in event.cEventScores) {
+                    counter = 0;
+                    
+                    for (Entry* entry in cscore.entries) {
+                        NSLog(@"entry here");
+                        if (counter > 0) {
+                                NSLog(@"counter %d deleting", counter);
+                            [self.managedObjectContext deleteObject:entry];
+    
+                        }
+                        else
+                        {
+                            NSLog(@"counter %d not deleting", counter);
+                         }
+                        counter++;
+            
+                    }
+        
+        
+        
+                }
+    
+    
+    
+            }
+            
+            
+            
+            
+            
+        }
+        
+        
+        if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+
         
     }
    

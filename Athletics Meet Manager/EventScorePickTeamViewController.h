@@ -28,7 +28,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *relayDisc;
 
-@property (strong, nonatomic) NSString* relayDiscString;
+
+
 
 
 

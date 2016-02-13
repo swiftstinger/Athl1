@@ -28,6 +28,7 @@
 
 - (IBAction)longPressRecognizer:(UILongPressGestureRecognizer *)sender;
 
+
 @property (weak, nonatomic) NSIndexPath * indexPathForLongPressCell;
 
 @end

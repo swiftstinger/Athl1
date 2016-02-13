@@ -8,11 +8,13 @@
 
 #import "SetupEventsForCViewController.h"
 #import "EventForCTableViewCell.h"
+#import "PickRelayTeamForCViewController.h"
 #import "CEventScore.h"
 #import "GEvent.h"
 #import "Division.h"
 #import "Event.h"
 #import "Meet.h"
+#import "Entry.h"
 
 
 @interface SetupEventsForCViewController ()
@@ -106,6 +108,8 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
         [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+        
             
         NSError *error = nil;
         if (![context save:&error]) {
@@ -127,7 +131,7 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CEventScore" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Entry" inManagedObjectContext:self.managedObjectContext];
     
     [fetchRequest setEntity:entity];
     
@@ -139,7 +143,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-   NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"cEventScoreID" ascending:YES];
+   NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"entryID" ascending:YES];
    NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -219,7 +223,9 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
 - (void)configureCell:(EventForCTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    CEventScore *ceventscore = (CEventScore*)object;
+    Entry *entry = (Entry*)object;
+    
+    CEventScore *ceventscore = entry.cEventScore;
   
      GEvent* gevent  = (GEvent*)ceventscore.event.gEvent;
    NSString *geventname = gevent.gEventName;
@@ -236,17 +242,16 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  
-
     if ([[segue identifier] isEqualToString:@"showEventResult"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        CEventScore* ceventscore = (CEventScore*) object;
+            NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+            NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        
+            Entry* entry = (Entry*) object;
         
         
-        [[segue destinationViewController] setDetailItem:ceventscore.event];
-        [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
-        
-    }
+              [[segue destinationViewController] setDetailItem:entry.cEventScore.event];
+            [[segue destinationViewController] setManagedObjectContext:self.managedObjectContext];
+        }
     
     if ([[segue identifier] isEqualToString:@"addEventForC"]) {
     
@@ -273,7 +278,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
             self.meet = self.competitorObject.meet;
             int competitorEventLimit = [self.meet.cEventLimit intValue];
     
-        int currentEventNumber = (int)[[self.competitorObject valueForKey:@"cEventScores"] count] ;
+        int currentEventNumber = (int)[[self.competitorObject valueForKey:@"entries"] count] ;
             if (competitorEventLimit != 0) {
             
                     if (!(competitorEventLimit>currentEventNumber)) {
@@ -312,7 +317,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
 }
 
 
-#pragma mark - MeetAddViewControllerUnwinds
+#pragma mark - SetupEventViewControllerUnwinds
 
 - (IBAction)unwindToSetupEventsForCDone:(UIStoryboardSegue *)unwindSegue
 {
@@ -322,12 +327,9 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
     {
         // nslog(@"Coming from EventsForCAdd Done!");
         
-        
-        
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     
         CEventScore *ceventscore = [NSEntityDescription insertNewObjectForEntityForName:@"CEventScore" inManagedObjectContext:context];
-        
         
         EventForCAddViewController *sourceViewController = unwindSegue.sourceViewController;
         
@@ -336,8 +338,6 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
         
       //  // nslog(@"Gevent %@ Division %@ ",sourceViewController.event.gEvent.gEventName, sourceViewController.event.division.divName);
 
-        
-        
         
         ////
         ////////
@@ -350,13 +350,7 @@ NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(competitor == %@)",
        [ceventscore setValue:nil forKey:@"score"];
        [ceventscore setValue:nil forKey:@"resultEntered"];
       
-        /*
-       [ceventscore setValue:[NSNumber numberWithDouble:0] forKey:@"result"];
-       [ceventscore setValue:[NSNumber numberWithDouble:0] forKey:@"personalBest"];
-       [ceventscore setValue:[NSNumber numberWithInt: 0] forKey:@"placing"];
-       [ceventscore setValue:[NSNumber numberWithInt: 0] forKey:@"score"];
-       [ceventscore setValue:[NSNumber numberWithBool: NO] forKey:@"resultEntered"];
-       */
+      
          //////
         // link relationships
         /////
@@ -415,7 +409,81 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
     [defaults synchronize];
 // }
     ////
-  
+    
+    
+                 //////
+            //////  Entry Add
+            
+            
+                Entry *entry = [NSEntityDescription insertNewObjectForEntityForName:@"Entry" inManagedObjectContext:context];
+                
+                
+                
+                
+                
+                ////////
+                /////   set values
+                ///////
+                
+              
+                entry.edited = [NSNumber numberWithBool:YES];
+                entry.editDone = [NSNumber numberWithBool:NO];
+                
+                
+                 //////
+                // link relationships
+                /////
+                
+               
+                
+                entry.competitor = self.competitorObject;
+                entry.cEventScore = ceventscore;
+                entry.meet = self.competitorObject.meet;
+                
+                
+                
+                //////
+                
+                         // Store entryID data
+          
+              
+                
+            defaults = [NSUserDefaults standardUserDefaults];
+            
+             
+              tempint =  [self.competitorObject.meet.meetID intValue];
+             
+              keystring = [NSString stringWithFormat:@"%dlastentryID",tempint];  ////
+             
+             // nslog(@"%@",keystring);
+             
+             if (![defaults objectForKey:keystring]) {                    /////
+             
+             int idint = 0;
+             NSNumber *idnumber = [NSNumber numberWithInt:idint];
+             [defaults setObject:idnumber forKey:keystring];             ///////
+             
+             }
+                oldnumber = [defaults objectForKey:keystring];   ///
+                oldint = [oldnumber intValue];
+                newint = oldint + 1;
+                newnumber = [NSNumber numberWithInt:newint];
+               entry.entryID = newnumber;                  //////////
+               
+
+            [defaults setObject: newnumber forKey:keystring];            /////////
+             
+            [defaults synchronize];
+         
+            ////
+                 
+     
+                ceventscore.edited = [NSNumber numberWithBool:YES];
+                ceventscore.editDone = [NSNumber numberWithBool:NO];
+                ceventscore.event.edited = [NSNumber numberWithBool:YES];
+                ceventscore.event.editDone = [NSNumber numberWithBool:NO];
+        
+
         
                 NSError *error = nil;
 
@@ -431,10 +499,117 @@ NSNumber *oldnumber = [defaults objectForKey:keystring];   ///
             //abort();
             }
         
+        
+        
+        
+      
+        
+        
     }
    
+    if ([unwindSegue.sourceViewController isKindOfClass:[PickRelayTeamForCViewController class]])
+    {
+        // nslog(@"Coming from pickrelay Done!");
+        
+                NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+        
+        
+        PickRelayTeamForCViewController *sourceViewController = unwindSegue.sourceViewController;
+        
    
+        CEventScore *ceventscore = sourceViewController.cEventScoreSelected;
+       
+         //////
+            //////  Entry Add
+            
+            
+                Entry *entry = [NSEntityDescription insertNewObjectForEntityForName:@"Entry" inManagedObjectContext:context];
+                
+                
+                
+                
+                
+                ////////
+                /////   set values
+                ///////
+                
+              
+                entry.edited = [NSNumber numberWithBool:YES];
+                entry.editDone = [NSNumber numberWithBool:NO];
+                
+                
+                 //////
+                // link relationships
+                /////
+                
+               
+                
+                entry.competitor = self.competitorObject;
+                entry.cEventScore = ceventscore;
+                entry.meet = self.competitorObject.meet;
+                
+                
+                
+                //////
+                
+                         // Store entryID data
 
+                
+             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+             
+             int tempint =  [self.competitorObject.meet.meetID intValue];
+             
+             NSString* keystring = [NSString stringWithFormat:@"%dlastentryID",tempint];  ////
+             
+             // nslog(@"%@",keystring);
+             
+             if (![defaults objectForKey:keystring]) {                    /////
+             
+             int idint = 0;
+             NSNumber *idnumber = [NSNumber numberWithInt:idint];
+             [defaults setObject:idnumber forKey:keystring];             ///////
+             
+             }
+              NSNumber*  oldnumber = [defaults objectForKey:keystring];   ///
+              int  oldint = [oldnumber intValue];
+               int newint = oldint + 1;
+               NSNumber* newnumber = [NSNumber numberWithInt:newint];
+               entry.entryID = newnumber;                  //////////
+               
+
+            [defaults setObject: newnumber forKey:keystring];            /////////
+             
+            [defaults synchronize];
+         
+            ////
+                 
+     
+                ceventscore.edited = [NSNumber numberWithBool:YES];
+                ceventscore.editDone = [NSNumber numberWithBool:NO];
+                ceventscore.event.edited = [NSNumber numberWithBool:YES];
+                ceventscore.event.editDone = [NSNumber numberWithBool:NO];
+        
+
+        
+                NSError *error = nil;
+
+        
+        
+
+        // Save the context.
+        
+            if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            // nslog(@"Unresolved error %@, %@", error, [error userInfo]);
+            //abort();
+            }
+        
+        
+       }
+        
 }
 - (IBAction)unwindToSetupEventsForCCancel:(UIStoryboardSegue *)unwindSegue
 {

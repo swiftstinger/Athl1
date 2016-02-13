@@ -1,20 +1,19 @@
 //
-//  EditRelayDiscViewController.m
+//  addRelayTeamForCViewController.m
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 18/01/2016.
+//  Created by Ailsa Huysamen on 03/02/2016.
 //  Copyright (c) 2016 rudi huysamen. All rights reserved.
 //
 
-#import "EditRelayDiscViewController.h"
-#import "CEventScore.h"
+#import "addRelayTeamForCViewController.h"
 
-@interface EditRelayDiscViewController ()
+@interface addRelayTeamForCViewController ()
 @property (nonatomic, assign) id currentResponder;
-@property (strong, nonatomic) CEventScore* cscore;
+
 @end
 
-@implementation EditRelayDiscViewController
+@implementation addRelayTeamForCViewController
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -32,7 +31,7 @@
    if (_detailItem != newDetailItem) {
 
        _detailItem = newDetailItem;
-       self.cscore = (CEventScore*)_detailItem;
+       self.eventObject = (Event*)_detailItem;
        
       
       [self configureView];
@@ -61,10 +60,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-   [self.textfield becomeFirstResponder];
+   [self.relayDiscTextField becomeFirstResponder];
    
  
-    [_textfield setDelegate:self];
+    [_relayDiscTextField setDelegate:self];
     
 UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
     [singleTap setNumberOfTapsRequired:1];
@@ -100,6 +99,5 @@ UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarg
       [self.currentResponder resignFirstResponder];
     }
 }
-
 
 @end

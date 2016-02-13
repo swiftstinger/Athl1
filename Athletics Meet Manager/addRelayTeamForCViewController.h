@@ -1,24 +1,22 @@
 //
-//  EditRelayDiscViewController.h
+//  addRelayTeamForCViewController.h
 //  Athletics Meet Manager
 //
-//  Created by Ailsa Huysamen on 18/01/2016.
+//  Created by Ailsa Huysamen on 03/02/2016.
 //  Copyright (c) 2016 rudi huysamen. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-
-
-@interface EditRelayDiscViewController : UITableViewController
-<UITextFieldDelegate>
+#import "Event.h"
+@interface addRelayTeamForCViewController : UITableViewController <UITextFieldDelegate>
 
 
 @property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (weak, nonatomic) IBOutlet UITextField *textfield;
-
-
+@property (strong, nonatomic) Event* eventObject;
 @property BOOL isOnTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *relayDiscTextField;
 
 @end

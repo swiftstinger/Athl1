@@ -199,10 +199,9 @@
                     </tableView>
                     <toolbarItems>
                         <barButtonItem systemItem="flexibleSpace" id="aXU-UM-Zdf"/>
-                        <barButtonItem title="Info" id="rJ9-5G-ghJ">
+                        <barButtonItem title="Reset Tutorials" id="rJ9-5G-ghJ">
                             <connections>
-                                <action selector="InfoButton:" destination="pGg-6v-bdr" id="IMV-rv-Frg"/>
-                                <segue destination="ny8-vP-2jf" kind="show" identifier="showTut" id="lWX-8z-XmK"/>
+                                <action selector="showAllTuts:" destination="pGg-6v-bdr" id="oLq-cF-xdc"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="RgW-8s-vPt"/>
@@ -1381,7 +1380,7 @@
                         <outlet property="showBackupButton" destination="oyg-Kc-iqo" id="A5w-23-aHb"/>
                         <outlet property="updateOnlineButton" destination="n7H-TV-CMZ" id="Zed-cw-MOK"/>
                         <segue destination="299-s9-Cpt" kind="show" identifier="showEventScoreCopySheet" id="fgN-QB-3Sy"/>
-                        <segue destination="wCZ-w4-a0b" kind="show" id="nEY-rF-HYX"/>
+                        <segue destination="wCZ-w4-a0b" kind="show" identifier="showEventScoreSheet" id="nEY-rF-HYX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zfd-JV-ndN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1869,10 +1868,10 @@
             </objects>
             <point key="canvasLocation" x="-2385" y="3331"/>
         </scene>
-        <!--Competitor In Team View-->
+        <!--SetupEventsForC-->
         <scene sceneID="vPc-Wa-FdY">
             <objects>
-                <tableViewController title="Competitor In Team View" id="PSi-Gm-V0S" customClass="SetupEventsForCViewController" sceneMemberID="viewController">
+                <tableViewController title="SetupEventsForC" id="PSi-Gm-V0S" customClass="SetupEventsForCViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="O18-EQ-oIR">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2226,12 +2225,18 @@
                                 <segue destination="Vks-jh-ps7" kind="unwind" unwindAction="unwindToSetupEventsForCCancel:" id="TCN-kZ-k1R"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="A2Z-I6-dhv"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="A2Z-I6-dhv">
+                            <connections>
+                                <action selector="DoneNextButtonPressed:" destination="hnL-8I-6gi" id="ENy-pP-HWw"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="DoneNextButton" destination="A2Z-I6-dhv" id="QEE-PW-aTH"/>
                         <outlet property="divPicker" destination="rce-j8-uTh" id="ti7-53-Iqt"/>
                         <outlet property="eventPicker" destination="mzz-il-Q2D" id="bx4-jf-cNk"/>
-                        <segue destination="wbC-S0-xhZ" kind="presentation" modalTransitionStyle="flipHorizontal" id="MMo-0Y-GXE"/>
+                        <segue destination="wbC-S0-xhZ" kind="presentation" identifier="pickRelayTeamForC" modalTransitionStyle="flipHorizontal" id="MMo-0Y-GXE"/>
+                        <segue destination="Vks-jh-ps7" kind="unwind" identifier="unwindToSetupEventsForCDoneSeque" unwindAction="unwindToSetupEventsForCDone:" id="5YH-ey-SNa"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yh2-0C-dj1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3017,6 +3022,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="pSf-Qy-lDm">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3262,6 +3268,7 @@
                         <connections>
                             <outlet property="dataSource" destination="wCZ-w4-a0b" id="FXR-WC-iBT"/>
                             <outlet property="delegate" destination="wCZ-w4-a0b" id="8Jv-nB-Mgn"/>
+                            <outletCollection property="gestureRecognizers" destination="jmC-At-zDA" appends="YES" id="Smj-bE-jsD"/>
                         </connections>
                     </tableView>
                     <toolbarItems>
@@ -3300,7 +3307,7 @@
                 <exit id="MVk-hM-YBr" userLabel="Exit" sceneMemberID="exit"/>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="jmC-At-zDA">
                     <connections>
-                        <action selector="longPressRecognizer:" destination="wCZ-w4-a0b" id="NIy-2e-mdf"/>
+                        <action selector="longPressRecognizer:" destination="wCZ-w4-a0b" id="VIf-k4-lLM"/>
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
@@ -3533,13 +3540,13 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="hiX-sI-a8s">
                             <connections>
-                                <segue destination="DOb-H7-72H" kind="unwind" unwindAction="unwindToEventScoreSheetDone:" id="Gx9-4E-QVp"/>
+                                <segue destination="DOb-H7-72H" kind="unwind" identifier="unwindToEventScoreSheetDone" unwindAction="unwindToEventScoreSheetDone:" id="Gx9-4E-QVp"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="pickerRelay" destination="bIz-97-xqz" id="y62-74-xO1"/>
-                        <outlet property="relayDisc" destination="PXt-Fv-YSv" id="ohB-ym-Uvn"/>
+                        <outlet property="relayDisc" destination="PXt-Fv-YSv" id="cnZ-oa-eNC"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXh-Uj-36G" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3571,14 +3578,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="NKD-WE-6ag">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="Lwe-R4-r0v" id="FJD-WW-xYL"/>
-                            </connections>
-                        </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SearchCell" textLabel="nBy-zT-gxk" detailTextLabel="FAb-fm-lmI" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="jic-pX-T6F">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -3633,7 +3632,6 @@
                 <searchDisplayController id="bcx-5P-hVE">
                     <connections>
                         <outlet property="delegate" destination="Lwe-R4-r0v" id="IN0-9z-P3x"/>
-                        <outlet property="searchBar" destination="NKD-WE-6ag" id="bvs-7O-1OI"/>
                         <outlet property="searchContentsController" destination="Lwe-R4-r0v" id="4yY-6w-c5f"/>
                         <outlet property="searchResultsDataSource" destination="Lwe-R4-r0v" id="DFv-4d-dpG"/>
                         <outlet property="searchResultsDelegate" destination="Lwe-R4-r0v" id="qyb-ui-aDw"/>
@@ -3832,10 +3830,10 @@
         <scene sceneID="nzD-6d-mc2">
             <objects>
                 <tableViewController title="Entries View" id="3fF-GE-UMB" customClass="EntriesViewTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="603-yi-ixW">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="603-yi-ixW">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="entryCell" textLabel="5ag-VT-fnq" detailTextLabel="uuX-vO-M4s" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="aL4-ZA-dFb" customClass="EntriesViewTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -3863,12 +3861,16 @@
                             </tableViewCell>
                         </prototypes>
                         <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="3fF-GE-UMB" id="4nx-AT-y1D"/>
+                            <outlet property="delegate" destination="3fF-GE-UMB" id="Mds-pa-W7P"/>
+                        </connections>
                     </tableView>
                     <toolbarItems>
                         <barButtonItem systemItem="flexibleSpace" id="c9P-JD-1GO"/>
                         <barButtonItem title="Edit Relay Discription" id="tsA-Th-sDk">
                             <connections>
-                                <segue destination="Prt-7p-MxL" kind="presentation" identifier="editRelayDiscSegue" id="z6e-ub-djz"/>
+                                <segue destination="Prt-7p-MxL" kind="presentation" identifier="editRelayDiscSegue" modalTransitionStyle="flipHorizontal" id="z6e-ub-djz"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
@@ -3933,7 +3935,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Insert New Description" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K20-CG-avX">
-                                                    <rect key="frame" x="8" y="7" width="336" height="30"/>
+                                                    <rect key="frame" x="8" y="7" width="584" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -3943,17 +3945,21 @@
                                 </cells>
                             </tableViewSection>
                         </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="uqc-A7-L08" id="RWX-wn-b44"/>
+                            <outlet property="delegate" destination="uqc-A7-L08" id="HE0-ys-dhY"/>
+                        </connections>
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Update Description" id="ThS-th-0IU">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="fUz-ah-eDN">
                             <connections>
-                                <segue destination="dIr-ZL-Ogd" kind="unwind" unwindAction="unwindToEventScoreAddCancel:" id="iSP-0y-Lym"/>
+                                <segue destination="dIr-ZL-Ogd" kind="unwind" unwindAction="unwindToEntriesViewSheetCancel:" id="yF0-wx-CCM"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="KRs-tF-cnm">
                             <connections>
-                                <segue destination="dIr-ZL-Ogd" kind="unwind" identifier="unwindToAddCompetitorDoneSegue" unwindAction="unwindToEventScoreSheetDone:" id="ckB-0l-4Tm"/>
+                                <segue destination="dIr-ZL-Ogd" kind="unwind" unwindAction="unwindToEntriesViewSheetDone:" id="06J-O6-f0w"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -3985,10 +3991,10 @@
             </objects>
             <point key="canvasLocation" x="96" y="4058"/>
         </scene>
-        <!--Relay Teams View-->
+        <!--PickRelayTeamsForC-->
         <scene sceneID="T5T-o0-9My">
             <objects>
-                <tableViewController title="Relay Teams View" id="4uU-F1-YiJ" customClass="EventScoreAddViewController" sceneMemberID="viewController">
+                <tableViewController title="PickRelayTeamsForC" id="4uU-F1-YiJ" customClass="PickRelayTeamForCViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fNI-05-159">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4015,7 +4021,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="entryCell" textLabel="VRm-VN-LJH" detailTextLabel="q0R-Zi-4sB" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="Mk4-rF-sel">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="teamForCCell" textLabel="VRm-VN-LJH" detailTextLabel="q0R-Zi-4sB" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="Mk4-rF-sel" customClass="relayTeamForCTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mk4-rF-sel" id="srv-Bi-ZhN">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -4034,27 +4040,40 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="subTitle" destination="q0R-Zi-4sB" id="qdX-Mg-Xqi"/>
+                                    <outlet property="title" destination="VRm-VN-LJH" id="5wF-5h-CZk"/>
+                                    <segue destination="Osy-hf-OnB" kind="unwind" identifier="unwindToSetupEventForCDoneSegue" unwindAction="unwindToSetupEventsForCDone:" id="1yi-wV-XJa"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="4uU-F1-YiJ" id="Rdw-0p-hO5"/>
+                            <outlet property="delegate" destination="4uU-F1-YiJ" id="ziH-gf-psr"/>
+                        </connections>
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Event and Div Teams" id="7SF-31-Ras">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="CzJ-Dj-ecP">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="CzJ-Dj-ecP">
                             <connections>
-                                <segue destination="Osy-hf-OnB" kind="unwind" unwindAction="unwindToEventScoreSheetCancel:" id="VNP-sv-9qq"/>
+                                <segue destination="Osy-hf-OnB" kind="unwind" unwindAction="unwindToSetupEventsForCCancel:" id="pxo-Md-4KA"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="saf-nD-1aD"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="saf-nD-1aD">
+                            <connections>
+                                <segue destination="jUJ-hd-IfG" kind="presentation" identifier="addRelayTeamForCSegue" modalTransitionStyle="flipHorizontal" id="bLH-rF-TxL"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="jUJ-hd-IfG" kind="presentation" modalTransitionStyle="flipHorizontal" id="WNl-Pz-YcI"/>
+                        <outlet property="navBar" destination="7SF-31-Ras" id="p5T-qb-UHY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CVM-Ge-T96" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Osy-hf-OnB" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="888" y="4058"/>
+            <point key="canvasLocation" x="904" y="4058"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EaI-ns-kre">
@@ -4072,10 +4091,10 @@
             </objects>
             <point key="canvasLocation" x="1679" y="4058"/>
         </scene>
-        <!--AddCompetitor Details-->
+        <!--AddRelayTeamForC-->
         <scene sceneID="SWg-dg-Y03">
             <objects>
-                <tableViewController title="AddCompetitor Details" id="FXh-cy-3rs" customClass="CompetitorAddInResultSheetViewController" sceneMemberID="viewController">
+                <tableViewController title="AddRelayTeamForC" id="FXh-cy-3rs" customClass="addRelayTeamForCViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="TrO-ff-bRe">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4104,15 +4123,18 @@
                     <navigationItem key="navigationItem" title="Enter Relay Description" id="nIO-TX-K5e">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="2eY-Ig-q9T">
                             <connections>
-                                <segue destination="N3J-dz-3Ec" kind="unwind" unwindAction="unwindToEventScoreAddCancel:" id="6iQ-k5-Ost"/>
+                                <segue destination="N3J-dz-3Ec" kind="unwind" unwindAction="unwindToPickRelayTeamForCCancel:" id="ucC-KL-1yc"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="9ge-eF-ERp">
                             <connections>
-                                <segue destination="N3J-dz-3Ec" kind="unwind" identifier="unwindToAddCompetitorDoneSegue" unwindAction="unwindToEventScoreSheetDone:" id="rnp-6o-rlS"/>
+                                <segue destination="N3J-dz-3Ec" kind="unwind" identifier="unwindToPickRelayTeamForCDoneSegue" unwindAction="unwindToPickRelayTeamForCDone:" id="ocF-AS-pKA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="relayDiscTextField" destination="dBy-lr-gfs" id="i7M-hp-AqE"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rUh-y5-Lnt" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="N3J-dz-3Ec" userLabel="Exit" sceneMemberID="exit"/>
@@ -4124,11 +4146,11 @@
         <image name="resultsLogo.png" width="40" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="iM2-Qd-8bg"/>
         <segue reference="pjO-ql-D1X"/>
-        <segue reference="PVp-iO-EbP"/>
         <segue reference="HxQ-va-xu1"/>
         <segue reference="oBo-Wm-xkL"/>
-        <segue reference="kWb-zD-Ztb"/>
+        <segue reference="KE2-9o-S9o"/>
+        <segue reference="iM2-Qd-8bg"/>
+        <segue reference="DDw-EA-Bfp"/>
     </inferredMetricsTieBreakers>
 </document>

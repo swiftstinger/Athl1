@@ -73,19 +73,22 @@
 		1F095F501B0FB765000FE30A /* Athletics_Meet_ManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F095F4F1B0FB765000FE30A /* Athletics_Meet_ManagerTests.m */; };
 		1F0A4BC31BF3F75000FBA30A /* resultsLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0A4BC21BF3F75000FBA30A /* resultsLogo.png */; };
 		1F11C8BA1BDC2D7600ACE8AF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F11C8B91BDC2D7600ACE8AF /* SystemConfiguration.framework */; };
+		1F33121B1C6AA1D10054DD56 /* Meet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33121A1C6AA1D10054DD56 /* Meet.m */; };
+		1F33121E1C6C19B00054DD56 /* BackupEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33121D1C6C19B00054DD56 /* BackupEntry.m */; };
+		1F3F87AC1C62970F00D83F41 /* PickRelayTeamForCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F87AB1C62970F00D83F41 /* PickRelayTeamForCViewController.m */; };
+		1F3F87AF1C629C1E00D83F41 /* relayTeamForCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F87AE1C629C1E00D83F41 /* relayTeamForCTableViewCell.m */; };
+		1F3F87B31C62A2AB00D83F41 /* addRelayTeamForCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F87B21C62A2AB00D83F41 /* addRelayTeamForCViewController.m */; };
 		1F470E351BE5295B0049D4F5 /* ResultsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F470E341BE5295B0049D4F5 /* ResultsWebViewController.m */; };
 		1F49C9BA1B8F1076007FB39C /* TutContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F49C9B91B8F1076007FB39C /* TutContentViewController.m */; };
 		1F49C9BD1B8F120F007FB39C /* TutMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F49C9BC1B8F120F007FB39C /* TutMainViewController.m */; };
 		1F54BD711B48E3A70046BA87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F3D1B0FB765000FE30A /* Main.storyboard */; };
 		1F54BD721B48E41D0046BA87 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F095F421B0FB765000FE30A /* LaunchScreen.xib */; };
-		1F63FDF31C502DC700CF7251 /* Competitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F63FDF21C502DC700CF7251 /* Competitor.m */; };
 		1F63FDF61C502DC700CF7251 /* BackupCompetitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F63FDF51C502DC700CF7251 /* BackupCompetitor.m */; };
 		1F63FDFC1C50346200CF7251 /* CEventScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F63FDFB1C50346200CF7251 /* CEventScore.m */; };
 		1F63FDFF1C50346300CF7251 /* BackupCEventScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F63FDFE1C50346300CF7251 /* BackupCEventScore.m */; };
-		1F63FE081C56E44500CF7251 /* Meet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F63FE071C56E44500CF7251 /* Meet.m */; };
 		1F63FE0B1C56E44500CF7251 /* Entry.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F63FE0A1C56E44500CF7251 /* Entry.m */; };
-		1F63FE0E1C56E44600CF7251 /* BackupEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F63FE0D1C56E44500CF7251 /* BackupEntry.m */; };
 		1F63FE111C5818C700CF7251 /* EntriesViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F63FE101C5818C700CF7251 /* EntriesViewTableViewCell.m */; };
+		1F63FE141C5D749D00CF7251 /* Competitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F63FE131C5D749D00CF7251 /* Competitor.m */; };
 		1FB470D01BDE72EF009820D9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB470CF1BDE72EF009820D9 /* Security.framework */; };
 		1FB470D81BDE80F5009820D9 /* ExampleMeet.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FB470D71BDE80F5009820D9 /* ExampleMeet.plist */; };
 		1FC88E801B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC88E7F1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.m */; };
@@ -234,28 +237,34 @@
 		1F095F4F1B0FB765000FE30A /* Athletics_Meet_ManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Athletics_Meet_ManagerTests.m; sourceTree = "<group>"; };
 		1F0A4BC21BF3F75000FBA30A /* resultsLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resultsLogo.png; sourceTree = "<group>"; };
 		1F11C8B91BDC2D7600ACE8AF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1F3312191C6AA1D10054DD56 /* Meet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meet.h; sourceTree = "<group>"; };
+		1F33121A1C6AA1D10054DD56 /* Meet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Meet.m; sourceTree = "<group>"; };
+		1F33121C1C6C19B00054DD56 /* BackupEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupEntry.h; sourceTree = "<group>"; };
+		1F33121D1C6C19B00054DD56 /* BackupEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupEntry.m; sourceTree = "<group>"; };
+		1F3F87AA1C62970F00D83F41 /* PickRelayTeamForCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickRelayTeamForCViewController.h; sourceTree = "<group>"; };
+		1F3F87AB1C62970F00D83F41 /* PickRelayTeamForCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickRelayTeamForCViewController.m; sourceTree = "<group>"; };
+		1F3F87AD1C629C1E00D83F41 /* relayTeamForCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = relayTeamForCTableViewCell.h; sourceTree = "<group>"; };
+		1F3F87AE1C629C1E00D83F41 /* relayTeamForCTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = relayTeamForCTableViewCell.m; sourceTree = "<group>"; };
+		1F3F87B11C62A2AB00D83F41 /* addRelayTeamForCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addRelayTeamForCViewController.h; sourceTree = "<group>"; };
+		1F3F87B21C62A2AB00D83F41 /* addRelayTeamForCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addRelayTeamForCViewController.m; sourceTree = "<group>"; };
 		1F470E331BE5295B0049D4F5 /* ResultsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsWebViewController.h; sourceTree = "<group>"; };
 		1F470E341BE5295B0049D4F5 /* ResultsWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsWebViewController.m; sourceTree = "<group>"; };
 		1F49C9B81B8F1076007FB39C /* TutContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutContentViewController.h; sourceTree = "<group>"; };
 		1F49C9B91B8F1076007FB39C /* TutContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutContentViewController.m; sourceTree = "<group>"; };
 		1F49C9BB1B8F120F007FB39C /* TutMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutMainViewController.h; sourceTree = "<group>"; };
 		1F49C9BC1B8F120F007FB39C /* TutMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutMainViewController.m; sourceTree = "<group>"; };
-		1F63FDF11C502DC700CF7251 /* Competitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Competitor.h; sourceTree = "<group>"; };
-		1F63FDF21C502DC700CF7251 /* Competitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Competitor.m; sourceTree = "<group>"; };
 		1F63FDF41C502DC700CF7251 /* BackupCompetitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupCompetitor.h; sourceTree = "<group>"; };
 		1F63FDF51C502DC700CF7251 /* BackupCompetitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupCompetitor.m; sourceTree = "<group>"; };
 		1F63FDFA1C50346200CF7251 /* CEventScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CEventScore.h; sourceTree = "<group>"; };
 		1F63FDFB1C50346200CF7251 /* CEventScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CEventScore.m; sourceTree = "<group>"; };
 		1F63FDFD1C50346300CF7251 /* BackupCEventScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupCEventScore.h; sourceTree = "<group>"; };
 		1F63FDFE1C50346300CF7251 /* BackupCEventScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupCEventScore.m; sourceTree = "<group>"; };
-		1F63FE061C56E44500CF7251 /* Meet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meet.h; sourceTree = "<group>"; };
-		1F63FE071C56E44500CF7251 /* Meet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Meet.m; sourceTree = "<group>"; };
 		1F63FE091C56E44500CF7251 /* Entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
 		1F63FE0A1C56E44500CF7251 /* Entry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entry.m; sourceTree = "<group>"; };
-		1F63FE0C1C56E44500CF7251 /* BackupEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupEntry.h; sourceTree = "<group>"; };
-		1F63FE0D1C56E44500CF7251 /* BackupEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupEntry.m; sourceTree = "<group>"; };
 		1F63FE0F1C5818C700CF7251 /* EntriesViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntriesViewTableViewCell.h; sourceTree = "<group>"; };
 		1F63FE101C5818C700CF7251 /* EntriesViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntriesViewTableViewCell.m; sourceTree = "<group>"; };
+		1F63FE121C5D749D00CF7251 /* Competitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Competitor.h; sourceTree = "<group>"; };
+		1F63FE131C5D749D00CF7251 /* Competitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Competitor.m; sourceTree = "<group>"; };
 		1FB470CF1BDE72EF009820D9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1FB470D71BDE80F5009820D9 /* ExampleMeet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ExampleMeet.plist; sourceTree = "<group>"; };
 		1FC88E7E1B39EEFD00BD0A23 /* HighJumpScoreEnterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighJumpScoreEnterViewController.h; sourceTree = "<group>"; };
@@ -526,6 +535,27 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		1F3F87A61C62951E00D83F41 /* PickRelayTeamForC */ = {
+			isa = PBXGroup;
+			children = (
+				1F3F87B01C62A1E900D83F41 /* addRelayTeamForC */,
+				1F3F87AA1C62970F00D83F41 /* PickRelayTeamForCViewController.h */,
+				1F3F87AB1C62970F00D83F41 /* PickRelayTeamForCViewController.m */,
+				1F3F87AD1C629C1E00D83F41 /* relayTeamForCTableViewCell.h */,
+				1F3F87AE1C629C1E00D83F41 /* relayTeamForCTableViewCell.m */,
+			);
+			name = PickRelayTeamForC;
+			sourceTree = "<group>";
+		};
+		1F3F87B01C62A1E900D83F41 /* addRelayTeamForC */ = {
+			isa = PBXGroup;
+			children = (
+				1F3F87B11C62A2AB00D83F41 /* addRelayTeamForCViewController.h */,
+				1F3F87B21C62A2AB00D83F41 /* addRelayTeamForCViewController.m */,
+			);
+			name = addRelayTeamForC;
+			sourceTree = "<group>";
+		};
 		1FA7E9E81B2C4C6000B924EF /* EnterScore */ = {
 			isa = PBXGroup;
 			children = (
@@ -606,20 +636,20 @@
 		1FD6B6581B1736D900F05968 /* DataObjects */ = {
 			isa = PBXGroup;
 			children = (
-				1F63FE0C1C56E44500CF7251 /* BackupEntry.h */,
-				1F63FE0D1C56E44500CF7251 /* BackupEntry.m */,
+				1F33121C1C6C19B00054DD56 /* BackupEntry.h */,
+				1F33121D1C6C19B00054DD56 /* BackupEntry.m */,
+				1F3312191C6AA1D10054DD56 /* Meet.h */,
+				1F33121A1C6AA1D10054DD56 /* Meet.m */,
+				1F63FE121C5D749D00CF7251 /* Competitor.h */,
+				1F63FE131C5D749D00CF7251 /* Competitor.m */,
 				1F63FE091C56E44500CF7251 /* Entry.h */,
 				1F63FE0A1C56E44500CF7251 /* Entry.m */,
-				1F63FE061C56E44500CF7251 /* Meet.h */,
-				1F63FE071C56E44500CF7251 /* Meet.m */,
 				1F63FDFD1C50346300CF7251 /* BackupCEventScore.h */,
 				1F63FDFE1C50346300CF7251 /* BackupCEventScore.m */,
 				1F63FDFA1C50346200CF7251 /* CEventScore.h */,
 				1F63FDFB1C50346200CF7251 /* CEventScore.m */,
 				1F63FDF41C502DC700CF7251 /* BackupCompetitor.h */,
 				1F63FDF51C502DC700CF7251 /* BackupCompetitor.m */,
-				1F63FDF11C502DC700CF7251 /* Competitor.h */,
-				1F63FDF21C502DC700CF7251 /* Competitor.m */,
 				1FE1632D1C050003003E10CF /* Division.h */,
 				1FE1632E1C050003003E10CF /* Division.m */,
 				1FE1632A1C050003003E10CF /* GEvent.h */,
@@ -785,6 +815,7 @@
 			isa = PBXGroup;
 			children = (
 				1FD6B68E1B1E5BD800F05968 /* EventResultView */,
+				1F3F87A61C62951E00D83F41 /* PickRelayTeamForC */,
 				1FD6B68B1B1E559C00F05968 /* EventForCAddViewController.h */,
 				1FD6B68C1B1E559C00F05968 /* EventForCAddViewController.m */,
 			);
@@ -1022,12 +1053,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F63FE081C56E44500CF7251 /* Meet.m in Sources */,
+				1F3F87AC1C62970F00D83F41 /* PickRelayTeamForCViewController.m in Sources */,
 				1F63FE0B1C56E44500CF7251 /* Entry.m in Sources */,
 				1F0633B91B409CF500110D26 /* TeamCompetitorResultTableViewCell.m in Sources */,
 				1FE1631A1C04FFDF003E10CF /* BackupEvent.m in Sources */,
 				1F0633AE1B40953100110D26 /* TeamDivResultViewController.m in Sources */,
 				1FE1633F1C050E71003E10CF /* BNHtmlPdfKit.m in Sources */,
+				1F3F87B31C62A2AB00D83F41 /* addRelayTeamForCViewController.m in Sources */,
 				1FD6B6A21B1F429500F05968 /* CompetitorScoreEnterViewController.m in Sources */,
 				1FD6B6411B171F4200F05968 /* MeetMenuViewController.m in Sources */,
 				1FE163441C050EC0003E10CF /* TeamPlacesViewController.m in Sources */,
@@ -1035,19 +1067,20 @@
 				1FD6B69C1B1F37A200F05968 /* EventScoreAddViewController.m in Sources */,
 				1FD6B6911B1E5C3600F05968 /* CEventResultViewController.m in Sources */,
 				1FC94A0E1BC5A7800058CE90 /* EventScoreCopySheetViewController.m in Sources */,
-				1F63FDF31C502DC700CF7251 /* Competitor.m in Sources */,
 				1FD021FA1B13BA6900F40102 /* MeetTableViewCell.m in Sources */,
 				1FE1632F1C050003003E10CF /* Division.m in Sources */,
 				84B5B8431B15C81D00529756 /* MasterViewController.m in Sources */,
 				1FD6B6501B17366900F05968 /* SetupTeamsViewController.m in Sources */,
 				1FD6B64A1B17363C00F05968 /* SetupDivViewController.m in Sources */,
 				1FE163261C050003003E10CF /* Event.m in Sources */,
+				1F3F87AF1C629C1E00D83F41 /* relayTeamForCTableViewCell.m in Sources */,
 				1FD6B6701B1884E200F05968 /* TeamAddViewController.m in Sources */,
 				1FD6B6471B17224300F05968 /* MeetMenuViewCell.m in Sources */,
 				1FE163231C050002003E10CF /* Team.m in Sources */,
 				1FD6B68D1B1E559C00F05968 /* EventForCAddViewController.m in Sources */,
 				1F095F331B0FB765000FE30A /* AppDelegate.m in Sources */,
 				1F470E351BE5295B0049D4F5 /* ResultsWebViewController.m in Sources */,
+				1F33121E1C6C19B00054DD56 /* BackupEntry.m in Sources */,
 				1FD6B6761B18852E00F05968 /* TeamTableViewCell.m in Sources */,
 				1F63FDFC1C50346200CF7251 /* CEventScore.m in Sources */,
 				1FD6B6941B1F365900F05968 /* EventResultTableViewCell.m in Sources */,
@@ -1066,6 +1099,7 @@
 				1F63FE111C5818C700CF7251 /* EntriesViewTableViewCell.m in Sources */,
 				1FD6B69F1B1F37E300F05968 /* EventScoreTableViewCell.m in Sources */,
 				1F63FDF61C502DC700CF7251 /* BackupCompetitor.m in Sources */,
+				1F33121B1C6AA1D10054DD56 /* Meet.m in Sources */,
 				1FEDB6B91BFDA5AA0073D277 /* (null) in Sources */,
 				1F0633BC1B409D4800110D26 /* TeamCompetitorResultsViewController.m in Sources */,
 				1FE1632C1C050003003E10CF /* GEvent.m in Sources */,
@@ -1077,7 +1111,7 @@
 				1FE163141C04FEDF003E10CF /* Athletics_Meet_Manager.xcdatamodeld in Sources */,
 				1FDA11ED1B2C971200CBE9E6 /* CompetitorAddInResultSheetViewController.m in Sources */,
 				1F039B921C4D929F00D92E61 /* EditRelayDiscViewController.m in Sources */,
-				1F63FE0E1C56E44600CF7251 /* BackupEntry.m in Sources */,
+				1F63FE141C5D749D00CF7251 /* Competitor.m in Sources */,
 				1F095F301B0FB765000FE30A /* main.m in Sources */,
 				1F0633A51B40853100110D26 /* TeamFinalResultsTableViewCell.m in Sources */,
 				1F0633B51B409C4500110D26 /* TeamEventResultTableViewCell.m in Sources */,

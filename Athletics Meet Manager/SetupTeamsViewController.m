@@ -166,7 +166,7 @@
     for (Competitor *comp in competitorarray) {
         
 
-        if ([comp.cEventScores count] > 0) {
+        if ([comp.entries count] > 0) {
         
             count = count +1;
            

@@ -44,7 +44,8 @@
         <attribute name="updateDateAndTime" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="backupCEventScore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BackupCEventScore" inverseName="backupEntries" inverseEntity="BackupCEventScore" syncable="YES"/>
         <relationship name="backupCompetitor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BackupCompetitor" inverseName="backupEntries" inverseEntity="BackupCompetitor" syncable="YES"/>
-        <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="backupEntry" inverseEntity="Meet" syncable="YES"/>
+        <relationship name="backupEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BackupEvent" inverseName="backupEntries" inverseEntity="BackupEvent" syncable="YES"/>
+        <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="backupEntries" inverseEntity="Meet" syncable="YES"/>
     </entity>
     <entity name="BackupEvent" representedClassName="BackupEvent" syncable="YES">
         <attribute name="backupDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -59,6 +60,7 @@
         <attribute name="updateDateAndTime" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="backupCEventScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupCEventScore" inverseName="backupEvent" inverseEntity="BackupCEventScore" syncable="YES"/>
         <relationship name="backupCompetitor" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupCompetitor" inverseName="backupEvent" inverseEntity="BackupCompetitor" syncable="YES"/>
+        <relationship name="backupEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupEntry" inverseName="backupEvent" inverseEntity="BackupEntry" syncable="YES"/>
         <relationship name="division" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Division" inverseName="backupEvents" inverseEntity="Division" syncable="YES"/>
         <relationship name="gEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GEvent" inverseName="backupEvents" inverseEntity="GEvent" syncable="YES"/>
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="backupEvents" inverseEntity="Meet" syncable="YES"/>
@@ -118,7 +120,7 @@
         <attribute name="updateDateAndTime" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="cEventScore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CEventScore" inverseName="entries" inverseEntity="CEventScore" syncable="YES"/>
         <relationship name="competitor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Competitor" inverseName="entries" inverseEntity="Competitor" syncable="YES"/>
-        <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="entry" inverseEntity="Meet" syncable="YES"/>
+        <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="entries" inverseEntity="Meet" syncable="YES"/>
     </entity>
     <entity name="Event" representedClassName="Event" syncable="YES">
         <attribute name="editDone" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
@@ -155,6 +157,7 @@
         <relationship name="meet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meet" inverseName="gEvents" inverseEntity="Meet" syncable="YES"/>
     </entity>
     <entity name="Meet" representedClassName="Meet" syncable="YES">
+        <attribute name="appVersionUpdatedFor" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cEventLimit" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="competitorPerTeam" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="decrementPerPlace" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -178,12 +181,12 @@
         <attribute name="updateDateAndTime" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="backupCEventScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupCEventScore" inverseName="meet" inverseEntity="BackupCEventScore" syncable="YES"/>
         <relationship name="backupCompetitors" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupCompetitor" inverseName="meet" inverseEntity="BackupCompetitor" syncable="YES"/>
-        <relationship name="backupEntry" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupEntry" inverseName="meet" inverseEntity="BackupEntry" syncable="YES"/>
+        <relationship name="backupEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupEntry" inverseName="meet" inverseEntity="BackupEntry" syncable="YES"/>
         <relationship name="backupEvents" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BackupEvent" inverseName="meet" inverseEntity="BackupEvent" syncable="YES"/>
         <relationship name="cEventsScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CEventScore" inverseName="meet" inverseEntity="CEventScore" syncable="YES"/>
         <relationship name="competitors" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Competitor" inverseName="meet" inverseEntity="Competitor" syncable="YES"/>
         <relationship name="divisions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Division" inverseName="meet" inverseEntity="Division" syncable="YES"/>
-        <relationship name="entry" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Entry" inverseName="meet" inverseEntity="Entry" syncable="YES"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Entry" inverseName="meet" inverseEntity="Entry" syncable="YES"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Event" inverseName="meet" inverseEntity="Event" syncable="YES"/>
         <relationship name="gEvents" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GEvent" inverseName="meet" inverseEntity="GEvent" syncable="YES"/>
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Team" inverseName="meet" inverseEntity="Team" syncable="YES"/>
@@ -208,15 +211,15 @@
     <elements>
         <element name="BackupCEventScore" positionX="-12069" positionY="-13491" width="128" height="315"/>
         <element name="BackupCompetitor" positionX="-12078" positionY="-13500" width="128" height="240"/>
-        <element name="BackupEvent" positionX="-12087" positionY="-13509" width="128" height="270"/>
+        <element name="BackupEntry" positionX="-12087" positionY="-13509" width="128" height="195"/>
+        <element name="BackupEvent" positionX="-12087" positionY="-13509" width="128" height="285"/>
         <element name="CEventScore" positionX="-12071" positionY="-12879" width="128" height="315"/>
         <element name="Competitor" positionX="-12267" positionY="-13032" width="128" height="225"/>
         <element name="Division" positionX="-12042" positionY="-13392" width="128" height="195"/>
+        <element name="Entry" positionX="-12096" positionY="-13518" width="128" height="180"/>
         <element name="Event" positionX="-11871" positionY="-13185" width="128" height="240"/>
         <element name="GEvent" positionX="-11486" positionY="-13366" width="128" height="300"/>
-        <element name="Meet" positionX="-11999" positionY="-13671" width="128" height="525"/>
+        <element name="Meet" positionX="-11999" positionY="-13671" width="128" height="540"/>
         <element name="Team" positionX="-12303" positionY="-13399" width="128" height="270"/>
-        <element name="Entry" positionX="-12096" positionY="-13518" width="128" height="180"/>
-        <element name="BackupEntry" positionX="-12087" positionY="-13509" width="128" height="180"/>
     </elements>
 </model>
